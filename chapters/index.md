@@ -34,22 +34,23 @@
 | 28 | 二十四小时之后 | 待平台统计 | 已完成 | 任务完成；曙光兑现权限；外环市场开放 |
 | 29 | 第一盘新鲜蔬菜 | 待平台统计 | 已完成 | 首收40公斤生菜；孙晓雨转为正式乘员 |
 | 30 | 移动站点的名字 | 待平台统计 | 已完成 | 正式命名归途站；建立岗位制度；获得七座失联小站线索 |
+| 31 | 七座失联小站 | 待平台统计 | 已完成 | 核验七站状态与路线；确定白栎医疗站为第一目标 |
 
 ## 正文文件
 
 - `volume-01/chapters-001-005.md`
 - `volume-01/chapters-006-009.md`
 - `volume-01/chapters-010-013.md`
-- `volume-01/chapter-014.md` 至 `volume-01/chapter-030.md`
+- `volume-01/chapter-014.md` 至 `volume-01/chapter-031.md`
 
 ## 下一章
 
-第31章暂定：**《七座失联小站》**
+第32章暂定：**《离开曙光之前》**
 
-新窗口续写时先读取：
+续写前先读取：
 
 1. `docs/next-window-handoff.md`
-2. `chapters/volume-01/chapter-029.md`
-3. `chapters/volume-01/chapter-030.md`
+2. `chapters/volume-01/chapter-030.md`
+3. `chapters/volume-01/chapter-031.md`
 4. `docs/continuity-ledger.md`
 5. `docs/short-term-outline.md`
