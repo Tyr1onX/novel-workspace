@@ -39,6 +39,7 @@
 | 33 | 归途站第一次发车 | 待平台统计 | 已完成 | 正式离开曙光；验证普通黑雾通行与岗位协作；通过首处道岔 |
 | 34 | 白栎医疗站 | 待平台统计 | 已完成 | 抵达白栎；修复供暖主泵回路；建立医疗合作谈判入口 |
 | 35 | 第一条医疗合作规则 | 待平台统计 | 已完成 | 签署有限医疗协作规则；沈青禾上车考察；白栎成为独立合作节点 |
+| 36 | 归途站的第九个人 | 待平台统计 | 已完成 | 沈青禾完成首日核验；建立转运准备区、医疗日志权限和清洁边界 |
 
 ## 正文文件
 
@@ -46,20 +47,21 @@
 - `volume-01/chapters-006-009.md`
 - `volume-01/chapters-010-013.md`
 - `volume-01/chapter-014.md` 至 `volume-01/chapter-035.md`
+- `volume-02/chapter-036.md` 起
 
 ## 卷进度
 
 - 第一卷《初生移动站》：第1～35章，已完成。
-- 第二卷《北境七站》：从第36章开始。
+- 第二卷《北境七站》：第36章起，进行中。
 
 ## 下一章
 
-第36章暂定：**《归途站的第九个人》**
+第37章暂定：**《先把清洁区分出来》**
 
 续写前先读取：
 
 1. `docs/next-window-handoff.md`
-2. `chapters/volume-01/chapter-034.md`
-3. `chapters/volume-01/chapter-035.md`
+2. `chapters/volume-01/chapter-035.md`
+3. `chapters/volume-02/chapter-036.md`
 4. `docs/continuity-ledger.md`
 5. `docs/short-term-outline.md`
