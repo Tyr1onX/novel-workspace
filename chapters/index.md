@@ -35,22 +35,23 @@
 | 29 | 第一盘新鲜蔬菜 | 待平台统计 | 已完成 | 首收40公斤生菜；孙晓雨转为正式乘员 |
 | 30 | 移动站点的名字 | 待平台统计 | 已完成 | 正式命名归途站；建立岗位制度；获得七座失联小站线索 |
 | 31 | 七座失联小站 | 待平台统计 | 已完成 | 核验七站状态与路线；确定白栎医疗站为第一目标 |
+| 32 | 离开曙光之前 | 待平台统计 | 已完成 | 完成离站检修、补能与物资准备；白栎接受有限合作 |
 
 ## 正文文件
 
 - `volume-01/chapters-001-005.md`
 - `volume-01/chapters-006-009.md`
 - `volume-01/chapters-010-013.md`
-- `volume-01/chapter-014.md` 至 `volume-01/chapter-031.md`
+- `volume-01/chapter-014.md` 至 `volume-01/chapter-032.md`
 
 ## 下一章
 
-第32章暂定：**《离开曙光之前》**
+第33章暂定：**《归途站第一次发车》**
 
 续写前先读取：
 
 1. `docs/next-window-handoff.md`
-2. `chapters/volume-01/chapter-030.md`
-3. `chapters/volume-01/chapter-031.md`
+2. `chapters/volume-01/chapter-031.md`
+3. `chapters/volume-01/chapter-032.md`
 4. `docs/continuity-ledger.md`
 5. `docs/short-term-outline.md`
