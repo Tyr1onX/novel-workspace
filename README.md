@@ -5,11 +5,12 @@
 ## 当前状态
 
 - 平台：番茄小说
-- 当前正文：第1～30章
+- 当前正文：第1～31章
 - 移动站点正式名称：**归途站**
-- 当前阶段：第一卷收尾，准备进入北部生活保障线
-- 最新章节：第30章《移动站点的名字》
-- 下一章：第31章《七座失联小站》（暂定）
+- 当前阶段：第一卷收尾，已确定生活保障线第一目标
+- 最新章节：第31章《七座失联小站》
+- 下一章：第32章《离开曙光之前》（暂定）
+- 第一行动目标：**白栎医疗站**
 - 当前正式队伍：8人
 - 标准全书规划：**10卷，约510章，合理浮动450～520章**
 - 压缩完结线：约370章
@@ -21,8 +22,8 @@
 先读取：
 
 1. `docs/next-window-handoff.md`
-2. `chapters/volume-01/chapter-029.md`
-3. `chapters/volume-01/chapter-030.md`
+2. `chapters/volume-01/chapter-030.md`
+3. `chapters/volume-01/chapter-031.md`
 4. `docs/continuity-ledger.md`
 5. `docs/short-term-outline.md`
 6. `docs/writing-rules.md`
@@ -35,8 +36,8 @@
 - `docs/series-bible.md`：世界观、能力体系和核心承诺
 - `docs/master-outline.md`：全书十卷究极大纲、三档完结线、终局、谜底、升级阶梯和人物长线
 - `docs/long-term-outline.md`：十卷结构快速摘要
-- `docs/short-term-outline.md`：当前第31～35章方向
-- `docs/continuity-ledger.md`：人物、岗位、车厢、资源、伏笔和当前状态
+- `docs/short-term-outline.md`：当前第32～35章方向
+- `docs/continuity-ledger.md`：人物、岗位、车厢、资源、七站状态、伏笔和当前进度
 - `docs/next-window-handoff.md`：新会话快速交接、全书规模和容易写偏的地方
 - `docs/writing-rules.md`：字数、节奏、升级和审核规范
 
@@ -48,6 +49,7 @@
 - 超过上限时优先拆章
 - 降低大型升级频率，持续兑现经营、岗位和已有设施
 - 归途站最终建立开放的分布式轨道网络，不吞并所有小站、不建立个人帝国
+- 七座站状态不同；当前先前往白栎，不同时营救七站
 - 增加总章数不等于拉长当前剧情；扩展主要放在移动核心、百站制度、轨道城市生活和跨域网络
 
 ## 每章完成后的固定维护
