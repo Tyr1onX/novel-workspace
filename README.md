@@ -11,7 +11,8 @@
 - 最新章节：第30章《移动站点的名字》
 - 下一章：第31章《七座失联小站》（暂定）
 - 当前正式队伍：8人
-- 写作模式：长期总纲 + 当前短纲 + 连续性账本 + 新窗口交接
+- 全书规划：**8卷，约360章，合理浮动340～380章**
+- 写作模式：究极大纲 + 长期总纲 + 当前短纲 + 连续性账本 + 新窗口交接
 
 ## 新窗口续写
 
@@ -23,12 +24,15 @@
 4. `docs/continuity-ledger.md`
 5. `docs/short-term-outline.md`
 6. `docs/writing-rules.md`
+7. `docs/long-term-outline.md`
+8. `docs/master-outline.md`
 
 ## 仓库结构
 
 - `chapters/`：已完成正文与章节索引
 - `docs/series-bible.md`：世界观、能力体系和核心承诺
-- `docs/long-term-outline.md`：全书五卷长期规划
+- `docs/master-outline.md`：全书八卷究极大纲、终局、谜底、升级阶梯和人物长线
+- `docs/long-term-outline.md`：八卷结构的快速摘要
 - `docs/short-term-outline.md`：当前第31～35章方向
 - `docs/continuity-ledger.md`：人物、岗位、车厢、资源、伏笔和当前状态
 - `docs/next-window-handoff.md`：新会话快速交接与容易写偏的地方
@@ -41,6 +45,7 @@
 - 关键高潮章：偶尔可到4200字
 - 超过上限时优先拆章
 - 降低大型升级频率，持续兑现经营、岗位和已有设施
+- 归途站最终建立开放的分布式轨道网络，不吞并所有小站、不建立个人帝国
 
 ## 每章完成后的固定维护
 
