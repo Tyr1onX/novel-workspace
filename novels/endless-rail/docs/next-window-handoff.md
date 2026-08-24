@@ -1,20 +1,22 @@
 # 新窗口续写交接
 
 > 当前正文已写到第41章《药柜里的空格》。第一卷《初生移动站》已完成，第二卷《北境七站》进行中。新窗口开始时，先读取本文件，再按下列顺序读取仓库资料。
+>
+> 本小说独立目录：`novels/endless-rail/`。以下所有正文、设定、账本和大纲都只属于《无尽轨道》，不得与其他小说项目混用。
 
 ## 必读顺序
 
-1. `chapters/volume-02/chapter-040.md`
-2. `chapters/volume-02/chapter-041.md`
-3. `docs/continuity-ledger.md`
-4. `docs/short-term-outline.md`
-5. `docs/writing-rules.md`
-6. `docs/long-term-outline.md`
-7. `docs/master-outline.md`
+1. `novels/endless-rail/chapters/volume-02/chapter-040.md`
+2. `novels/endless-rail/chapters/volume-02/chapter-041.md`
+3. `novels/endless-rail/docs/continuity-ledger.md`
+4. `novels/endless-rail/docs/short-term-outline.md`
+5. `novels/endless-rail/docs/writing-rules.md`
+6. `novels/endless-rail/docs/long-term-outline.md`
+7. `novels/endless-rail/docs/master-outline.md`
 
-仓库：`Tyr1onX/endless-rail-novel`，默认分支 `main`。
+默认分支 `main`。
 
-每写完一章，必须同步：新章节文件、`chapters/index.md`、连续性账本、短期大纲和 `README.md`。本交接文件如果已经落后于正文，也要同步刷新。
+每写完一章，必须同步：新章节文件、`novels/endless-rail/chapters/index.md`、连续性账本、短期大纲和 `novels/endless-rail/README.md`。本交接文件如果已经落后于正文，也要同步刷新。
 
 ## 全书方向
 
