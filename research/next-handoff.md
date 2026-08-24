@@ -15,18 +15,17 @@
 - 极深读：**8 / 8 ✅**
 - 深读弱/停更：**8 / 24 = 33.3% ✅**
 
-极深读门槛已在`round-2026-08-24-extreme-pair-02.md`完成。
-
-**正文继续冻结**：原生元数据50本仍未完成；达到50后还必须做统一编码和反过拟合审计，不能看到“8/8”就直接开始V3。
+**正文继续冻结**：原生元数据50本仍未完成；达到50后还必须做统一编码、反过拟合和市场表层审计。
 
 ## 当前权威文件
 
 1. `research/README.md`——当前总状态与模型；
 2. `research/sample-ledger-v2.md`——当前24本权威账本；
-3. `research/round-2026-08-24-extreme-pair-02.md`——极深读6～8；
-4. `research/round-2026-08-24-extreme-pair-01.md`——年代AI极深强弱配对；
-5. `research/round-2026-08-24-rebuild-03.md`——深读20～24与现代AI样本；
-6. `research/platform-matrix-rebuild-01.md`——跨平台原生元数据矩阵。
+3. `research/round-2026-08-24-anti-overfit-surface-01.md`——最新反过拟合/点击层审计；
+4. `research/round-2026-08-24-extreme-pair-02.md`——极深读6～8；
+5. `research/round-2026-08-24-extreme-pair-01.md`——年代AI极深强弱配对；
+6. `research/round-2026-08-24-rebuild-03.md`——深读20～24与现代AI样本；
+7. `research/platform-matrix-rebuild-01.md`——跨平台原生元数据矩阵。
 
 旧`sample-ledger.md`是19本阶段的中期快照，保留历史，不再作为总计数来源。
 
@@ -41,43 +40,54 @@
 7. 《超级全能学生》（紫函）——番茄全能能力弱；
 8. 《我靠打爆学霸兑换黑科技》——番茄反馈燃料长线强。
 
-## 极深读02的核心新结论
+## 极深读阶段的核心结论
 
-### 1. `progress_topology`
+- `progress_topology`：区分纵向累计、横向模块巡演、反馈闭环；
+- `cumulative_progress_legibility`：读者能否说清从哪到哪、下一格是什么；
+- `progression_headroom`：第一计分板不能太快打满；
+- `feedback_fuel_alignment` / `resource_loop_visibility`：真实反馈最好既是剧情结果又是下一轮成长燃料；
+- `proof_burden`：AI知道不等于现实世界承认；
+- `agency_share`：主角不能沦为把问题转交AI的提问器；
+- `application_target_coherence`：能力可以多，但应先打在同一个现实靶心；
+- `intermediate_proof_density`：大兑现可以晚，小proof不能断。
 
-不要再简单问“能力多不多”。更有区分度的是进展拓扑：
+## 最新反过拟合审计：研究模型必须分层
 
-- **纵向累计**：《台式机》255→597→高考→名校→大学→公司/产业；
-- **横向模块巡演**：《超级全能学生》格斗→学习→篮球→彩票等；
-- **反馈闭环**：《我靠打爆学霸》现实竞争→怨念→能力→同一竞争→更强反馈。
+新报告`round-2026-08-24-anti-overfit-surface-01.md`重点比较：
 
-### 2. 修正《超级全能学生》的旧诊断
+- 起点强样本《首富从AI浪潮开始》；
+- 番茄低量级观察《重生2005，AI客服称霸电商》；
+- 番茄中低观察《重生：我把魔法冠冕改成人工智能》；
+- 辅助弱样本《重生手搓ChatGPT》。
 
-它的书名/简介本来就明确承诺“全能”，所以不能再说`promise_surface_alignment`低。
+### 关键修正
 
-它真正提供的反例是：即使human stake、校园计分板、见证、快速兑现和表面承诺都存在，如果胜利主要横向展示模块、不能累加在一条长期进度线上，仍可能表现弱。
+《AI客服》的真实结构其实非常像理想SEED：2005年技术限制、手工录300多商品、低置信转人工、人工答案回填、真实客户、价格战、ROI、数据与隐私都存在。它当前量级低不能被简单解释成“反馈闭环不行”。
 
-### 3. 新变量
+《魔法冠冕AI》前20章也比表层包装集中：废品电脑→第一桶金→网吧系统→现金流→公司。但书名/简介同时要求读者处理重生、魔法、AI、创业、光刻机等多个概念。
 
-- `cumulative_progress_legibility`
-- `module_demo_trap`
-- `scoreboard_saturation_speed`
-- `progression_headroom`
-- `resource_loop_visibility`
+因此研究必须新增**点击层**，不能只研究“点进来之后”。候选变量：
 
-### 4. 对SEED的新约束
+- `surface_conflict_compression`：能否一句话压缩人物困境+异常能力+第一次利益；
+- `fantasy_specificity`：是泛化“用AI称霸”，还是可立即想象的具体异常规则；
+- `premise_explanation_tax`：理解爽点前需要多少行业/技术背景；
+- `premise_concept_load`：标题简介同时塞了多少独立概念；
+- `surface_to_story_focus_ratio`：表层承诺覆盖多少赛道，而前20章实际集中多少；
+- `event_specificity`：章节钩子是具体事件/数字，还是“王者、震惊、降维打击”等作者评价；
+- `authorial_hype_ratio`：作者替读者宣布“很牛”的比例。
 
-SEED不要做“模块解锁表”。
+### 当前分层模型
 
-更合理：
+1. **click layer**：书名/封面/简介/0.5秒幻想/题材拥挤度；
+2. **activation layer**：第一章～前三章的人类利益、能力proof、叙事声音；
+3. **retention layer**：前20章累计进度、反馈闭环、阻力、阶段结算；
+4. **scale layer**：长线引擎、升级空间、平台推荐和口碑扩散。
 
-> **同一现实项目遇到新失败 → 收集真实反馈 → SEED只学当前失败所需能力 → 回到同一指标复测 → 外部proof → 再遇到更难问题。**
-
-第一块计分板必须保留足够成长空间；不要十章内从普通人直接打满行业顶级身份。
+此前多数变量集中在activation/retention层。这可以解释为什么“结构正确”仍不是市场大成的充分条件。
 
 ## 下一批执行顺序
 
-### 1. 原生元数据35 → 50（当前唯一未完成数量门槛）
+### 1. 原生元数据35 → 50（唯一未完成数量门槛）
 
 优先补平台不均衡：
 
@@ -88,44 +98,28 @@ SEED不要做“模块解锁表”。
 - 书旗：补原生科技中量级/弱对照；
 - 塔读：严格区分新书0人气与长期停更0人气。
 
-目标不是凑15个书名，而是每条都可复核：原生/首发、指标语义、状态、作品年龄、抓取日期、source confidence。
+每条必须有：原生/首发、指标语义、状态、作品年龄、抓取日期、source confidence。
 
-### 2. 开始24本统一编码矩阵
+### 2. 24本统一编码矩阵
 
-不再继续无限加变量。把当前字段真正用于成败比较，删除高度相关项，寻找能区分：
+把字段按四层归类，不再无限增加变量；删除高度相关项。重点验证哪些变量真正区分：
 
 - 强 vs 弱；
-- 强 vs 结构正确但没大成；
-- 番茄 vs 起点/书旗/飞卢等平台差异。
+- 强 vs “结构正确但没大成”；
+- 番茄 vs 起点/书旗/飞卢等平台。
 
-重点候选：
+### 3. 继续反过拟合
 
-- `progress_topology`
-- `cumulative_progress_legibility`
-- `feedback_fuel_alignment`
-- `resource_loop_visibility`
-- `proof_burden`
-- `agency_share`
-- `application_target_coherence`
-- `constraint_portfolio/transfer`
-- `intermediate_proof_density`
-- `promise_surface_alignment`
-- `progression_headroom`
+优先：
 
-### 3. 反过拟合审计
+- 《重生2005，AI客服称霸电商》：继续观察，不因<1000提前判失败；
+- 《魔法冠冕改AI》：重点研究表层概念负载与正文聚焦的错位；
+- 《8号手机维修店》：agency被AI吃空；
+- 《重生手搓ChatGPT》：技术解释预算、产品proof与资本先后关系。
 
-优先继续深挖：
+### 4. 达到50并完成统一审计后才做立项评分
 
-- 《重生2005，AI客服称霸电商》——SEED式反馈闭环很漂亮，但当前量级低且观察窗口短；
-- 《重生：我把魔法冠冕改成人工智能》——现实交易/成本/产品化结构不错，但没有大成；
-- 《8号手机维修店》——现代AI小生意弱，AI吃掉主角agency；
-- 《重生手搓ChatGPT》——技术约束真实但表面兑现/解释预算存在问题。
-
-用这些样本检验模型，而不是只用成功书证明自己。
-
-### 4. 达到50后才做立项评分
-
-最终候选仍至少比较：
+最终候选至少比较：
 
 - 现代强现实困境 + SEED；
 - 现代职场/创业 + SEED；
