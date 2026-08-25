@@ -14,8 +14,9 @@
 
 ### `second-pass/`
 
-Second Pass（项目代号）
+《开局小厂要倒闭，我让每次失败都变成黑科技》
 
+- 内部代号：Second Pass
 - 状态：READY TO WRITE
 - 当前方向：现代家庭小厂现实危机 × 验证式进化
 
