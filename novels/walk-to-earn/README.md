@@ -53,7 +53,7 @@
 
 **沈川，22岁。**
 
-大四前暑假，在杭州一家办公用品电商公司做运营实习。
+大四前暑假，在虚构城市**临岚市**一家办公用品电商公司做运营实习。
 
 日薪200元，住合租房，没背巨额债务，也没有全家等他救命。
 
@@ -98,7 +98,8 @@
 7. 钱必须具体落到真实生活：饭、鞋、房租、交通、设备、旅行、时间选择。
 8. 人物关系不能只负责夸主角；室友、同事、朋友各自有自己的日程、利益和判断。
 9. 轻松感来自人物和生活本身，不塞网络梗合集。
-10. 每章正文执行 `shared/RULES.md`、`shared/PROSE_RULES.md` 和本项目 `style/STYLE_DNA.md`，完成 prose scan + 人工复核后才能作为续写基准。
+10. **故事地点统一使用虚构地名，不直接使用现实存在的城市、街区、商圈、景点和徒步线路名称。**
+11. 每章正文执行 `shared/RULES.md`、`shared/PROSE_RULES.md` 和本项目 `style/STYLE_DNA.md`，完成 prose scan + 人工复核后才能作为续写基准。
 
 ## 当前设计文件
 
@@ -107,5 +108,6 @@
 - `design/02-characters.md`
 - `design/03-opening-20-chapters.md`
 - `design/04-platform-metadata.md`
+- `design/05-fictional-locations.md`
 - `style/STYLE_DNA.md`
 - `chapters/index.md`
