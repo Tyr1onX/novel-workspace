@@ -20,10 +20,14 @@
 2. `novels/endless-rail/chapters/volume-02/chapter-070.md`
 3. `novels/endless-rail/chapters/volume-02/chapter-071.md`
 4. 本文件
-5. `novels/endless-rail/docs/writing-rules.md`
-6. `novels/endless-rail/docs/long-term-outline.md`
-7. `novels/endless-rail/docs/master-outline.md`
-8. `shared/` 最新通用研究规则；只能叠加，不能覆盖已发生事实
+5. `novels/endless-rail/docs/continuity-ledger.md`
+6. `novels/endless-rail/docs/character-memory-ledger.md`
+7. `novels/endless-rail/docs/writing-rules.md`
+8. `novels/endless-rail/docs/long-term-outline.md`
+9. `novels/endless-rail/docs/master-outline.md`
+10. `shared/` 最新通用研究规则；只能叠加，不能覆盖已发生事实
+
+> **人物连续性新增硬门槛：**连续性账本只证明“这个人设定上存在”，不能证明读者还记得。凡已有角色重新进入正文，必须按 `character-memory-ledger.md` 复核首次出场、最近有效出场和是否需要自然身份锚点；禁止因为作者账本里写着岗位，就直接用裸名字把长空窗角色塞回场景。
 
 ## 已完成主线压缩
 
@@ -105,6 +109,7 @@
 - 每章必须有至少一个可见变化：资源、路线、设施、人员关系、权限、交易、真实使用结果之一。
 - 系统提示只在信息真正变化时出现。
 - 周野负责路线、融合、协议、资源优先级与是否承担风险的关键选择；专业岗位负责专业判断。
+- 已有角色重登场前必须复核 `character-memory-ledger.md`；长空窗、弱首次出场、相似姓名角色不得直接裸名字回归。
 - 不写连续会议、制度解释、账目解释；规则必须尽量在真实事件中被用出来。
 - 章末停在动作、人物、物件、数据或尚未解决的小问题，不写抽象升华金句。
 - 归途站连接小站，不吞并小站。
