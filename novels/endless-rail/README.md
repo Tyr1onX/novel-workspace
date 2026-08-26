@@ -6,44 +6,47 @@
 
 - 平台：番茄小说
 - Fanqie book_id：`7670480372831882302`
-- 番茄作者后台已导出：第1～70章，70/70均为 `author-editor` 原文
-- 平台已发布：第1～59章
-- 待发布/定时稿：第60～70章
+- 番茄作者后台已完成一次第1～70章全文导出，70/70均为 `author-editor` 原文
+- 第58、59章已于2026-08-26按审计结果回修，待下一次导出校准新平台字数
 - 第一卷《初生移动站》：第1～35章，已完成
 - 第二卷《北境七站》：进行中
-- 最新稿：第70章《炉坪今天第一次下班》
-- 下一章：第71章
-- 当前主线：炉坪工务站阶段收束，获得通往旧港的真实工务维护廊线索
+- 最新平台导出稿：第70章《炉坪今天第一次下班》
+- 最新仓库新稿：第71章《想进旧港，先上秤》
+- 下一章：第72章
+- 当前主线：炉坪工务站阶段收束；轻型接驳编组通过旧港东联络桥称重检查，开始进入旧港现存交易/路线体系
 
 ## 重要：2026-08-26 平台/仓库漂移恢复
 
 已确认番茄实际正文与仓库旧逐章正文**从第1章起就存在版本差异**。过去曾发生“聊天中完成重写 → 平台已替换 → 新版未同步回 GitHub”的情况。
 
-因此，在 `scripts/sync-fanqie-export.py` 将最新番茄全文导出完整同步进逐章文件以前：
+因此：
 
-1. `docs/next-window-handoff.md` 是当前剧情状态的第一权威交接文件；
-2. 旧的 `chapters/` 正文、`chapters/index.md` 和旧连续性账本不得单独用于续写；
-3. 不允许再拿仓库旧版覆盖平台已发布正文；
-4. 同步完成后，仓库逐章正文重新成为后续写作事实源。
+1. 番茄 `author-editor` 全文导出是恢复旧正文的历史真源；
+2. 已恢复的新逐章正文与新写章节重新作为续写事实源；
+3. 尚未恢复的旧章节不得反向覆盖平台真实稿；
+4. 每次新章完成后必须同步：章节正文、`chapters/index.md`、`docs/next-window-handoff.md`，必要时更新连续性/短期大纲。
 
 同步工具：
 
 `novels/endless-rail/scripts/sync-fanqie-export.py`
 
-它会校验 `source=author-editor`、重建逐章正文、章节索引和平台来源哈希清单。
+## 当前恢复进度
+
+- 平台真实稿：第1～70章已拿到。
+- 逐章正文已优先恢复第67～70章。
+- 第71章已直接写入 `chapters/volume-02/chapter-071.md`。
+- 其余历史章节继续按平台导出恢复；完整恢复前以 `docs/next-window-handoff.md` + 已恢复最新逐章正文为续写依据。
 
 ## 当前必读顺序
 
-1. `novels/endless-rail/docs/next-window-handoff.md`
-2. 平台同步后的 `chapter-068.md`
-3. `chapter-069.md`
-4. `chapter-070.md`
+1. `novels/endless-rail/chapters/volume-02/chapter-069.md`
+2. `novels/endless-rail/chapters/volume-02/chapter-070.md`
+3. `novels/endless-rail/chapters/volume-02/chapter-071.md`
+4. `novels/endless-rail/docs/next-window-handoff.md`
 5. `novels/endless-rail/docs/writing-rules.md`
 6. `novels/endless-rail/docs/long-term-outline.md`
 7. `novels/endless-rail/docs/master-outline.md`
 8. `shared/` 最新研究规则
-
-详细人物、能力、暖桥/沉泉/麦丘/炉坪连续性和第71章入口，以 `docs/next-window-handoff.md` 为准。
 
 ## 目录
 
