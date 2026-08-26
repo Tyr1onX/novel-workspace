@@ -5,7 +5,8 @@
 - export_result: `70/70`
 - repository_restore: 第1～70章已完整恢复
 - repo_new_draft: 第71章《想进旧港，先上秤》
-- platform_backfill_pending: 第6、7、8、30章
+- platform_backfill_completed: 第6、7、8、30章（2026-08-26 已由作者回填番茄）
+- platform_backfill_pending: 无
 - 第58、59章已包含在最新导出中，不再待校准。
 
 ## 原则
