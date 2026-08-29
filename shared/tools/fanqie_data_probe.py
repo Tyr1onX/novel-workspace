@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only Fanqie long-form income probe.
-
-Uses the site's own book switcher and reloads the selected income view so Fanqie
-itself generates valid signed GET requests. No writes are performed and no
-comment/message/chapter body text is collected.
-"""
+"""Read-only Fanqie long-form income probe."""
 from __future__ import annotations
 import argparse, asyncio, importlib.util, json, math, re
 from pathlib import Path
@@ -13,7 +8,6 @@ import fanqie_probe
 
 BASE="https://fanqienovel.com"; BOOK_MANAGE=BASE+"/main/writer/book-manage"
 INCOME_PATHS=("/api/author/income/book_summary_v3/v0/","/api/author/income/book_daily_v3/v0/")
-
 class ProbeError(RuntimeError): pass
 
 def load_runtime(d:Path):
@@ -22,7 +16,7 @@ def load_runtime(d:Path):
     m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
 
 def bid(p:Path):
-    x=json.loads((p/"platform-sync"/"config.json").read_text(encoding="utf-8")); v=str(x.get("book_id") or "").strip()
+    x=json.loads((p/"platform-sync"/"config.json").read_text(encoding="utf-8"));v=str(x.get("book_id") or "").strip()
     if not v: raise ProbeError(f"missing book_id: {p}")
     return v
 
@@ -33,12 +27,11 @@ def num(v):
         s=v.replace(",","").strip()
         if re.fullmatch(r"-?\d+(?:\.\d+)?%?",s):
             try:
-                n=float(s[:-1] if s.endswith("%") else s); return n/100 if s.endswith("%") else n
+                n=float(s[:-1] if s.endswith("%") else s);return n/100 if s.endswith("%") else n
             except ValueError: pass
     return None
-
-HINT=("read","reader","follow","pursue","completion","shelf","remind","comment","income","amount","fee","revenue","earning","reward","gift","pay","count","rate","total","daily","monthly","yesterday","today","novel","audio")
-BLOCK=("content","reply","message","nickname","phone","email","address","intro","summary")
+HINT=("read","income","amount","fee","revenue","earning","reward","gift","pay","count","rate","total","daily","monthly","yesterday","today","novel","audio")
+BLOCK=("content","reply","message","nickname","phone","email","address")
 def metrics(v,prefix="",out=None,limit=500):
     out={} if out is None else out
     if len(out)>=limit:return out
@@ -60,7 +53,6 @@ def summary_body(body,status=200):
     out={"http_status":status,"keys":keys,"metrics":metrics(data)}
     if isinstance(body,dict):out["code"]=body.get("code");out["message"]=body.get("message")
     return out
-
 async def get_json(page,path,query):
     return await page.evaluate("""async ({path,query})=>{const u=new URL(path,location.origin);for(const[k,v]of Object.entries(query||{}))u.searchParams.set(k,String(v));const r=await fetch(u.toString(),{credentials:'include'});const t=await r.text();let b=null;try{b=JSON.parse(t)}catch(_){};return{status:r.status,body:b};}""",{"path":path,"query":query})
 async def click_exact(page,text):
@@ -68,18 +60,17 @@ async def click_exact(page,text):
     for i in range(min(await loc.count(),30)):
         el=loc.nth(i)
         try:
-            if await el.is_visible():await el.click(timeout=5000);await page.wait_for_timeout(1600);return True
+            if await el.is_visible():await el.click(timeout=5000);await page.wait_for_timeout(1300);return True
         except Exception:continue
     return False
-async def ui_income_segment(page):
+async def ui_segment(page):
     lines=[x.strip() for x in (await page.locator("body").inner_text()).splitlines() if x.strip() and len(x.strip())<=120]
-    out=[];anchors=("收益概览","昨日番茄收益","累计番茄收益","收益趋势","阅读收益","听书收益","互动收益","每日收益","每月稿费")
+    out=[];anchors=("收益概览","昨日番茄收益","累计番茄收益","收益趋势","阅读收益","听书收益","每日收益","每月稿费")
     for i,line in enumerate(lines):
         if any(a in line for a in anchors):
-            for item in lines[max(0,i-1):min(len(lines),i+4)]:
+            for item in lines[max(0,i-1):min(len(lines),i+5)]:
                 if item not in out:out.append(item)
-        if len(out)>=80:break
-    return out
+    return out[:100]
 
 async def run(novel_dirs,runtime_arg):
     rd=fanqie_probe.resolve_runtime(runtime_arg);rt=load_runtime(rd);rt.load_config();books=[(p.name,bid(p)) for p in novel_dirs]
@@ -101,17 +92,21 @@ async def run(novel_dirs,runtime_arg):
             await rt.settle_page(page)
             bl=await get_json(page,"/api/author/book/book_list/v0",{"page_index":0,"page_count":50});data=unwrap(bl.get("body"));rows=data.get("book_list",[]) if isinstance(data,dict) else []
             names={str(x.get("book_id")):str(x.get("book_name") or "") for x in rows if isinstance(x,dict)}
-            report={"books":{s:{"book_id":b,"income":{},"income_ui_segment":[],"switch_success":False} for s,b in books}}
+            report={"books":{s:{"book_id":b,"switch_success":False,"confirm_clicked":False,"income":{},"income_ui_segment":[]} for s,b in books}}
             for slug,book_id in books:
-                await rt.goto_with_login_retry(page,BOOK_MANAGE);await page.wait_for_timeout(700)
+                await rt.goto_with_login_retry(page,BOOK_MANAGE);await page.wait_for_timeout(600)
                 if not await click_exact(page,"小说收益"):continue
                 name=names.get(book_id,"")
                 if not name or not await click_exact(page,"切换作品"):continue
                 switched=await click_exact(page,name);report["books"][slug]["switch_success"]=switched
                 if not switched:continue
+                confirmed=False
+                for label in ("确定","确认"):
+                    if await click_exact(page,label):confirmed=True;break
+                report["books"][slug]["confirm_clicked"]=confirmed
                 current=slug
                 await page.reload(wait_until="domcontentloaded",timeout=30000);await page.wait_for_timeout(4200)
-                report["books"][slug]["income_ui_segment"]=await ui_income_segment(page)
+                report["books"][slug]["income_ui_segment"]=await ui_segment(page)
                 current=None
             if tasks:await asyncio.gather(*list(tasks),return_exceptions=True)
             for slug,_ in books:report["books"][slug]["income"]=captured[slug]
