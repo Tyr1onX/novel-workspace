@@ -1,18 +1,19 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-08-29T18:45:00+08:00",
+  "updated_at": "2026-08-29T10:49:51+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
       "action": "update",
       "chapters": "18-19",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "basis": "Current main is canonical. Chapter 18 was rewritten and subsequently style-trimmed; chapter 19 was explicitly rewritten to return to the walking mainline. Fanqie reconciliation shows the platform still has the pre-rewrite titles for both chapters. User explicitly authorized the corresponding correction on 2026-08-29."
-      }
+      },
+      "completed_at": "2026-08-29T10:49:51+00:00"
     }
   ]
 }
