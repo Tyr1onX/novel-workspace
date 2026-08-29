@@ -18,7 +18,6 @@ from datetime import date, timedelta
 from pathlib import Path
 
 import fanqie_probe
-import fanqie_sync
 
 
 class DataProbeError(RuntimeError):
@@ -33,6 +32,18 @@ def load_runtime(runtime_dir: Path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def load_book_id(novel_dir: Path) -> str:
+    path = novel_dir / "platform-sync" / "config.json"
+    try:
+        config = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise DataProbeError(f"cannot read {path}: {exc}") from exc
+    book_id = str(config.get("book_id") or "").strip()
+    if not book_id:
+        raise DataProbeError(f"missing book_id in {path}")
+    return book_id
 
 
 def as_number(value):
@@ -135,10 +146,7 @@ async def run(novel_dirs: list[Path], runtime_arg: str | None):
     runtime = load_runtime(runtime_dir)
     runtime.load_config()
 
-    configs = []
-    for novel_dir in novel_dirs:
-        config, _policy, _queue, _chapters = fanqie_sync.load_model(novel_dir)
-        configs.append((novel_dir.name, str(config["book_id"])))
+    configs = [(novel_dir.name, load_book_id(novel_dir)) for novel_dir in novel_dirs]
 
     async with runtime.async_playwright() as playwright:
         browser, context = await runtime.create_context(playwright, headless=True)
@@ -204,7 +212,7 @@ def main():
     args = parser.parse_args()
     try:
         return asyncio.run(run([path.resolve() for path in args.novel_dirs], args.runtime))
-    except (fanqie_probe.ProbeError, fanqie_sync.SyncError, DataProbeError, RuntimeError) as exc:
+    except (fanqie_probe.ProbeError, DataProbeError, RuntimeError) as exc:
         print(f"ERROR: {exc}")
         return 2
 
