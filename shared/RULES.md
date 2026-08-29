@@ -10,10 +10,19 @@
 所有小说正文、试写章节和大幅改稿必须同时遵守：
 
 > `shared/PROSE_RULES.md`
+>
+> `shared/META_NARRATIVE_RULES.md`
 
-强制流程是：读取当前小说自己的风格/连续性规则与本文件 → 读取 `shared/PROSE_RULES.md` → 写第一稿 → 运行 prose scan → 人工复核高风险命中 → 再交付或提交正文。
+强制流程是：读取当前小说自己的风格/连续性规则与本文件 → 读取 `shared/PROSE_RULES.md` 与 `shared/META_NARRATIVE_RULES.md` → 写第一稿 → 运行 prose scan 与 meta-narrative scan → 人工复核全部高风险命中 → 再交付或提交正文。
 
-不能只因为章节卡和爽点结构通过，就跳过语言层检查；也不能为了“去 AI 味”机械碎句、批量换同义词或清除正常文学表达。
+至少运行：
+
+```bash
+python shared/tools/prose_guard.py <chapter.md>
+python shared/tools/meta_narrative_guard.py <chapter.md>
+```
+
+元叙事扫描的 `HARD` 必须为 0；`WARN` 必须逐条人工确认。不能只因为章节卡和爽点结构通过，就跳过语言层检查；也不能为了“去 AI 味”机械碎句、批量换同义词或清除正常文学表达。
 
 ## 1. Click：先让第一因果容易复述
 
