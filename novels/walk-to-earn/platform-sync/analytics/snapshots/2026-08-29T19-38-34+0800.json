@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source": "fanqie-author-dashboard",
+  "collected_at": "2026-08-29T19:38:34+08:00",
+  "project": "walk-to-earn",
+  "stats": {
+    "stats_col_time": "1787846400",
+    "update_time": "1787970758",
+    "reader_uv_daily": "4",
+    "reader_uv_daily_incr": "100",
+    "reader_uv_14day_cnt": 6,
+    "reader_uv_14day_incr": "100",
+    "reminder_cnt_daily_incr": "-100",
+    "pursue_read_rate": "0",
+    "read_completion_rate": "0",
+    "read_completion_level": -1,
+    "mark_score": "0",
+    "mark_score_incr": "0"
+  },
+  "income": {
+    "verified_book": false,
+    "stats_through": "08-28 24:00",
+    "yesterday_fanqie_income": null,
+    "cumulative_fanqie_income": null
+  }
+}
