@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "platform": "fanqie",
+  "book_id": "7677956141673892926",
+  "novel_slug": "walk-to-earn",
+  "chapter_glob": "chapters/chapter-*.md",
+  "sync_enabled": false,
+  "browser": {
+    "headless": true
+  },
+  "safety": {
+    "require_explicit_authorization": true,
+    "require_audit_passed": true,
+    "stop_on_create_failure": true,
+    "max_mutations_per_run": 30
+  }
+}
