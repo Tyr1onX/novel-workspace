@@ -7,12 +7,12 @@
 自动化默认关闭。真正写入番茄必须同时满足：
 
 1. `config.json` 中 `sync_enabled=true`；
-2. GitHub 仓库变量 `FANQIE_SYNC_ENABLED=true`；
+2. `policy.json` 中 `policy_status=active`；
 3. `queue.json` 中存在明确操作；
 4. 操作 `authorized=true`；
 5. 操作的 `audit.status` 必须为 `passed`。
 
-普通章节修改、审计过程、文档修改不会自动覆盖番茄。
+GitHub-hosted 的 `validate` job 会先读取仓库配置；只有仓库自己的 `sync_enabled=true` 时，才会调度本机 `fanqie` runner。普通章节修改、审计过程、文档修改不会自动覆盖番茄。
 
 ## 文件职责
 
@@ -88,15 +88,22 @@ python shared/tools/fanqie_sync.py plan novels/endless-rail
 
 ## 一次性本机准备
 
-Windows PowerShell：
+Windows 上只需要跑一次总引导脚本：
 
 ```text
-powershell -ExecutionPolicy Bypass -File shared/tools/setup_fanqie_runtime.ps1
+powershell -ExecutionPolicy Bypass -File shared/tools/bootstrap_fanqie_sync.ps1
 ```
 
-脚本会把经过固定 commit 锁定的 `rockbenben/fanqie-publisher` 安装到用户目录，并启动一次番茄登录。登录状态只保存在本机，不提交 GitHub。
+它会依次完成：
 
-随后为本机注册 GitHub self-hosted runner，并增加标签 `fanqie`。真正的平台写入只在这个本机 runner 上发生，避免把番茄 Cookie 放进 GitHub Actions 云主机。
+1. 把固定版本的 `rockbenben/fanqie-publisher` 安装到用户目录并安装 Playwright Chromium；
+2. 打开一次番茄登录流程，登录状态只保存在本机；
+3. 下载并配置 GitHub self-hosted runner，标签固定为 `fanqie`；
+4. 给当前 Windows 用户注册登录后自动启动 runner 的计划任务，并立即启动本次会话的 runner。
+
+脚本配置 Runner 时会要求一个 GitHub **短期注册 token**。请在仓库 `Settings -> Actions -> Runners -> New self-hosted runner` 页面复制；只在本机脚本提示框中输入，不要发到聊天、不要提交仓库。
+
+完成这一次后，日常不需要再启动发布器、打开番茄后台或手工运行脚本。真正的平台写入只在这个本机 runner 上发生，番茄登录信息不进入 GitHub。
 
 ## 自然语言工作流
 
