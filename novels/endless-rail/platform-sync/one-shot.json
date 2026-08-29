@@ -6,6 +6,7 @@
   "chapter": 81,
   "status": "pending",
   "authorized": true,
+  "triggered_at": "2026-08-29T18:10:00+08:00",
   "audit": {
     "status": "passed",
     "basis": "Chapter 81 is already present on Fanqie as an authorized scheduled chapter; the latest read-only reconciliation confirmed chapter number, title and order match GitHub. The author explicitly requested this one-chapter immediate-publish test."
