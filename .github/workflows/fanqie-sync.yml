@@ -30,6 +30,8 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    outputs:
+      sync_enabled: ${{ steps.gate.outputs.sync_enabled }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -41,10 +43,25 @@ jobs:
         run: python shared/tools/fanqie_sync.py validate novels/endless-rail
       - name: Show authorized plan
         run: python shared/tools/fanqie_sync.py plan novels/endless-rail
+      - name: Read repository sync gate
+        id: gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          config = json.loads(Path("novels/endless-rail/platform-sync/config.json").read_text(encoding="utf-8"))
+          value = "true" if config.get("sync_enabled") is True else "false"
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+              fh.write(f"sync_enabled={value}\n")
+          print(f"sync_enabled={value}")
+          PY
 
   publish:
     needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.FANQIE_SYNC_ENABLED == 'true'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.validate.outputs.sync_enabled == 'true'
     runs-on: [self-hosted, windows, fanqie]
     permissions:
       contents: write
