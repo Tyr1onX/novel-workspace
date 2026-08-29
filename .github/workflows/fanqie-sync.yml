@@ -15,6 +15,7 @@ on:
       - "shared/tools/test_fanqie_probe.py"
       - "shared/tools/fanqie_reconcile.py"
       - "shared/tools/fanqie_publish_now.py"
+      - "shared/tools/fanqie_projects.py"
       - ".github/workflows/fanqie-sync.yml"
   push:
     branches:
@@ -31,6 +32,7 @@ on:
       - "shared/tools/test_fanqie_probe.py"
       - "shared/tools/fanqie_reconcile.py"
       - "shared/tools/fanqie_publish_now.py"
+      - "shared/tools/fanqie_projects.py"
       - ".github/workflows/fanqie-sync.yml"
 
 concurrency:
@@ -41,7 +43,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     outputs:
-      sync_enabled: ${{ steps.gate.outputs.sync_enabled }}
+      any_sync_enabled: ${{ steps.gate.outputs.any_sync_enabled }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -49,33 +51,35 @@ jobs:
           python-version: "3.12"
       - name: Run Fanqie sync unit tests
         run: python -m unittest shared/tools/test_fanqie_sync.py shared/tools/test_fanqie_probe.py
-      - name: Compile browser-side helpers
-        run: python -m py_compile shared/tools/fanqie_reconcile.py shared/tools/fanqie_publish_now.py
-      - name: Validate publishing model
-        run: python shared/tools/fanqie_sync.py validate novels/endless-rail
-      - name: Show authorized plan
-        run: python shared/tools/fanqie_sync.py plan novels/endless-rail
-      - name: Read repository sync gate
+      - name: Compile Fanqie helpers
+        run: python -m py_compile shared/tools/fanqie_reconcile.py shared/tools/fanqie_publish_now.py shared/tools/fanqie_projects.py
+      - name: Validate every configured Fanqie novel
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t projects < <(python shared/tools/fanqie_projects.py list)
+          if (( ${#projects[@]} == 0 )); then
+            echo "No Fanqie-configured novels found."
+            exit 1
+          fi
+          for project in "${projects[@]}"; do
+            echo "=== validate: $project ==="
+            python shared/tools/fanqie_sync.py validate "$project"
+            python shared/tools/fanqie_sync.py plan "$project"
+          done
+      - name: Read repository-wide sync gate
         id: gate
         shell: bash
         run: |
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-
-          config = json.loads(Path("novels/endless-rail/platform-sync/config.json").read_text(encoding="utf-8"))
-          value = "true" if config.get("sync_enabled") is True else "false"
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
-              fh.write(f"sync_enabled={value}\n")
-          print(f"sync_enabled={value}")
-          PY
+          value="$(python shared/tools/fanqie_projects.py any-enabled)"
+          echo "any_sync_enabled=$value" >> "$GITHUB_OUTPUT"
+          echo "any_sync_enabled=$value"
 
   probe:
     needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.validate.outputs.sync_enabled == 'true' || contains(github.event.head_commit.message, '[fanqie-probe]'))
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.validate.outputs.any_sync_enabled == 'true' || contains(github.event.head_commit.message, '[fanqie-probe]'))
     runs-on: [self-hosted, windows, fanqie]
-    timeout-minutes: 10
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
@@ -88,18 +92,29 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Write-Host "Resolved runtime: $runtime"
           "path=$runtime" >> $env:GITHUB_OUTPUT
-      - name: Probe saved Fanqie login and target book
+      - name: Probe configured books
         shell: powershell
         env:
           PYTHONUTF8: "1"
+          PROBE_ALL: ${{ contains(github.event.head_commit.message, '[fanqie-probe]') }}
         run: |
-          python shared/tools/fanqie_probe.py probe novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}"
+          if ($env:PROBE_ALL -eq "true") {
+            $projects = @(python shared/tools/fanqie_projects.py list)
+          } else {
+            $projects = @(python shared/tools/fanqie_projects.py enabled)
+          }
+          foreach ($project in $projects) {
+            if (-not $project) { continue }
+            Write-Host "=== probe: $project ==="
+            python shared/tools/fanqie_probe.py probe $project --runtime "${{ steps.runtime.outputs.path }}"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
 
   reconcile:
     needs: validate
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[fanqie-reconcile]')
     runs-on: [self-hosted, windows, fanqie]
-    timeout-minutes: 15
+    timeout-minutes: 30
     permissions:
       contents: read
     steps:
@@ -112,31 +127,36 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Write-Host "Resolved runtime: $runtime"
           "path=$runtime" >> $env:GITHUB_OUTPUT
-      - name: Reconcile GitHub chapters with Fanqie metadata and schedule
+      - name: Reconcile every configured Fanqie novel
         shell: powershell
         env:
           PYTHONUTF8: "1"
         run: |
-          python shared/tools/fanqie_reconcile.py novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}" --output "$env:RUNNER_TEMP\fanqie-reconcile.json"
+          $projects = @(python shared/tools/fanqie_projects.py list)
+          foreach ($project in $projects) {
+            if (-not $project) { continue }
+            $slug = Split-Path $project -Leaf
+            Write-Host "=== reconcile: $project ==="
+            python shared/tools/fanqie_reconcile.py $project --runtime "${{ steps.runtime.outputs.path }}" --output "$env:RUNNER_TEMP\fanqie-reconcile-$slug.json"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
 
   publish_now:
     needs: validate
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[fanqie-publish-now]')
     runs-on: [self-hosted, windows, fanqie]
-    timeout-minutes: 15
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Rebase to latest main before platform mutation
         shell: powershell
         run: |
           git fetch origin main
           git rebase origin/main
-
       - name: Resolve local Fanqie runtime
         id: runtime
         shell: powershell
@@ -145,54 +165,56 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Write-Host "Resolved runtime: $runtime"
           "path=$runtime" >> $env:GITHUB_OUTPUT
-
-      - name: List account books for multibook discovery
+      - name: Execute pending authorized publish-now requests
         shell: powershell
         env:
           PYTHONUTF8: "1"
         run: |
-          python "${{ steps.runtime.outputs.path }}\fanqie_upload.py" books
-
-      - name: Publish the explicitly authorized scheduled chapter now
+          $requests = @(python shared/tools/fanqie_projects.py pending-one-shots)
+          if ($requests.Count -eq 0) {
+            Write-Host "No pending authorized publish-now requests."
+            exit 0
+          }
+          foreach ($entry in $requests) {
+            if (-not $entry) { continue }
+            $parts = $entry -split '\|', 2
+            $project = $parts[0]
+            $request = $parts[1]
+            Write-Host "=== publish now: $project ==="
+            python shared/tools/fanqie_publish_now.py $project --runtime "${{ steps.runtime.outputs.path }}" --request $request
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - name: Persist one-shot results
         shell: powershell
-        env:
-          PYTHONUTF8: "1"
         run: |
-          python shared/tools/fanqie_publish_now.py novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}" --request novels/endless-rail/platform-sync/one-shot.json
-
-      - name: Persist one-shot result
-        shell: powershell
-        run: |
-          $path = "novels/endless-rail/platform-sync/one-shot.json"
-          $changed = git status --porcelain -- $path
-          if (-not $changed) {
+          $paths = @(git diff --name-only | Where-Object { $_ -match '^novels/[^/]+/platform-sync/one-shot\.json$' })
+          if ($paths.Count -eq 0) {
             Write-Host "No one-shot state changes to commit."
             exit 0
           }
           git config user.name "fanqie-sync-bot"
           git config user.email "fanqie-sync-bot@users.noreply.github.com"
-          git add -- $path
+          foreach ($path in $paths) { git add -- $path }
           git commit -m "chore(fanqie): record publish-now result"
           git pull --rebase origin main
           git push origin HEAD:main
 
   publish:
     needs: [validate, probe]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.validate.outputs.sync_enabled == 'true' && needs.probe.result == 'success'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.validate.outputs.any_sync_enabled == 'true' && needs.probe.result == 'success'
     runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 60
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Rebase to latest main before platform mutation
         shell: powershell
         run: |
           git fetch origin main
           git rebase origin/main
-
       - name: Resolve local Fanqie runtime
         id: runtime
         shell: powershell
@@ -201,29 +223,29 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Write-Host "Resolved runtime: $runtime"
           "path=$runtime" >> $env:GITHUB_OUTPUT
-
-      - name: Execute authorized Fanqie operations
+      - name: Execute authorized operations for enabled novels
         shell: powershell
         env:
           PYTHONUTF8: "1"
         run: |
-          python shared/tools/fanqie_sync.py sync novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}"
-
-      - name: Persist synchronization ledger
+          $projects = @(python shared/tools/fanqie_projects.py enabled)
+          foreach ($project in $projects) {
+            if (-not $project) { continue }
+            Write-Host "=== sync: $project ==="
+            python shared/tools/fanqie_sync.py sync $project --runtime "${{ steps.runtime.outputs.path }}"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - name: Persist synchronization ledgers
         shell: powershell
         run: |
-          $paths = @(
-            "novels/endless-rail/platform-sync/queue.json",
-            "novels/endless-rail/platform-sync/sync-state.json"
-          )
-          $changed = git status --porcelain -- $paths
-          if (-not $changed) {
+          $paths = @(git diff --name-only | Where-Object { $_ -match '^novels/[^/]+/platform-sync/(queue|sync-state)\.json$' })
+          if ($paths.Count -eq 0) {
             Write-Host "No sync-state changes to commit."
             exit 0
           }
           git config user.name "fanqie-sync-bot"
           git config user.email "fanqie-sync-bot@users.noreply.github.com"
-          git add -- $paths
+          foreach ($path in $paths) { git add -- $path }
           git commit -m "chore(fanqie): record completed sync operations"
           git pull --rebase origin main
           git push origin HEAD:main
