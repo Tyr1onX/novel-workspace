@@ -13,11 +13,13 @@ import json
 import re
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from urllib.parse import parse_qsl, urlparse
 
 import fanqie_probe
 
 BASE = "https://fanqienovel.com"
 BOOK_MANAGE = BASE + "/main/writer/book-manage"
+STATS_COMMON_PATH = "/api/author/stats/book_common_v1/v0/"
 CN_TZ = timezone(timedelta(hours=8))
 
 
@@ -102,6 +104,51 @@ async def click_exact(page, text: str) -> bool:
     return False
 
 
+async def capture_stats_query_template(page, runtime):
+    """Capture the dashboard's own signed GET query; never persist or print it."""
+    captured: dict[str, str] = {}
+
+    def on_response(response):
+        if captured:
+            return
+        try:
+            parsed = urlparse(response.url)
+            if response.request.method.upper() == "GET" and parsed.path == STATS_COMMON_PATH:
+                captured.update(dict(parse_qsl(parsed.query, keep_blank_values=True)))
+        except Exception:
+            return
+
+    page.on("response", on_response)
+    try:
+        if not await runtime.goto_with_login_retry(page, BOOK_MANAGE):
+            return {}
+        await page.wait_for_timeout(700)
+        if not await click_exact(page, "小说数据"):
+            return {}
+        await page.wait_for_timeout(2200)
+        return dict(captured)
+    finally:
+        page.remove_listener("response", on_response)
+
+
+async def read_stats(page, book_id: str, query_template: dict[str, str]):
+    if query_template:
+        query = dict(query_template)
+        query["book_id"] = book_id
+        result = await get_json(page, STATS_COMMON_PATH, query)
+        data = unwrap(result.get("body"))
+        if isinstance(data, dict) and any(key in data for key in STAT_KEYS):
+            return pick(data, STAT_KEYS)
+
+    # Fail-soft fallback for deployments where the signed query is not required.
+    for stats_type in (1, 2, 3, 4, 5, 0):
+        result = await get_json(page, STATS_COMMON_PATH, {"book_id": book_id, "stats_type": stats_type})
+        data = unwrap(result.get("body"))
+        if isinstance(data, dict) and any(key in data for key in STAT_KEYS):
+            return pick(data, STAT_KEYS)
+    return {}
+
+
 def first_number_after(lines: list[str], label: str):
     for i, line in enumerate(lines):
         if line != label:
@@ -131,15 +178,16 @@ def income_from_lines(lines: list[str], expected_book_name: str):
 
 
 async def read_income(page, runtime, book_name: str):
-    if not await runtime.goto_with_login_retry(page, BOOK_MANAGE):
-        return {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+    empty = {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+    if not book_name or not await runtime.goto_with_login_retry(page, BOOK_MANAGE):
+        return empty
     await page.wait_for_timeout(700)
     if not await click_exact(page, "小说收益"):
-        return {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+        return empty
     if not await click_exact(page, "切换作品"):
-        return {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+        return empty
     if not await click_exact(page, book_name):
-        return {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+        return empty
     for label in ("确定", "确认"):
         if await click_exact(page, label):
             break
@@ -192,13 +240,12 @@ async def run(novel_dirs: list[Path], runtime_arg: str | None, write: bool):
             book_data = unwrap(book_list.get("body"))
             rows = book_data.get("book_list", []) if isinstance(book_data, dict) else []
             names = {str(row.get("book_id")): str(row.get("book_name") or "") for row in rows if isinstance(row, dict)}
+            stats_template = await capture_stats_query_template(page, runtime)
 
             report = {"schema_version": 1, "collected_at": collected_at.isoformat(), "books": {}}
             for novel_dir, book_id in projects:
                 slug = novel_dir.name
-                common = await get_json(page, "/api/author/stats/book_common_v1/v0/", {"book_id": book_id, "stats_type": 0})
-                common_data = unwrap(common.get("body"))
-                stats = pick(common_data, STAT_KEYS) if isinstance(common_data, dict) else {}
+                stats = await read_stats(page, book_id, stats_template)
                 income = await read_income(page, runtime, names.get(book_id, ""))
                 report["books"][slug] = {"stats": stats, "income": income}
 
