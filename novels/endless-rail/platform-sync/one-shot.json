@@ -4,12 +4,22 @@
   "id": "reader-update-2026-08-29-ch82",
   "action": "publish_now",
   "chapter": 82,
-  "status": "pending",
+  "status": "completed",
   "authorized": true,
   "triggered_at": "2026-08-29T19:33:00+08:00",
   "audit": {
     "status": "passed",
-    "basis": "Chapter 82 is the next chapter after the already-published chapter 81. The author explicitly requested one additional immediate chapter because a loyal reader requested an update. The publish-now runner must independently verify that chapter 82 already exists on Fanqie and is still in 待发布 state before making any mutation."
+    "basis": "Chapter 82 was the next chapter after the already-published chapter 81. The author explicitly requested one additional immediate chapter because a loyal reader requested an update. The runner verified chapter 82 existed on Fanqie in 待发布 state before attempting the release-mode change."
   },
-  "reason": "One-chapter reader-requested extra update. Publish chapter 82 immediately without changing its title/body or touching the schedules of chapters 83 and later."
+  "reason": "One-chapter reader-requested extra update. Publish chapter 82 immediately without changing its title/body or touching the schedules of chapters 83 and later.",
+  "completed_at": "2026-08-29T11:45:41+00:00",
+  "result": {
+    "platform_status": "blocked_daily_word_limit",
+    "chapter": 82,
+    "title": "第82章 四只旧滤筒，第一只就不用洗",
+    "scheduled_date_before": "2026-08-30",
+    "scheduled_time_before": "00:00",
+    "confirm_publish_submitted": false,
+    "message": "当日发布字数已达上限: 提交字数超出每日上限"
+  }
 }
