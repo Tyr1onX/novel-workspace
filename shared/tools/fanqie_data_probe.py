@@ -1,122 +1,230 @@
 #!/usr/bin/env python3
-"""Read-only Fanqie long-form income probe."""
+"""Read-only Fanqie analytics collector with sanitized snapshot output.
+
+Only numeric/book-level analytics are persisted. Cookies, tokens, account identity,
+bank/payment details, comments/messages, and chapter bodies are never written.
+"""
 from __future__ import annotations
-import argparse, asyncio, importlib.util, json, math, re
+
+import argparse
+import asyncio
+import importlib.util
+import json
+import re
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from urllib.parse import urlparse
+
 import fanqie_probe
 
-BASE="https://fanqienovel.com"; BOOK_MANAGE=BASE+"/main/writer/book-manage"
-INCOME_PATHS=("/api/author/income/book_summary_v3/v0/","/api/author/income/book_daily_v3/v0/")
-class ProbeError(RuntimeError): pass
+BASE = "https://fanqienovel.com"
+BOOK_MANAGE = BASE + "/main/writer/book-manage"
+CN_TZ = timezone(timedelta(hours=8))
 
-def load_runtime(d:Path):
-    s=d/"fanqie_upload.py"; spec=importlib.util.spec_from_file_location("fanqie_runtime_income_probe",s)
-    if spec is None or spec.loader is None: raise ProbeError(f"cannot load runtime: {s}")
-    m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
 
-def bid(p:Path):
-    x=json.loads((p/"platform-sync"/"config.json").read_text(encoding="utf-8"));v=str(x.get("book_id") or "").strip()
-    if not v: raise ProbeError(f"missing book_id: {p}")
-    return v
+class ProbeError(RuntimeError):
+    pass
 
-def num(v):
-    if isinstance(v,bool): return None
-    if isinstance(v,(int,float)) and math.isfinite(float(v)): return v
-    if isinstance(v,str):
-        s=v.replace(",","").strip()
-        if re.fullmatch(r"-?\d+(?:\.\d+)?%?",s):
-            try:
-                n=float(s[:-1] if s.endswith("%") else s);return n/100 if s.endswith("%") else n
-            except ValueError: pass
-    return None
-HINT=("read","income","amount","fee","revenue","earning","reward","gift","pay","count","rate","total","daily","monthly","yesterday","today","novel","audio")
-BLOCK=("content","reply","message","nickname","phone","email","address")
-def metrics(v,prefix="",out=None,limit=500):
-    out={} if out is None else out
-    if len(out)>=limit:return out
-    if isinstance(v,dict):
-        for k,c in v.items():
-            p=f"{prefix}.{k}" if prefix else str(k)
-            if any(x in p.lower() for x in BLOCK):continue
-            metrics(c,p,out,limit)
-    elif isinstance(v,list):
-        for i,c in enumerate(v[:30]):metrics(c,f"{prefix}[{i}]",out,limit)
-    elif any(x in prefix.lower() for x in HINT):
-        n=num(v)
-        if n is not None:out[prefix]=n
-    return out
 
-def unwrap(b):return b.get("data") if isinstance(b,dict) and "data" in b else b
-def summary_body(body,status=200):
-    data=unwrap(body);keys=sorted(map(str,data.keys()))[:220] if isinstance(data,dict) else []
-    out={"http_status":status,"keys":keys,"metrics":metrics(data)}
-    if isinstance(body,dict):out["code"]=body.get("code");out["message"]=body.get("message")
-    return out
-async def get_json(page,path,query):
-    return await page.evaluate("""async ({path,query})=>{const u=new URL(path,location.origin);for(const[k,v]of Object.entries(query||{}))u.searchParams.set(k,String(v));const r=await fetch(u.toString(),{credentials:'include'});const t=await r.text();let b=null;try{b=JSON.parse(t)}catch(_){};return{status:r.status,body:b};}""",{"path":path,"query":query})
-async def click_exact(page,text):
-    loc=page.get_by_text(text,exact=True)
-    for i in range(min(await loc.count(),30)):
-        el=loc.nth(i)
+def load_runtime(runtime_dir: Path):
+    script = runtime_dir / "fanqie_upload.py"
+    spec = importlib.util.spec_from_file_location("fanqie_runtime_analytics", script)
+    if spec is None or spec.loader is None:
+        raise ProbeError(f"cannot load runtime: {script}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def read_book_id(novel_dir: Path) -> str:
+    config = json.loads((novel_dir / "platform-sync" / "config.json").read_text(encoding="utf-8"))
+    value = str(config.get("book_id") or "").strip()
+    if not value:
+        raise ProbeError(f"missing book_id: {novel_dir}")
+    return value
+
+
+def unwrap(body):
+    return body.get("data") if isinstance(body, dict) and "data" in body else body
+
+
+async def get_json(page, path: str, query: dict):
+    return await page.evaluate(
+        """async ({path,query}) => {
+          const u = new URL(path, location.origin);
+          for (const [k,v] of Object.entries(query || {})) u.searchParams.set(k, String(v));
+          const r = await fetch(u.toString(), {method:'GET', credentials:'include'});
+          const text = await r.text();
+          let body = null; try { body = JSON.parse(text); } catch (_) {}
+          return {status:r.status, body};
+        }""",
+        {"path": path, "query": query},
+    )
+
+
+def pick(data: dict, keys: tuple[str, ...]):
+    return {key: data.get(key) for key in keys if key in data}
+
+
+STAT_KEYS = (
+    "stats_col_time",
+    "update_time",
+    "reader_uv_daily",
+    "reader_uv_daily_incr",
+    "reader_uv_14day_cnt",
+    "reader_uv_14day_incr",
+    "shelf_cnt_daily",
+    "shelf_cnt_daily_incr",
+    "pursue_cnt_daily",
+    "pursue_cnt_daily_incr",
+    "reminder_cnt_daily",
+    "reminder_cnt_daily_incr",
+    "comment_cnt",
+    "comment_cnt_incr",
+    "pursue_read_rate",
+    "read_completion_rate",
+    "read_completion_level",
+    "mark_score",
+    "mark_score_incr",
+)
+
+
+async def click_exact(page, text: str) -> bool:
+    locator = page.get_by_text(text, exact=True)
+    for i in range(min(await locator.count(), 30)):
+        element = locator.nth(i)
         try:
-            if await el.is_visible():await el.click(timeout=5000);await page.wait_for_timeout(1300);return True
-        except Exception:continue
+            if await element.is_visible():
+                await element.click(timeout=5000)
+                await page.wait_for_timeout(1200)
+                return True
+        except Exception:
+            continue
     return False
-async def ui_segment(page):
-    lines=[x.strip() for x in (await page.locator("body").inner_text()).splitlines() if x.strip() and len(x.strip())<=120]
-    out=[];anchors=("收益概览","昨日番茄收益","累计番茄收益","收益趋势","阅读收益","听书收益","每日收益","每月稿费")
-    for i,line in enumerate(lines):
-        if any(a in line for a in anchors):
-            for item in lines[max(0,i-1):min(len(lines),i+5)]:
-                if item not in out:out.append(item)
-    return out[:100]
 
-async def run(novel_dirs,runtime_arg):
-    rd=fanqie_probe.resolve_runtime(runtime_arg);rt=load_runtime(rd);rt.load_config();books=[(p.name,bid(p)) for p in novel_dirs]
-    async with rt.async_playwright() as pw:
-        browser,context=await rt.create_context(pw,headless=True);page=await context.new_page();current=None;captured={s:{} for s,_ in books};tasks=set()
-        async def capture(resp):
-            nonlocal current
-            try:
-                parsed=urlparse(resp.url)
-                if current is None or resp.request.method.upper()!="GET" or parsed.path not in INCOME_PATHS:return
-                if "json" not in (resp.headers.get("content-type") or "").lower():return
-                captured[current][parsed.path]=summary_body(await resp.json(),resp.status)
-            except Exception:return
-        def on_response(resp):
-            t=asyncio.create_task(capture(resp));tasks.add(t);t.add_done_callback(tasks.discard)
-        page.on("response",on_response)
+
+def first_number_after(lines: list[str], label: str):
+    for i, line in enumerate(lines):
+        if line != label:
+            continue
+        for candidate in lines[i + 1 : i + 5]:
+            raw = candidate.replace(",", "").strip()
+            if re.fullmatch(r"-?\d+(?:\.\d+)?", raw):
+                return float(raw)
+    return None
+
+
+def income_from_lines(lines: list[str], expected_book_name: str):
+    full_text = "\n".join(lines)
+    verified = bool(expected_book_name and expected_book_name in full_text)
+    cutoff = None
+    for line in lines:
+        match = re.search(r"统计周期截止至[:：]\s*([^每]+)", line)
+        if match:
+            cutoff = match.group(1).strip()
+            break
+    return {
+        "verified_book": verified,
+        "stats_through": cutoff,
+        "yesterday_fanqie_income": first_number_after(lines, "昨日番茄收益") if verified else None,
+        "cumulative_fanqie_income": first_number_after(lines, "累计番茄收益") if verified else None,
+    }
+
+
+async def read_income(page, runtime, book_name: str):
+    if not await runtime.goto_with_login_retry(page, BOOK_MANAGE):
+        return {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+    await page.wait_for_timeout(700)
+    if not await click_exact(page, "小说收益"):
+        return {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+    if not await click_exact(page, "切换作品"):
+        return {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+    if not await click_exact(page, book_name):
+        return {"verified_book": False, "stats_through": None, "yesterday_fanqie_income": None, "cumulative_fanqie_income": None}
+    for label in ("确定", "确认"):
+        if await click_exact(page, label):
+            break
+    await page.reload(wait_until="domcontentloaded", timeout=30000)
+    await page.wait_for_timeout(3500)
+    lines = [line.strip() for line in (await page.locator("body").inner_text()).splitlines() if line.strip() and len(line.strip()) <= 160]
+    return income_from_lines(lines, book_name)
+
+
+def write_snapshots(novel_dirs: list[Path], report: dict, collected_at: datetime):
+    filename = collected_at.strftime("%Y-%m-%dT%H-%M-%S%z") + ".json"
+    written = []
+    for novel_dir in novel_dirs:
+        slug = novel_dir.name
+        book = report["books"].get(slug)
+        if not book:
+            continue
+        snapshot = {
+            "schema_version": 1,
+            "source": "fanqie-author-dashboard",
+            "collected_at": collected_at.isoformat(),
+            "project": slug,
+            "stats": book.get("stats", {}),
+            "income": book.get("income", {}),
+        }
+        out_dir = novel_dir / "platform-sync" / "analytics" / "snapshots"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / filename
+        out_path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        written.append(str(out_path))
+    return written
+
+
+async def run(novel_dirs: list[Path], runtime_arg: str | None, write: bool):
+    runtime_dir = fanqie_probe.resolve_runtime(runtime_arg)
+    runtime = load_runtime(runtime_dir)
+    runtime.load_config()
+    projects = [(path, read_book_id(path)) for path in novel_dirs]
+    collected_at = datetime.now(CN_TZ).replace(microsecond=0)
+
+    async with runtime.async_playwright() as playwright:
+        browser, context = await runtime.create_context(playwright, headless=True)
+        page = await context.new_page()
         try:
-            if not await rt.goto_with_login_retry(page,BOOK_MANAGE):raise ProbeError("cannot open writer dashboard")
-            await rt.settle_page(page)
-            bl=await get_json(page,"/api/author/book/book_list/v0",{"page_index":0,"page_count":50});data=unwrap(bl.get("body"));rows=data.get("book_list",[]) if isinstance(data,dict) else []
-            names={str(x.get("book_id")):str(x.get("book_name") or "") for x in rows if isinstance(x,dict)}
-            report={"books":{s:{"book_id":b,"switch_success":False,"confirm_clicked":False,"income":{},"income_ui_segment":[]} for s,b in books}}
-            for slug,book_id in books:
-                await rt.goto_with_login_retry(page,BOOK_MANAGE);await page.wait_for_timeout(600)
-                if not await click_exact(page,"小说收益"):continue
-                name=names.get(book_id,"")
-                if not name or not await click_exact(page,"切换作品"):continue
-                switched=await click_exact(page,name);report["books"][slug]["switch_success"]=switched
-                if not switched:continue
-                confirmed=False
-                for label in ("确定","确认"):
-                    if await click_exact(page,label):confirmed=True;break
-                report["books"][slug]["confirm_clicked"]=confirmed
-                current=slug
-                await page.reload(wait_until="domcontentloaded",timeout=30000);await page.wait_for_timeout(4200)
-                report["books"][slug]["income_ui_segment"]=await ui_segment(page)
-                current=None
-            if tasks:await asyncio.gather(*list(tasks),return_exceptions=True)
-            for slug,_ in books:report["books"][slug]["income"]=captured[slug]
-            await rt.save_auth(context)
-            print("FANQIE_DATA_PROBE_JSON_BEGIN");print(json.dumps(report,ensure_ascii=False,separators=(",",":"),default=str));print("FANQIE_DATA_PROBE_JSON_END");return 0
+            if not await runtime.goto_with_login_retry(page, BOOK_MANAGE):
+                raise ProbeError("cannot open authenticated writer dashboard")
+            await runtime.settle_page(page)
+
+            book_list = await get_json(page, "/api/author/book/book_list/v0", {"page_index": 0, "page_count": 50})
+            book_data = unwrap(book_list.get("body"))
+            rows = book_data.get("book_list", []) if isinstance(book_data, dict) else []
+            names = {str(row.get("book_id")): str(row.get("book_name") or "") for row in rows if isinstance(row, dict)}
+
+            report = {"schema_version": 1, "collected_at": collected_at.isoformat(), "books": {}}
+            for novel_dir, book_id in projects:
+                slug = novel_dir.name
+                common = await get_json(page, "/api/author/stats/book_common_v1/v0/", {"book_id": book_id, "stats_type": 0})
+                common_data = unwrap(common.get("body"))
+                stats = pick(common_data, STAT_KEYS) if isinstance(common_data, dict) else {}
+                income = await read_income(page, runtime, names.get(book_id, ""))
+                report["books"][slug] = {"stats": stats, "income": income}
+
+            await runtime.save_auth(context)
+            if write:
+                report["written_files"] = write_snapshots(novel_dirs, report, collected_at)
+            print("FANQIE_DATA_PROBE_JSON_BEGIN")
+            print(json.dumps(report, ensure_ascii=False, separators=(",", ":"), default=str))
+            print("FANQIE_DATA_PROBE_JSON_END")
+            return 0
         finally:
-            page.remove_listener("response",on_response);await rt.close_browser_safely(browser)
+            await runtime.close_browser_safely(browser)
+
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument("novel_dirs",nargs="+",type=Path);ap.add_argument("--runtime");a=ap.parse_args()
-    try:return asyncio.run(run([p.resolve() for p in a.novel_dirs],a.runtime))
-    except (fanqie_probe.ProbeError,ProbeError,RuntimeError,OSError,json.JSONDecodeError) as e:print(f"ERROR: {e}");return 2
-if __name__=="__main__":raise SystemExit(main())
+    parser = argparse.ArgumentParser(description="Read and optionally persist sanitized Fanqie analytics")
+    parser.add_argument("novel_dirs", nargs="+", type=Path)
+    parser.add_argument("--runtime")
+    parser.add_argument("--write-snapshots", action="store_true")
+    args = parser.parse_args()
+    try:
+        return asyncio.run(run([path.resolve() for path in args.novel_dirs], args.runtime, args.write_snapshots))
+    except (fanqie_probe.ProbeError, ProbeError, RuntimeError, OSError, json.JSONDecodeError) as exc:
+        print(f"ERROR: {exc}")
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
