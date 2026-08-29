@@ -12,6 +12,7 @@ on:
       - "shared/tools/test_fanqie_sync.py"
       - "shared/tools/fanqie_probe.py"
       - "shared/tools/test_fanqie_probe.py"
+      - "shared/tools/fanqie_reconcile.py"
       - ".github/workflows/fanqie-sync.yml"
   push:
     branches:
@@ -25,6 +26,7 @@ on:
       - "shared/tools/test_fanqie_sync.py"
       - "shared/tools/fanqie_probe.py"
       - "shared/tools/test_fanqie_probe.py"
+      - "shared/tools/fanqie_reconcile.py"
       - ".github/workflows/fanqie-sync.yml"
 
 concurrency:
@@ -43,6 +45,8 @@ jobs:
           python-version: "3.12"
       - name: Run Fanqie sync unit tests
         run: python -m unittest shared/tools/test_fanqie_sync.py shared/tools/test_fanqie_probe.py
+      - name: Compile read-only reconciliation tool
+        run: python -m py_compile shared/tools/fanqie_reconcile.py
       - name: Validate publishing model
         run: python shared/tools/fanqie_sync.py validate novels/endless-rail
       - name: Show authorized plan
@@ -86,6 +90,30 @@ jobs:
           PYTHONUTF8: "1"
         run: |
           python shared/tools/fanqie_probe.py probe novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}"
+
+  reconcile:
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[fanqie-reconcile]')
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Reconcile GitHub chapters with Fanqie metadata and schedule
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_reconcile.py novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}" --output "$env:RUNNER_TEMP\fanqie-reconcile.json"
 
   publish:
     needs: [validate, probe]
