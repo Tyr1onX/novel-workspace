@@ -4,7 +4,7 @@
   "book_id": "7670480372831882302",
   "novel_slug": "endless-rail",
   "chapter_glob": "chapters/volume-*/chapter-*.md",
-  "sync_enabled": false,
+  "sync_enabled": true,
   "browser": {
     "headless": true
   },
