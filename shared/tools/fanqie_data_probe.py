@@ -113,6 +113,20 @@ def shape(value):
     return {"type": type(value).__name__}
 
 
+def nested_lists(value):
+    result = {}
+    if not isinstance(value, dict):
+        return result
+    for key, child in value.items():
+        if isinstance(child, list):
+            first = child[0] if child else None
+            result[str(key)] = {
+                "length": len(child),
+                "item_keys": sorted(first.keys())[:120] if isinstance(first, dict) else [],
+            }
+    return result
+
+
 async def get_json(page, path: str, query: dict):
     return await page.evaluate(
         """async ({path, query}) => {
@@ -133,12 +147,19 @@ async def get_json(page, path: str, query: dict):
 def summarize(label: str, result: dict):
     body = result.get("body")
     data = body.get("data") if isinstance(body, dict) and "data" in body else body
-    return {
+    summary = {
         "label": label,
         "status": result.get("status"),
         "shape": shape(data),
+        "nested_lists": nested_lists(data),
         "metrics": collect_metrics(data),
     }
+    if label == "chapter_stats" and isinstance(data, dict):
+        title = data.get("diag_title")
+        if isinstance(title, str) and title.strip():
+            summary["diag_title"] = title.strip()[:300]
+        summary["diag_detail_shape"] = shape(data.get("diag_detail"))
+    return summary
 
 
 async def run(novel_dirs: list[Path], runtime_arg: str | None):
@@ -195,6 +216,18 @@ async def run(novel_dirs: list[Path], runtime_arg: str | None):
                 for item in links
                 if item.get("text") and any(word in item["text"] for word in ("数据", "收益", "分析", "收入", "稿费"))
             ][:30]
+
+            body_text = await page.locator("body").inner_text()
+            keywords = ("数据", "收益", "分析", "收入", "稿费", "阅读", "追读", "催更", "读完", "质量")
+            report["ui_keyword_lines"] = []
+            for raw in body_text.splitlines():
+                line = raw.strip()
+                if not line or len(line) > 220:
+                    continue
+                if any(word in line for word in keywords) and line not in report["ui_keyword_lines"]:
+                    report["ui_keyword_lines"].append(line)
+                if len(report["ui_keyword_lines"]) >= 80:
+                    break
 
             await runtime.save_auth(context)
             print("FANQIE_DATA_PROBE_JSON_BEGIN")
