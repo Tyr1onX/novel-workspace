@@ -1,0 +1,32 @@
+name: One-shot meta leak repair
+
+on:
+  push:
+    branches:
+      - fix/endless-rail-meta-leaks
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: ${{ !contains(github.event.head_commit.message, 'fix: remove meta-narrative leaks') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/endless-rail-meta-leaks
+      - name: Apply exact repairs
+        run: python shared/tools/repair_endless_rail_meta_leaks.py
+      - name: Commit repaired chapters
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No repair diff produced"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add novels/endless-rail/chapters
+          git commit -m "fix: remove meta-narrative leaks"
+          git push origin HEAD:fix/endless-rail-meta-leaks
