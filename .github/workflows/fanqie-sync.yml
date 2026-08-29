@@ -16,6 +16,7 @@ on:
       - "shared/tools/fanqie_reconcile.py"
       - "shared/tools/fanqie_publish_now.py"
       - "shared/tools/fanqie_projects.py"
+      - "shared/tools/fanqie_compat.py"
       - ".github/workflows/fanqie-sync.yml"
   push:
     branches:
@@ -33,6 +34,7 @@ on:
       - "shared/tools/fanqie_reconcile.py"
       - "shared/tools/fanqie_publish_now.py"
       - "shared/tools/fanqie_projects.py"
+      - "shared/tools/fanqie_compat.py"
       - ".github/workflows/fanqie-sync.yml"
 
 concurrency:
@@ -52,7 +54,7 @@ jobs:
       - name: Run Fanqie sync unit tests
         run: python -m unittest shared/tools/test_fanqie_sync.py shared/tools/test_fanqie_probe.py
       - name: Compile Fanqie helpers
-        run: python -m py_compile shared/tools/fanqie_reconcile.py shared/tools/fanqie_publish_now.py shared/tools/fanqie_projects.py
+        run: python -m py_compile shared/tools/fanqie_reconcile.py shared/tools/fanqie_publish_now.py shared/tools/fanqie_projects.py shared/tools/fanqie_compat.py
       - name: Validate every configured Fanqie novel
         shell: bash
         run: |
@@ -64,8 +66,8 @@ jobs:
           fi
           for project in "${projects[@]}"; do
             echo "=== validate: $project ==="
-            python shared/tools/fanqie_sync.py validate "$project"
-            python shared/tools/fanqie_sync.py plan "$project"
+            python shared/tools/fanqie_compat.py validate "$project"
+            python shared/tools/fanqie_compat.py plan "$project"
           done
       - name: Read repository-wide sync gate
         id: gate
@@ -137,7 +139,7 @@ jobs:
             if (-not $project) { continue }
             $slug = Split-Path $project -Leaf
             Write-Host "=== reconcile: $project ==="
-            python shared/tools/fanqie_reconcile.py $project --runtime "${{ steps.runtime.outputs.path }}" --output "$env:RUNNER_TEMP\fanqie-reconcile-$slug.json"
+            python shared/tools/fanqie_compat.py reconcile $project --runtime "${{ steps.runtime.outputs.path }}" --output "$env:RUNNER_TEMP\fanqie-reconcile-$slug.json"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
 
@@ -181,7 +183,7 @@ jobs:
             $project = $parts[0]
             $request = $parts[1]
             Write-Host "=== publish now: $project ==="
-            python shared/tools/fanqie_publish_now.py $project --runtime "${{ steps.runtime.outputs.path }}" --request $request
+            python shared/tools/fanqie_compat.py publish-now $project --runtime "${{ steps.runtime.outputs.path }}" --request $request
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
       - name: Persist one-shot results
@@ -232,7 +234,7 @@ jobs:
           foreach ($project in $projects) {
             if (-not $project) { continue }
             Write-Host "=== sync: $project ==="
-            python shared/tools/fanqie_sync.py sync $project --runtime "${{ steps.runtime.outputs.path }}"
+            python shared/tools/fanqie_compat.py sync $project --runtime "${{ steps.runtime.outputs.path }}"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
       - name: Persist synchronization ledgers
