@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -8,6 +9,7 @@ MODULE_PATH = Path(__file__).with_name("fanqie_sync.py")
 spec = importlib.util.spec_from_file_location("fanqie_sync", MODULE_PATH)
 fanqie_sync = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
+sys.modules["fanqie_sync"] = fanqie_sync
 spec.loader.exec_module(fanqie_sync)
 
 
