@@ -14,6 +14,7 @@
     ],
     "start_date": null,
     "group_size": 3,
+    "same_timestamp_within_group": true,
     "extra_release": {
       "unit": "group",
       "chapters_per_group": 3,
@@ -21,5 +22,5 @@
       "preserve_grouping": true
     }
   },
-  "notes": "Use the author's confirmed default Fanqie release habit: three consecutive chapters as one group at 00:00 Asia/Shanghai each day. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited queue authorization."
+  "notes": "Use the author's confirmed default Fanqie release habit: three consecutive chapters as one group at exactly 00:00 Asia/Shanghai each day. All three chapters in a group intentionally share the same 00:00 timestamp. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited queue authorization."
 }

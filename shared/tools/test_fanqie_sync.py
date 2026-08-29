@@ -12,6 +12,18 @@ assert spec.loader is not None
 sys.modules["fanqie_sync"] = fanqie_sync
 spec.loader.exec_module(fanqie_sync)
 
+BRIDGE_PATH = Path(__file__).with_name("fanqie_runtime_bridge.py")
+bridge_spec = importlib.util.spec_from_file_location("fanqie_runtime_bridge", BRIDGE_PATH)
+fanqie_runtime_bridge = importlib.util.module_from_spec(bridge_spec)
+assert bridge_spec.loader is not None
+bridge_spec.loader.exec_module(fanqie_runtime_bridge)
+
+COMPAT_PATH = Path(__file__).with_name("fanqie_compat.py")
+compat_spec = importlib.util.spec_from_file_location("fanqie_compat", COMPAT_PATH)
+fanqie_compat = importlib.util.module_from_spec(compat_spec)
+assert compat_spec.loader is not None
+compat_spec.loader.exec_module(fanqie_compat)
+
 
 class FanqieSyncTests(unittest.TestCase):
     def test_parse_chapter_separates_heading_and_body(self):
@@ -30,6 +42,32 @@ class FanqieSyncTests(unittest.TestCase):
             p.write_text("# 第109章 错号\n\n正文。\n", encoding="utf-8")
             with self.assertRaises(fanqie_sync.SyncError):
                 fanqie_sync.parse_chapter(p)
+
+    def test_compat_parser_accepts_chinese_numeral_heading(self):
+        with tempfile.TemporaryDirectory() as td:
+            p = Path(td) / "chapter-040.md"
+            p.write_text("# 第四十章 七公里，找一条蓝绳\n\n正文。\n", encoding="utf-8")
+            ch = fanqie_compat.parse_chapter_compat(p)
+            self.assertEqual(ch.number, 40)
+            self.assertEqual(ch.title, "七公里，找一条蓝绳")
+
+    def test_exact_group_schedule_keeps_all_three_at_midnight(self):
+        schedule = fanqie_runtime_bridge.exact_group_schedule(
+            8, "2026-09-08", "00:00", 3
+        )
+        self.assertEqual(
+            schedule,
+            [
+                ("2026-09-08", "00:00"),
+                ("2026-09-08", "00:00"),
+                ("2026-09-08", "00:00"),
+                ("2026-09-09", "00:00"),
+                ("2026-09-09", "00:00"),
+                ("2026-09-09", "00:00"),
+                ("2026-09-10", "00:00"),
+                ("2026-09-10", "00:00"),
+            ],
+        )
 
     def test_chapter_range_round_trip(self):
         nums = fanqie_sync.parse_chapter_spec("1,3,5-8,10")
