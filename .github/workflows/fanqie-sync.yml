@@ -1,0 +1,84 @@
+name: Fanqie Sync
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "novels/**/chapters/**"
+      - "novels/**/platform-sync/config.json"
+      - "novels/**/platform-sync/policy.json"
+      - "novels/**/platform-sync/queue.json"
+      - "shared/tools/fanqie_sync.py"
+      - "shared/tools/test_fanqie_sync.py"
+      - ".github/workflows/fanqie-sync.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "novels/**/chapters/**"
+      - "novels/**/platform-sync/config.json"
+      - "novels/**/platform-sync/policy.json"
+      - "novels/**/platform-sync/queue.json"
+      - "shared/tools/fanqie_sync.py"
+      - "shared/tools/test_fanqie_sync.py"
+      - ".github/workflows/fanqie-sync.yml"
+
+concurrency:
+  group: fanqie-sync-endless-rail
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run Fanqie sync unit tests
+        run: python -m unittest shared/tools/test_fanqie_sync.py
+      - name: Validate publishing model
+        run: python shared/tools/fanqie_sync.py validate novels/endless-rail
+      - name: Show authorized plan
+        run: python shared/tools/fanqie_sync.py plan novels/endless-rail
+
+  publish:
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.FANQIE_SYNC_ENABLED == 'true'
+    runs-on: [self-hosted, windows, fanqie]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main before platform mutation
+        shell: pwsh
+        run: |
+          git fetch origin main
+          git rebase origin/main
+
+      - name: Execute authorized Fanqie operations
+        shell: pwsh
+        run: |
+          python shared/tools/fanqie_sync.py sync novels/endless-rail
+
+      - name: Persist synchronization ledger
+        shell: pwsh
+        run: |
+          $paths = @(
+            "novels/endless-rail/platform-sync/queue.json",
+            "novels/endless-rail/platform-sync/sync-state.json"
+          )
+          $changed = git status --porcelain -- $paths
+          if (-not $changed) {
+            Write-Host "No sync-state changes to commit."
+            exit 0
+          }
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          git add -- $paths
+          git commit -m "chore(fanqie): record completed sync operations"
+          git pull --rebase origin main
+          git push origin HEAD:main

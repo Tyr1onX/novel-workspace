@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "book_id": "7670480372831882302",
+  "policy_status": "draft",
+  "timezone": "Asia/Shanghai",
+  "declaration": {
+    "use_ai": true
+  },
+  "schedule": {
+    "mode": "auto_continue",
+    "chapters_per_day": 2,
+    "slots": [
+      "10:00",
+      "20:00"
+    ],
+    "start_date": null
+  },
+  "notes": "Initial safe placeholder policy. Automatic execution remains disabled until the local runner/login bootstrap is completed and the release schedule is confirmed."
+}
