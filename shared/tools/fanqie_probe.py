@@ -93,7 +93,10 @@ def load_book_id(novel_dir: Path) -> str:
 
 
 def output_contains_book_id(output: str, book_id: str) -> bool:
-    pattern = re.compile(rf"(?m)^\s*ID:\s*{re.escape(book_id)}\s*$")
+    # Upstream writes through the logger, so lines may be prefixed with a
+    # timestamp and "[INFO]". Match the ID token anywhere on a line, while
+    # still requiring a numeric boundary so a partial ID cannot pass.
+    pattern = re.compile(rf"(?m)\bID:\s*{re.escape(book_id)}(?=\s|$)")
     return bool(pattern.search(output))
 
 
