@@ -38,13 +38,23 @@ class FanqieProbeTests(unittest.TestCase):
             with self.assertRaises(fanqie_probe.ProbeError):
                 fanqie_probe.resolve_runtime(str(Path(td) / "missing"))
 
-    def test_output_contains_exact_book_id(self):
-        output = "找到 1 部作品:\n  1. 测试书\n     ID: 7670480372831882302\n"
+    def test_output_contains_exact_book_id_with_logger_prefix(self):
+        output = (
+            "16:50:50 [INFO] 找到 1 部作品:\n"
+            "16:50:50 [INFO]   1. 测试书\n"
+            "16:50:50 [INFO]      ID: 7670480372831882302\n"
+        )
         self.assertTrue(
             fanqie_probe.output_contains_book_id(output, "7670480372831882302")
         )
         self.assertFalse(
             fanqie_probe.output_contains_book_id(output, "7670480372831882303")
+        )
+
+    def test_output_does_not_accept_partial_book_id(self):
+        output = "ID: 17670480372831882302\n"
+        self.assertFalse(
+            fanqie_probe.output_contains_book_id(output, "7670480372831882302")
         )
 
 
