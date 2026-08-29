@@ -1,23 +1,15 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "id": "publish-now-test-2026-08-29-ch81",
+  "id": "reader-update-2026-08-29-ch82",
   "action": "publish_now",
-  "chapter": 81,
-  "status": "completed",
+  "chapter": 82,
+  "status": "pending",
   "authorized": true,
-  "triggered_at": "2026-08-29T18:10:00+08:00",
+  "triggered_at": "2026-08-29T19:33:00+08:00",
   "audit": {
     "status": "passed",
-    "basis": "Chapter 81 is already present on Fanqie as an authorized scheduled chapter; the latest read-only reconciliation confirmed chapter number, title and order match GitHub. The author explicitly requested this one-chapter immediate-publish test."
+    "basis": "Chapter 82 is the next chapter after the already-published chapter 81. The author explicitly requested one additional immediate chapter because a loyal reader requested an update. The publish-now runner must independently verify that chapter 82 already exists on Fanqie and is still in 待发布 state before making any mutation."
   },
-  "reason": "One-time real-world test of the immediate-publish path. Do not alter title/body or any other chapter schedule.",
-  "completed_at": "2026-08-29T10:24:36+00:00",
-  "result": {
-    "platform_status": "published",
-    "chapter": 81,
-    "title": "第81章 二十四小时以后，只送四只",
-    "scheduled_date_before": "2026-08-30",
-    "scheduled_time_before": "00:00"
-  }
+  "reason": "One-chapter reader-requested extra update. Publish chapter 82 immediately without changing its title/body or touching the schedules of chapters 83 and later."
 }
