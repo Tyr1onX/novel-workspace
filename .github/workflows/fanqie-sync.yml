@@ -17,6 +17,7 @@ on:
       - "shared/tools/fanqie_publish_now.py"
       - "shared/tools/fanqie_projects.py"
       - "shared/tools/fanqie_compat.py"
+      - "shared/tools/fanqie_runtime_bridge.py"
       - ".github/workflows/fanqie-sync.yml"
   push:
     branches:
@@ -35,6 +36,7 @@ on:
       - "shared/tools/fanqie_publish_now.py"
       - "shared/tools/fanqie_projects.py"
       - "shared/tools/fanqie_compat.py"
+      - "shared/tools/fanqie_runtime_bridge.py"
       - ".github/workflows/fanqie-sync.yml"
 
 concurrency:
@@ -54,7 +56,7 @@ jobs:
       - name: Run Fanqie sync unit tests
         run: python -m unittest shared/tools/test_fanqie_sync.py shared/tools/test_fanqie_probe.py
       - name: Compile Fanqie helpers
-        run: python -m py_compile shared/tools/fanqie_reconcile.py shared/tools/fanqie_publish_now.py shared/tools/fanqie_projects.py shared/tools/fanqie_compat.py
+        run: python -m py_compile shared/tools/fanqie_reconcile.py shared/tools/fanqie_publish_now.py shared/tools/fanqie_projects.py shared/tools/fanqie_compat.py shared/tools/fanqie_runtime_bridge.py
       - name: Validate every configured Fanqie novel
         shell: bash
         run: |
