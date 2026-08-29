@@ -26,6 +26,7 @@ CHAPTER_HEADING_RE = re.compile(r"^#\s*第\s*(\d+)\s*章\s*(.*?)\s*$")
 RANGE_TOKEN_RE = re.compile(r"^(\d+)(?:-(\d+))?$")
 SUMMARY_RE = re.compile(r"成功:\s*(\d+)\s+失败:\s*(\d+)")
 EDIT_SUMMARY_RE = re.compile(r"修改完成!\s*成功:\s*(\d+)\s+失败:\s*(\d+)")
+RESCHEDULE_SUMMARY_RE = re.compile(r"修改排期完成!\s*成功:\s*(\d+)\s*失败:\s*(\d+)")
 
 
 class SyncError(RuntimeError):
@@ -170,6 +171,8 @@ def validate_policy(policy: dict[str, Any], config: dict[str, Any]) -> None:
         raise SyncError("policy.schedule.chapters_per_day must be 1..20")
     if config.get("book_id") != policy.get("book_id"):
         raise SyncError("book_id differs between config.json and policy.json")
+    if config.get("sync_enabled") and policy.get("policy_status") != "active":
+        raise SyncError("sync_enabled=true requires policy_status='active'")
 
 
 def validate_operation(op: dict[str, Any], chapters: dict[int, Chapter]) -> list[int]:
@@ -212,6 +215,8 @@ def load_model(novel_dir: Path) -> tuple[dict[str, Any], dict[str, Any], dict[st
         raise SyncError("config.json version must be 1")
     if queue.get("version") != 1:
         raise SyncError("queue.json version must be 1")
+    if queue.get("book_id") != config.get("book_id"):
+        raise SyncError("book_id differs between config.json and queue.json")
     validate_policy(policy, config)
     chapters = discover_chapters(novel_dir, config.get("chapter_glob", "chapters/volume-*/chapter-*.md"))
     seen_ids: set[str] = set()
@@ -300,17 +305,42 @@ def run_upstream(command: list[str], *, assume_yes: bool = True) -> tuple[int, s
     return proc.returncode, output
 
 
-def parse_success(output: str, expected: int, *, edit: bool = False) -> None:
+def parse_success(
+    output: str,
+    expected: int,
+    *,
+    edit: bool = False,
+    allow_already_present: bool = False,
+) -> None:
     regex = EDIT_SUMMARY_RE if edit else SUMMARY_RE
     matches = list(regex.finditer(output))
     if not matches:
+        if allow_already_present and "本地章节都已经在平台上了" in output:
+            return
         raise SyncError("publisher did not emit a completion summary; operation is not confirmed")
     success = int(matches[-1].group(1))
     failed = int(matches[-1].group(2))
-    if failed != 0 or success != expected:
+    if failed != 0:
         raise SyncError(
-            f"publisher summary mismatch: expected {expected}, success={success}, failed={failed}"
+            f"publisher reported failures: expected at most {expected}, success={success}, failed={failed}"
         )
+    if success == expected:
+        return
+    if allow_already_present and 0 < success <= expected:
+        return
+    raise SyncError(
+        f"publisher summary mismatch: expected {expected}, success={success}, failed={failed}"
+    )
+
+
+def parse_reschedule_success(output: str) -> None:
+    matches = list(RESCHEDULE_SUMMARY_RE.finditer(output))
+    if not matches:
+        raise SyncError("reschedule operation did not emit a completion summary")
+    success = int(matches[-1].group(1))
+    failed = int(matches[-1].group(2))
+    if failed != 0:
+        raise SyncError(f"reschedule completed with failures: success={success}, failed={failed}")
 
 
 def operation_command(
@@ -440,6 +470,16 @@ def cmd_sync(novel_dir: Path, runtime_arg: str | None, dry_run: bool) -> int:
     if not config.get("sync_enabled", False):
         print("Sync is disabled in platform-sync/config.json; no platform mutation performed.")
         return 0
+    mutation_count = sum(
+        len(validate_operation(op, chapters))
+        for op in ops
+        if op.get("action") in {"create", "update"}
+    )
+    max_mutations = int((config.get("safety") or {}).get("max_mutations_per_run", 30))
+    if mutation_count > max_mutations:
+        raise SyncError(
+            f"authorized mutations ({mutation_count}) exceed max_mutations_per_run ({max_mutations})"
+        )
     runtime = resolve_runtime(runtime_arg)
     completed: list[tuple[dict[str, Any], list[int]]] = []
     for op in ops:
@@ -452,9 +492,14 @@ def cmd_sync(novel_dir: Path, runtime_arg: str | None, dry_run: bool) -> int:
             raise SyncError(f"publisher process exited with code {code} for {op['id']}")
         nums = validate_operation(op, chapters)
         if expected >= 0:
-            parse_success(output, expected, edit=is_edit)
-        elif "修改排期完成!" not in output:
-            raise SyncError("reschedule operation did not emit a completion summary")
+            parse_success(
+                output,
+                expected,
+                edit=is_edit,
+                allow_already_present=(op.get("action") == "create"),
+            )
+        else:
+            parse_reschedule_success(output)
         completed.append((op, nums))
     if dry_run:
         print("Dry run only; queue/state unchanged.")
