@@ -9,6 +9,7 @@ on:
       - "novels/**/platform-sync/policy.json"
       - "novels/**/platform-sync/queue.json"
       - "shared/tools/fanqie_sync.py"
+      - "shared/tools/test_fanqie_sync.py"
       - ".github/workflows/fanqie-sync.yml"
   push:
     branches:
@@ -19,6 +20,7 @@ on:
       - "novels/**/platform-sync/policy.json"
       - "novels/**/platform-sync/queue.json"
       - "shared/tools/fanqie_sync.py"
+      - "shared/tools/test_fanqie_sync.py"
       - ".github/workflows/fanqie-sync.yml"
 
 concurrency:
@@ -33,6 +35,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Run Fanqie sync unit tests
+        run: python -m unittest shared/tools/test_fanqie_sync.py
       - name: Validate publishing model
         run: python shared/tools/fanqie_sync.py validate novels/endless-rail
       - name: Show authorized plan
