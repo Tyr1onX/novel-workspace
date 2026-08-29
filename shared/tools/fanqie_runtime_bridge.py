@@ -3,9 +3,14 @@
 
 Upstream intentionally makes every chapter time unique (e.g. 00:00/00:01/00:02).
 The author's established Fanqie habit is different: a release group of three chapters
-is intentionally scheduled at the exact same 00:00 timestamp.  This bridge keeps the
-upstream browser/publish implementation intact and replaces only its pure
-`compute_schedule` function for explicitly configured same-time groups.
+is intentionally scheduled at the exact same 00:00 timestamp. This bridge keeps the
+upstream browser/publish implementation intact and replaces only the scheduling
+semantics explicitly owned by the repository.
+
+For rescheduling, the bridge also skips chapters whose existing platform date/time is
+already exactly the requested target. This makes retries idempotent and avoids sending
+no-op modify-timer requests, which Fanqie can reject with a misleading server-error
+message.
 """
 
 from __future__ import annotations
@@ -52,6 +57,69 @@ def exact_group_schedule(file_count: int, start_date: str, exact_time: str, grou
     ]
 
 
+def _row_datetime(row):
+    date = str(row.get("date") or "").strip()
+    time = str(row.get("time") or "").strip()
+    if date and time:
+        return date, time
+    value = str(row.get("scheduled_at") or row.get("scheduledAt") or "").strip()
+    if "T" in value:
+        left, right = value.split("T", 1)
+        return left[:10], right[:5]
+    return date, time
+
+
+def patch_reschedule_noops(runtime) -> None:
+    original = getattr(runtime, "reschedule_on_manage_page", None)
+    extractor = getattr(runtime, "extract_chapters_from_page", None)
+    if original is None or extractor is None:
+        return
+
+    async def filtered_reschedule(page, book_id, schedule_map, **kwargs):
+        # The current production books are single-volume. For a true multi-volume
+        # invocation, preserve upstream behavior unless we can inspect the whole
+        # requested set in one table view; correctness is more important than an
+        # optimization.
+        volume_texts = kwargs.get("volume_texts")
+        if volume_texts and len(volume_texts) > 1:
+            return await original(page, book_id, schedule_map, **kwargs)
+
+        try:
+            rows, _last = await extractor(page, book_id)
+            by_title = {
+                str(row.get("title") or "").strip(): row
+                for row in rows
+                if str(row.get("title") or "").strip()
+            }
+            filtered = {}
+            skipped = []
+            for title, target in schedule_map.items():
+                row = by_title.get(str(title).strip())
+                current = _row_datetime(row or {})
+                desired = (str(target[0]), str(target[1]))
+                if row is not None and current == desired:
+                    skipped.append(title)
+                    continue
+                filtered[title] = target
+
+            if skipped:
+                runtime.logger.info(
+                    f"排期幂等检查：{len(skipped)} 章已处于目标时间，跳过重复提交"
+                )
+            if not filtered:
+                runtime.logger.info("排期幂等检查：全部待发布章节已符合目标排期，无需修改")
+                return 0, 0
+            return await original(page, book_id, filtered, **kwargs)
+        except Exception as exc:
+            # Fail open only for this optimization: if platform DOM extraction changes,
+            # fall back to the pinned upstream rescheduler rather than guessing that a
+            # chapter is already correct.
+            runtime.logger.warning(f"排期幂等检查不可用，回退上游重排逻辑: {exc}")
+            return await original(page, book_id, schedule_map, **kwargs)
+
+    runtime.reschedule_on_manage_page = filtered_reschedule
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Repository scheduling bridge for Fanqie publisher")
     parser.add_argument("--runtime", type=Path, required=True)
@@ -85,6 +153,8 @@ def main() -> int:
         return original_compute(file_count, start_date, pub_time, per_day)
 
     runtime.compute_schedule = patched_compute
+    patch_reschedule_noops(runtime)
+
     old_argv = sys.argv[:]
     try:
         sys.argv = [str(script), *upstream_args]
