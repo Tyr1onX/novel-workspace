@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """Compatibility entrypoint for repository Fanqie tools.
 
-Older novel projects use headings such as `# 第一章 标题` while newer projects use
-`# 第1章 标题`. The canonical Markdown should not be rewritten merely for publishing,
-so this entrypoint broadens local parsing before delegating to the existing sync,
-reconciliation, and publish-now controllers.
+This layer intentionally owns the small semantics that differ between repository
+novels and the pinned upstream publisher:
+
+- legacy novels may use Chinese chapter numerals (`# 第一章 标题`);
+- the author's confirmed release habit may put every chapter in one release group at
+  the exact same timestamp (for example three chapters all at 00:00), while upstream
+  intentionally makes same-day timestamps unique.
+
+Canonical Markdown and the pinned upstream runtime remain unchanged.
 """
 
 from __future__ import annotations
@@ -13,6 +18,7 @@ import argparse
 import asyncio
 import hashlib
 import re
+import sys
 from pathlib import Path
 
 import fanqie_sync
@@ -36,6 +42,7 @@ CN_UNITS = {"十": 10, "百": 100, "千": 1000}
 HEADING_RE = re.compile(
     r"^#\s*第\s*([0-9]+|[零〇一二两三四五六七八九十百千]+)\s*[章回节话]\s*(.*?)\s*$"
 )
+_ORIGINAL_OPERATION_COMMAND = fanqie_sync.operation_command
 
 
 def cn_to_int(text: str) -> int:
@@ -88,8 +95,46 @@ def parse_chapter_compat(path: Path) -> fanqie_sync.Chapter:
     return fanqie_sync.Chapter(file_number, title, body, path, digest, char_count)
 
 
+def operation_command_compat(runtime, novel_dir, config, policy, op, chapters):
+    command, expected, is_edit = _ORIGINAL_OPERATION_COMMAND(
+        runtime, novel_dir, config, policy, op, chapters
+    )
+    schedule = policy.get("schedule") or {}
+    if (
+        op.get("action") in {"create", "reschedule_all"}
+        and schedule.get("same_timestamp_within_group") is True
+    ):
+        slots = schedule.get("slots") or []
+        group_size = schedule.get("group_size") or schedule.get("chapters_per_day")
+        if len(slots) != 1:
+            raise fanqie_sync.SyncError(
+                "same_timestamp_within_group=true requires exactly one schedule slot"
+            )
+        if not isinstance(group_size, int) or group_size < 1:
+            raise fanqie_sync.SyncError("same-time group_size must be a positive integer")
+        # The original command is [python, <runtime>/fanqie_upload.py, ...]. Keep the
+        # upstream CLI arguments but run them through the bridge so only
+        # compute_schedule is replaced in-process.
+        upstream_args = command[2:]
+        bridge = Path(__file__).with_name("fanqie_runtime_bridge.py")
+        command = [
+            sys.executable,
+            str(bridge),
+            "--runtime",
+            str(runtime),
+            "--same-time-group-size",
+            str(group_size),
+            "--same-time",
+            str(slots[0]),
+            "--",
+            *upstream_args,
+        ]
+    return command, expected, is_edit
+
+
 def install_compat() -> None:
     fanqie_sync.parse_chapter = parse_chapter_compat
+    fanqie_sync.operation_command = operation_command_compat
 
 
 def build_parser() -> argparse.ArgumentParser:
