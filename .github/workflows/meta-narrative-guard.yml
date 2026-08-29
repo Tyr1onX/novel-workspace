@@ -1,0 +1,19 @@
+name: Meta narrative guard
+
+on:
+  push:
+    branches:
+      - main
+      - fix/endless-rail-meta-leaks
+  pull_request:
+
+jobs:
+  endless-rail-meta-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan Endless Rail chapters
+        shell: bash
+        run: |
+          python shared/tools/meta_narrative_guard.py \
+            novels/endless-rail/chapters/volume-*/*.md
