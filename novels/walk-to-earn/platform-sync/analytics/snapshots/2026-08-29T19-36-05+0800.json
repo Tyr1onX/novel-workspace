@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "source": "fanqie-author-dashboard",
+  "collected_at": "2026-08-29T19:36:05+08:00",
+  "project": "walk-to-earn",
+  "stats": {},
+  "income": {
+    "verified_book": false,
+    "stats_through": "08-28 24:00",
+    "yesterday_fanqie_income": null,
+    "cumulative_fanqie_income": null
+  }
+}
