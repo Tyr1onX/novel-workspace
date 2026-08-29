@@ -4,12 +4,20 @@
   "id": "publish-now-test-2026-08-29-ch81",
   "action": "publish_now",
   "chapter": 81,
-  "status": "pending",
+  "status": "completed",
   "authorized": true,
   "triggered_at": "2026-08-29T18:10:00+08:00",
   "audit": {
     "status": "passed",
     "basis": "Chapter 81 is already present on Fanqie as an authorized scheduled chapter; the latest read-only reconciliation confirmed chapter number, title and order match GitHub. The author explicitly requested this one-chapter immediate-publish test."
   },
-  "reason": "One-time real-world test of the immediate-publish path. Do not alter title/body or any other chapter schedule."
+  "reason": "One-time real-world test of the immediate-publish path. Do not alter title/body or any other chapter schedule.",
+  "completed_at": "2026-08-29T10:24:36+00:00",
+  "result": {
+    "platform_status": "published",
+    "chapter": 81,
+    "title": "第81章 二十四小时以后，只送四只",
+    "scheduled_date_before": "2026-08-30",
+    "scheduled_time_before": "00:00"
+  }
 }
