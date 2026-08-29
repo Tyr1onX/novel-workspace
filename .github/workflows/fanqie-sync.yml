@@ -10,6 +10,8 @@ on:
       - "novels/**/platform-sync/queue.json"
       - "shared/tools/fanqie_sync.py"
       - "shared/tools/test_fanqie_sync.py"
+      - "shared/tools/fanqie_probe.py"
+      - "shared/tools/test_fanqie_probe.py"
       - ".github/workflows/fanqie-sync.yml"
   push:
     branches:
@@ -21,6 +23,8 @@ on:
       - "novels/**/platform-sync/queue.json"
       - "shared/tools/fanqie_sync.py"
       - "shared/tools/test_fanqie_sync.py"
+      - "shared/tools/fanqie_probe.py"
+      - "shared/tools/test_fanqie_probe.py"
       - ".github/workflows/fanqie-sync.yml"
 
 concurrency:
@@ -38,7 +42,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run Fanqie sync unit tests
-        run: python -m unittest shared/tools/test_fanqie_sync.py
+        run: python -m unittest shared/tools/test_fanqie_sync.py shared/tools/test_fanqie_probe.py
       - name: Validate publishing model
         run: python shared/tools/fanqie_sync.py validate novels/endless-rail
       - name: Show authorized plan
@@ -59,9 +63,33 @@ jobs:
           print(f"sync_enabled={value}")
           PY
 
-  publish:
+  probe:
     needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.validate.outputs.sync_enabled == 'true'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.validate.outputs.sync_enabled == 'true' || contains(github.event.head_commit.message, '[fanqie-probe]'))
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: pwsh
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Probe saved Fanqie login and target book
+        shell: pwsh
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_probe.py probe novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}"
+
+  publish:
+    needs: [validate, probe]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.validate.outputs.sync_enabled == 'true' && needs.probe.result == 'success'
     runs-on: [self-hosted, windows, fanqie]
     permissions:
       contents: write
@@ -76,10 +104,21 @@ jobs:
           git fetch origin main
           git rebase origin/main
 
-      - name: Execute authorized Fanqie operations
+      - name: Resolve local Fanqie runtime
+        id: runtime
         shell: pwsh
         run: |
-          python shared/tools/fanqie_sync.py sync novels/endless-rail
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+
+      - name: Execute authorized Fanqie operations
+        shell: pwsh
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_sync.py sync novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}"
 
       - name: Persist synchronization ledger
         shell: pwsh
