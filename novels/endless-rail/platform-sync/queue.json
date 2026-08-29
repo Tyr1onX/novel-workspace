@@ -1,17 +1,17 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-08-29T19:50:00+08:00",
+  "updated_at": "2026-08-29T20:04:00+08:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
       "action": "reschedule_all",
-      "status": "pending",
+      "status": "verification_pending",
       "authorized": true,
       "start_date": "2026-08-30",
       "audit": {
         "status": "passed",
-        "basis": "The author clarified that an early extra release must not reduce the normal future quota of three chapters per day. Chapter 81 was released early from the Aug 30 group. Read-only reconciliation confirms chapters 82-106 remain scheduled in order; rescheduling all remaining pending chapters from Aug 30 at three chapters per day and 00:00 compacts the queue forward without changing chapter content or order."
+        "basis": "The author clarified that an early extra release must not reduce the normal future quota of three chapters per day. Chapter 81 was released early from the Aug 30 group. The first reschedule attempt changed every chapter that actually needed moving, while six already-at-target chapters returned platform server errors. Further mutation is quarantined until a fresh read-only reconciliation verifies the resulting schedule."
       },
       "reason": "Restore the normal three-chapter 00:00 daily cadence after chapter 81 was released early: Aug 30 becomes 82-84, Aug 31 becomes 85-87, then continue consecutively."
     }
