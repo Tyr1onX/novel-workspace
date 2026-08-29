@@ -8,11 +8,13 @@ on:
       - "novels/**/platform-sync/config.json"
       - "novels/**/platform-sync/policy.json"
       - "novels/**/platform-sync/queue.json"
+      - "novels/**/platform-sync/one-shot.json"
       - "shared/tools/fanqie_sync.py"
       - "shared/tools/test_fanqie_sync.py"
       - "shared/tools/fanqie_probe.py"
       - "shared/tools/test_fanqie_probe.py"
       - "shared/tools/fanqie_reconcile.py"
+      - "shared/tools/fanqie_publish_now.py"
       - ".github/workflows/fanqie-sync.yml"
   push:
     branches:
@@ -22,15 +24,17 @@ on:
       - "novels/**/platform-sync/config.json"
       - "novels/**/platform-sync/policy.json"
       - "novels/**/platform-sync/queue.json"
+      - "novels/**/platform-sync/one-shot.json"
       - "shared/tools/fanqie_sync.py"
       - "shared/tools/test_fanqie_sync.py"
       - "shared/tools/fanqie_probe.py"
       - "shared/tools/test_fanqie_probe.py"
       - "shared/tools/fanqie_reconcile.py"
+      - "shared/tools/fanqie_publish_now.py"
       - ".github/workflows/fanqie-sync.yml"
 
 concurrency:
-  group: fanqie-sync-endless-rail
+  group: fanqie-sync
   cancel-in-progress: false
 
 jobs:
@@ -45,8 +49,8 @@ jobs:
           python-version: "3.12"
       - name: Run Fanqie sync unit tests
         run: python -m unittest shared/tools/test_fanqie_sync.py shared/tools/test_fanqie_probe.py
-      - name: Compile read-only reconciliation tool
-        run: python -m py_compile shared/tools/fanqie_reconcile.py
+      - name: Compile browser-side helpers
+        run: python -m py_compile shared/tools/fanqie_reconcile.py shared/tools/fanqie_publish_now.py
       - name: Validate publishing model
         run: python shared/tools/fanqie_sync.py validate novels/endless-rail
       - name: Show authorized plan
@@ -114,6 +118,63 @@ jobs:
           PYTHONUTF8: "1"
         run: |
           python shared/tools/fanqie_reconcile.py novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}" --output "$env:RUNNER_TEMP\fanqie-reconcile.json"
+
+  publish_now:
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[fanqie-publish-now]')
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main before platform mutation
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+
+      - name: List account books for multibook discovery
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python "${{ steps.runtime.outputs.path }}\fanqie_upload.py" books
+
+      - name: Publish the explicitly authorized scheduled chapter now
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_publish_now.py novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}" --request novels/endless-rail/platform-sync/one-shot.json
+
+      - name: Persist one-shot result
+        shell: powershell
+        run: |
+          $path = "novels/endless-rail/platform-sync/one-shot.json"
+          $changed = git status --porcelain -- $path
+          if (-not $changed) {
+            Write-Host "No one-shot state changes to commit."
+            exit 0
+          }
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          git add -- $path
+          git commit -m "chore(fanqie): record publish-now result"
+          git pull --rebase origin main
+          git push origin HEAD:main
 
   publish:
     needs: [validate, probe]

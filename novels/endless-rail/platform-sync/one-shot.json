@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "book_id": "7670480372831882302",
+  "id": "publish-now-test-2026-08-29-ch81",
+  "action": "publish_now",
+  "chapter": 81,
+  "status": "pending",
+  "authorized": true,
+  "audit": {
+    "status": "passed",
+    "basis": "Chapter 81 is already present on Fanqie as an authorized scheduled chapter; the latest read-only reconciliation confirmed chapter number, title and order match GitHub. The author explicitly requested this one-chapter immediate-publish test."
+  },
+  "reason": "One-time real-world test of the immediate-publish path. Do not alter title/body or any other chapter schedule."
+}
