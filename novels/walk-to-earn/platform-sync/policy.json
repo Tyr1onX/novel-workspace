@@ -16,11 +16,15 @@
     "group_size": 3,
     "same_timestamp_within_group": true,
     "extra_release": {
-      "unit": "group",
-      "chapters_per_group": 3,
-      "strategy": "append_in_order",
-      "preserve_grouping": true
+      "unit": "chapter",
+      "allow_partial_group": true,
+      "strategy": "publish_early_then_pull_forward",
+      "preserve_daily_quota": true,
+      "daily_quota": 3,
+      "reflow": "compact_remaining_schedule_forward_in_chapter_order",
+      "preserve_same_timestamp_within_group": true,
+      "do_not_reduce_original_day_count": true
     }
   },
-  "notes": "Use the author's confirmed default Fanqie release habit: three consecutive chapters as one group at exactly 00:00 Asia/Shanghai each day. All three chapters in a group intentionally share the same 00:00 timestamp. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited queue authorization."
+  "notes": "Use the confirmed default Fanqie release habit: three consecutive chapters at exactly 00:00 Asia/Shanghai each normal release day. A temporary extra release may contain any explicitly approved number of chapters, including one chapter. It consumes chapters early but does not reduce the original future day's three-chapter quota. After an early release, compact all remaining scheduled chapters forward in chapter-number order to refill each normal release day to three chapters at 00:00 where inventory permits. Never skip or reorder chapter numbers. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited authorization."
 }
