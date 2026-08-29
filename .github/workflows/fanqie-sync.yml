@@ -2,6 +2,14 @@ name: Fanqie Sync
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "novels/**/chapters/**"
+      - "novels/**/platform-sync/config.json"
+      - "novels/**/platform-sync/policy.json"
+      - "novels/**/platform-sync/queue.json"
+      - "shared/tools/fanqie_sync.py"
+      - ".github/workflows/fanqie-sync.yml"
   push:
     branches:
       - main
@@ -32,7 +40,7 @@ jobs:
 
   publish:
     needs: validate
-    if: github.ref == 'refs/heads/main' && vars.FANQIE_SYNC_ENABLED == 'true'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.FANQIE_SYNC_ENABLED == 'true'
     runs-on: [self-hosted, windows, fanqie]
     permissions:
       contents: write
@@ -49,8 +57,6 @@ jobs:
 
       - name: Execute authorized Fanqie operations
         shell: pwsh
-        env:
-          FANQIE_RUNTIME_DIR: ${{ env.USERPROFILE }}\.novel-workspace\fanqie-publisher
         run: |
           python shared/tools/fanqie_sync.py sync novels/endless-rail
 
