@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-08-29T10:49:51+00:00",
+  "updated_at": "2026-08-30T11:24:00+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -14,6 +14,17 @@
         "basis": "Current main is canonical. Chapter 18 was rewritten and subsequently style-trimmed; chapter 19 was explicitly rewritten to return to the walking mainline. Fanqie reconciliation shows the platform still has the pre-rewrite titles for both chapters. User explicitly authorized the corresponding correction on 2026-08-29."
       },
       "completed_at": "2026-08-29T10:49:51+00:00"
+    },
+    {
+      "id": "walk-dialogue-overhaul-republish-001-020-20260830",
+      "action": "update",
+      "chapters": "1-20",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "User explicitly required the WeChat Sports novel to be fully rewritten, repeatedly audited, and republished after reader reports of stiff AI-like dialogue. Chapters 1-40 were rewritten and multi-pass Dialogue/Humanizer/Prose/Meta checks completed before merge commit 5068d3072427cbfc8fc1066e6752d3304bdb28f4. This operation republishes the audited canonical main text for chapters 1-20 without changing chapter order or release schedule."
+      }
     }
   ]
 }
