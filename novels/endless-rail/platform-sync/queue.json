@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-08-30T20:12:00+08:00",
+  "updated_at": "2026-08-30T20:21:00+08:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -33,6 +33,18 @@
           "2026-09-07": [106]
         }
       }
+    },
+    {
+      "id": "humanizer-sync-ch88-90-2026-08-30",
+      "action": "update",
+      "status": "pending",
+      "authorized": true,
+      "chapters": "88,90",
+      "audit": {
+        "status": "passed",
+        "basis": "PR #16 was merged after full Dialogue/Humanizer/Prose/Meta review. A fresh read-only Fanqie reconciliation at 2026-08-30 20:12 Asia/Shanghai confirmed chapters 88-106 are still scheduled/unpublished with zero title or position mismatches. This operation targets only modified chapters 88 and 90 from the next scheduled release group; chapter 89 was reviewed but not changed. Existing schedule is not modified by the repository update action."
+      },
+      "reason": "Sync the approved Humanizer prose revisions for chapters 88 and 90 before their next scheduled release while preserving the existing chapter IDs, order, and schedule."
     }
   ]
 }
