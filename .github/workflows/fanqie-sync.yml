@@ -189,6 +189,7 @@ jobs:
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
       - name: Persist one-shot results
+        if: always()
         shell: powershell
         run: |
           $paths = @(git diff --name-only | Where-Object { $_ -match '^novels/[^/]+/platform-sync/one-shot\.json$' })
