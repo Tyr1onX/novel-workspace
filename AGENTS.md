@@ -19,14 +19,15 @@
 1. `shared/RULES.md`
 2. `shared/DIALOGUE_RULES.md`
 3. `shared/HUMANIZER_RULES.md`
-4. `shared/PROSE_RULES.md`
-5. `shared/META_NARRATIVE_RULES.md`
-6. 当前小说自己的 README / design / continuity / style 文件
-7. 当前小说若存在：
+4. `shared/HUMANIZER_EVOLUTION.md`
+5. `shared/PROSE_RULES.md`
+6. `shared/META_NARRATIVE_RULES.md`
+7. 当前小说自己的 README / design / continuity / style 文件
+8. 当前小说若存在：
    - `style/DIALOGUE_VOICES.md`
    - `style/VOICE_SAMPLES.md`
    - `style/HUMANIZER_FEEDBACK.md`
-8. 与当前场景直接连续的上一章正文
+9. 与当前场景直接连续的上一章正文
 
 禁止只根据用户一句“继续写”或章节卡直接生成正文。
 
@@ -78,6 +79,7 @@ python shared/tools/meta_narrative_guard.py <chapter.md>
 - 禁止层：`shared/HUMANIZER_RULES.md` 等共享规则；
 - 语气层：单本小说的 `STYLE_DNA`、`DIALOGUE_VOICES`、`VOICE_SAMPLES`；
 - 审核层：guards + 人工回读；
+- 演化层：`shared/HUMANIZER_EVOLUTION.md`；
 - 反馈闭环：作者/读者反馈写入 `style/HUMANIZER_FEEDBACK.md`，稳定结论再回写规则。
 
 外部 humanizer 规则不能覆盖本书已经验证的人物声音和作者人工选择。
@@ -116,7 +118,27 @@ python shared/tools/meta_narrative_guard.py <chapter.md>
 
 单本问题写入对应 `style/HUMANIZER_FEEDBACK.md`；跨项目重复验证后才升级到 `shared/`。
 
-## 7. 语气样本优先于形容词
+## 7. 人工校稿后强制执行 Diff Learning
+
+只要作者发生了以下任一行为：
+
+- 亲手改正文；
+- 明确指出某个具体改法更好；
+- 对两个版本作出选择；
+- 明确说“以后不要这样写 / 以后就按这种感觉”；
+
+Agent 在完成正文修改后，必须继续执行 `shared/HUMANIZER_EVOLUTION.md` 的 Diff Learning：
+
+1. 比较改前与改后；
+2. 提炼具体差异，禁止只写“更自然”；
+3. 判断是 `LOCAL / CHARACTER / BOOK / SHARED_CANDIDATE`；
+4. 写入 `style/HUMANIZER_FEEDBACK.md` 或对应 style 文件；
+5. 只有满足升级阈值才把候选规则升级；
+6. 必要时更新 `VOICE_SAMPLES.md` 的状态。
+
+**不能改完正文就结束。校稿差异本身也是交付物的一部分。**
+
+## 8. 语气样本优先于形容词
 
 存在 `VOICE_SAMPLES.md` 时，必须先读样本，再写或改。
 
@@ -130,7 +152,9 @@ python shared/tools/meta_narrative_guard.py <chapter.md>
 
 禁止复刻样本原句、口头禅和固定句式。
 
-## 8. 禁止“规则腔”
+未经作者确认的 AI 草稿只能作为 `CANDIDATE`，不能自动升为 `LOCKED`。
+
+## 9. 禁止“规则腔”
 
 不要为了像真人而：
 
@@ -144,7 +168,20 @@ python shared/tools/meta_narrative_guard.py <chapter.md>
 
 规则服务故事，不反过来让故事服务规则。
 
-## 9. 提交正文前
+## 10. 周期性自更新
+
+每累计 10 个新章节：
+
+1. 批量运行 `dialogue_guard.py`；
+2. 批量运行 `humanizer_guard.py`；
+3. 检查跨章重复问句、重复口癖和角色固定功能；
+4. 回看最近 10 章作者修改记录；
+5. 更新 `HUMANIZER_FEEDBACK.md` 中候选规则的状态；
+6. 检查 `VOICE_SAMPLES.md` 是否仍代表当前风格。
+
+每 30–50 章额外做一次规则瘦身，检查是否因规则过多形成新的统一“规则腔”。
+
+## 11. 提交正文前
 
 必须确认：
 
@@ -153,6 +190,7 @@ python shared/tools/meta_narrative_guard.py <chapter.md>
 - 主要人物声音可区分；
 - 没有明显 AI 解释尾巴、假深刻、强行金句；
 - 本章存在只属于本场景的具体材料；
-- 已按规则人工复核 guard 命中。
+- 已按规则人工复核 guard 命中；
+- 如果本轮产生新的人工偏好/读者反馈，已经完成反馈回写。
 
 如果做不到，正文仍是草稿，不得把它当作后续续写基准。
