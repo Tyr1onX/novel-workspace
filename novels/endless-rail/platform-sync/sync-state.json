@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-08-30T12:23:10+00:00",
+  "last_sync_at": "2026-08-30T13:23:07+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -15,6 +15,24 @@
       "last_action": "update",
       "last_synced_at": "2026-08-30T12:23:10+00:00",
       "queue_operation_id": "humanizer-sync-ch88-90-2026-08-30"
+    },
+    "91": {
+      "local_sha256": "2a1f5313dffe10724115df4c05888bd16f610e53ae0b1cbecde791072b638723",
+      "last_action": "update",
+      "last_synced_at": "2026-08-30T13:23:07+00:00",
+      "queue_operation_id": "humanizer-sync-ch91-95-96-2026-08-30"
+    },
+    "95": {
+      "local_sha256": "9168bacc5254e7c1bea89fee71c30bb0dbc6fac9db3e83f26c2ffc4d0d9dd870",
+      "last_action": "update",
+      "last_synced_at": "2026-08-30T13:23:07+00:00",
+      "queue_operation_id": "humanizer-sync-ch91-95-96-2026-08-30"
+    },
+    "96": {
+      "local_sha256": "8e43d50bc4b7f1ab079673f8f69070d50d80f98faf61884378d355b58cae5fb8",
+      "last_action": "update",
+      "last_synced_at": "2026-08-30T13:23:07+00:00",
+      "queue_operation_id": "humanizer-sync-ch91-95-96-2026-08-30"
     }
   }
 }
