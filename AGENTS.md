@@ -57,11 +57,32 @@ meta_narrative_guard.py
 Continuity / Numbers / Final Read
 ```
 
-没有对白的章节可以跳过 Dialogue Pass，其余不能因为“看起来没问题”跳过。
+没有对白的章节可以跳过人工 Dialogue Pass，其余不能因为“看起来没问题”跳过。
 
 ## 3. 运行检查
 
-至少按适用情况运行：
+默认优先使用统一入口，避免漏掉某一层：
+
+```bash
+python shared/tools/novel_gate.py <chapter.md>
+```
+
+批量章节也可以一次传入：
+
+```bash
+python shared/tools/novel_gate.py chapter-041.md chapter-042.md chapter-043.md
+```
+
+`novel_gate.py` 会依次调用：
+
+```text
+dialogue_guard.py
+humanizer_guard.py
+prose_guard.py
+meta_narrative_guard.py
+```
+
+需要单独定位时才分别运行：
 
 ```bash
 python shared/tools/dialogue_guard.py <chapter.md>
