@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-08-30T11:40:00+00:00",
+  "updated_at": "2026-08-30T22:45:00+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -38,6 +38,28 @@
         "basis": "User explicitly required the WeChat Sports novel to be fully rewritten, repeatedly audited, and republished after reader reports of stiff AI-like dialogue. Chapters 21-40 are the audited canonical continuation of the same full-book rewrite merged at 5068d3072427cbfc8fc1066e6752d3304bdb28f4. Multi-pass Dialogue/Humanizer/Prose/Meta review was completed before platform mutation. This operation republishes chapters 21-40 without changing chapter order or release schedule."
       },
       "completed_at": "2026-08-30T11:38:42+00:00"
+    },
+    {
+      "id": "walk-dialogue-rebuild-v2-republish-001-020-20260831",
+      "action": "update",
+      "chapters": "1-20",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "The author explicitly required a second full rebuild after the first republished dialogue cleanup still read as AI-like, and explicitly authorized republishing only after repeated audit. Chapters 001-040 were rebuilt again on PR #17. The V2 audit at novels/walk-to-earn/audits/dialogue-rebuild-v2-001-040-20260831.md records manual cold reads, character/cross-chapter review, protected continuity checks, and successful Dialogue/Humanizer/Prose/Meta quality gates. This operation replaces existing Fanqie chapters 1-20 with the audited V2 canonical text without changing chapter order or normal future scheduling."
+      }
+    },
+    {
+      "id": "walk-dialogue-rebuild-v2-republish-021-040-20260831",
+      "action": "update",
+      "chapters": "21-40",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "The author explicitly required a second full rebuild after the first republished dialogue cleanup still read as AI-like, and explicitly authorized republishing only after repeated audit. Chapters 001-040 were rebuilt again on PR #17. The V2 audit at novels/walk-to-earn/audits/dialogue-rebuild-v2-001-040-20260831.md records manual cold reads, character/cross-chapter review, protected continuity checks, and successful Dialogue/Humanizer/Prose/Meta quality gates. This operation replaces existing Fanqie chapters 21-40 with the audited V2 canonical text without changing chapter order or normal future scheduling."
+      }
     }
   ]
 }

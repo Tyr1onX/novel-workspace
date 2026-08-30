@@ -1,0 +1,52 @@
+name: Walk to Earn Quality Gate
+
+on:
+  pull_request:
+    paths:
+      - "novels/walk-to-earn/chapters/**"
+      - "novels/walk-to-earn/style/**"
+      - "novels/walk-to-earn/tools/**"
+      - "shared/*RULES.md"
+      - "shared/DIALOGUE_APPRENTICESHIP.md"
+      - "shared/tools/*guard.py"
+      - "shared/tools/novel_gate.py"
+      - ".github/workflows/walk-to-earn-quality-gate.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "novels/walk-to-earn/chapters/**"
+      - "novels/walk-to-earn/style/**"
+      - "novels/walk-to-earn/tools/**"
+      - "shared/*RULES.md"
+      - "shared/DIALOGUE_APPRENTICESHIP.md"
+      - "shared/tools/*guard.py"
+      - "shared/tools/novel_gate.py"
+      - ".github/workflows/walk-to-earn-quality-gate.yml"
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check protected Walk to Earn facts
+        run: python novels/walk-to-earn/tools/check_rebuild_invariants.py
+
+      - name: Run full 1-40 novel gate
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p .audit
+          python shared/tools/novel_gate.py novels/walk-to-earn/chapters/chapter-{001..040}.md 2>&1 | tee .audit/walk-to-earn-novel-gate.log
+
+      - name: Upload audit log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: walk-to-earn-quality-gate
+          path: .audit/walk-to-earn-novel-gate.log
+          if-no-files-found: warn
