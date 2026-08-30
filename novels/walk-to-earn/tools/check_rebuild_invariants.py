@@ -57,7 +57,7 @@ def main() -> int:
     require(10, "100.1公里", "0.05元/步", "500公里")
 
     # Shared-memory anchor used again in chapter 32.
-    require(11, "42", "昨天你给我带")
+    require(11, "42", "昨天你帮我买")
     require(32, "四十二", "展馆")
 
     # Long-distance progression and recovery anchors.
@@ -78,7 +78,7 @@ def main() -> int:
     require(35, "74.2元", "3.3V", "5V", "做梦都在接他们电话")
 
     # Body remains ordinary; preserve measured results rather than supernatural enhancement claims.
-    require(38, "7秒5", "2米24", "4分06", "4分14", "4分42", "4分23", "603.6公里")
+    require(38, "7秒5", "2米24", "4分06", "四分十四", "4分42", "4分23", "603.6公里")
     forbid(38, "系统强化", "身体强化", "体质强化")
 
     # Family scene and final stage close.
