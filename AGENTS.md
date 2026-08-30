@@ -18,18 +18,21 @@
 
 1. `shared/RULES.md`
 2. `shared/DIALOGUE_RULES.md`
-3. `shared/HUMANIZER_RULES.md`
-4. `shared/HUMANIZER_EVOLUTION.md`
-5. `shared/PROSE_RULES.md`
-6. `shared/META_NARRATIVE_RULES.md`
-7. 当前小说自己的 README / design / continuity / style 文件
-8. 当前小说若存在：
+3. `shared/DIALOGUE_APPRENTICESHIP.md`
+4. `shared/HUMANIZER_RULES.md`
+5. `shared/HUMANIZER_EVOLUTION.md`
+6. `shared/PROSE_RULES.md`
+7. `shared/META_NARRATIVE_RULES.md`
+8. 当前小说自己的 README / design / continuity / style 文件
+9. 当前小说若存在：
    - `style/DIALOGUE_VOICES.md`
    - `style/VOICE_SAMPLES.md`
    - `style/HUMANIZER_FEEDBACK.md`
-9. 与当前场景直接连续的上一章正文
+10. 与当前场景直接连续的上一章正文
 
 禁止只根据用户一句“继续写”或章节卡直接生成正文。
+
+如果作者或读者已经明确说过“对白怪 / 对话硬 / 像 AI / 像排练”，必须按 `DIALOGUE_APPRENTICESHIP.md` 进入 `REBUILD`，不能在旧句上逐句润色。
 
 ## 2. 固定正文流水线
 
@@ -38,7 +41,9 @@
 ```text
 Story / Continuity
       ↓
-First Draft
+Dialogue Scene Card（有对白时）
+      ↓
+First Draft / REBUILD
       ↓
 Dialogue Pass
       ↓
@@ -54,10 +59,14 @@ prose_guard.py
       ↓
 meta_narrative_guard.py
       ↓
+Cold Read（高风险对白强制）
+      ↓
 Continuity / Numbers / Final Read
 ```
 
-没有对白的章节可以跳过人工 Dialogue Pass，其余不能因为“看起来没问题”跳过。
+没有对白的章节可以跳过 Dialogue Scene Card / Dialogue Pass，其余不能因为“看起来没问题”跳过。
+
+开篇前三章、首次人物登场、关系转折、以及作者/读者已经投诉过的同类对白，必须执行 `DIALOGUE_APPRENTICESHIP.md` 的三版法与 Cold Read。
 
 ## 3. 运行检查
 
@@ -93,17 +102,20 @@ python shared/tools/meta_narrative_guard.py <chapter.md>
 
 工具只定位风险，不自动决定改法。不能通过批量替词、机械碎句、强行删标点来追求 WARN=0。
 
+**WARN=0 / Gate PASS 不是对白合格证。** 如果 Cold Read 仍然觉得人物像按作者安排轮流说话，必须回到 REBUILD。
+
 ## 4. 去 AI 味不是一次性 prompt
 
 本仓库采用长期 Humanizer 机制：
 
 - 禁止层：`shared/HUMANIZER_RULES.md` 等共享规则；
+- 对白训练层：`shared/DIALOGUE_APPRENTICESHIP.md`；
 - 语气层：单本小说的 `STYLE_DNA`、`DIALOGUE_VOICES`、`VOICE_SAMPLES`；
-- 审核层：guards + 人工回读；
+- 审核层：guards + 人工回读 + Cold Read；
 - 演化层：`shared/HUMANIZER_EVOLUTION.md`；
 - 反馈闭环：作者/读者反馈写入 `style/HUMANIZER_FEEDBACK.md`，稳定结论再回写规则。
 
-外部 humanizer 规则不能覆盖本书已经验证的人物声音和作者人工选择。
+外部 humanizer / dialogue 项目只用于学习可迁移技法，不能覆盖本书已经验证的人物声音和作者人工选择，也不能复制某个作者或作品的固定句子、口癖和签名风格。
 
 ## 5. 修订前锁事实
 
@@ -123,6 +135,7 @@ python shared/tools/meta_narrative_guard.py <chapter.md>
 
 - AI 味；
 - 对话硬；
+- 读着怪 / 像排练；
 - 角色说话像一个人；
 - 解释太多；
 - 金句太多；
@@ -138,6 +151,8 @@ python shared/tools/meta_narrative_guard.py <chapter.md>
 - 跨项目通用问题。
 
 单本问题写入对应 `style/HUMANIZER_FEEDBACK.md`；跨项目重复验证后才升级到 `shared/`。
+
+如果一次“大规模去 AI 重写”已经通过自动审计，但作者再次明确说“还是怪”，必须把这次重写判定为**失败样本**，不能继续拿它训练后文，也不能把“已经发布”当作质量证明。
 
 ## 7. 人工校稿后强制执行 Diff Learning
 
@@ -169,11 +184,12 @@ Agent 在完成正文修改后，必须继续执行 `shared/HUMANIZER_EVOLUTION.
 - 注意力落点；
 - 信息分配；
 - 人物如何被现场打断；
-- 哪些地方作者选择不解释。
+- 哪些地方作者选择不解释；
+- 人物在压力下会怎样保护自己、绕开什么、说到几分。
 
 禁止复刻样本原句、口头禅和固定句式。
 
-未经作者确认的 AI 草稿只能作为 `CANDIDATE`，不能自动升为 `LOCKED`。
+未经作者确认的 AI 草稿只能作为 `CANDIDATE`，不能自动升为 `LOCKED`。作者已经明确说“读着怪”的版本必须从正向样本中移除，作为失败样本保留。
 
 ## 9. 禁止“规则腔”
 
@@ -185,7 +201,9 @@ Agent 在完成正文修改后，必须继续执行 `shared/HUMANIZER_EVOLUTION.
 - 每个问句都答非所问；
 - 把所有排比、破折号、比喻清零；
 - 强行制造不确定和矛盾；
-- 凭空给角色补经历和立场。
+- 凭空给角色补经历和立场；
+- 把“潜台词”理解成人人都阴阳怪气；
+- 把“口语化”理解成所有人都只说极短句。
 
 规则服务故事，不反过来让故事服务规则。
 
@@ -198,11 +216,12 @@ Agent 在完成正文修改后，必须继续执行 `shared/HUMANIZER_EVOLUTION.
 3. 检查跨章重复问句、重复口癖和角色固定功能；
 4. 回看最近 10 章作者修改记录；
 5. 更新 `HUMANIZER_FEEDBACK.md` 中候选规则的状态；
-6. 检查 `VOICE_SAMPLES.md` 是否仍代表当前风格。
+6. 检查 `VOICE_SAMPLES.md` 是否仍代表当前风格；
+7. 抽至少 2 场对白做无修改说明的 Cold Read。
 
 每 30–50 章额外做一次规则瘦身，检查是否因规则过多形成新的统一“规则腔”。
 
-## 11. 提交正文前
+## 11. 提交与发布正文前
 
 必须确认：
 
@@ -212,6 +231,9 @@ Agent 在完成正文修改后，必须继续执行 `shared/HUMANIZER_EVOLUTION.
 - 没有明显 AI 解释尾巴、假深刻、强行金句；
 - 本章存在只属于本场景的具体材料；
 - 已按规则人工复核 guard 命中；
+- 高风险对白已经通过三版法 / Cold Read；
 - 如果本轮产生新的人工偏好/读者反馈，已经完成反馈回写。
+
+收到明确对白负反馈后的整批重写，**不得只凭自动 guard 通过就直接发布**。开篇 1–3 章仍有排练感时，整批保持草稿状态。
 
 如果做不到，正文仍是草稿，不得把它当作后续续写基准。
