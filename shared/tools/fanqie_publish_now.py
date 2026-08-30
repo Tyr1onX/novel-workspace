@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Publish one already-scheduled Fanqie chapter immediately.
+"""Publish already-scheduled Fanqie chapters immediately, then optionally compact schedule.
 
-This is intentionally narrower than the normal publisher:
-- the target must already exist on Fanqie;
-- the target must be the explicitly authorized chapter in one-shot.json;
-- audit.status must be passed;
-- only a currently scheduled/pending chapter is mutated;
-- the operation is idempotent: an already-published target is treated as done;
-- after submit, the chapter-management page is read again and the result is recorded.
-
-The script does not create chapters, edit title/body text, delete chapters, or touch any
-other schedule entry.
+Safety properties:
+- targets must already exist on Fanqie;
+- the explicitly authorized request must pass audit;
+- targets must be consecutive chapter numbers;
+- for a new batch, targets must be exactly the first pending chapters on the platform;
+- only currently scheduled/pending targets are mutated;
+- already-published targets are idempotently accepted on retry;
+- title/body text is never edited;
+- optional reflow only changes the remaining pending schedule after every requested
+  immediate release succeeds;
+- platform state is read again after publishing and after reflow.
 """
 
 from __future__ import annotations
@@ -20,11 +21,12 @@ import asyncio
 import importlib.util
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 import fanqie_probe
+import fanqie_runtime_bridge
 import fanqie_sync
 
 
@@ -44,6 +46,30 @@ def _load_runtime(runtime_dir: Path):
     return mod
 
 
+def _requested_chapters(data: dict[str, Any]) -> list[int]:
+    if "chapters" in data:
+        raw = data.get("chapters")
+        if not isinstance(raw, list) or not raw:
+            raise PublishNowError("publish_now chapters must be a non-empty list")
+        if not all(isinstance(ch, int) and ch > 0 for ch in raw):
+            raise PublishNowError("publish_now chapters must contain positive integers")
+        chapters = list(raw)
+    else:
+        chapter = data.get("chapter")
+        if not isinstance(chapter, int) or chapter < 1:
+            raise PublishNowError("publish_now chapter must be a positive integer")
+        chapters = [chapter]
+
+    if len(set(chapters)) != len(chapters):
+        raise PublishNowError("publish_now chapters contain duplicates")
+    if chapters != sorted(chapters):
+        raise PublishNowError("publish_now chapters must be ascending")
+    expected = list(range(chapters[0], chapters[0] + len(chapters)))
+    if chapters != expected:
+        raise PublishNowError("publish_now chapters must be consecutive")
+    return chapters
+
+
 def _load_request(path: Path) -> dict[str, Any]:
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -59,9 +85,7 @@ def _load_request(path: Path) -> dict[str, Any]:
         raise PublishNowError("publish_now requires audit.status=passed")
     if data.get("status") not in {None, "pending", "completed"}:
         raise PublishNowError(f"unsupported one-shot status: {data.get('status')!r}")
-    chapter = data.get("chapter")
-    if not isinstance(chapter, int) or chapter < 1:
-        raise PublishNowError("publish_now chapter must be a positive integer")
+    _requested_chapters(data)
     return data
 
 
@@ -104,6 +128,45 @@ def _find_numbered(chapters: list[dict[str, Any]], chapter_number: int) -> dict[
     return matches[0] if matches else None
 
 
+def _pending_numbers(rows: list[dict[str, Any]]) -> list[int]:
+    nums = []
+    for row in rows:
+        if "待发布" not in _status_text(row):
+            continue
+        num = row.get("chapterNum")
+        if isinstance(num, int):
+            nums.append(num)
+    return sorted(set(nums))
+
+
+def _verify_batch_precondition(rows: list[dict[str, Any]], targets: list[int]) -> None:
+    target_states = {ch: _find_numbered(rows, ch) for ch in targets}
+    missing = [ch for ch, row in target_states.items() if row is None]
+    if missing:
+        raise PublishNowError(f"Fanqie does not contain requested chapters: {missing}")
+
+    remaining_targets = [
+        ch for ch in targets
+        if "已发布" not in _status_text(target_states[ch] or {})
+    ]
+    for ch in remaining_targets:
+        status = _status_text(target_states[ch] or {})
+        if "待发布" not in status:
+            raise PublishNowError(
+                f"chapter {ch} must be 待发布 or 已发布; actual status={status!r}"
+            )
+
+    if not remaining_targets:
+        return
+
+    pending = _pending_numbers(rows)
+    if pending[: len(remaining_targets)] != remaining_targets:
+        raise PublishNowError(
+            "requested extra-release chapters are not the first pending chapters; "
+            f"requested={remaining_targets}, first_pending={pending[:len(remaining_targets)]}"
+        )
+
+
 async def _switch_timer_off(runtime, page) -> str:
     result = await page.evaluate(
         """() => {
@@ -126,7 +189,6 @@ async def _switch_timer_off(runtime, page) -> str:
     if result == "not_found":
         raise PublishNowError("cannot find the Fanqie scheduled-publish switch")
     await page.wait_for_timeout(600)
-    # Re-check instead of trusting a click on a React control.
     still_on = await page.evaluate(
         """() => {
             const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
@@ -159,7 +221,7 @@ async def _publish_existing_now(runtime, page, row: dict[str, Any], *, use_ai: b
     if hasattr(runtime, "dismiss_edit_hint"):
         await runtime.dismiss_edit_hint(page)
 
-    # Do not clear or fill the editor. This operation changes only the release mode.
+    # Never clear or fill the editor: this changes release mode only.
     await runtime._navigate_to_publish_settings(
         page, use_ai=use_ai, draft_action="继续编辑"
     )
@@ -178,9 +240,6 @@ async def _publish_existing_now(runtime, page, row: dict[str, Any], *, use_ai: b
 
 
 async def _verify(runtime, page, book_id: str, chapter_number: int) -> tuple[str, dict[str, Any]]:
-    # The table can briefly show 审核中 after a successful immediate-submit. Both
-    # 已发布 and 审核中 prove it is no longer in the scheduled queue. Keep polling a
-    # little while so the usual fast path resolves to 已发布.
     last_row: dict[str, Any] | None = None
     for attempt in range(6):
         rows = await _read_chapter_table(runtime, page, book_id)
@@ -206,16 +265,105 @@ async def _verify(runtime, page, book_id: str, chapter_number: int) -> tuple[str
     raise PublishNowError(f"unrecognized post-submit status: {_status_text(last_row or {})}")
 
 
+def _schedule_map_for_pending(
+    rows: list[dict[str, Any]], start_date: str, group_size: int, exact_time: str
+) -> tuple[dict[str, tuple[str, str]], dict[int, str]]:
+    try:
+        base = datetime.strptime(start_date, "%Y-%m-%d")
+        datetime.strptime(exact_time, "%H:%M")
+    except ValueError as exc:
+        raise PublishNowError(str(exc)) from exc
+    pending = [
+        row for row in rows
+        if "待发布" in _status_text(row) and isinstance(row.get("chapterNum"), int)
+    ]
+    pending.sort(key=lambda row: int(row["chapterNum"]))
+    schedule_map: dict[str, tuple[str, str]] = {}
+    expected: dict[int, str] = {}
+    for idx, row in enumerate(pending):
+        target_date = (base + timedelta(days=idx // group_size)).strftime("%Y-%m-%d")
+        title = str(row.get("title") or "").strip()
+        if not title:
+            raise PublishNowError(f"pending chapter {row.get('chapterNum')} has no title")
+        schedule_map[title] = (target_date, exact_time)
+        expected[int(row["chapterNum"])] = f"{target_date} {exact_time}"
+    return schedule_map, expected
+
+
+def _row_date_time(row: dict[str, Any]) -> str:
+    return f"{str(row.get('date') or '').strip()} {str(row.get('time') or '').strip()}".strip()
+
+
+async def _reflow_remaining(runtime, page, book_id: str, policy: dict, request: dict) -> dict[str, Any]:
+    reflow = request.get("reflow")
+    if not reflow:
+        return {"performed": False}
+    if not isinstance(reflow, dict):
+        raise PublishNowError("reflow must be an object")
+    start_date = str(reflow.get("start_date") or "").strip()
+    if not start_date:
+        raise PublishNowError("reflow.start_date is required")
+
+    schedule = policy.get("schedule") or {}
+    group_size = schedule.get("group_size") or schedule.get("chapters_per_day")
+    slots = schedule.get("slots") or []
+    if not isinstance(group_size, int) or group_size < 1:
+        raise PublishNowError("policy schedule group_size must be a positive integer")
+    if len(slots) != 1:
+        raise PublishNowError("extra-release reflow requires exactly one schedule slot")
+    exact_time = str(slots[0])
+
+    rows = await _read_chapter_table(runtime, page, book_id)
+    schedule_map, expected = _schedule_map_for_pending(rows, start_date, group_size, exact_time)
+    fanqie_runtime_bridge.patch_reschedule_noops(runtime)
+    if schedule_map:
+        ok, bad = await runtime.reschedule_on_manage_page(
+            page,
+            book_id,
+            schedule_map,
+            max_retries=runtime.load_config().get("max_retries", 2),
+            delay=runtime.load_config().get("delay_between_chapters", 3),
+            volume_texts=None,
+        )
+        if bad:
+            raise PublishNowError(f"reflow completed with failures: success={ok}, failed={bad}")
+    else:
+        ok, bad = 0, 0
+
+    verify_rows = await _read_chapter_table(runtime, page, book_id)
+    mismatches = []
+    for ch, wanted in expected.items():
+        row = _find_numbered(verify_rows, ch)
+        if not row:
+            mismatches.append({"chapter": ch, "expected": wanted, "actual": "missing"})
+            continue
+        actual = _row_date_time(row)
+        if actual != wanted:
+            mismatches.append({"chapter": ch, "expected": wanted, "actual": actual})
+    if mismatches:
+        raise PublishNowError(f"reflow verification failed: {mismatches[:5]}")
+    return {
+        "performed": True,
+        "start_date": start_date,
+        "group_size": group_size,
+        "time": exact_time,
+        "pending_count": len(expected),
+        "changed_or_confirmed": ok,
+        "verified": True,
+    }
+
+
 async def run(novel_dir: Path, runtime_arg: str | None, request_path: Path) -> int:
     config, policy, _queue, local = fanqie_sync.load_model(novel_dir)
     request = _load_request(request_path)
-    chapter_number = int(request["chapter"])
+    targets = _requested_chapters(request)
     book_id = str(config["book_id"])
 
     if str(request.get("book_id") or book_id) != book_id:
         raise PublishNowError("one-shot book_id does not match config.json")
-    if chapter_number not in local:
-        raise PublishNowError(f"local chapter {chapter_number} does not exist")
+    missing_local = [ch for ch in targets if ch not in local]
+    if missing_local:
+        raise PublishNowError(f"local chapters do not exist: {missing_local}")
 
     runtime_dir = fanqie_probe.resolve_runtime(runtime_arg)
     runtime = _load_runtime(runtime_dir)
@@ -223,31 +371,64 @@ async def run(novel_dir: Path, runtime_arg: str | None, request_path: Path) -> i
     headless = bool((config.get("browser") or {}).get("headless", True))
     use_ai = bool((policy.get("declaration") or {}).get("use_ai", True))
 
+    chapter_results: list[dict[str, Any]] = []
+    reflow_result: dict[str, Any] = {"performed": False}
+    error: Exception | None = None
+
     async with runtime.async_playwright() as p:
         browser, context = await runtime.create_context(p, headless=headless)
         page = await context.new_page()
         try:
             rows = await _read_chapter_table(runtime, page, book_id)
-            row = _find_numbered(rows, chapter_number)
-            if not row:
-                raise PublishNowError(f"Fanqie does not contain chapter {chapter_number}")
-            before_status = _status_text(row)
-            print(
-                f"target: 第{chapter_number}章 | {row.get('title')} | "
-                f"status={before_status} | date={row.get('date')} {row.get('time')}"
-            )
+            _verify_batch_precondition(rows, targets)
 
-            if "已发布" in before_status:
-                final_status = "published"
-                verified = row
-                print("target is already published; treating request as idempotently complete")
-            else:
-                if "待发布" not in before_status:
-                    raise PublishNowError(
-                        f"chapter {chapter_number} must be 待发布; actual status={before_status!r}"
-                    )
-                await _publish_existing_now(runtime, page, row, use_ai=use_ai)
-                final_status, verified = await _verify(runtime, page, book_id, chapter_number)
+            for chapter_number in targets:
+                rows = await _read_chapter_table(runtime, page, book_id)
+                row = _find_numbered(rows, chapter_number)
+                if not row:
+                    raise PublishNowError(f"Fanqie does not contain chapter {chapter_number}")
+                before_status = _status_text(row)
+                print(
+                    f"target: 第{chapter_number}章 | {row.get('title')} | "
+                    f"status={before_status} | date={row.get('date')} {row.get('time')}"
+                )
+                try:
+                    if "已发布" in before_status:
+                        final_status = "published"
+                        verified = row
+                        print("target is already published; treating request as idempotently complete")
+                    else:
+                        if "待发布" not in before_status:
+                            raise PublishNowError(
+                                f"chapter {chapter_number} must be 待发布; actual status={before_status!r}"
+                            )
+                        await _publish_existing_now(runtime, page, row, use_ai=use_ai)
+                        final_status, verified = await _verify(runtime, page, book_id, chapter_number)
+                    chapter_results.append({
+                        "chapter": chapter_number,
+                        "platform_status": final_status,
+                        "title": verified.get("title"),
+                        "scheduled_date_before": row.get("date"),
+                        "scheduled_time_before": row.get("time"),
+                    })
+                except Exception as exc:
+                    error = exc
+                    chapter_results.append({
+                        "chapter": chapter_number,
+                        "platform_status": "failed",
+                        "title": row.get("title"),
+                        "scheduled_date_before": row.get("date"),
+                        "scheduled_time_before": row.get("time"),
+                        "message": str(exc),
+                    })
+                    break
+
+            if error is None and all(r.get("platform_status") in {"published", "reviewing"} for r in chapter_results):
+                try:
+                    reflow_result = await _reflow_remaining(runtime, page, book_id, policy, request)
+                except Exception as exc:
+                    error = exc
+                    reflow_result = {"performed": True, "verified": False, "message": str(exc)}
 
             await runtime.save_auth(context)
         finally:
@@ -256,22 +437,23 @@ async def run(novel_dir: Path, runtime_arg: str | None, request_path: Path) -> i
     request["status"] = "completed"
     request["completed_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     request["result"] = {
-        "platform_status": final_status,
-        "chapter": chapter_number,
-        "title": verified.get("title"),
-        "scheduled_date_before": row.get("date"),
-        "scheduled_time_before": row.get("time"),
+        "platform_status": "success" if error is None else "partial_or_failed",
+        "chapters": chapter_results,
+        "reflow": reflow_result,
     }
+    if error is not None:
+        request["result"]["message"] = str(error)
     _write_request(request_path, request)
-    print(
-        f"PUBLISH_NOW_OK book_id={book_id} chapter={chapter_number} "
-        f"platform_status={final_status}"
-    )
+
+    if error is not None:
+        print(f"PUBLISH_NOW_INCOMPLETE book_id={book_id} targets={targets} error={error}")
+        return 2
+    print(f"PUBLISH_NOW_OK book_id={book_id} chapters={targets} reflow={reflow_result.get('performed')}")
     return 0
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Publish one scheduled Fanqie chapter immediately")
+    parser = argparse.ArgumentParser(description="Publish scheduled Fanqie chapter(s) immediately")
     parser.add_argument("novel_dir", type=Path)
     parser.add_argument("--runtime")
     parser.add_argument("--request", type=Path, required=True)
