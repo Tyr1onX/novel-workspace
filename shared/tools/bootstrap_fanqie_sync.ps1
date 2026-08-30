@@ -72,16 +72,30 @@ function Configure-GitHubRunner([string]$Destination) {
 }
 
 function Install-RunnerAutostart([string]$Destination) {
-    $launcher = Join-Path $Destination "run-fanqie-runner.ps1"
+    $psLauncher = Join-Path $Destination "run-fanqie-runner.ps1"
+    $vbsLauncher = Join-Path $Destination "run-fanqie-runner.vbs"
+
     @"
 `$ErrorActionPreference = "Stop"
 Set-Location "$Destination"
 & ".\run.cmd"
-"@ | Set-Content -Path $launcher -Encoding UTF8
+exit `$LASTEXITCODE
+"@ | Set-Content -Path $psLauncher -Encoding UTF8
+
+    # Use Windows Script Host as the scheduled-task host. WScript has no console and
+    # starts the PowerShell/runner process with window style 0, so logging in does not
+    # leave a visible terminal window that can accidentally terminate the runner.
+    @"
+Set shell = CreateObject("WScript.Shell")
+shell.CurrentDirectory = "$Destination"
+command = "powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File ""$psLauncher"""
+exitCode = shell.Run(command, 0, True)
+WScript.Quit exitCode
+"@ | Set-Content -Path $vbsLauncher -Encoding Unicode
 
     $action = New-ScheduledTaskAction `
-        -Execute "powershell.exe" `
-        -Argument "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$launcher`""
+        -Execute "wscript.exe" `
+        -Argument "//B //Nologo `"$vbsLauncher`""
     $trigger = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
     $principal = New-ScheduledTaskPrincipal `
         -UserId "$env:USERDOMAIN\$env:USERNAME" `
@@ -90,7 +104,10 @@ Set-Location "$Destination"
     $settings = New-ScheduledTaskSettingsSet `
         -AllowStartIfOnBatteries `
         -DontStopIfGoingOnBatteries `
-        -ExecutionTimeLimit ([TimeSpan]::Zero)
+        -ExecutionTimeLimit ([TimeSpan]::Zero) `
+        -RestartCount 999 `
+        -RestartInterval (New-TimeSpan -Minutes 1) `
+        -MultipleInstances IgnoreNew
 
     try {
         Register-ScheduledTask `
@@ -99,21 +116,21 @@ Set-Location "$Destination"
             -Trigger $trigger `
             -Principal $principal `
             -Settings $settings `
-            -Description "GitHub self-hosted runner for novel-workspace Fanqie sync" `
+            -Description "Hidden GitHub self-hosted runner for novel-workspace Fanqie sync" `
             -Force | Out-Null
-        Write-Host "Registered runner autostart task: $RunnerTaskName"
+        Write-Host "Registered hidden runner autostart task: $RunnerTaskName"
     }
     catch {
         Write-Warning "Task Scheduler registration failed: $($_.Exception.Message)"
-        Write-Warning "The runner is configured, but you will need to start $launcher after Windows login until autostart is fixed."
+        Write-Warning "The runner is configured, but you will need to start $vbsLauncher after Windows login until autostart is fixed."
     }
 
     $existing = Get-CimInstance Win32_Process -Filter "Name = 'Runner.Listener.exe'" -ErrorAction SilentlyContinue
     if (-not $existing) {
-        Start-Process powershell.exe `
-            -ArgumentList "-NoProfile", "-WindowStyle", "Hidden", "-ExecutionPolicy", "Bypass", "-File", $launcher `
+        Start-Process wscript.exe `
+            -ArgumentList "//B", "//Nologo", $vbsLauncher `
             -WindowStyle Hidden
-        Write-Host "Started the GitHub runner for this Windows session."
+        Write-Host "Started the hidden GitHub runner for this Windows session."
     }
 }
 
@@ -133,10 +150,11 @@ Write-Host "Step 2/3: install and configure the GitHub self-hosted runner."
 Install-GitHubRunner $RunnerDir
 Configure-GitHubRunner $RunnerDir
 
-Write-Host "Step 3/3: start the runner automatically whenever this Windows account logs in."
+Write-Host "Step 3/3: start the runner automatically and invisibly whenever this Windows account logs in."
 Install-RunnerAutostart $RunnerDir
 
 Write-Host ""
 Write-Host "Bootstrap complete."
+Write-Host "The runner autostarts in the background with no terminal window to keep open."
 Write-Host "Platform sync is still disabled in the repository, so this setup cannot publish anything yet."
 Write-Host "After telling the assistant that login + runner setup succeeded, the repository policy can be activated safely."
