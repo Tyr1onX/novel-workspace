@@ -1,25 +1,18 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "id": "reader-update-2026-08-29-ch82",
+  "id": "reader-extra-2026-08-30-ch85-87",
   "action": "publish_now",
-  "chapter": 82,
-  "status": "completed",
+  "chapters": [85, 86, 87],
+  "status": "pending",
   "authorized": true,
-  "triggered_at": "2026-08-29T19:33:00+08:00",
+  "triggered_at": "2026-08-30T18:32:00+08:00",
   "audit": {
     "status": "passed",
-    "basis": "Chapter 82 was the next chapter after the already-published chapter 81. The author explicitly requested one additional immediate chapter because a loyal reader requested an update. The runner verified chapter 82 existed on Fanqie in 待发布 state before attempting the release-mode change."
+    "basis": "The author explicitly requested three additional immediate chapters for the rail novel on 2026-08-30. The last verified schedule placed chapters 82-84 at 2026-08-30 00:00 and chapters 85-87 at 2026-08-31 00:00. The batch executor must re-read Fanqie and will refuse mutation unless 85,86,87 are exactly the first three remaining pending chapters (or idempotently already published on retry), preventing any chapter-order skip. After all three immediate releases succeed, remaining pending chapters are compacted forward from 2026-08-31 so the normal three-chapter 00:00 daily quota is preserved."
   },
-  "reason": "One-chapter reader-requested extra update. Publish chapter 82 immediately without changing its title/body or touching the schedules of chapters 83 and later.",
-  "completed_at": "2026-08-29T11:45:41+00:00",
-  "result": {
-    "platform_status": "blocked_daily_word_limit",
-    "chapter": 82,
-    "title": "第82章 四只旧滤筒，第一只就不用洗",
-    "scheduled_date_before": "2026-08-30",
-    "scheduled_time_before": "00:00",
-    "confirm_publish_submitted": false,
-    "message": "当日发布字数已达上限: 提交字数超出每日上限"
+  "reason": "Reader-requested three-chapter extra release for the rail novel. Publish the next three pending chapters immediately, then pull all later scheduled chapters forward by one three-chapter group without changing title/body content or chapter order.",
+  "reflow": {
+    "start_date": "2026-08-31"
   }
 }
