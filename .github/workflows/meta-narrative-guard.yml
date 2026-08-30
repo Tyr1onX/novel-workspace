@@ -19,16 +19,33 @@ jobs:
           python shared/tools/meta_narrative_guard.py \
             novels/endless-rail/chapters/volume-*/*.md
 
-  endless-rail-unpublished-novel-gate:
+  endless-rail-novel-gate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run full novel gate for unpublished Endless Rail chapters 88-106
+      - name: Run dialogue, humanizer, prose and meta guards for modern Endless Rail chapters
         shell: bash
         run: |
-          python shared/tools/novel_gate.py \
-            novels/endless-rail/chapters/volume-02/chapter-0{88..94}.md \
-            novels/endless-rail/chapters/volume-03/chapter-{095..106}.md
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import subprocess
+          import sys
+
+          chapters = []
+          for path in Path("novels/endless-rail/chapters").glob("volume-*/*.md"):
+              match = re.fullmatch(r"chapter-(\d+)\.md", path.name)
+              if match and int(match.group(1)) >= 88:
+                  chapters.append((int(match.group(1)), path))
+          chapters.sort()
+          if not chapters:
+              raise SystemExit("No Endless Rail chapters >= 88 found")
+          subprocess.check_call([
+              sys.executable,
+              "shared/tools/novel_gate.py",
+              *[str(path) for _number, path in chapters],
+          ])
+          PY
 
   walk-to-earn-novel-gate:
     runs-on: ubuntu-latest
