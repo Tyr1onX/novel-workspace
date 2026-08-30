@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-08-30T11:31:00+00:00",
+  "updated_at": "2026-08-30T11:38:42+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -32,11 +32,12 @@
       "action": "update",
       "chapters": "21-40",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "basis": "User explicitly required the WeChat Sports novel to be fully rewritten, repeatedly audited, and republished after reader reports of stiff AI-like dialogue. Chapters 21-40 are the audited canonical continuation of the same full-book rewrite merged at 5068d3072427cbfc8fc1066e6752d3304bdb28f4. Multi-pass Dialogue/Humanizer/Prose/Meta review was completed before platform mutation. This operation republishes chapters 21-40 without changing chapter order or release schedule."
-      }
+      },
+      "completed_at": "2026-08-30T11:38:42+00:00"
     }
   ]
 }
