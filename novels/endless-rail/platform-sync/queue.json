@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-08-30T13:36:00+00:00",
+  "updated_at": "2026-08-30T13:39:55+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -22,15 +22,49 @@
         "title_mismatches": 0,
         "position_mismatches": 0,
         "schedule": {
-          "2026-08-30": [82, 83, 84],
-          "2026-08-31": [85, 86, 87],
-          "2026-09-01": [88, 89, 90],
-          "2026-09-02": [91, 92, 93],
-          "2026-09-03": [94, 95, 96],
-          "2026-09-04": [97, 98, 99],
-          "2026-09-05": [100, 101, 102],
-          "2026-09-06": [103, 104, 105],
-          "2026-09-07": [106]
+          "2026-08-30": [
+            82,
+            83,
+            84
+          ],
+          "2026-08-31": [
+            85,
+            86,
+            87
+          ],
+          "2026-09-01": [
+            88,
+            89,
+            90
+          ],
+          "2026-09-02": [
+            91,
+            92,
+            93
+          ],
+          "2026-09-03": [
+            94,
+            95,
+            96
+          ],
+          "2026-09-04": [
+            97,
+            98,
+            99
+          ],
+          "2026-09-05": [
+            100,
+            101,
+            102
+          ],
+          "2026-09-06": [
+            103,
+            104,
+            105
+          ],
+          "2026-09-07": [
+            106
+          ]
         }
       }
     },
@@ -76,14 +110,15 @@
     {
       "id": "humanizer-sync-ch103-106-2026-08-30",
       "action": "update",
-      "status": "pending",
+      "status": "completed",
       "authorized": true,
       "chapters": "103-106",
       "audit": {
         "status": "passed",
         "basis": "PR #16 passed the full Dialogue/Humanizer/Prose/Meta review. The latest read-only reconciliation at 2026-08-30 21:34 Asia/Shanghai confirmed chapters 103-106 remain scheduled/unpublished with zero title or position mismatches. Exact chapter-table schedules remain 103-105 at 2026-09-05 00:00 and 106 at 2026-09-06 00:00 Asia/Shanghai."
       },
-      "reason": "Sync the final approved Humanizer prose revisions for chapters 103-106 while preserving existing chapter IDs, order and scheduled release times."
+      "reason": "Sync the final approved Humanizer prose revisions for chapters 103-106 while preserving existing chapter IDs, order and scheduled release times.",
+      "completed_at": "2026-08-30T13:39:55+00:00"
     }
   ]
 }

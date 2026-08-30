@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-08-30T13:31:11+00:00",
+  "last_sync_at": "2026-08-30T13:39:55+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -69,6 +69,30 @@
       "last_action": "update",
       "last_synced_at": "2026-08-30T13:31:11+00:00",
       "queue_operation_id": "humanizer-sync-ch97-102-2026-08-30"
+    },
+    "103": {
+      "local_sha256": "846e08737067e1b6d0e39ffc8e64d1751e81ccc02d30997902745e5e8586cc3f",
+      "last_action": "update",
+      "last_synced_at": "2026-08-30T13:39:55+00:00",
+      "queue_operation_id": "humanizer-sync-ch103-106-2026-08-30"
+    },
+    "104": {
+      "local_sha256": "ad10c8a43b84bf36b72450b1b858eef6b1104c8fe3ae93b1cd436b0883364dc3",
+      "last_action": "update",
+      "last_synced_at": "2026-08-30T13:39:55+00:00",
+      "queue_operation_id": "humanizer-sync-ch103-106-2026-08-30"
+    },
+    "105": {
+      "local_sha256": "4687f7c686d261ca7f9511ba6cd1a44c79388a3f6cae915a8237f68342494174",
+      "last_action": "update",
+      "last_synced_at": "2026-08-30T13:39:55+00:00",
+      "queue_operation_id": "humanizer-sync-ch103-106-2026-08-30"
+    },
+    "106": {
+      "local_sha256": "869c836426af7eadf13af33e351d26a62ad2a9804c76af2737123621fd12b4ad",
+      "last_action": "update",
+      "last_synced_at": "2026-08-30T13:39:55+00:00",
+      "queue_operation_id": "humanizer-sync-ch103-106-2026-08-30"
     }
   }
 }
