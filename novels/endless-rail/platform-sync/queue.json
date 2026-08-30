@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-08-30T13:32:00+00:00",
+  "updated_at": "2026-08-30T13:36:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -72,6 +72,18 @@
       },
       "reason": "Sync the approved Humanizer prose revisions for chapters 97-102 while preserving existing chapter IDs, order and scheduled release times.",
       "completed_at": "2026-08-30T13:31:11+00:00"
+    },
+    {
+      "id": "humanizer-sync-ch103-106-2026-08-30",
+      "action": "update",
+      "status": "pending",
+      "authorized": true,
+      "chapters": "103-106",
+      "audit": {
+        "status": "passed",
+        "basis": "PR #16 passed the full Dialogue/Humanizer/Prose/Meta review. The latest read-only reconciliation at 2026-08-30 21:34 Asia/Shanghai confirmed chapters 103-106 remain scheduled/unpublished with zero title or position mismatches. Exact chapter-table schedules remain 103-105 at 2026-09-05 00:00 and 106 at 2026-09-06 00:00 Asia/Shanghai."
+      },
+      "reason": "Sync the final approved Humanizer prose revisions for chapters 103-106 while preserving existing chapter IDs, order and scheduled release times."
     }
   ]
 }
