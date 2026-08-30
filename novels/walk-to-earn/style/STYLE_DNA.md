@@ -1,7 +1,7 @@
 # Walk to Earn — STYLE DNA
 
-> 这是本书的正向写法，不替代 `shared/PROSE_RULES.md` 与 `shared/DIALOGUE_RULES.md`。
-> 人物具体交流方式同时读取 `DIALOGUE_VOICES.md`。
+> 这是本书的正向写法，不替代 `shared/PROSE_RULES.md`、`shared/DIALOGUE_RULES.md`、`shared/HUMANIZER_RULES.md` 与 `shared/HUMANIZER_EVOLUTION.md`。
+> 人物具体交流方式同时读取 `DIALOGUE_VOICES.md`；语气样本读取 `VOICE_SAMPLES.md`；历史语言反馈读取 `HUMANIZER_FEEDBACK.md`。
 
 ## 1. 整体感觉
 
@@ -213,18 +213,48 @@
 本书任何新章或大幅改稿必须依次完成：
 
 1. 读取连续性、人物、当前阶段；
-2. 第一稿只保证事件与人物目的；
-3. **Dialogue Pass**：按 `shared/DIALOGUE_RULES.md` 和 `DIALOGUE_VOICES.md` 重读所有主要对话；
-4. 运行 `python shared/tools/dialogue_guard.py <chapter.md>`；
-5. 做主要人物“遮名字测试”；
-6. **Prose Pass**：按 `shared/PROSE_RULES.md` 清理叙述层AI腔；
-7. 运行 `python shared/tools/prose_guard.py <chapter.md>`；
-8. 数字、连续性、地点、热梗审计；
-9. 人工通读后才允许提交。
+2. 读取 `STYLE_DNA.md`、`DIALOGUE_VOICES.md`、`VOICE_SAMPLES.md`、`HUMANIZER_FEEDBACK.md`；
+3. 读取 `shared/DIALOGUE_RULES.md`、`shared/HUMANIZER_RULES.md`、`shared/HUMANIZER_EVOLUTION.md`、`shared/PROSE_RULES.md`、`shared/META_NARRATIVE_RULES.md`；
+4. 第一稿只保证事件与人物目的；
+5. **Dialogue Pass**：按人物自己的注意力和目的重读主要对话；
+6. 运行 `python shared/tools/dialogue_guard.py <chapter.md>`；
+7. 做主要人物“遮名字测试”；
+8. **Humanizer Pass**：检查统计平均、假深刻、机械三拍、金句公式、解释尾巴、句长过匀、每段都收尾等模式；
+9. 运行 `python shared/tools/humanizer_guard.py <chapter.md>`；
+10. **Prose Pass**：按 `shared/PROSE_RULES.md` 清理叙述层AI腔；
+11. 运行 `python shared/tools/prose_guard.py <chapter.md>` 与 `python shared/tools/meta_narrative_guard.py <chapter.md>`；
+12. 数字、连续性、地点、热梗审计；
+13. 人工通读后才允许提交。
 
-每累计10章，额外对最近10章批量运行 `dialogue_guard.py`，检查重复问句和角色功能复发。
+每累计10章，额外对最近10章批量运行 `dialogue_guard.py` 与 `humanizer_guard.py`，检查重复问句、角色固定功能、重复口癖和新的模型舒适区。
 
-## 14. 本书真正应该让读者产生的念头
+如果本轮作者亲手修改、明确选择版本或给出新的语言偏好，提交正文前还必须按 `shared/HUMANIZER_EVOLUTION.md` 执行 Diff Learning，并更新 `HUMANIZER_FEEDBACK.md`。不能只保存最终稿。
+
+## 14. Humanizer 正向目标
+
+这本书的“人味”不靠故意加废话，而靠具体材料和人物自己的注意力。
+
+优先保留：
+
+- 不漂亮但真实的生活细节；
+- 身体上轻微、渐进的反馈；
+- 人物自己的饭、兼职、工作、疲劳、安排；
+- 信息密度不平均，有的地方一句带过，有的地方多停一会儿；
+- 角色知道道理但情绪没跟上的摩擦；
+- 普通句；
+- 没有总结的场景结尾。
+
+禁止为了“像真人”机械制造：
+
+- “嗯、呃、其实、就是”；
+- 故意答非所问；
+- 每三句插一个动作；
+- 凭空的旧经历、创伤、暧昧和新立场；
+- 另一套固定“不工整模板”。
+
+Humanizer 只能放大本书已有材料，不能替作者编造人味。
+
+## 15. 本书真正应该让读者产生的念头
 
 读者读完一段以后，最好会自己想：
 
