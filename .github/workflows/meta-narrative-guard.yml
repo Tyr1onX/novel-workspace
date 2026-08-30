@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - fix/endless-rail-meta-leaks
+      - audit/endless-rail-humanizer-088-106
   pull_request:
 
 jobs:
@@ -17,6 +18,17 @@ jobs:
         run: |
           python shared/tools/meta_narrative_guard.py \
             novels/endless-rail/chapters/volume-*/*.md
+
+  endless-rail-unpublished-novel-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run full novel gate for unpublished Endless Rail chapters 88-106
+        shell: bash
+        run: |
+          python shared/tools/novel_gate.py \
+            novels/endless-rail/chapters/volume-02/chapter-0{88..94}.md \
+            novels/endless-rail/chapters/volume-03/chapter-{095..106}.md
 
   walk-to-earn-novel-gate:
     runs-on: ubuntu-latest
