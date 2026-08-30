@@ -3,8 +3,12 @@
   "book_id": "7670480372831882302",
   "id": "reader-extra-2026-08-30-ch85-87",
   "action": "publish_now",
-  "chapters": [85, 86, 87],
-  "status": "pending",
+  "chapters": [
+    85,
+    86,
+    87
+  ],
+  "status": "completed",
   "authorized": true,
   "triggered_at": "2026-08-30T18:32:00+08:00",
   "audit": {
@@ -14,5 +18,41 @@
   "reason": "Reader-requested three-chapter extra release for the rail novel. Publish the next three pending chapters immediately, then pull all later scheduled chapters forward by one three-chapter group without changing title/body content or chapter order.",
   "reflow": {
     "start_date": "2026-08-31"
+  },
+  "completed_at": "2026-08-30T10:51:14+00:00",
+  "result": {
+    "platform_status": "success",
+    "chapters": [
+      {
+        "chapter": 85,
+        "platform_status": "published",
+        "title": "第85章 四只试批，最后留下两只",
+        "scheduled_date_before": "2026-08-31",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 86,
+        "platform_status": "published",
+        "title": "第86章 下一批六只，先检再洗",
+        "scheduled_date_before": "2026-08-31",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 87,
+        "platform_status": "published",
+        "title": "第87章 六只都到了，第一只停在门口",
+        "scheduled_date_before": "2026-08-31",
+        "scheduled_time_before": "00:00"
+      }
+    ],
+    "reflow": {
+      "performed": true,
+      "start_date": "2026-08-31",
+      "group_size": 3,
+      "time": "00:00",
+      "pending_count": 19,
+      "changed_or_confirmed": 19,
+      "verified": true
+    }
   }
 }
