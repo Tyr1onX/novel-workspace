@@ -17,3 +17,13 @@ jobs:
         run: |
           python shared/tools/meta_narrative_guard.py \
             novels/endless-rail/chapters/volume-*/*.md
+
+  walk-to-earn-novel-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run dialogue, humanizer, prose and meta guards
+        shell: bash
+        run: |
+          python shared/tools/novel_gate.py \
+            novels/walk-to-earn/chapters/chapter-*.md

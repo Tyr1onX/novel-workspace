@@ -8,6 +8,7 @@
 
 - `shared/`：跨小说复用的研究结论、写作规则与市场方法。
 - `novels/`：每一本小说独立存放正文、设定、大纲、章节卡和平台状态。
+- `AGENTS.md`：AI / Agent 在本仓库写正文、改稿、去 AI 味时必须遵守的入口规则。
 
 ## 当前小说
 
@@ -26,7 +27,7 @@
 - 平台：番茄小说
 - 状态：DRAFTING
 - 核心：有效步行可以换成真钱；开局 0.04 元/步，累计里程推动单步价值成长。
-- 第一章《五千步，两百块》已成为当前续写基准。
+- 当前正在执行第1～40章 Dialogue + Humanizer 全量整改，整改分支未完成前不得把旧版对白当作新章模板。
 
 ### `novels/second-pass/`
 
@@ -51,9 +52,36 @@
 3. 只有经过多样本研究或多个项目反复验证的结论，才进入 `shared/`。
 4. 某一本小说为了题材需要违反通用规则时，在该小说内部记录例外，不反向修改通用规则。
 5. 市场数据必须区分平台、推荐状态、曝光可见性和作者供给，不能直接跨平台比较数字。
-6. 任何小说正文除项目自身规则外，默认同时读取 `shared/RULES.md` 与 `shared/PROSE_RULES.md`；初稿完成后必须经过 prose scan 和人工语言复核，才能作为后续续写基准。
-7. 去 AI 腔不是关键词替换任务。禁止为了通过检查机械碎句、强行口语化、批量改同义词或清除作品本来成立的排比、比喻和节奏。
-8. 新项目除了共享语言闸门，还应建立自己的正向 `STYLE_DNA`，明确这一本书具体应该怎样写。
-9. 任何新设定先过“作者自己是否想点”的测试。包装无法救活一个自己都不想看的核心幻想。
+6. 任何小说正文除项目自身规则外，默认同时读取：`shared/RULES.md`、`shared/DIALOGUE_RULES.md`、`shared/HUMANIZER_RULES.md`、`shared/HUMANIZER_EVOLUTION.md`、`shared/PROSE_RULES.md`、`shared/META_NARRATIVE_RULES.md`。
+7. 新章/大改稿默认依次经过：Dialogue Pass → `dialogue_guard.py` → Humanizer Pass → `humanizer_guard.py` → Prose Pass → `prose_guard.py` → `meta_narrative_guard.py` → 连续性/数字终审。
+8. 去 AI 腔不是关键词替换任务。禁止为了通过检查机械碎句、强行口语化、批量改同义词或清除作品本来成立的排比、比喻和节奏。
+9. 每本长期项目都应建立自己的正向 `STYLE_DNA`；有稳定人物对白时建立 `DIALOGUE_VOICES.md`；有作者认可样本后建立/维护 `VOICE_SAMPLES.md`。
+10. 作者人工改稿、版本选择、读者明确语言反馈都属于长期训练数据，必须按 `HUMANIZER_EVOLUTION.md` 回写到单本 `HUMANIZER_FEEDBACK.md`，不能改完正文就丢。
+11. Humanizer 规则必须有误杀边界与回归测试。规则越多不代表越好，要防止形成新的“规则腔”。
+12. 任何新设定先过“作者自己是否想点”的测试。包装无法救活一个自己都不想看的核心幻想。
+
+## 长期 Humanizer 机制
+
+本仓库不采用“一条万能 prompt 去 AI 味”的方案，而采用可积累系统：
+
+```text
+禁止层：共享 AI 痕迹与文体底线
+↓
+语气层：单本 STYLE_DNA / DIALOGUE_VOICES / VOICE_SAMPLES
+↓
+初稿与 Dialogue / Humanizer / Prose 审核
+↓
+作者校稿或读者反馈
+↓
+保存改前→改后差异
+↓
+提炼候选规则并验证
+↓
+稳定后升级单本或 shared
+↓
+下一章从更新后的规则开始
+```
+
+现成的 `blader/humanizer`、`op7418/Humanizer-zh`、`Raymondhou0917/speak-human-tw` 只作为起点；本仓库最终规则以作者真实校稿记录和本项目验证为准。
 
 > 仓库名只是工作区名称，不等于任何一本小说的正式书名。
