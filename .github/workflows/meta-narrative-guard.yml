@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - fix/endless-rail-meta-leaks
+      - audit/endless-rail-humanizer-088-106
   pull_request:
 
 jobs:
@@ -17,6 +18,34 @@ jobs:
         run: |
           python shared/tools/meta_narrative_guard.py \
             novels/endless-rail/chapters/volume-*/*.md
+
+  endless-rail-novel-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run dialogue, humanizer, prose and meta guards for modern Endless Rail chapters
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import subprocess
+          import sys
+
+          chapters = []
+          for path in Path("novels/endless-rail/chapters").glob("volume-*/*.md"):
+              match = re.fullmatch(r"chapter-(\d+)\.md", path.name)
+              if match and int(match.group(1)) >= 88:
+                  chapters.append((int(match.group(1)), path))
+          chapters.sort()
+          if not chapters:
+              raise SystemExit("No Endless Rail chapters >= 88 found")
+          subprocess.check_call([
+              sys.executable,
+              "shared/tools/novel_gate.py",
+              *[str(path) for _number, path in chapters],
+          ])
+          PY
 
   walk-to-earn-novel-gate:
     runs-on: ubuntu-latest
