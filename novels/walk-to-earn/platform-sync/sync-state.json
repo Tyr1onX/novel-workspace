@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "last_sync_at": "2026-08-30T22:55:26+00:00",
+  "last_sync_at": "2026-08-30T23:03:28+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "18": {
@@ -125,124 +125,124 @@
       "queue_operation_id": "walk-dialogue-rebuild-v2-republish-001-020-20260831"
     },
     "21": {
-      "local_sha256": "9f22276e5b9737f2744d8f49a5dedb765f1950e0907ef960dcd561b142750f0e",
+      "local_sha256": "0649dd67a626030c043573cb07f215ab927d4c34f7ad97fd0f92c5e3a131c907",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "22": {
-      "local_sha256": "13a462a5f23283b22bbbb07df8337a1aa7b804ace51c3132e1a27cdcf735c627",
+      "local_sha256": "194a0b00ba9a198d8cb3a54c5ddbb18b5b926ea6fae2aa47ae3f86375ea4b5ea",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "23": {
-      "local_sha256": "e61d9842b0037f6ce598670ef78ea0a2e1359991020ffec7477e02e9f8459a42",
+      "local_sha256": "ea672fd79f11438799337b9a3e3d9c90963512123a54b16711c751a1fbbee99f",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "24": {
-      "local_sha256": "0f49518443246d9b9738c44feba1095b19431597c4ca5a961703c050015ed307",
+      "local_sha256": "8dcfacc87e5e1059eaa9f7d10df5561b11f28fa2a7a541376f23899133a246b7",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "25": {
-      "local_sha256": "a25437ecc56da9e7c8f956f2d11482610ca4d9a2206adf0761dc1cc603db9904",
+      "local_sha256": "c8c5e0a943eb09e6dcccc92be8bd9e22f7b1db9b3c33337445fbef6c7a158de5",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "26": {
-      "local_sha256": "984587559fc56d8517f7911e110a82e50316370cd6502af9559048ca14d01116",
+      "local_sha256": "97b23bc7ba631621dac8721090e195cb56e0393c94ffb0ac5ec24a4cfa8a95c5",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "27": {
-      "local_sha256": "bddd515df0ce0ebb4c251a1decb657d73ae2d7f9b2891ece43f8adeb7cb11a6d",
+      "local_sha256": "1c2a59d535d06e64d3de259bd85573b1241d747dfb8e62fa918c7281edfdbec5",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "28": {
-      "local_sha256": "761da9e01a0996d019fe03dcf50dcab9b9e0eb05d2c9c89015a524fea1e97e3d",
+      "local_sha256": "b2c287c7533b5e0637cc7cc3023cc43442a7ad3b242c67f546ec2023feb1b48b",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "29": {
-      "local_sha256": "24f4631034ba2726c707a64f36ec0f1135b1e8a9fbbd3e56b064cd33c413f059",
+      "local_sha256": "d02b2fb8bd655292d27580bcff3161271f1a5b9b77b7b78b476975023c4cc628",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "30": {
-      "local_sha256": "3349f3e59495da2b4fc2dcb8ed1947776f9d720fb7c2563f6d6e860e52e15e6e",
+      "local_sha256": "1caf0e789a3c75e57bad121e4a7fb26d802ae3efc71afa2984d471d7dbb8de5b",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "31": {
-      "local_sha256": "2e1a047ddd0f76e48f1cb1a9429842591e973607867a966867cbf065bd1c7b1d",
+      "local_sha256": "c339c2a01059a26b31a3550b61a21472800e95c265c82d03c88e787e864050a0",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "32": {
-      "local_sha256": "3600de8472616afac31a3a3ce5a3277a55be5df22f7128c3f5189c0cfe6d5e2e",
+      "local_sha256": "f48a1e1b2000ecff2926296a1f91b6381fb9d65bfb672fb34282c4e86bbd7a7e",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "33": {
-      "local_sha256": "3707cd7f0dd375ef040adf188cdf06aebb8783f6d35be61c71833394437ec7b4",
+      "local_sha256": "cec7f916bb1673382c61efa9596adb007871de37400c01946a043ffa1f41cf96",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "34": {
-      "local_sha256": "447b4debab52d9a565cead5935971465fc31b55e678b9584ccc357ba7d024baf",
+      "local_sha256": "d9cb50a420047f2dbfad3121da96c9ed6472cd619c0ef62a1b0b63c5a37ea31f",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "35": {
-      "local_sha256": "fdbdf8f27421c83f94ea4a62875311ab7ca82faffa5cd4a150f52ffddaab5738",
+      "local_sha256": "1be763820c3fde70ecdafbdaa9a3f2461b0beb5311d8debf63308a92f728c8c3",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "36": {
-      "local_sha256": "0ed0a430a5f9f2f77932e2d757f6d1da41e1c9d75b758502d7dfbf9cb3470975",
+      "local_sha256": "a3f3b87fd07ad7fa234b0651b66cb5c35d67f04e45f3dd0c3089df51ae845a09",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "37": {
-      "local_sha256": "72a6632779340a3ee89e1466154a9dfa627d09bf7170e9ce90ae4f0c202b99e5",
+      "local_sha256": "c58127e9c0f5e00c16cc44b2825d5cb7154edec8f54db73f3376f9f7e199ab0f",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "38": {
-      "local_sha256": "81508229ba2635d4c1286ae8d47ce4b7a1113a677c549fe9f23b66d1fb419353",
+      "local_sha256": "fa3f83454904f02fec52065f781565f5b79c7b5264e3569ad396e167be8194a4",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "39": {
-      "local_sha256": "c927087627ec467914d50870880d52cad7d2e5fdf08afa0f9e16411b68807a28",
+      "local_sha256": "a79ebeb5279e8b00435569cb8f0afb6ea04c19713f82a5505b01b6eb0ff4dc60",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     },
     "40": {
-      "local_sha256": "863a997a7a30f4ef618affac92001ce148afeb30c56d9392a60505c63539b69a",
+      "local_sha256": "847c4fc6b145b0c60e18767c94ea3a21e7d57c126ea5e096bbe6e2ca1a4759f9",
       "last_action": "update",
-      "last_synced_at": "2026-08-30T11:38:42+00:00",
-      "queue_operation_id": "walk-dialogue-overhaul-republish-021-040-20260830"
+      "last_synced_at": "2026-08-30T23:03:28+00:00",
+      "queue_operation_id": "walk-dialogue-rebuild-v2-republish-021-040-20260831"
     }
   }
 }
