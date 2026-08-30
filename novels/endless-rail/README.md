@@ -10,6 +10,7 @@
 - 第1～70章：已按该导出恢复为逐章正文；第6、7、8、30章人物连续性小修已回填平台
 - 第71～86章：恢复完成后的仓库新稿/修正版
 - 第87～106章：2026-08-29 连续续写，并完成逐章审计与全量连续性复核；详见 `docs/audit-087-106.md`
+- 第88～106章：2026-08-30 追加最新 Dialogue / Humanizer 审计；真实高风险段落已优先在未发布库存中整改，书级规则见 `style/HUMANIZER_FEEDBACK.md`
 - 最新仓库正文：第106章《七张需求单，今天只接两件急的》
 - 下一章：第107章
 - 第一卷《初生移动站》：第1～35章，已完成
@@ -58,8 +59,19 @@
 11. `docs/short-term-outline.md`
 12. `docs/long-term-outline.md`
 13. `docs/master-outline.md`
-14. `shared/RULES.md`
-15. `shared/PROSE_RULES.md`
+14. `style/HUMANIZER_FEEDBACK.md`
+15. `shared/RULES.md`
+16. `shared/DIALOGUE_RULES.md`
+17. `shared/HUMANIZER_RULES.md`
+18. `shared/HUMANIZER_EVOLUTION.md`
+19. `shared/PROSE_RULES.md`
+20. `shared/META_NARRATIVE_RULES.md`
+
+后续任何新章、重写或平台同步前，除事实连续性审计外，必须执行完整语言门禁：
+
+`Dialogue → Humanizer → Prose → Meta → 人工复核`
+
+自动 WARN 只负责定位，不能为了清零告警机械改写真实货单、接口卡、系统框、型号、尺寸和必要安全检查。
 
 ## 权威顺序
 
