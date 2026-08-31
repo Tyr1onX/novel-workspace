@@ -1,58 +1,22 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "id": "reader-extra-2026-08-30-ch85-87",
+  "id": "reader-extra-2026-08-31-ch91-93",
   "action": "publish_now",
   "chapters": [
-    85,
-    86,
-    87
+    91,
+    92,
+    93
   ],
-  "status": "completed",
+  "status": "pending",
   "authorized": true,
-  "triggered_at": "2026-08-30T18:32:00+08:00",
+  "triggered_at": "2026-08-31T08:57:00+08:00",
   "audit": {
     "status": "passed",
-    "basis": "The author explicitly requested three additional immediate chapters for the rail novel on 2026-08-30. The last verified schedule placed chapters 82-84 at 2026-08-30 00:00 and chapters 85-87 at 2026-08-31 00:00. The batch executor must re-read Fanqie and will refuse mutation unless 85,86,87 are exactly the first three remaining pending chapters (or idempotently already published on retry), preventing any chapter-order skip. After all three immediate releases succeed, remaining pending chapters are compacted forward from 2026-08-31 so the normal three-chapter 00:00 daily quota is preserved."
+    "basis": "The author explicitly requested three additional immediate chapters for the rail novel on 2026-08-31. The latest verified read-only Fanqie reconciliation showed chapters 88-90 published at 2026-08-31 00:00 and chapters 91-93 as the next scheduled group at 2026-09-01 00:00. The batch executor must re-read Fanqie immediately before mutation and refuse unless chapters 91,92,93 are exactly the first three remaining pending chapters (or are idempotently already published on a retry). After all three immediate releases succeed, the remaining pending schedule must be compacted forward from 2026-09-01 so the normal three-chapter 00:00 daily quota is preserved."
   },
-  "reason": "Reader-requested three-chapter extra release for the rail novel. Publish the next three pending chapters immediately, then pull all later scheduled chapters forward by one three-chapter group without changing title/body content or chapter order.",
+  "reason": "Reader-requested three-chapter extra release for the rail novel. Publish the next three pending chapters 91-93 immediately, then compact later scheduled chapters forward by one three-chapter group while preserving title/body content and chapter order.",
   "reflow": {
-    "start_date": "2026-08-31"
-  },
-  "completed_at": "2026-08-30T10:51:14+00:00",
-  "result": {
-    "platform_status": "success",
-    "chapters": [
-      {
-        "chapter": 85,
-        "platform_status": "published",
-        "title": "第85章 四只试批，最后留下两只",
-        "scheduled_date_before": "2026-08-31",
-        "scheduled_time_before": "00:00"
-      },
-      {
-        "chapter": 86,
-        "platform_status": "published",
-        "title": "第86章 下一批六只，先检再洗",
-        "scheduled_date_before": "2026-08-31",
-        "scheduled_time_before": "00:00"
-      },
-      {
-        "chapter": 87,
-        "platform_status": "published",
-        "title": "第87章 六只都到了，第一只停在门口",
-        "scheduled_date_before": "2026-08-31",
-        "scheduled_time_before": "00:00"
-      }
-    ],
-    "reflow": {
-      "performed": true,
-      "start_date": "2026-08-31",
-      "group_size": 3,
-      "time": "00:00",
-      "pending_count": 19,
-      "changed_or_confirmed": 19,
-      "verified": true
-    }
+    "start_date": "2026-09-01"
   }
 }
