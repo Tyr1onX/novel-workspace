@@ -1,0 +1,42 @@
+name: Walk Published Min2000 Repair Apply
+
+on:
+  push:
+    branches:
+      - audit/walk-repair-published-min2000
+    paths:
+      - "novels/walk-to-earn/tools/apply_published_min2000_repairs.py"
+      - ".github/workflows/walk-published-min2000-repair-apply.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/walk-repair-published-min2000
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply substantive repair blocks
+        run: python novels/walk-to-earn/tools/apply_published_min2000_repairs.py
+      - name: Verify all published chapters meet 2000 floor
+        run: python novels/walk-to-earn/tools/check_chapter_length_floor.py --end 43 --minimum 2000 --require-all
+      - name: Commit repaired chapters
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$(git status --porcelain -- novels/walk-to-earn/chapters/)" ]]; then
+            echo "No chapter changes."
+            exit 0
+          fi
+          git config user.name "walk-repair-bot"
+          git config user.email "walk-repair-bot@users.noreply.github.com"
+          git add novels/walk-to-earn/chapters/
+          git commit -m "fix(walk): expand published short chapters above 2000"
+          git pull --rebase origin audit/walk-repair-published-min2000
+          git push origin HEAD:audit/walk-repair-published-min2000
