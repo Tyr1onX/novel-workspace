@@ -6,102 +6,102 @@
     {
       "number": 44,
       "title": "周五，他只回了一句“继续推进”",
-      "chars": 1037
+      "chars": 2148
     },
     {
       "number": 45,
       "title": "离公司七公里，房租差六百",
-      "chars": 1422
+      "chars": 2046
     },
     {
       "number": 46,
       "title": "晚上九点，这条街还有灯",
-      "chars": 998
+      "chars": 2178
     },
     {
       "number": 47,
       "title": "三十六个测点，不在一栋楼里",
-      "chars": 1024
+      "chars": 2330
     },
     {
       "number": 48,
       "title": "食堂最挤的时候，数据开始乱跳",
-      "chars": 861
+      "chars": 2318
     },
     {
       "number": 49,
       "title": "最后六个点，背着设备坐校车",
-      "chars": 1127
+      "chars": 2156
     },
     {
       "number": 50,
       "title": "这次去青篁，不走云岭古道",
-      "chars": 1004
+      "chars": 2180
     },
     {
       "number": 51,
       "title": "下午四点，集市还没逛完",
-      "chars": 1014
+      "chars": 2368
     },
     {
       "number": 52,
       "title": "河滩那条路，走到水边就停",
-      "chars": 973
+      "chars": 2350
     },
     {
       "number": 53,
       "title": "十二公里以后，先等下一班车",
-      "chars": 871
+      "chars": 2117
     },
     {
       "number": 54,
       "title": "合同签完，他只走到湖边",
-      "chars": 1085
+      "chars": 2023
     },
     {
       "number": 55,
       "title": "七公斤的显示器，回程不算步数",
-      "chars": 1102
+      "chars": 2475
     },
     {
       "number": 56,
       "title": "唐梨八点四十的车",
-      "chars": 992
+      "chars": 2077
     },
     {
       "number": 57,
       "title": "清晨五点四十，志愿者先坐地铁",
-      "chars": 940
+      "chars": 2065
     },
     {
       "number": 58,
       "title": "最后一袋纸杯装车以后",
-      "chars": 638
+      "chars": 2184
     },
     {
       "number": 59,
       "title": "拔完智齿，周航不坐地铁",
-      "chars": 729
+      "chars": 2325
     },
     {
       "number": 60,
       "title": "八百公里，没有新的提示音",
-      "chars": 812
+      "chars": 2171
     },
     {
       "number": 61,
       "title": "山脚机房，最后一段路不铺水泥",
-      "chars": 847
+      "chars": 2040
     },
     {
       "number": 62,
       "title": "四小时的车票，先买周六早上",
-      "chars": 758
+      "chars": 2187
     },
     {
       "number": 63,
       "title": "四小时以后，先走到江边",
-      "chars": 900
+      "chars": 2510
     }
   ],
   "batches": [
@@ -109,12 +109,70 @@
       "chapters": [
         44,
         45,
-        46,
-        47
+        46
       ],
-      "chars": 4481,
+      "chars": 6372,
+      "status": "ready",
+      "reason": "normal three-chapter group meets floor"
+    },
+    {
+      "chapters": [
+        47,
+        48,
+        49
+      ],
+      "chars": 6804,
+      "status": "ready",
+      "reason": "normal three-chapter group meets floor"
+    },
+    {
+      "chapters": [
+        50,
+        51,
+        52
+      ],
+      "chars": 6898,
+      "status": "ready",
+      "reason": "normal three-chapter group meets floor"
+    },
+    {
+      "chapters": [
+        53,
+        54,
+        55
+      ],
+      "chars": 6615,
+      "status": "ready",
+      "reason": "normal three-chapter group meets floor"
+    },
+    {
+      "chapters": [
+        56,
+        57,
+        58
+      ],
+      "chars": 6326,
+      "status": "ready",
+      "reason": "normal three-chapter group meets floor"
+    },
+    {
+      "chapters": [
+        59,
+        60,
+        61
+      ],
+      "chars": 6536,
+      "status": "ready",
+      "reason": "normal three-chapter group meets floor"
+    },
+    {
+      "chapters": [
+        62,
+        63
+      ],
+      "chars": 4697,
       "status": "hold",
-      "reason": "even four chapters remain below daily floor"
+      "reason": "remaining inventory below daily floor"
     }
   ],
   "all_inventory_schedulable": false
