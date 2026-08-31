@@ -1,4 +1,3 @@
-# temporary compatibility check: preserve selected income book without reload
 name: Fanqie Data Probe
 
 on:
@@ -50,10 +49,6 @@ jobs:
         run: |
           $projects = @(python shared/tools/fanqie_projects.py list)
           if ($projects.Count -eq 0) { throw "No Fanqie projects configured." }
-          $probePath = "shared/tools/fanqie_data_probe.py"
-          $probeText = Get-Content $probePath -Raw
-          $probeText = $probeText -replace '    await page\.reload\(wait_until="domcontentloaded", timeout=30000\)\r?\n', ''
-          Set-Content -Path $probePath -Value $probeText -Encoding utf8
           python shared/tools/fanqie_data_probe.py @projects --runtime "${{ steps.runtime.outputs.path }}" --write-snapshots
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Commit analytics snapshots
