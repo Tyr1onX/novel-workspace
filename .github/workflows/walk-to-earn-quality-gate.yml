@@ -53,6 +53,16 @@ jobs:
           fi
           python shared/tools/novel_gate.py "${chapters[@]}" 2>&1 | tee .audit/walk-to-earn-novel-gate.log
 
+      - name: Audit 2000-char minimum for every chapter
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p novels/walk-to-earn/audits
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 \
+            | tee .audit/walk-to-earn-chapter-lengths.log \
+            > novels/walk-to-earn/audits/chapter-lengths-current.json
+          cat novels/walk-to-earn/audits/chapter-lengths-current.json
+
       - name: Plan release batches against 6000-char floor
         shell: bash
         run: |
@@ -63,20 +73,23 @@ jobs:
             > novels/walk-to-earn/audits/release-floor-current.json
           cat novels/walk-to-earn/audits/release-floor-current.json
 
-      - name: Persist current release-floor audit
+      - name: Persist current chapter audits
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
         run: |
           set -euo pipefail
-          path="novels/walk-to-earn/audits/release-floor-current.json"
-          if [[ -z "$(git status --porcelain -- "$path")" ]]; then
-            echo "Release-floor audit unchanged."
+          paths=(
+            "novels/walk-to-earn/audits/chapter-lengths-current.json"
+            "novels/walk-to-earn/audits/release-floor-current.json"
+          )
+          if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
+            echo "Chapter audits unchanged."
             exit 0
           fi
           git config user.name "walk-quality-bot"
           git config user.email "walk-quality-bot@users.noreply.github.com"
-          git add -- "$path"
-          git commit -m "chore(walk): refresh release-floor audit"
+          git add -- "${paths[@]}"
+          git commit -m "chore(walk): refresh chapter audits"
           git pull --rebase origin main
           git push origin HEAD:main
 
