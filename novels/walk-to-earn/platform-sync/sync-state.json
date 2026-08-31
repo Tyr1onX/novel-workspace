@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "last_sync_at": "2026-08-31T15:07:51+00:00",
+  "last_sync_at": "2026-08-31T15:30:55+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "18": {
@@ -261,6 +261,114 @@
       "last_action": "update",
       "last_synced_at": "2026-08-31T15:07:51+00:00",
       "queue_operation_id": "walk-short-chapter-repair-update-published-20260831"
+    },
+    "44": {
+      "local_sha256": "df676974b9c98cd8cfd7ace190720c7682e1ec16c02a49a1817a453935ab4747",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "45": {
+      "local_sha256": "ff32c8227044cc86b4432e4a768bc741d86cd06804a5d98dccbb7544b7d49afb",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "46": {
+      "local_sha256": "182ce3da2b71eb6783545fdbb6fc6efc671b47fc2181a9ecefa9d428591792aa",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "47": {
+      "local_sha256": "cddc9f187f0a9492c690f7d51d7a1e3c3726f33eedda842969d631db4f4ef8ed",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "48": {
+      "local_sha256": "9d6a2c3250f6bceb43797427baa72c37c3b9b66d973da84ee939db765a1e6ace",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "49": {
+      "local_sha256": "18f95ba81f6fee93a9eb9da63466487d910210306c3a26a96709012302db5f8e",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "50": {
+      "local_sha256": "c2b3b6082eef09274bbfd2b7a2fac2ced41be8925363285d53be70b9192ef10a",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "51": {
+      "local_sha256": "69329453bfa9c128617b49c79adc7f2cd2cd2bac6db6bb94a90b2353a0a9006c",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "52": {
+      "local_sha256": "90c09d0024cd8c4864cd7f3cb921904338dd815c857023a4928d96a96d8ea266",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "53": {
+      "local_sha256": "0f70bb5ddfdfc5bb733f2300609f11a35b099eccef2344b03baebb2609e02b84",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "54": {
+      "local_sha256": "8ed12628ea5b5723f65a908f485ecef2ce80fe0cf783969b8bf0fb792abf0dd7",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "55": {
+      "local_sha256": "482340b33f56d73963e045fd7cab3937fbb4c64dacb829cab6a5c9e6104af8ae",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "56": {
+      "local_sha256": "5c589ca513d54f855f5f021737c24b9abd69005e414ca0ef14cf9d49c712f244",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "57": {
+      "local_sha256": "b07a5ce7d3835f7be920161848255064f8de6567095f7d35935b225527f09adb",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "58": {
+      "local_sha256": "4933a937b22a621369abed8496e8845456c8370d3caa091d352859c2176b7e8e",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "59": {
+      "local_sha256": "5e462130558f9aa2a9cf037f2e4ab363103b65e5a7298b598eea384f278bd7c0",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "60": {
+      "local_sha256": "e098aa41c99f711d2db2715dfed0b77e10e6748fc4695819a270a30c41da0f5e",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "61": {
+      "local_sha256": "a43ee23c0f2c9bd7a01daa80c943d90a4005f1214649081eca47f0de2f24e87b",
+      "last_action": "create",
+      "last_synced_at": "2026-08-31T15:30:55+00:00",
+      "queue_operation_id": "walk-create-044-061-20260831"
     }
   }
 }
