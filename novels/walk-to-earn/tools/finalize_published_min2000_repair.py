@@ -34,4 +34,4 @@ Rules applied:
 Status: prose repairs staged on audit branch; awaiting full Dialogue / Humanizer / Prose / Meta PR review before merge or platform update.
 """, encoding="utf-8")
 
-print("repair markers removed; audit plan refreshed")
+print("repair markers removed; audit plan refreshed; marker-free floor will be rechecked")
