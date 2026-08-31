@@ -6,6 +6,7 @@ on:
       - audit/walk-repair-published-min2000
     paths:
       - "novels/walk-to-earn/tools/apply_published_min2000_repairs.py"
+      - "novels/walk-to-earn/tools/apply_published_min2000_repairs_v2.py"
       - ".github/workflows/walk-published-min2000-repair-apply.yml"
 
 permissions:
@@ -23,7 +24,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Apply substantive repair blocks
-        run: python novels/walk-to-earn/tools/apply_published_min2000_repairs.py
+        run: python novels/walk-to-earn/tools/apply_published_min2000_repairs_v2.py
       - name: Verify all published chapters meet 2000 floor
         run: python novels/walk-to-earn/tools/check_chapter_length_floor.py --end 43 --minimum 2000 --require-all
       - name: Commit repaired chapters
