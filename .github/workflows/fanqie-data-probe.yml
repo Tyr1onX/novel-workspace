@@ -50,7 +50,10 @@ jobs:
         run: |
           $projects = @(python shared/tools/fanqie_projects.py list)
           if ($projects.Count -eq 0) { throw "No Fanqie projects configured." }
-          python -c "from pathlib import Path; p=Path('shared/tools/fanqie_data_probe.py'); s=p.read_text(encoding='utf-8'); s=s.replace('    await page.reload(wait_until=\"domcontentloaded\", timeout=30000)\n    await page.wait_for_timeout(3500)\n','    await page.wait_for_timeout(3500)\n'); p.write_text(s, encoding='utf-8')"
+          $probePath = "shared/tools/fanqie_data_probe.py"
+          $probeText = Get-Content $probePath -Raw
+          $probeText = $probeText -replace '    await page\.reload\(wait_until="domcontentloaded", timeout=30000\)\r?\n', ''
+          Set-Content -Path $probePath -Value $probeText -Encoding utf8
           python shared/tools/fanqie_data_probe.py @projects --runtime "${{ steps.runtime.outputs.path }}" --write-snapshots
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Commit analytics snapshots
