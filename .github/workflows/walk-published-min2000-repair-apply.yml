@@ -9,6 +9,7 @@ on:
       - "novels/walk-to-earn/tools/apply_published_min2000_repairs_v2.py"
       - "novels/walk-to-earn/tools/apply_published_min2000_repairs_v3.py"
       - "novels/walk-to-earn/tools/apply_published_min2000_repairs_v4.py"
+      - "novels/walk-to-earn/tools/apply_published_min2000_repairs_v5.py"
       - ".github/workflows/walk-published-min2000-repair-apply.yml"
 
 permissions:
@@ -26,7 +27,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Apply complete substantive repair pass
-        run: python novels/walk-to-earn/tools/apply_published_min2000_repairs_v4.py
+        run: python novels/walk-to-earn/tools/apply_published_min2000_repairs_v5.py
       - name: Verify all published chapters meet 2000 floor
         run: python novels/walk-to-earn/tools/check_chapter_length_floor.py --end 43 --minimum 2000 --require-all
       - name: Commit repaired chapters
