@@ -38,7 +38,7 @@ async def click_exact(page, text: str) -> bool:
         try:
             if await element.is_visible():
                 await element.click(timeout=5000)
-                await page.wait_for_timeout(1000)
+                await page.wait_for_timeout(900)
                 return True
         except Exception:
             continue
@@ -89,6 +89,31 @@ def sanitize(value, depth: int = 0):
     return value if isinstance(value, (str, int, float, bool)) or value is None else None
 
 
+def first_number_after(lines: list[str], label: str):
+    for i, line in enumerate(lines):
+        if line != label:
+            continue
+        for candidate in lines[i + 1 : i + 5]:
+            raw = candidate.replace(",", "").strip()
+            if re.fullmatch(r"-?\d+(?:\.\d+)?", raw):
+                return float(raw)
+    return None
+
+
+def page_income(lines: list[str]):
+    cutoff = None
+    for line in lines:
+        match = re.search(r"统计周期截止至[:：]\s*([^每]+)", line)
+        if match:
+            cutoff = match.group(1).strip()
+            break
+    return {
+        "stats_through": cutoff,
+        "yesterday_fanqie_income": first_number_after(lines, "昨日番茄收益"),
+        "cumulative_fanqie_income": first_number_after(lines, "累计番茄收益"),
+    }
+
+
 async def run(project_dirs: list[Path], runtime_arg: str | None) -> int:
     runtime_dir = fanqie_probe.resolve_runtime(runtime_arg)
     runtime = load_runtime(runtime_dir)
@@ -99,46 +124,61 @@ async def run(project_dirs: list[Path], runtime_arg: str | None) -> int:
         browser, context = await runtime.create_context(playwright, headless=True)
         page = await context.new_page()
         try:
-            templates: dict[str, dict[str, str]] = {}
-
-            def on_response(response):
-                try:
-                    parsed = urlparse(response.url)
-                    if response.request.method.upper() == "GET" and parsed.path.startswith(INCOME_PREFIX):
-                        templates[parsed.path] = dict(parse_qsl(parsed.query, keep_blank_values=True))
-                except Exception:
-                    return
-
-            page.on("response", on_response)
             if not await runtime.goto_with_login_retry(page, BOOK_MANAGE):
                 raise RuntimeError("cannot open writer dashboard")
             await page.wait_for_timeout(700)
+
+            book_list = await get_json(page, "/api/author/book/book_list/v0", {"page_index": 0, "page_count": 50})
+            book_data = unwrap(book_list.get("body"))
+            rows = book_data.get("book_list", []) if isinstance(book_data, dict) else []
+            names = {str(row.get("book_id")): str(row.get("book_name") or "") for row in rows if isinstance(row, dict)}
+
             if not await click_exact(page, "小说收益"):
                 raise RuntimeError("cannot open income dashboard")
-            await page.wait_for_timeout(3500)
-            page.remove_listener("response", on_response)
+            await page.wait_for_timeout(2500)
 
-            report = {"templates": {}, "books": {}}
-            for path, query in templates.items():
-                report["templates"][path] = {"query_keys": sorted(query.keys())}
-
+            report = {"books": {}}
             for slug, book_id in projects:
-                book_out = {}
-                for path, template in templates.items():
-                    query = dict(template)
-                    replaced = False
-                    for key in list(query):
-                        if key.lower() in {"book_id", "bookid"}:
-                            query[key] = book_id
-                            replaced = True
-                    if not replaced:
-                        query["book_id"] = book_id
+                book_name = names.get(book_id, "")
+                captured: dict[str, dict[str, str]] = {}
+
+                def on_response(response):
+                    try:
+                        parsed = urlparse(response.url)
+                        if response.request.method.upper() == "GET" and parsed.path.startswith(INCOME_PREFIX):
+                            captured[parsed.path] = dict(parse_qsl(parsed.query, keep_blank_values=True))
+                    except Exception:
+                        return
+
+                page.on("response", on_response)
+                switched = False
+                if await click_exact(page, "切换作品"):
+                    if book_name and await click_exact(page, book_name):
+                        switched = True
+                        for label in ("确定", "确认"):
+                            if await click_exact(page, label):
+                                break
+                await page.wait_for_timeout(2600)
+                page.remove_listener("response", on_response)
+
+                lines = [line.strip() for line in (await page.locator("body").inner_text()).splitlines() if line.strip() and len(line.strip()) <= 160]
+                exact_responses = {}
+                for path, query in captured.items():
                     result = await get_json(page, path, query)
-                    book_out[path] = {
+                    exact_responses[path] = {
                         "status": result.get("status"),
+                        "book_id_query": query.get("book_id"),
                         "data": sanitize(unwrap(result.get("body"))),
                     }
-                report["books"][slug] = book_out
+
+                report["books"][slug] = {
+                    "expected_book_id": book_id,
+                    "expected_book_name": book_name,
+                    "switch_clicked": switched,
+                    "body_has_book_name": bool(book_name and book_name in "\n".join(lines)),
+                    "page_income": page_income(lines),
+                    "responses": exact_responses,
+                }
 
             print("FANQIE_INCOME_DEBUG_JSON_BEGIN")
             print(json.dumps(report, ensure_ascii=False, separators=(",", ":"), default=str))
