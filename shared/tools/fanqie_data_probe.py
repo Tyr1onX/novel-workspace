@@ -191,7 +191,8 @@ async def read_income(page, runtime, book_name: str):
     for label in ("确定", "确认"):
         if await click_exact(page, label):
             break
-    await page.reload(wait_until="domcontentloaded", timeout=30000)
+    # Do not reload here. Fanqie's selected income work is page state; a reload can
+    # revert to the default work and make a second book appear unverified.
     await page.wait_for_timeout(3500)
     lines = [line.strip() for line in (await page.locator("body").inner_text()).splitlines() if line.strip() and len(line.strip()) <= 160]
     return income_from_lines(lines, book_name)
