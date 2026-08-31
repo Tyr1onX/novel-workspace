@@ -69,7 +69,7 @@ jobs:
         run: |
           set -euo pipefail
           path="novels/walk-to-earn/audits/release-floor-current.json"
-          if git diff --quiet -- "$path"; then
+          if [[ -z "$(git status --porcelain -- "$path")" ]]; then
             echo "Release-floor audit unchanged."
             exit 0
           fi
