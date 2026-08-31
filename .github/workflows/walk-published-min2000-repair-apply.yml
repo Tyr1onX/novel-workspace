@@ -29,7 +29,27 @@ jobs:
       - name: Apply complete substantive repair pass
         run: python novels/walk-to-earn/tools/apply_published_min2000_repairs_v5.py
       - name: Verify all published chapters meet 2000 floor
-        run: python novels/walk-to-earn/tools/check_chapter_length_floor.py --end 43 --minimum 2000 --require-all
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          root = Path('novels/walk-to-earn/chapters')
+          short = []
+          for n in range(1, 44):
+              p = root / f'chapter-{n:03d}.md'
+              raw = p.read_text(encoding='utf-8').replace('\r\n','\n').replace('\r','\n')
+              lines = raw.split('\n')
+              first = next(i for i, line in enumerate(lines) if line.strip())
+              body = '\n'.join(lines[first+1:]).strip()
+              chars = len(re.sub(r'\s', '', body))
+              print(f'ch{n}: {chars}')
+              if chars < 2000:
+                  short.append((n, chars))
+          if short:
+              raise SystemExit(f'short chapters remain: {short}')
+          print('ALL_PUBLISHED_CHAPTERS_MEET_FLOOR')
+          PY
       - name: Commit repaired chapters
         shell: bash
         run: |
