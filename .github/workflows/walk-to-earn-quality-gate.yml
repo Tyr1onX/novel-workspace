@@ -48,10 +48,16 @@ jobs:
           fi
           python shared/tools/novel_gate.py "${chapters[@]}" 2>&1 | tee .audit/walk-to-earn-novel-gate.log
 
+      - name: Plan release batches against 6000-char floor
+        shell: bash
+        run: |
+          set -euo pipefail
+          python novels/walk-to-earn/tools/check_release_floor.py --start 44 2>&1 | tee .audit/walk-to-earn-release-floor.log
+
       - name: Upload audit log
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: walk-to-earn-quality-gate
-          path: .audit/walk-to-earn-novel-gate.log
+          path: .audit/
           if-no-files-found: warn
