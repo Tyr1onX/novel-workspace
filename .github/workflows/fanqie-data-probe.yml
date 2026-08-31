@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - "shared/tools/fanqie_data_probe.py"
-      - "shared/tools/fanqie_income_debug.py"
       - ".github/workflows/fanqie-data-probe.yml"
   workflow_dispatch:
 
@@ -22,8 +21,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Compile read-only probes
-        run: python -m py_compile shared/tools/fanqie_data_probe.py shared/tools/fanqie_income_debug.py
+      - name: Compile read-only probe
+        run: python -m py_compile shared/tools/fanqie_data_probe.py
 
   data_probe:
     needs: validate
@@ -43,15 +42,6 @@ jobs:
           $runtime = python shared/tools/fanqie_probe.py resolve-runtime
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           "path=$runtime" >> $env:GITHUB_OUTPUT
-      - name: Diagnose income endpoints read-only
-        shell: powershell
-        env:
-          PYTHONUTF8: "1"
-        run: |
-          $projects = @(python shared/tools/fanqie_projects.py list)
-          if ($projects.Count -eq 0) { throw "No Fanqie projects configured." }
-          python shared/tools/fanqie_income_debug.py @projects --runtime "${{ steps.runtime.outputs.path }}"
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Read and persist sanitized author analytics
         shell: powershell
         env:
