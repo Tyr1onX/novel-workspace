@@ -8,7 +8,7 @@
     92,
     93
   ],
-  "status": "pending",
+  "status": "completed",
   "authorized": true,
   "triggered_at": "2026-08-31T08:57:00+08:00",
   "audit": {
@@ -18,5 +18,41 @@
   "reason": "Reader-requested three-chapter extra release for the rail novel. Publish the next three pending chapters 91-93 immediately, then compact later scheduled chapters forward by one three-chapter group while preserving title/body content and chapter order.",
   "reflow": {
     "start_date": "2026-09-01"
+  },
+  "completed_at": "2026-08-31T01:08:51+00:00",
+  "result": {
+    "platform_status": "success",
+    "chapters": [
+      {
+        "chapter": 91,
+        "platform_status": "published",
+        "title": "第91章 这块滑床板，不能只让一趟车买单",
+        "scheduled_date_before": "2026-09-01",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 92,
+        "platform_status": "published",
+        "title": "第92章 多走九公里，备用路才有了价钱",
+        "scheduled_date_before": "2026-09-01",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 93,
+        "platform_status": "published",
+        "title": "第93章 第一班，不等所有货都凑齐",
+        "scheduled_date_before": "2026-09-01",
+        "scheduled_time_before": "00:00"
+      }
+    ],
+    "reflow": {
+      "performed": true,
+      "start_date": "2026-09-01",
+      "group_size": 3,
+      "time": "00:00",
+      "pending_count": 13,
+      "changed_or_confirmed": 13,
+      "verified": true
+    }
   }
 }
