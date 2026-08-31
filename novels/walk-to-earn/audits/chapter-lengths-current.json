@@ -1,0 +1,496 @@
+{
+  "minimum_chars": 2000,
+  "count": 63,
+  "pass_count": 18,
+  "short_count": 45,
+  "short_chapters": [
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    21,
+    22,
+    23,
+    24,
+    25,
+    31,
+    34,
+    38,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "chapters": [
+    {
+      "number": 1,
+      "heading": "第一章 五千步，两百块",
+      "chars": 2304,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 2,
+      "heading": "第二章 那就走到两万",
+      "chars": 2132,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 3,
+      "heading": "第三章 先买双鞋",
+      "chars": 1932,
+      "status": "short",
+      "deficit": 68
+    },
+    {
+      "number": 4,
+      "heading": "第四章 坐两站，还是走两站",
+      "chars": 1818,
+      "status": "short",
+      "deficit": 182
+    },
+    {
+      "number": 5,
+      "heading": "第五章 三小时加班，六十块",
+      "chars": 1916,
+      "status": "short",
+      "deficit": 84
+    },
+    {
+      "number": 6,
+      "heading": "第六章 你最近怎么天天走路",
+      "chars": 2097,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 7,
+      "heading": "第七章 今天不走了",
+      "chars": 1611,
+      "status": "short",
+      "deficit": 389
+    },
+    {
+      "number": 8,
+      "heading": "第八章 一顿两百块的饭",
+      "chars": 1560,
+      "status": "short",
+      "deficit": 440
+    },
+    {
+      "number": 9,
+      "heading": "第九章 展馆一天一万八",
+      "chars": 1993,
+      "status": "short",
+      "deficit": 7
+    },
+    {
+      "number": 10,
+      "heading": "第十章 一百公里，五分钱",
+      "chars": 1846,
+      "status": "short",
+      "deficit": 154
+    },
+    {
+      "number": 11,
+      "heading": "第十一章 两万步，一千块",
+      "chars": 1695,
+      "status": "short",
+      "deficit": 305
+    },
+    {
+      "number": 12,
+      "heading": "第十二章 两万步的人，爬山也会喘",
+      "chars": 1782,
+      "status": "short",
+      "deficit": 218
+    },
+    {
+      "number": 13,
+      "heading": "第十三章 那根登山杖不能丢",
+      "chars": 1545,
+      "status": "short",
+      "deficit": 455
+    },
+    {
+      "number": 14,
+      "heading": "第十四章 八千块，先别急着花",
+      "chars": 1291,
+      "status": "short",
+      "deficit": 709
+    },
+    {
+      "number": 15,
+      "heading": "第十五章 一台电脑",
+      "chars": 1893,
+      "status": "short",
+      "deficit": 107
+    },
+    {
+      "number": 16,
+      "heading": "第十六章 别给我转了",
+      "chars": 1364,
+      "status": "short",
+      "deficit": 636
+    },
+    {
+      "number": 17,
+      "heading": "第十七章 三百块，去另一座城",
+      "chars": 1376,
+      "status": "short",
+      "deficit": 624
+    },
+    {
+      "number": 18,
+      "heading": "第十八章 四点六公里，先走过去",
+      "chars": 1732,
+      "status": "short",
+      "deficit": 268
+    },
+    {
+      "number": 19,
+      "heading": "第十九章 明天不用打卡",
+      "chars": 2052,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 20,
+      "heading": "第二十章 四十分钟外的小城",
+      "chars": 2191,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 21,
+      "heading": "第二十一章 你走慢一点",
+      "chars": 1653,
+      "status": "short",
+      "deficit": 347
+    },
+    {
+      "number": 22,
+      "heading": "第二十二章 宿舍到教室，两点六公里",
+      "chars": 1751,
+      "status": "short",
+      "deficit": 249
+    },
+    {
+      "number": 23,
+      "heading": "第二十三章 三小时空课",
+      "chars": 1484,
+      "status": "short",
+      "deficit": 516
+    },
+    {
+      "number": 24,
+      "heading": "第二十四章 放学以后，八点八公里",
+      "chars": 1720,
+      "status": "short",
+      "deficit": 280
+    },
+    {
+      "number": 25,
+      "heading": "第二十五章 地铁停了，还有六公里",
+      "chars": 1617,
+      "status": "short",
+      "deficit": 383
+    },
+    {
+      "number": 26,
+      "heading": "第二十六章 七公里，卖掉旧电脑",
+      "chars": 2020,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 27,
+      "heading": "第二十七章 十二公里，五个打卡点",
+      "chars": 2467,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 28,
+      "heading": "第二十八章 先走二十公里",
+      "chars": 2217,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 29,
+      "heading": "第二十九章 一百七十九块，住一晚",
+      "chars": 2648,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 30,
+      "heading": "第三十章 二十八公里，八小时",
+      "chars": 2672,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 31,
+      "heading": "第三十一章 三万八千步的第二天",
+      "chars": 1644,
+      "status": "short",
+      "deficit": 356
+    },
+    {
+      "number": 32,
+      "heading": "第三十二章 四个小时，走到车站",
+      "chars": 2572,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 33,
+      "heading": "第三十三章 五百公里，八分钱",
+      "chars": 2570,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 34,
+      "heading": "第三十四章 一万两千步，一千块",
+      "chars": 1993,
+      "status": "short",
+      "deficit": 7
+    },
+    {
+      "number": 35,
+      "heading": "第三十五章 七十四块，买四十五分钟",
+      "chars": 2567,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 36,
+      "heading": "第三十六章 白榆，一天来回",
+      "chars": 2513,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 37,
+      "heading": "第三十七章 二百八十块，一个周六",
+      "chars": 2111,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 38,
+      "heading": "第三十八章 一千米，四分零六",
+      "chars": 1714,
+      "status": "short",
+      "deficit": 286
+    },
+    {
+      "number": 39,
+      "heading": "第三十九章 这顿我来",
+      "chars": 2903,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 40,
+      "heading": "第四十章 七公里，找一条蓝绳",
+      "chars": 3309,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 41,
+      "heading": "第四十一章 两个半小时，去栖湾",
+      "chars": 2296,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 42,
+      "heading": "第四十二章 十八块的旧杂志",
+      "chars": 1946,
+      "status": "short",
+      "deficit": 54
+    },
+    {
+      "number": 43,
+      "heading": "第四十三章 周一，七千步就够了",
+      "chars": 1134,
+      "status": "short",
+      "deficit": 866
+    },
+    {
+      "number": 44,
+      "heading": "第四十四章 周五，他只回了一句“继续推进”",
+      "chars": 1037,
+      "status": "short",
+      "deficit": 963
+    },
+    {
+      "number": 45,
+      "heading": "第四十五章 离公司七公里，房租差六百",
+      "chars": 1422,
+      "status": "short",
+      "deficit": 578
+    },
+    {
+      "number": 46,
+      "heading": "第四十六章 晚上九点，这条街还有灯",
+      "chars": 998,
+      "status": "short",
+      "deficit": 1002
+    },
+    {
+      "number": 47,
+      "heading": "第四十七章 三十六个测点，不在一栋楼里",
+      "chars": 1024,
+      "status": "short",
+      "deficit": 976
+    },
+    {
+      "number": 48,
+      "heading": "第四十八章 食堂最挤的时候，数据开始乱跳",
+      "chars": 861,
+      "status": "short",
+      "deficit": 1139
+    },
+    {
+      "number": 49,
+      "heading": "第四十九章 最后六个点，背着设备坐校车",
+      "chars": 1127,
+      "status": "short",
+      "deficit": 873
+    },
+    {
+      "number": 50,
+      "heading": "第五十章 这次去青篁，不走云岭古道",
+      "chars": 1004,
+      "status": "short",
+      "deficit": 996
+    },
+    {
+      "number": 51,
+      "heading": "第五十一章 下午四点，集市还没逛完",
+      "chars": 1014,
+      "status": "short",
+      "deficit": 986
+    },
+    {
+      "number": 52,
+      "heading": "第五十二章 河滩那条路，走到水边就停",
+      "chars": 973,
+      "status": "short",
+      "deficit": 1027
+    },
+    {
+      "number": 53,
+      "heading": "第五十三章 十二公里以后，先等下一班车",
+      "chars": 871,
+      "status": "short",
+      "deficit": 1129
+    },
+    {
+      "number": 54,
+      "heading": "第五十四章 合同签完，他只走到湖边",
+      "chars": 1085,
+      "status": "short",
+      "deficit": 915
+    },
+    {
+      "number": 55,
+      "heading": "第五十五章 七公斤的显示器，回程不算步数",
+      "chars": 1102,
+      "status": "short",
+      "deficit": 898
+    },
+    {
+      "number": 56,
+      "heading": "第五十六章 唐梨八点四十的车",
+      "chars": 992,
+      "status": "short",
+      "deficit": 1008
+    },
+    {
+      "number": 57,
+      "heading": "第五十七章 清晨五点四十，志愿者先坐地铁",
+      "chars": 940,
+      "status": "short",
+      "deficit": 1060
+    },
+    {
+      "number": 58,
+      "heading": "第五十八章 最后一袋纸杯装车以后",
+      "chars": 638,
+      "status": "short",
+      "deficit": 1362
+    },
+    {
+      "number": 59,
+      "heading": "第五十九章 拔完智齿，周航不坐地铁",
+      "chars": 729,
+      "status": "short",
+      "deficit": 1271
+    },
+    {
+      "number": 60,
+      "heading": "第六十章 八百公里，没有新的提示音",
+      "chars": 812,
+      "status": "short",
+      "deficit": 1188
+    },
+    {
+      "number": 61,
+      "heading": "第六十一章 山脚机房，最后一段路不铺水泥",
+      "chars": 847,
+      "status": "short",
+      "deficit": 1153
+    },
+    {
+      "number": 62,
+      "heading": "第六十二章 四小时的车票，先买周六早上",
+      "chars": 758,
+      "status": "short",
+      "deficit": 1242
+    },
+    {
+      "number": 63,
+      "heading": "第六十三章 四小时以后，先走到江边",
+      "chars": 900,
+      "status": "short",
+      "deficit": 1100
+    }
+  ]
+}
