@@ -8,10 +8,10 @@
   },
   "chapter_length": {
     "hard_minimum_chars": 2000,
-    "preferred_target_chars": "2200-2600",
+    "preferred_target_chars": "flexible",
     "counting_basis": "body_non_whitespace_characters",
     "applies_to_existing_chapters": true,
-    "notes": "Every chapter must contain at least 2000正文 characters after whitespace removal. Drafting should normally target 2200-2600 to leave formatting/counting margin. Existing published chapters are not grandfathered: any chapter below the floor must be substantively revised and re-audited before/through a platform update. Do not pad with repetitive explanation or AI-style dialogue."
+    "notes": "Every chapter must contain at least 2000正文 characters after whitespace removal. There is no upper target or preferred cap: 2200-3000 is common, but chapters may naturally exceed 3000 or 4000 when the scene, conflict, or character work needs the space. Do not shorten a complete scene merely to fit a target, and do not pad with repetitive explanation, summaries, or AI-style dialogue. Existing published chapters are not grandfathered: any chapter below the floor must be substantively revised and re-audited before/through a platform update."
   },
   "schedule": {
     "mode": "auto_continue",
@@ -30,7 +30,7 @@
       "strategy": "append_next_consecutive_chapter_if_three_chapters_are_below_floor",
       "preserve_order": true,
       "same_timestamp": true,
-      "notes": "Each normal release day should publish at least 6000 Chinese正文 characters. Schedule three consecutive chapters by default. If those three total fewer than 6000 characters, append exactly the next consecutive chapter as a fourth chapter at the same 00:00 slot. Never skip or reorder chapters. Writing should normally target enough length that three chapters already meet the floor; the fourth chapter is a fallback, not the default cadence."
+      "notes": "Each normal release day should publish at least 6000 Chinese正文 characters. Schedule three consecutive chapters by default. If those three total fewer than 6000 characters, append exactly the next consecutive chapter as a fourth chapter at the same 00:00 slot. Never skip or reorder chapters. Writing should normally make each chapter complete on its own; the fourth chapter is a fallback for the daily floor, not a reason to write shorter chapters."
     },
     "extra_release": {
       "unit": "chapter",
@@ -43,5 +43,5 @@
       "do_not_reduce_original_day_count": true
     }
   },
-  "notes": "Every chapter has a hard 2000-character正文 floor, with a preferred 2200-2600 target. Normal publication is three consecutive chapters at exactly 00:00 Asia/Shanghai, and each release day must reach at least 6000正文 characters. If a three-chapter group is below 6000 characters, add only the next consecutive chapter as a fourth chapter at the same timestamp. Never skip or reorder chapter numbers. Existing published short chapters must be repaired through audited body-only updates. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited authorization."
+  "notes": "Every chapter has a hard 2000-character正文 floor with no upper target cap. Normal publication is three consecutive chapters at exactly 00:00 Asia/Shanghai, and each release day must reach at least 6000正文 characters. If a three-chapter group is below 6000 characters, add only the next consecutive chapter as a fourth chapter at the same timestamp. Never skip or reorder chapter numbers. Existing published short chapters must be repaired through audited body-only updates. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited authorization."
 }
