@@ -6,6 +6,13 @@
   "declaration": {
     "use_ai": true
   },
+  "chapter_length": {
+    "hard_minimum_chars": 2000,
+    "preferred_target_chars": "2200-2600",
+    "counting_basis": "body_non_whitespace_characters",
+    "applies_to_existing_chapters": true,
+    "notes": "Every chapter must contain at least 2000正文 characters after whitespace removal. Drafting should normally target 2200-2600 to leave formatting/counting margin. Existing published chapters are not grandfathered: any chapter below the floor must be substantively revised and re-audited before/through a platform update. Do not pad with repetitive explanation or AI-style dialogue."
+  },
   "schedule": {
     "mode": "auto_continue",
     "chapters_per_day": 3,
@@ -36,5 +43,5 @@
       "do_not_reduce_original_day_count": true
     }
   },
-  "notes": "Normal publication is three consecutive chapters at exactly 00:00 Asia/Shanghai, but each release day must reach at least 6000正文 characters for the burst-update target. If a three-chapter group is below 6000 characters, add only the next consecutive chapter as a fourth chapter at the same timestamp. Never skip or reorder chapter numbers. A temporary extra release may contain any explicitly approved number of chapters. It consumes chapters early but does not reduce the future normal release requirement; remaining inventory must compact forward in chapter order. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited authorization."
+  "notes": "Every chapter has a hard 2000-character正文 floor, with a preferred 2200-2600 target. Normal publication is three consecutive chapters at exactly 00:00 Asia/Shanghai, and each release day must reach at least 6000正文 characters. If a three-chapter group is below 6000 characters, add only the next consecutive chapter as a fourth chapter at the same timestamp. Never skip or reorder chapter numbers. Existing published short chapters must be repaired through audited body-only updates. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited authorization."
 }
