@@ -8,12 +8,42 @@
     42,
     43
   ],
-  "status": "pending",
+  "status": "completed",
   "authorized": true,
   "triggered_at": "2026-08-31T14:14:00+08:00",
   "audit": {
     "status": "passed",
     "basis": "The author explicitly requested today's Walk to Earn update. Fresh Fanqie creation logs confirmed chapters 41-43 were created successfully, all three are present on the platform, and all three are scheduled for 2026-09-01 00:00. The dedicated continuation audit passed Dialogue/Humanizer/Prose/Meta and manual cold-read review. The publish-now executor must re-read Fanqie immediately before mutation and refuse unless 41,42,43 are exactly the first pending chapters (or idempotently already published on retry). No title/body edits are authorized."
   },
-  "reason": "Publish the audited Walk to Earn chapters 41-43 immediately today as explicitly requested. Preserve chapter order and content. There are no later Walk to Earn scheduled chapters yet, so no reflow is requested in this one-shot."
+  "reason": "Publish the audited Walk to Earn chapters 41-43 immediately today as explicitly requested. Preserve chapter order and content. There are no later Walk to Earn scheduled chapters yet, so no reflow is requested in this one-shot.",
+  "completed_at": "2026-08-31T06:23:49+00:00",
+  "result": {
+    "platform_status": "success",
+    "chapters": [
+      {
+        "chapter": 41,
+        "platform_status": "published",
+        "title": "第41章 两个半小时，去栖湾",
+        "scheduled_date_before": "2026-09-01",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 42,
+        "platform_status": "published",
+        "title": "第42章 十八块的旧杂志",
+        "scheduled_date_before": "2026-09-01",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 43,
+        "platform_status": "published",
+        "title": "第43章 周一，七千步就够了",
+        "scheduled_date_before": "2026-09-01",
+        "scheduled_time_before": "00:00"
+      }
+    ],
+    "reflow": {
+      "performed": false
+    }
+  }
 }
