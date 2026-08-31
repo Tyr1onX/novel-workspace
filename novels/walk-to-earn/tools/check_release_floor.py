@@ -22,7 +22,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve()
 NOVEL_DIR = HERE.parents[1]
 CHAPTER_DIR = NOVEL_DIR / "chapters"
-HEADING_RE = re.compile(r"^#\s*第\s*(\d+)\s*章\s*(.*?)\s*$")
+HEADING_RE = re.compile(r"^#\s*第.+?章\s*(.*?)\s*$")
 FILE_RE = re.compile(r"chapter-(\d+)\.md$")
 
 
@@ -37,9 +37,9 @@ def parse_chapter(path: Path) -> dict:
     if first is None:
         raise RuntimeError(f"empty chapter: {path}")
     heading = HEADING_RE.match(lines[first].strip())
-    if not heading or int(heading.group(1)) != number:
+    if not heading:
         raise RuntimeError(f"bad heading: {path}")
-    title = heading.group(2).strip()
+    title = heading.group(1).strip()
     body = "\n".join(lines[first + 1 :]).strip()
     chars = len(re.sub(r"\s", "", body))
     return {"number": number, "title": title, "chars": chars}
