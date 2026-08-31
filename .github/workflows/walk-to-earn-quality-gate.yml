@@ -36,12 +36,17 @@ jobs:
       - name: Check protected Walk to Earn facts
         run: python novels/walk-to-earn/tools/check_rebuild_invariants.py
 
-      - name: Run full 1-40 novel gate
+      - name: Run full novel gate on every current chapter
         shell: bash
         run: |
-          set -o pipefail
+          set -euo pipefail
           mkdir -p .audit
-          python shared/tools/novel_gate.py novels/walk-to-earn/chapters/chapter-{001..040}.md 2>&1 | tee .audit/walk-to-earn-novel-gate.log
+          mapfile -t chapters < <(find novels/walk-to-earn/chapters -maxdepth 1 -type f -name 'chapter-*.md' | sort)
+          if (( ${#chapters[@]} == 0 )); then
+            echo "No Walk to Earn chapters found."
+            exit 1
+          fi
+          python shared/tools/novel_gate.py "${chapters[@]}" 2>&1 | tee .audit/walk-to-earn-novel-gate.log
 
       - name: Upload audit log
         if: always()

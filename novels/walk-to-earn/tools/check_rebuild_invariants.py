@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Hard continuity checks for the current Walk to Earn 1-40 rebuild.
+"""Hard continuity checks for the protected Walk to Earn 1-40 V2 baseline.
 
-This is intentionally narrow. It protects facts that have already caused
-regressions during large language/style rewrites. It does not judge prose
-quality; the shared novel guards and manual cold read do that.
+The original 1-40 freeze ended on 2026-08-31 when the author explicitly
+requested new chapters. These checks keep protecting facts that have already
+regressed during large rewrites, while allowing audited continuation at 41+.
 """
 
 from __future__ import annotations
@@ -42,13 +42,11 @@ def forbid(chapter: int, *tokens: str) -> None:
 
 
 def main() -> int:
-    # The audited freeze is exactly chapters 1-40. Do not silently continue.
+    # Chapters 1-40 remain the protected V2 baseline. Continuation at 41+ is allowed.
     expected = [CHAPTERS / f"chapter-{i:03d}.md" for i in range(1, 41)]
     for path in expected:
         if not path.exists():
-            FAILURES.append(f"missing expected chapter: {path.name}")
-    if (CHAPTERS / "chapter-041.md").exists():
-        FAILURES.append("chapter-041.md exists while the 1-40 audit freeze is active")
+            FAILURES.append(f"missing expected baseline chapter: {path.name}")
 
     # Opening/mechanic anchors.
     require(1, "5031", "201.24", "0.04", "7.3公里")
@@ -74,28 +72,36 @@ def main() -> int:
     # First complete ordinary day at the 0.08 tier.
     require(34, "12742", "1019.36", "637.10", "0.08元 / 有效步")
 
-    # Time-purchase chapter: exact taxi price, correct module mismatch, and Zhou Hang's post-internship call residue.
+    # Time-purchase chapter.
     require(35, "74.2元", "3.3V", "5V", "做梦都在接他们电话")
 
-    # Body remains ordinary; preserve measured results rather than supernatural enhancement claims.
+    # Body remains ordinary.
     require(38, "7秒5", "2米24", "4分06", "四分十四", "4分42", "4分23", "603.6公里")
     forbid(38, "系统强化", "身体强化", "体质强化")
 
-    # Family scene and final stage close.
+    # Family scene and protected V2 close.
     require(39, "327元")
     require(40, "七公里", "17683", "1414.64", "628.4公里", "0.08元 / 有效步", "1500公里", "0.12元 / 有效步")
     forbid(40, "青禾河", "露天电影", "手机11%", "手机2%")
 
+    # First continuation window anchors, when present.
+    if (CHAPTERS / "chapter-041.md").exists():
+        require(41, "18322", "1465.76", "栖湾")
+    if (CHAPTERS / "chapter-042.md").exists():
+        require(42, "21405", "1712.40", "十八")
+    if (CHAPTERS / "chapter-043.md").exists():
+        require(43, "7231", "578.48", "663.6公里", "澄光科技园")
+
     if FAILURES:
-        print("WALK REBUILD INVARIANTS: FAIL")
+        print("WALK CONTINUITY INVARIANTS: FAIL")
         for failure in FAILURES:
             print(f"- {failure}")
         return 1
 
-    print("WALK REBUILD INVARIANTS: PASS")
-    print("- chapters 001-040 present; chapter 041 absent")
+    print("WALK CONTINUITY INVARIANTS: PASS")
+    print("- protected chapters 001-040 baseline present")
     print("- protected numeric/mechanic/continuity anchors present")
-    print("- stale chapter-33 secret-leak and chapter-40 old-route anchors absent")
+    print("- audited continuation at chapter 041+ is allowed")
     return 0
 
 
