@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-08-31T05:55:45+00:00",
+  "updated_at": "2026-08-31T06:08:00+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -62,6 +62,19 @@
         "basis": "The author explicitly required a second full rebuild after the first republished dialogue cleanup still read as AI-like, and explicitly authorized republishing only after repeated audit. Chapters 001-040 were rebuilt again on PR #17. The V2 audit at novels/walk-to-earn/audits/dialogue-rebuild-v2-001-040-20260831.md records manual cold reads, character/cross-chapter review, protected continuity checks, and successful Dialogue/Humanizer/Prose/Meta quality gates. This operation replaces existing Fanqie chapters 21-40 with the audited V2 canonical text without changing chapter order or normal future scheduling. Batch 1 (chapters 1-20) completed first to respect the repository safety cap; batch 2 is now executable."
       },
       "completed_at": "2026-08-30T23:03:28+00:00"
+    },
+    {
+      "id": "walk-create-041-043-20260831",
+      "action": "create",
+      "chapters": "41-43",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-01",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "Author explicitly requested three new Walk to Earn chapters today. Fresh read-only reconciliation confirmed Fanqie was exactly published 1-40 with no pending chapters before continuation. Chapters 41-43 passed continuity invariants and the full quality gate; manual cold-read audit is recorded in novels/walk-to-earn/audits/continuation-041-043-20260831.md. Create is intentionally scheduled from 2026-09-01 first; immediate publication is a separate one-shot only after platform creation is confirmed."
+      }
     }
   ]
 }
