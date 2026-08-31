@@ -4,9 +4,9 @@
 Usage:
     python shared/tools/novel_gate.py chapter-001.md [chapter-002.md ...]
 
-The wrapper does not rewrite text. It runs the repository's dialogue,
-humanizer, prose, and meta-narrative guards in sequence so agents are less
-likely to skip one layer.
+The wrapper does not rewrite text. It runs the repository's narrative,
+dialogue, humanizer, prose, and meta-narrative guards in sequence so agents
+are less likely to skip one layer.
 """
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 GUARDS = (
+    "narrative_guard.py",
     "dialogue_guard.py",
     "humanizer_guard.py",
     "prose_guard.py",
@@ -27,7 +28,7 @@ GUARDS = (
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run all novel-workspace prose quality guards.")
+    parser = argparse.ArgumentParser(description="Run all novel-workspace fiction quality guards.")
     parser.add_argument("files", nargs="+", type=Path, help="UTF-8 chapter markdown/text files")
     return parser.parse_args()
 
@@ -64,8 +65,9 @@ def main() -> int:
 
     print("NOVEL GATE: AUTOMATED GUARDS COMPLETED")
     print(
-        "Automated success is not final approval. Manual Dialogue/Humanizer/Prose review, "
-        "voice-sample comparison, continuity, number checks, and final read are still required."
+        "Automated success is not final approval. Manual Architecture Lite / QUD, "
+        "Dialogue/Humanizer/Prose review, voice-sample comparison, continuity, number "
+        "checks, and final read are still required. narrative_guard.py is advisory in V1."
     )
     return 0
 

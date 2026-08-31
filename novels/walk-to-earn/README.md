@@ -112,7 +112,9 @@
 
 ## 当前写作状态
 
-第1—40章经历过两轮针对“对白像AI、像排练”的大规模重建；第41章起在新的Dialogue/Humanizer质量闸门下续写。
+第1—40章经历过两轮针对“对白像AI、像排练”的大规模重建；第41章起在新的 Dialogue / Humanizer 质量闸门下续写。
+
+从第64章起，再增加仓库级 **Narrative Pass**：先检查 Architecture Lite、QUD、因果纹理、信息揭露、Emotion Mix 和关键对白即时目的，再进入 Dialogue / Humanizer / Prose 表面层。Narrative V1 的自动命中是 REVIEW，不为追求清零而机械改稿。
 
 第41—63章已完成。2026-08-31最后一次正文清理后：
 
@@ -131,11 +133,14 @@
 3. 配角都有自己的日程，不全天围着沈川。
 4. 轻松感来自人物和生活，不塞网络梗合集。
 5. **故事地点统一虚构，不直接使用现实存在的城市、街区、商圈、景点和徒步线路名称。**
-6. 每章必须执行 `shared/RULES.md`、`shared/DIALOGUE_RULES.md`、`shared/DIALOGUE_APPRENTICESHIP.md`、`shared/HUMANIZER_RULES.md`、`shared/PROSE_RULES.md`、`shared/META_NARRATIVE_RULES.md`、本项目 `style/STYLE_DNA.md` 与 `design/06-current-stage-mainline.md`。
-7. 用户只说“下一章”时，不得只看上一章续写；必须复核当前阶段、最近至少3章功能、累计成长轴和支线占比。
-8. 1500km是长期背景，不写成新的每日倒数任务。
-9. 0.08元/步只涨钱，不自动强化身体。
-10. 收到“对白怪 / 像AI / 像排练”反馈时，按 `DIALOGUE_APPRENTICESHIP.md` 直接REBUILD，不能只逐句美容。
+6. 每章必须执行 `shared/RULES.md`、`shared/STORY_ARCHITECTURE_RULES.md`、`shared/NARRATIVE_PASS_RULES.md`、`shared/DIALOGUE_RULES.md`、`shared/DIALOGUE_APPRENTICESHIP.md`、`shared/HUMANIZER_RULES.md`、`shared/PROSE_RULES.md`、`shared/META_NARRATIVE_RULES.md`、本项目 `style/STYLE_DNA.md` 与 `design/06-current-stage-mainline.md`。
+7. 用户只说“下一章”时，不得只看上一章续写；必须复核当前阶段、最近至少3章功能、累计成长轴和支线占比，并完成 Architecture Lite。
+8. 正文后至少给一个主要场景写 QUD；关键对白必须能回答“这个人为什么现在必须说这句话？”。
+9. 情绪优先采用“行为 + 直接情绪词 + 少量身体反应 + 必要留白”；普通情绪不连续堆胸口/呼吸/手心/喉咙等症状。
+10. 1500km是长期背景，不写成新的每日倒数任务。
+11. 0.08元/步只涨钱，不自动强化身体。
+12. 收到“对白怪 / 像AI / 像排练”反馈时，按 `DIALOGUE_APPRENTICESHIP.md` 直接REBUILD，不能只逐句美容。
+13. 不为去 AI 强行倒叙、答非所问、制造矛盾或塞无关支线；每章只处理最突出的 3–5 个叙事/语言问题。
 
 ## 当前设计与接续文件
 
