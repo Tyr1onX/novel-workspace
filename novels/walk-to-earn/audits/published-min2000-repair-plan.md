@@ -12,4 +12,4 @@ Rules applied:
 - no upper length cap; scenes may exceed 3000 or 4000 characters when needed;
 - platform synchronization is not authorized by this audit alone and remains separately gated.
 
-Status: prose repairs staged on audit branch; awaiting full Dialogue / Humanizer / Prose / Meta PR review before merge or platform update.
+Status: marker-free prose repairs are staged on the audit branch, and all published chapters 1-43 pass the 2000-character floor. Awaiting full Dialogue / Humanizer / Prose / Meta PR review before merge or platform update.
