@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-08-31T14:56:00+00:00",
+  "updated_at": "2026-08-31T15:07:51+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -82,11 +82,12 @@
       "action": "update",
       "chapters": "3-5,7-18,21-25,31,34,38,42-43",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "basis": "User explicitly authorized publishing the completed Walk to Earn repair. PR #19 was merged into main after full continuity, Novel Gate, Meta narrative, chapter-length, release-floor and manual dialogue/humanizer review. The listed chapters are the subset of already-created Fanqie chapters 1-43 whose canonical body text changed in PR #19. Current audit reports pass_count=63 and short_count=0. This operation updates only those existing platform chapters to the audited canonical main text and does not alter chapter order or future schedule."
-      }
+      },
+      "completed_at": "2026-08-31T15:07:51+00:00"
     }
   ]
 }
