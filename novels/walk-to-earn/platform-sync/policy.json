@@ -15,6 +15,16 @@
     "start_date": null,
     "group_size": 3,
     "same_timestamp_within_group": true,
+    "daily_word_floor": {
+      "enabled": true,
+      "minimum_chars": 6000,
+      "normal_chapters": 3,
+      "max_chapters": 4,
+      "strategy": "append_next_consecutive_chapter_if_three_chapters_are_below_floor",
+      "preserve_order": true,
+      "same_timestamp": true,
+      "notes": "Each normal release day should publish at least 6000 Chinese正文 characters. Schedule three consecutive chapters by default. If those three total fewer than 6000 characters, append exactly the next consecutive chapter as a fourth chapter at the same 00:00 slot. Never skip or reorder chapters. Writing should normally target enough length that three chapters already meet the floor; the fourth chapter is a fallback, not the default cadence."
+    },
     "extra_release": {
       "unit": "chapter",
       "allow_partial_group": true,
@@ -26,5 +36,5 @@
       "do_not_reduce_original_day_count": true
     }
   },
-  "notes": "Use the confirmed default Fanqie release habit: three consecutive chapters at exactly 00:00 Asia/Shanghai each normal release day. A temporary extra release may contain any explicitly approved number of chapters, including one chapter. It consumes chapters early but does not reduce the original future day's three-chapter quota. After an early release, compact all remaining scheduled chapters forward in chapter-number order to refill each normal release day to three chapters at 00:00 where inventory permits. Never skip or reorder chapter numbers. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited authorization."
+  "notes": "Normal publication is three consecutive chapters at exactly 00:00 Asia/Shanghai, but each release day must reach at least 6000正文 characters for the burst-update target. If a three-chapter group is below 6000 characters, add only the next consecutive chapter as a fourth chapter at the same timestamp. Never skip or reorder chapter numbers. A temporary extra release may contain any explicitly approved number of chapters. It consumes chapters early but does not reduce the future normal release requirement; remaining inventory must compact forward in chapter order. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited authorization."
 }
