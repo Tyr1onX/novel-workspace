@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Hard continuity checks for the protected Walk to Earn 1-40 V2 baseline.
+"""Hard continuity checks for protected Walk to Earn facts.
 
-The original 1-40 freeze ended on 2026-08-31 when the author explicitly
-requested new chapters. These checks keep protecting facts that have already
-regressed during large rewrites, while allowing audited continuation at 41+.
+The author explicitly requested a data-driven cold-start rewrite of chapters
+1-10 on 2026-09-01. The opening anchors below therefore follow the approved
+new chapter mapping, while chapters 11-40 keep their existing protected facts.
+Continuation at 41+ remains allowed.
 """
 
 from __future__ import annotations
@@ -42,17 +43,22 @@ def forbid(chapter: int, *tokens: str) -> None:
 
 
 def main() -> int:
-    # Chapters 1-40 remain the protected V2 baseline. Continuation at 41+ is allowed.
     expected = [CHAPTERS / f"chapter-{i:03d}.md" for i in range(1, 41)]
     for path in expected:
         if not path.exists():
             FAILURES.append(f"missing expected baseline chapter: {path.name}")
 
-    # Opening/mechanic anchors.
-    require(1, "5031", "201.24", "0.04", "7.3公里")
-    require(2, "20018", "800.72")
-    require(3, "699", "100公里", "0.05元/步")
-    require(10, "100.1公里", "0.05元/步", "500公里")
+    # Rebuilt cold start: protect the facts, numbers and new chapter mapping.
+    require(1, "5031", "201.24", "0.04", "7.3公里", "20018", "800.72")
+    require(2, "699", "20.4公里", "100公里", "0.05元 / 有效步")
+    require(3, "13762", "550.48")
+    require(4, "14863", "594.52", "6.4公里")
+    require(5, "21864", "874.56", "55.3公里")
+    require(6, "6047", "241.88", "59.1公里")
+    require(7, "13742", "549.68", "68.2公里")
+    require(8, "3.6公里", "10843", "433.72")
+    require(9, "18642", "745.68", "96.8公里")
+    require(10, "100.1公里", "0.05元 / 有效步", "500公里", "20137", "962.85", "111.9公里")
 
     # Shared-memory anchor used again in chapter 32.
     require(11, "42", "昨天你帮我买")
@@ -99,7 +105,8 @@ def main() -> int:
         return 1
 
     print("WALK CONTINUITY INVARIANTS: PASS")
-    print("- protected chapters 001-040 baseline present")
+    print("- rebuilt chapters 001-010 anchors present")
+    print("- protected chapters 011-040 anchors present")
     print("- protected numeric/mechanic/continuity anchors present")
     print("- audited continuation at chapter 041+ is allowed")
     return 0
