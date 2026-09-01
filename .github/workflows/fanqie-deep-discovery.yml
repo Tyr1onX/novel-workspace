@@ -10,12 +10,12 @@ on:
 
 concurrency:
   group: fanqie-deep-discovery
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   discover:
     runs-on: [self-hosted, windows, fanqie]
-    timeout-minutes: 30
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - name: Resolve local Fanqie runtime
