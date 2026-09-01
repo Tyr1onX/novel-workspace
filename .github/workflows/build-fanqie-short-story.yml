@@ -1,0 +1,105 @@
+name: Build Fanqie Short Story Bundle
+
+on:
+  push:
+    branches:
+      - chore/fanqie-publish-bundle
+    paths-ignore:
+      - 'novels/true-daughter-police/publish/**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build publish bundle
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('novels/true-daughter-police')
+          chapter_dir = root / 'chapters'
+          out_dir = root / 'publish'
+          out_dir.mkdir(parents=True, exist_ok=True)
+
+          sections = []
+          stats = []
+          cumulative = 0
+
+          for i in range(1, 16):
+              path = chapter_dir / f'chapter-{i:03d}.md'
+              text = path.read_text(encoding='utf-8').strip()
+              lines = text.splitlines()
+              if not lines:
+                  continue
+
+              m = re.match(r'^#\s+第(.+?)章\s+(.+)$', lines[0].strip())
+              if m:
+                  heading = f'{m.group(1)}、{m.group(2)}'
+              else:
+                  heading = lines[0].lstrip('#').strip()
+
+              body = '\n'.join(lines[1:]).strip()
+              body = body.replace('**', '').replace('`', '')
+              section = f'{heading}\n\n{body}'.strip()
+              sections.append(section)
+
+              chars = len(re.sub(r'\s+', '', section))
+              cumulative += chars
+              stats.append((i, heading, chars, cumulative))
+
+          publish_body = '\n\n'.join(sections).strip() + '\n'
+          body_path = out_dir / 'fanqie-body.txt'
+          body_path.write_text(publish_body, encoding='utf-8')
+
+          total = sum(x[2] for x in stats)
+          lines = [
+              '作品名：真千金回来那天，我先替她报了警',
+              '推荐标题：真千金回家宴上，我当着三桌亲戚报了警',
+              '建议分类：女性成长',
+              '正文形式：单篇完结；15章改为正文内部小节',
+              f'正文字符数（去空白估算）：{total}',
+              '',
+              '简介：',
+              '真千金林晚被接回沈家的那晚，三桌亲戚都在等一场团圆。我却先问她身份证带没带，然后当众拨了110。因为我知道，父母不是今天才找到她——十二年前，他们已经见过她；三年前，我也知道了真相，却选择沉默。直到奶奶去世，一份遗嘱让他们突然决定认回亲生女儿。我终于明白，这场认亲宴真正等的不是团圆，而是她的签字。',
+              '',
+              '章节字符与累计比例：',
+          ]
+          for i, heading, chars, cum in stats:
+              ratio = cum / total if total else 0
+              lines.append(f'{i:02d}. {heading} | {chars} | 累计 {ratio:.1%}')
+
+          # Provide a deterministic trial-cut suggestion near/after 30%.
+          target = total * 0.30
+          candidate = next((x for x in stats if x[3] >= target), stats[-1])
+          lines += [
+              '',
+              f'30%正文位置首次落在：{candidate[1]}（累计 {candidate[3]/total:.1%}）',
+              '试读建议：不要机械截在30%线上；优先在第七节《奶奶的遗嘱》中“她当然应该知情。”之后设置试读结束，让付费/解锁后的第一段立即进入遗嘱核心内容。',
+              '',
+              '发布前检查：',
+              '1. 标题栏只填作品名，正文不要重复作品名。',
+              '2. 正文粘贴 fanqie-body.txt 全文。',
+              '3. 智能分章保持关闭；这是短故事单篇完结。',
+              '4. 下一步优先选择女性成长相关分类/标签。',
+              '5. 若平台要求推荐标题，使用上方推荐标题。',
+          ]
+          (out_dir / 'fanqie-publish-meta.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit generated bundle
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add novels/true-daughter-police/publish/fanqie-body.txt novels/true-daughter-police/publish/fanqie-publish-meta.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: build fanqie publish bundle [skip ci]"
+            git push origin HEAD
+          fi
