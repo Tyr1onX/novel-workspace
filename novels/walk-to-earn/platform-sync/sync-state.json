@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "last_sync_at": "2026-09-01T06:52:04+00:00",
+  "last_sync_at": "2026-09-01T06:56:30+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "18": {
@@ -53,10 +53,10 @@
       "queue_operation_id": "walk-dialogue-rebuild-v2-republish-001-020-20260831"
     },
     "7": {
-      "local_sha256": "a404d9f3d1afa245be0807f58013732d7ac9fef32baef42babc2b95f88faa018",
+      "local_sha256": "5758df77546adc2e12120293077a1ea8568f10df3cd5a84e9eafa802d571e193",
       "last_action": "update",
-      "last_synced_at": "2026-08-31T15:07:51+00:00",
-      "queue_operation_id": "walk-short-chapter-repair-update-published-20260831"
+      "last_synced_at": "2026-09-01T06:56:30+00:00",
+      "queue_operation_id": "walk-cold-start-migrate-ch007-20260901"
     },
     "8": {
       "local_sha256": "06594eeaeba52215d9776cf4a463898a3851d6c61103a8d3eaccdd671e5a1808",
