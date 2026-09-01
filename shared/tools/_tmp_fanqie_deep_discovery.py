@@ -49,8 +49,8 @@ async def click_exact(page, text: str) -> bool:
         el = locator.nth(i)
         try:
             if await el.is_visible():
-                await el.click(timeout=5000)
-                await page.wait_for_timeout(1800)
+                await el.click(timeout=3000)
+                await page.wait_for_timeout(1300)
                 return True
         except Exception:
             pass
@@ -59,7 +59,7 @@ async def click_exact(page, text: str) -> bool:
 
 async def discover_book(page, runtime, slug: str, book_id: str):
     seen: dict[str, dict] = {}
-    tasks = []
+    tasks: set[asyncio.Task] = set()
 
     async def handle(response):
         try:
@@ -69,7 +69,7 @@ async def discover_book(page, runtime, slug: str, book_id: str):
             ctype = (response.headers or {}).get("content-type", "")
             if "json" not in ctype.lower():
                 return
-            body = await response.json()
+            body = await asyncio.wait_for(response.json(), timeout=4)
             query_keys = sorted(k for k, _ in parse_qsl(u.query, keep_blank_values=True))
             key = f"{response.request.method.upper()} {u.path}?{','.join(query_keys)}"
             seen[key] = {"status": response.status, "shape": shape(body)}
@@ -77,21 +77,27 @@ async def discover_book(page, runtime, slug: str, book_id: str):
             return
 
     def listener(response):
-        tasks.append(asyncio.create_task(handle(response)))
+        task = asyncio.create_task(handle(response))
+        tasks.add(task)
+        task.add_done_callback(tasks.discard)
 
     page.on("response", listener)
     try:
         if not await runtime.goto_with_login_retry(page, DATA_URL.format(book_id=book_id)):
             raise RuntimeError(f"cannot open data page for {slug}")
-        await page.wait_for_timeout(2500)
+        await page.wait_for_timeout(1800)
         for label in ("质量分析", "章节完读率", "章节跟读率", "字数读完率", "流量构成", "7天", "14天", "30天"):
             await click_exact(page, label)
-        await page.wait_for_timeout(2500)
+        await page.wait_for_timeout(1800)
         if tasks:
-            await asyncio.gather(*tasks, return_exceptions=True)
+            done, pending = await asyncio.wait(list(tasks), timeout=6)
+            for task in pending:
+                task.cancel()
         return {"project": slug, "book_id_length": len(book_id), "endpoints": seen}
     finally:
         page.remove_listener("response", listener)
+        for task in list(tasks):
+            task.cancel()
 
 
 async def run(novel_dirs: list[Path], runtime_arg: str | None):
