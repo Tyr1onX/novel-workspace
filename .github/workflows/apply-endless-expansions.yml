@@ -1,0 +1,34 @@
+name: Apply Endless Expansions
+
+on:
+  push:
+    branches:
+      - write/endless-rail-107-116-narrative-pass
+    paths:
+      - shared/tools/_tmp_expand_107_116.py
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply audited scene expansions
+        run: python shared/tools/_tmp_expand_107_116.py
+      - name: Commit expansions
+        shell: bash
+        run: |
+          git config user.name "novel-audit-bot"
+          git config user.email "novel-audit-bot@users.noreply.github.com"
+          git add novels/endless-rail/chapters
+          if git diff --cached --quiet; then
+            echo "No chapter changes"
+            exit 0
+          fi
+          git commit -m "revise(novel): expand chapters 107-116 to target length"
+          git pull --rebase origin write/endless-rail-107-116-narrative-pass
+          git push origin HEAD:write/endless-rail-107-116-narrative-pass
