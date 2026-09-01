@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "last_sync_at": "2026-09-01T07:12:30+00:00",
+  "last_sync_at": "2026-09-01T07:15:50+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "18": {
@@ -65,10 +65,10 @@
       "queue_operation_id": "walk-cold-start-migrate-ch008-20260901"
     },
     "9": {
-      "local_sha256": "f67b23a1dc02b3c049dee2194eeedba5c7f4ae0c85839f7f6045db2e4c6c3bde",
+      "local_sha256": "2dffc88c869fe0a902ece816b25e967a731e7863e9b45248b5f296486bdb7f66",
       "last_action": "update",
-      "last_synced_at": "2026-08-31T15:07:51+00:00",
-      "queue_operation_id": "walk-short-chapter-repair-update-published-20260831"
+      "last_synced_at": "2026-09-01T07:15:50+00:00",
+      "queue_operation_id": "walk-cold-start-refresh-ch009-20260901"
     },
     "10": {
       "local_sha256": "23d551efc4ec9310b9e7b67fbde6af1a932e4058120578739cde02cd47dd2085",
