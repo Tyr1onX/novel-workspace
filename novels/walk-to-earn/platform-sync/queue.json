@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-01T06:16:00+00:00",
+  "updated_at": "2026-09-01T06:25:00+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -106,11 +106,19 @@
       "id": "walk-cold-start-rewrite-update-001-010-20260901",
       "action": "update",
       "chapters": "1-10",
-      "authorized": true,
-      "status": "pending",
+      "authorized": false,
+      "status": "partial_failed",
       "audit": {
         "status": "passed",
-        "basis": "User explicitly authorized applying the audited cold-start rewrite to Fanqie after PR #36 was merged. Main now contains the final rebuilt chapters 1-10; all 63 local chapters pass the 2000-character floor and current continuity/meta/quality gates. Fresh read-only Fanqie reconciliation run 202 confirmed remote chapters 1-61 exist, chapters 1-46 are published, chapters 47-61 remain scheduled, and chapters 1-8 have title mismatches caused by the new cold-start rewrite while chapters 9-10 retain their titles but have rewritten canonical bodies. This operation updates only existing chapters 1-10 using --edit; it does not create chapters, reschedule anything, change chapter numbering, or touch the 47-61 release schedule."
+        "basis": "User explicitly authorized applying the audited cold-start rewrite to Fanqie after PR #36 was merged. Main contains the final rebuilt chapters 1-10 and the rewrite passed repository quality gates. The first platform attempt on Fanqie Sync run 206 was intentionally disabled after partial failure so later main pushes cannot automatically retry it. Publisher output confirms chapter 1 saved successfully; chapters 2-7 failed during the batch because old neighboring titles/body fragments still occupied the desired canonical values and repeated submissions then hit rate limiting; chapters 8-10 were not processed. A fresh read-only reconciliation is required before any dependency-ordered retry."
+      },
+      "attempted_at": "2026-09-01T06:24:34+00:00",
+      "result": {
+        "success": 1,
+        "failed": 9,
+        "confirmed_success_chapters": "1",
+        "failed_or_unprocessed_chapters": "2-10",
+        "source_run": 33477033944
       }
     }
   ]
