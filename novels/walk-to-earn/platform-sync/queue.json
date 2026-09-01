@@ -1,179 +1,21 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-01T06:59:16+00:00",
+  "updated_at": "2026-09-01T07:00:00+00:00",
   "operations": [
-    {
-      "id": "walk-canonicalize-18-19-20260829",
-      "action": "update",
-      "chapters": "18-19",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "Current main is canonical. Chapter 18 was rewritten and subsequently style-trimmed; chapter 19 was explicitly rewritten to return to the walking mainline. Fanqie reconciliation shows the platform still has the pre-rewrite titles for both chapters. User explicitly authorized the corresponding correction on 2026-08-29."
-      },
-      "completed_at": "2026-08-29T10:49:51+00:00"
-    },
-    {
-      "id": "walk-dialogue-overhaul-republish-001-020-20260830",
-      "action": "update",
-      "chapters": "1-20",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "User explicitly required the WeChat Sports novel to be fully rewritten, repeatedly audited, and republished after reader reports of stiff AI-like dialogue. Chapters 1-40 were rewritten and multi-pass Dialogue/Humanizer/Prose/Meta checks completed before merge commit 5068d3072427cbfc8fc1066e6752d3304bdb28f4. This operation republishes the audited canonical main text for chapters 1-20 without changing chapter order or release schedule."
-      },
-      "completed_at": "2026-08-30T11:30:36+00:00"
-    },
-    {
-      "id": "walk-dialogue-overhaul-republish-021-040-20260830",
-      "action": "update",
-      "chapters": "21-40",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "User explicitly required the WeChat Sports novel to be fully rewritten, repeatedly audited, and republished after reader reports of stiff AI-like dialogue. Chapters 21-40 are the audited canonical continuation of the same full-book rewrite merged at 5068d3072427cbfc8fc1066e6752d3304bdb28f4. Multi-pass Dialogue/Humanizer/Prose/Meta review was completed before platform mutation. This operation republishes chapters 21-40 without changing chapter order or release schedule."
-      },
-      "completed_at": "2026-08-30T11:38:42+00:00"
-    },
-    {
-      "id": "walk-dialogue-rebuild-v2-republish-001-020-20260831",
-      "action": "update",
-      "chapters": "1-20",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "The author explicitly required a second full rebuild after the first republished dialogue cleanup still read as AI-like, and explicitly authorized republishing only after repeated audit. Chapters 001-040 were rebuilt again on PR #17. The V2 audit at novels/walk-to-earn/audits/dialogue-rebuild-v2-001-040-20260831.md records manual cold reads, character/cross-chapter review, protected continuity checks, and successful Dialogue/Humanizer/Prose/Meta quality gates. This operation replaces existing Fanqie chapters 1-20 with the audited V2 canonical text without changing chapter order or normal future scheduling."
-      },
-      "completed_at": "2026-08-30T22:55:26+00:00"
-    },
-    {
-      "id": "walk-dialogue-rebuild-v2-republish-021-040-20260831",
-      "action": "update",
-      "chapters": "21-40",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "The author explicitly required a second full rebuild after the first republished dialogue cleanup still read as AI-like, and explicitly authorized republishing only after repeated audit. Chapters 001-040 were rebuilt again on PR #17. The V2 audit at novels/walk-to-earn/audits/dialogue-rebuild-v2-001-040-20260831.md records manual cold reads, character/cross-chapter review, protected continuity checks, and successful Dialogue/Humanizer/Prose/Meta quality gates. This operation replaces existing Fanqie chapters 21-40 with the audited V2 canonical text without changing chapter order or normal future scheduling. Batch 1 (chapters 1-20) completed first to respect the repository safety cap; batch 2 is now executable."
-      },
-      "completed_at": "2026-08-30T23:03:28+00:00"
-    },
-    {
-      "id": "walk-create-041-043-20260831",
-      "action": "create",
-      "chapters": "41-43",
-      "schedule_mode": "fixed_start",
-      "start_date": "2026-09-01",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "Author explicitly requested three new Walk to Earn chapters today. Fresh read-only reconciliation confirmed Fanqie was exactly published 1-40 with no pending chapters before continuation. Chapters 41-43 passed continuity invariants and the full quality gate; manual cold-read audit is recorded in novels/walk-to-earn/audits/continuation-041-043-20260831.md. Create is intentionally scheduled from 2026-09-01 first; immediate publication is a separate one-shot only after platform creation is confirmed."
-      },
-      "completed_at": "2026-08-31T06:12:58+00:00"
-    },
-    {
-      "id": "walk-short-chapter-repair-update-published-20260831",
-      "action": "update",
-      "chapters": "3-5,7-18,21-25,31,34,38,42-43",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "User explicitly authorized publishing the completed Walk to Earn repair. PR #19 was merged into main after full continuity, Novel Gate, Meta narrative, chapter-length, release-floor and manual dialogue/humanizer review. The listed chapters are the subset of already-created Fanqie chapters 1-43 whose canonical body text changed in PR #19. Current audit reports pass_count=63 and short_count=0. This operation updates only those existing platform chapters to the audited canonical main text and does not alter chapter order or future schedule."
-      },
-      "completed_at": "2026-08-31T15:07:51+00:00"
-    },
-    {
-      "id": "walk-create-044-061-20260831",
-      "action": "create",
-      "chapters": "44-61",
-      "schedule_mode": "auto_continue",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "User explicitly clarified that the completed continuation must be uploaded into the Fanqie author backend so future chapters are visible there, not merely recorded in the repository queue. Chapters 44-61 are audited canonical main text, every chapter is at least 2000 body characters, and all six normal three-chapter release groups 44-46 through 59-61 satisfy the 6000-character daily floor. Upload uses the active auto-continue policy of three consecutive chapters per day at 00:00 Asia/Shanghai, preserving chapter order. Chapters 62-63 are intentionally excluded until chapter 64 exists so the final release day also satisfies the normal 6000-character floor."
-      },
-      "completed_at": "2026-08-31T15:30:55+00:00"
-    },
-    {
-      "id": "walk-cold-start-rewrite-update-001-010-20260901",
-      "action": "update",
-      "chapters": "1-10",
-      "authorized": false,
-      "status": "partial_failed",
-      "audit": {
-        "status": "passed",
-        "basis": "User explicitly authorized applying the audited cold-start rewrite to Fanqie after PR #36 was merged. Main contains the final rebuilt chapters 1-10 and the rewrite passed repository quality gates. The first platform attempt on Fanqie Sync run 206 was intentionally disabled after partial failure so later main pushes cannot automatically retry it. Publisher output confirms chapter 1 saved successfully; chapters 2-7 failed during the batch because old neighboring titles/body fragments still occupied the desired canonical values and repeated submissions then hit rate limiting; chapters 8-10 were not processed. A fresh read-only reconciliation is required before any dependency-ordered retry."
-      },
-      "attempted_at": "2026-09-01T06:24:34+00:00",
-      "result": {
-        "success": 1,
-        "failed": 9,
-        "confirmed_success_chapters": "1",
-        "failed_or_unprocessed_chapters": "2-10",
-        "source_run": 33477033944
-      }
-    },
-    {
-      "id": "walk-cold-start-retry-ch003-20260901",
-      "action": "update",
-      "chapters": "3",
-      "authorized": false,
-      "status": "blocked_duplicate_content",
-      "audit": {
-        "status": "passed",
-        "basis": "Dependency-ordered retry after run 206. Fresh read-only reconcile run 208 confirmed chapter 1 updated and chapters 2-8 retained old titles. A single-chapter retry for chapter 3 on Fanqie Sync run 209 still failed: the first submission was rejected as an existing duplicate chapter/paragraph even though the target title was unique; automatic publisher retries then hit the platform rate limit. This operation is disabled so later main pushes cannot automatically retry it. Further platform mutation is blocked until a migration method avoids duplicate-content overlap without temporary visible placeholder text."
-      },
-      "attempted_at": "2026-09-01T06:34:59+00:00",
-      "result": {
-        "success": 0,
-        "failed": 1,
-        "source_run": 33478070914,
-        "reason": "duplicate chapter/paragraph; retries rate-limited"
-      }
-    },
-    {
-      "id": "walk-cold-start-migrate-ch008-20260901",
-      "action": "update",
-      "chapters": "8",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "User explicitly authorized continuing the audited cold-start migration. Commit ddfa03a shows the rebuilt chapter chain shifts prior chapter bodies forward: new 2 derives from old 3 through new 7 from old 8, while new chapter 8 is a new Tuesday exhibition-material scene. Therefore chapter 8 is the safe migration-chain exit and must be updated first, releasing the old chapter-8 body for chapter 7 before continuing 7→6→5→4→3→2. This operation edits only existing chapter 8; chapter number, platform position, publication state, and chapters 47-61 schedules are unchanged."
-      },
-      "completed_at": "2026-09-01T06:52:04+00:00"
-    },
-    {
-      "id": "walk-cold-start-migrate-ch007-20260901",
-      "action": "update",
-      "chapters": "7",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "User explicitly authorized continuing the audited cold-start migration. Chapter 8 has now been successfully updated and recorded in queue/state, releasing the old chapter-8 body/title '一顿两百块的饭'. The rebuilt chapter 7 is exactly the next dependency in the migration chain, so updating existing chapter 7 now no longer collides with chapter 8. This operation edits only chapter 7 and does not alter numbering, platform position, publication state, or any future schedule."
-      },
-      "completed_at": "2026-09-01T06:56:30+00:00"
-    },
-    {
-      "id": "walk-cold-start-migrate-ch006-20260901",
-      "action": "update",
-      "chapters": "6",
-      "authorized": true,
-      "status": "completed",
-      "audit": {
-        "status": "passed",
-        "basis": "User explicitly authorized continuing the audited cold-start migration. Chapter 7 has now been successfully replaced with canonical chapter 7, releasing the old chapter-7 body/title '今天不走了'. Canonical chapter 6 is the next dependency and can now replace existing chapter 6 without duplicate-content overlap. This operation edits only chapter 6 and leaves numbering, platform position, publication state, and future schedules unchanged."
-      },
-      "completed_at": "2026-09-01T06:59:16+00:00"
-    }
+    {"id":"walk-canonicalize-18-19-20260829","action":"update","chapters":"18-19","authorized":true,"status":"completed","audit":{"status":"passed","basis":"Current main is canonical. Chapter 18 was rewritten and subsequently style-trimmed; chapter 19 was explicitly rewritten to return to the walking mainline. Fanqie reconciliation shows the platform still has the pre-rewrite titles for both chapters. User explicitly authorized the corresponding correction on 2026-08-29."},"completed_at":"2026-08-29T10:49:51+00:00"},
+    {"id":"walk-dialogue-overhaul-republish-001-020-20260830","action":"update","chapters":"1-20","authorized":true,"status":"completed","audit":{"status":"passed","basis":"User explicitly required the WeChat Sports novel to be fully rewritten, repeatedly audited, and republished after reader reports of stiff AI-like dialogue. Chapters 1-40 were rewritten and multi-pass Dialogue/Humanizer/Prose/Meta checks completed before merge commit 5068d3072427cbfc8fc1066e6752d3304bdb28f4. This operation republishes the audited canonical main text for chapters 1-20 without changing chapter order or release schedule."},"completed_at":"2026-08-30T11:30:36+00:00"},
+    {"id":"walk-dialogue-overhaul-republish-021-040-20260830","action":"update","chapters":"21-40","authorized":true,"status":"completed","audit":{"status":"passed","basis":"User explicitly required the WeChat Sports novel to be fully rewritten, repeatedly audited, and republished after reader reports of stiff AI-like dialogue. Chapters 21-40 are the audited canonical continuation of the same full-book rewrite merged at 5068d3072427cbfc8fc1066e6752d3304bdb28f4. Multi-pass Dialogue/Humanizer/Prose/Meta review was completed before platform mutation. This operation republishes chapters 21-40 without changing chapter order or release schedule."},"completed_at":"2026-08-30T11:38:42+00:00"},
+    {"id":"walk-dialogue-rebuild-v2-republish-001-020-20260831","action":"update","chapters":"1-20","authorized":true,"status":"completed","audit":{"status":"passed","basis":"The author explicitly required a second full rebuild after the first republished dialogue cleanup still read as AI-like, and explicitly authorized republishing only after repeated audit. Chapters 001-040 were rebuilt again on PR #17. The V2 audit at novels/walk-to-earn/audits/dialogue-rebuild-v2-001-040-20260831.md records manual cold reads, character/cross-chapter review, protected continuity checks, and successful Dialogue/Humanizer/Prose/Meta quality gates. This operation replaces existing Fanqie chapters 1-20 with the audited V2 canonical text without changing chapter order or normal future scheduling."},"completed_at":"2026-08-30T22:55:26+00:00"},
+    {"id":"walk-dialogue-rebuild-v2-republish-021-040-20260831","action":"update","chapters":"21-40","authorized":true,"status":"completed","audit":{"status":"passed","basis":"The author explicitly required a second full rebuild after the first republished dialogue cleanup still read as AI-like, and explicitly authorized republishing only after repeated audit. Chapters 001-040 were rebuilt again on PR #17. The V2 audit at novels/walk-to-earn/audits/dialogue-rebuild-v2-001-040-20260831.md records manual cold reads, character/cross-chapter review, protected continuity checks, and successful Dialogue/Humanizer/Prose/Meta quality gates. This operation replaces existing Fanqie chapters 21-40 with the audited V2 canonical text without changing chapter order or normal future scheduling. Batch 1 (chapters 1-20) completed first to respect the repository safety cap; batch 2 is now executable."},"completed_at":"2026-08-30T23:03:28+00:00"},
+    {"id":"walk-create-041-043-20260831","action":"create","chapters":"41-43","schedule_mode":"fixed_start","start_date":"2026-09-01","authorized":true,"status":"completed","audit":{"status":"passed","basis":"Author explicitly requested three new Walk to Earn chapters today. Fresh read-only reconciliation confirmed Fanqie was exactly published 1-40 with no pending chapters before continuation. Chapters 41-43 passed continuity invariants and the full quality gate; manual cold-read audit is recorded in novels/walk-to-earn/audits/continuation-041-043-20260831.md. Create is intentionally scheduled from 2026-09-01 first; immediate publication is a separate one-shot only after platform creation is confirmed."},"completed_at":"2026-08-31T06:12:58+00:00"},
+    {"id":"walk-short-chapter-repair-update-published-20260831","action":"update","chapters":"3-5,7-18,21-25,31,34,38,42-43","authorized":true,"status":"completed","audit":{"status":"passed","basis":"User explicitly authorized publishing the completed Walk to Earn repair. PR #19 was merged into main after full continuity, Novel Gate, Meta narrative, chapter-length, release-floor and manual dialogue/humanizer review. The listed chapters are the subset of already-created Fanqie chapters 1-43 whose canonical body text changed in PR #19. Current audit reports pass_count=63 and short_count=0. This operation updates only those existing platform chapters to the audited canonical main text and does not alter chapter order or future schedule."},"completed_at":"2026-08-31T15:07:51+00:00"},
+    {"id":"walk-create-044-061-20260831","action":"create","chapters":"44-61","schedule_mode":"auto_continue","authorized":true,"status":"completed","audit":{"status":"passed","basis":"User explicitly clarified that the completed continuation must be uploaded into the Fanqie author backend so future chapters are visible there, not merely recorded in the repository queue. Chapters 44-61 are audited canonical main text, every chapter is at least 2000 body characters, and all six normal three-chapter release groups 44-46 through 59-61 satisfy the 6000-character daily floor. Upload uses the active auto-continue policy of three consecutive chapters per day at 00:00 Asia/Shanghai, preserving chapter order. Chapters 62-63 are intentionally excluded until chapter 64 exists so the final release day also satisfies the normal 6000-character floor."},"completed_at":"2026-08-31T15:30:55+00:00"},
+    {"id":"walk-cold-start-rewrite-update-001-010-20260901","action":"update","chapters":"1-10","authorized":false,"status":"partial_failed","audit":{"status":"passed","basis":"User explicitly authorized applying the audited cold-start rewrite to Fanqie after PR #36 was merged. Main contains the final rebuilt chapters 1-10 and the rewrite passed repository quality gates. The first platform attempt on Fanqie Sync run 206 was intentionally disabled after partial failure so later main pushes cannot automatically retry it. Publisher output confirms chapter 1 saved successfully; chapters 2-7 failed during the batch because old neighboring titles/body fragments still occupied the desired canonical values and repeated submissions then hit rate limiting; chapters 8-10 were not processed. A fresh read-only reconciliation is required before any dependency-ordered retry."},"attempted_at":"2026-09-01T06:24:34+00:00","result":{"success":1,"failed":9,"confirmed_success_chapters":"1","failed_or_unprocessed_chapters":"2-10","source_run":33477033944}},
+    {"id":"walk-cold-start-retry-ch003-20260901","action":"update","chapters":"3","authorized":false,"status":"blocked_duplicate_content","audit":{"status":"passed","basis":"Dependency-ordered retry after run 206. Fresh read-only reconcile run 208 confirmed chapter 1 updated and chapters 2-8 retained old titles. A single-chapter retry for chapter 3 on Fanqie Sync run 209 still failed: the first submission was rejected as an existing duplicate chapter/paragraph even though the target title was unique; automatic publisher retries then hit the platform rate limit. This operation is disabled so later main pushes cannot automatically retry it. Further platform mutation is blocked until a migration method avoids duplicate-content overlap without temporary visible placeholder text."},"attempted_at":"2026-09-01T06:34:59+00:00","result":{"success":0,"failed":1,"source_run":33478070914,"reason":"duplicate chapter/paragraph; retries rate-limited"}},
+    {"id":"walk-cold-start-migrate-ch008-20260901","action":"update","chapters":"8","authorized":true,"status":"completed","audit":{"status":"passed","basis":"User explicitly authorized continuing the audited cold-start migration. Commit ddfa03a shows the rebuilt chapter chain shifts prior chapter bodies forward: new 2 derives from old 3 through new 7 from old 8, while new chapter 8 is a new Tuesday exhibition-material scene. Therefore chapter 8 is the safe migration-chain exit and must be updated first, releasing the old chapter-8 body for chapter 7 before continuing 7→6→5→4→3→2. This operation edits only existing chapter 8; chapter number, platform position, publication state, and chapters 47-61 schedules are unchanged."},"completed_at":"2026-09-01T06:52:04+00:00"},
+    {"id":"walk-cold-start-migrate-ch007-20260901","action":"update","chapters":"7","authorized":true,"status":"completed","audit":{"status":"passed","basis":"User explicitly authorized continuing the audited cold-start migration. Chapter 8 has now been successfully updated and recorded in queue/state, releasing the old chapter-8 body/title '一顿两百块的饭'. The rebuilt chapter 7 is exactly the next dependency in the migration chain, so updating existing chapter 7 now no longer collides with chapter 8. This operation edits only chapter 7 and does not alter numbering, platform position, publication state, or any future schedule."},"completed_at":"2026-09-01T06:56:30+00:00"},
+    {"id":"walk-cold-start-migrate-ch006-20260901","action":"update","chapters":"6","authorized":true,"status":"completed","audit":{"status":"passed","basis":"User explicitly authorized continuing the audited cold-start migration. Chapter 7 has now been successfully replaced with canonical chapter 7, releasing the old chapter-7 body/title '今天不走了'. Canonical chapter 6 is the next dependency and can now replace existing chapter 6 without duplicate-content overlap. This operation edits only chapter 6 and leaves numbering, platform position, publication state, and future schedules unchanged."},"completed_at":"2026-09-01T06:59:16+00:00"},
+    {"id":"walk-cold-start-migrate-ch005-20260901","action":"update","chapters":"5","authorized":true,"status":"pending","audit":{"status":"passed","basis":"User explicitly authorized continuing the audited cold-start migration. Chapter 6 has now been successfully replaced with canonical chapter 6, releasing the old chapter-6 body/title '你最近怎么天天走路'. Canonical chapter 5 is the next dependency and can now replace existing chapter 5 without duplicate-content overlap. This operation edits only chapter 5 and leaves numbering, platform position, publication state, and future schedules unchanged."}}
   ]
 }
