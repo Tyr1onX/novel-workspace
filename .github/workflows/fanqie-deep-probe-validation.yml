@@ -1,0 +1,82 @@
+name: Fanqie Deep Probe Validation
+
+on:
+  push:
+    branches:
+      - feat/fanqie-deep-analytics-probe-20260901
+    paths:
+      - "shared/tools/fanqie_data_probe.py"
+      - ".github/workflows/fanqie-deep-probe-validation.yml"
+
+concurrency:
+  group: fanqie-deep-probe-validation
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile probe
+        shell: powershell
+        run: python -m py_compile shared/tools/fanqie_data_probe.py
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Run sanitized v2 probe
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $projects = @(python shared/tools/fanqie_projects.py list)
+          python shared/tools/fanqie_data_probe.py @projects --runtime "${{ steps.runtime.outputs.path }}" --write-snapshots | Out-File -Encoding utf8 probe-output.txt
+          if ($LASTEXITCODE -ne 0) { Get-Content probe-output.txt; exit $LASTEXITCODE }
+          Get-Content probe-output.txt
+      - name: Validate deep snapshot schema and sanitization
+        shell: powershell
+        run: |
+          @'
+          import json
+          from pathlib import Path
+
+          forbidden = ("msToken", "a_bogus", '"book_id"', '"item_id"', "phone_number", "bank_card", "identity_code")
+          expected = {"endless-rail", "walk-to-earn"}
+          seen = set()
+          for slug in expected:
+              files = sorted((Path("novels") / slug / "platform-sync" / "analytics" / "snapshots").glob("*.json"), key=lambda p: p.stat().st_mtime)
+              if not files:
+                  raise SystemExit(f"no snapshot for {slug}")
+              p = files[-1]
+              raw = p.read_text(encoding="utf-8")
+              for token in forbidden:
+                  if token in raw:
+                      raise SystemExit(f"forbidden token persisted in {p}: {token}")
+              data = json.loads(raw)
+              if data.get("schema_version") != 2:
+                  raise SystemExit(f"expected schema_version=2 in {p}")
+              quality = data.get("quality") or {}
+              chapters = quality.get("chapters") or []
+              if len(chapters) < 10:
+                  raise SystemExit(f"too few chapter analytics rows for {slug}: {len(chapters)}")
+              first = chapters[0]
+              if first.get("chapter_number") != 1 or first.get("read_completion_rate") is None or first.get("follow_read_rate") is None:
+                  raise SystemExit(f"missing chapter metrics for {slug}: {first}")
+              traffic = data.get("traffic") or {}
+              seven = traffic.get("7d") or {}
+              sources = seven.get("sources") or {}
+              required = {"bookstore", "category", "shelf", "continue_reading", "search", "other"}
+              if set(sources) != required:
+                  raise SystemExit(f"bad 7d traffic sources for {slug}: {sorted(sources)}")
+              if not all(len(sources[name]) == len(seven.get("dates") or []) for name in required):
+                  raise SystemExit(f"traffic date/series length mismatch for {slug}")
+              seen.add(slug)
+              print(slug, "chapters", len(chapters), "ch1", first.get("read_completion_rate"), first.get("follow_read_rate"), "traffic7d", {k: v[-1] if v else None for k,v in sources.items()})
+          if seen != expected:
+              raise SystemExit(f"missing books: {expected-seen}")
+          '@ | Set-Content -Encoding utf8 validate_probe.py
+          python validate_probe.py
