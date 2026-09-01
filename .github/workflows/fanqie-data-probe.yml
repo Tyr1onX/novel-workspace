@@ -1,3 +1,4 @@
+# Temporary no-op trigger for a fresh read-only analytics snapshot on 2026-09-01.
 name: Fanqie Data Probe
 
 on:
