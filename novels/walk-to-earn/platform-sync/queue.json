@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-01T05:59:00+00:00",
+  "updated_at": "2026-09-01T06:16:00+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -101,6 +101,17 @@
         "basis": "User explicitly clarified that the completed continuation must be uploaded into the Fanqie author backend so future chapters are visible there, not merely recorded in the repository queue. Chapters 44-61 are audited canonical main text, every chapter is at least 2000 body characters, and all six normal three-chapter release groups 44-46 through 59-61 satisfy the 6000-character daily floor. Upload uses the active auto-continue policy of three consecutive chapters per day at 00:00 Asia/Shanghai, preserving chapter order. Chapters 62-63 are intentionally excluded until chapter 64 exists so the final release day also satisfies the normal 6000-character floor."
       },
       "completed_at": "2026-08-31T15:30:55+00:00"
+    },
+    {
+      "id": "walk-cold-start-rewrite-update-001-010-20260901",
+      "action": "update",
+      "chapters": "1-10",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "User explicitly authorized applying the audited cold-start rewrite to Fanqie after PR #36 was merged. Main now contains the final rebuilt chapters 1-10; all 63 local chapters pass the 2000-character floor and current continuity/meta/quality gates. Fresh read-only Fanqie reconciliation run 202 confirmed remote chapters 1-61 exist, chapters 1-46 are published, chapters 47-61 remain scheduled, and chapters 1-8 have title mismatches caused by the new cold-start rewrite while chapters 9-10 retain their titles but have rewritten canonical bodies. This operation updates only existing chapters 1-10 using --edit; it does not create chapters, reschedule anything, change chapter numbering, or touch the 47-61 release schedule."
+      }
     }
   ]
 }
