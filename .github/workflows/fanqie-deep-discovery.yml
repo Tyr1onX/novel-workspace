@@ -1,0 +1,36 @@
+name: Fanqie Deep Analytics Discovery
+
+on:
+  push:
+    branches:
+      - feat/fanqie-deep-analytics-probe-20260901
+    paths:
+      - "shared/tools/_tmp_fanqie_deep_discovery.py"
+      - ".github/workflows/fanqie-deep-discovery.yml"
+
+concurrency:
+  group: fanqie-deep-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Discover analytics API shapes
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $projects = @(python shared/tools/fanqie_projects.py list)
+          if ($projects.Count -eq 0) { throw "No Fanqie projects configured." }
+          python shared/tools/_tmp_fanqie_deep_discovery.py @projects --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
