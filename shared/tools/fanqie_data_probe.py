@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Read-only Fanqie analytics collector with sanitized snapshot output.
 
-Only numeric/book-level analytics are persisted. Cookies, tokens, account identity,
-bank/payment details, comments/messages, and chapter bodies are never written.
+Persisted data is deliberately limited to book/chapter analytics and income totals.
+Cookies, signed query tokens, book/item IDs, account identity, bank/payment details,
+comments/messages, and chapter bodies are never written to snapshots or logs.
 """
 from __future__ import annotations
 
@@ -19,7 +20,19 @@ import fanqie_probe
 
 BASE = "https://fanqienovel.com"
 BOOK_MANAGE = BASE + "/main/writer/book-manage"
+DATA_URL = BASE + "/main/writer/data?bookId={book_id}"
 STATS_COMMON_PATH = "/api/author/stats/book_common_v1/v0/"
+CHAPTER_LIST_PATH = "/api/author/stats/chapter_list_v1/v0/"
+BOOK_INCREASE_PATH = "/api/author/stats/book_increase_v2/v0/"
+TRAFFIC_SOURCE_STATS_TYPES = "24,27,26,25,28,29"
+TRAFFIC_SOURCE_ORDER = (
+    "bookstore",
+    "category",
+    "shelf",
+    "continue_reading",
+    "search",
+    "other",
+)
 CN_TZ = timezone(timedelta(hours=8))
 
 
@@ -90,14 +103,14 @@ STAT_KEYS = (
 )
 
 
-async def click_exact(page, text: str) -> bool:
+async def click_exact(page, text: str, wait_ms: int = 1200) -> bool:
     locator = page.get_by_text(text, exact=True)
     for i in range(min(await locator.count(), 30)):
         element = locator.nth(i)
         try:
             if await element.is_visible():
                 await element.click(timeout=5000)
-                await page.wait_for_timeout(1200)
+                await page.wait_for_timeout(wait_ms)
                 return True
         except Exception:
             continue
@@ -198,6 +211,200 @@ async def read_income(page, runtime, book_name: str):
     return income_from_lines(lines, book_name)
 
 
+def number_or_none(value):
+    if value is None or value == "":
+        return None
+    if isinstance(value, (int, float)):
+        return value
+    raw = str(value).replace(",", "").strip()
+    if not re.fullmatch(r"-?\d+(?:\.\d+)?", raw):
+        return None
+    number = float(raw)
+    return int(number) if number.is_integer() else number
+
+
+def epoch_to_cn_iso(value):
+    number = number_or_none(value)
+    if number is None:
+        return None
+    try:
+        return datetime.fromtimestamp(float(number), CN_TZ).isoformat()
+    except (OverflowError, OSError, ValueError):
+        return None
+
+
+def epoch_to_cn_date(value):
+    iso = epoch_to_cn_iso(value)
+    return iso[:10] if iso else None
+
+
+def chapter_rows(data) -> list[dict]:
+    if not isinstance(data, dict):
+        return []
+    rows = data.get("chapter_stats_list")
+    return rows if isinstance(rows, list) else []
+
+
+def merge_chapter_quality(completion_data, follow_data) -> dict:
+    merged: dict[int, dict] = {}
+    update_times = []
+
+    for data, metric in ((completion_data, "read_completion_rate"), (follow_data, "follow_read_rate")):
+        if isinstance(data, dict) and data.get("stats_update_time") not in (None, ""):
+            update_times.append(data.get("stats_update_time"))
+        for row in chapter_rows(data):
+            if not isinstance(row, dict):
+                continue
+            raw_index = number_or_none(row.get("indice"))
+            if not isinstance(raw_index, int):
+                continue
+            item = merged.setdefault(
+                raw_index,
+                {
+                    "chapter_number": raw_index + 1,
+                    "title": str(row.get("title") or "").strip(),
+                    "word_number": number_or_none(row.get("word_number")),
+                    "publish_time": epoch_to_cn_iso(row.get("publish_time")),
+                    "read_completion_rate": None,
+                    "follow_read_rate": None,
+                },
+            )
+            if not item["title"]:
+                item["title"] = str(row.get("title") or "").strip()
+            if item["word_number"] is None:
+                item["word_number"] = number_or_none(row.get("word_number"))
+            if item["publish_time"] is None:
+                item["publish_time"] = epoch_to_cn_iso(row.get("publish_time"))
+            item[metric] = number_or_none(row.get(metric))
+
+    latest_update = max((number_or_none(value) for value in update_times), default=None)
+    return {
+        "stats_update_time": epoch_to_cn_iso(latest_update),
+        "chapters": [merged[index] for index in sorted(merged)],
+        # The dashboard exposes a separate “字数读完率” tab, but its numeric payload
+        # has not yet been mapped to a stable read-only API field. Keep this explicit
+        # instead of guessing and polluting snapshots with a mislabeled metric.
+        "word_completion": {
+            "available": False,
+            "reason": "dashboard numeric payload not yet mapped to a stable API field",
+        },
+    }
+
+
+def traffic_window_from_capture(query: dict[str, str], data) -> tuple[str | None, dict | None]:
+    if query.get("stats_types") != TRAFFIC_SOURCE_STATS_TYPES or not isinstance(data, dict):
+        return None, None
+    raw_series = data.get("data_list")
+    if not isinstance(raw_series, list) or len(raw_series) < len(TRAFFIC_SOURCE_ORDER):
+        return None, None
+
+    source_values: dict[str, list] = {}
+    max_len = 0
+    for name, series in zip(TRAFFIC_SOURCE_ORDER, raw_series):
+        values = [number_or_none(value) for value in series] if isinstance(series, list) else []
+        source_values[name] = values
+        max_len = max(max_len, len(values))
+
+    start_epoch = number_or_none(query.get("start_date"))
+    end_epoch = number_or_none(query.get("end_date"))
+    if not isinstance(start_epoch, int) or not isinstance(end_epoch, int):
+        return None, None
+
+    inclusive_days = int((end_epoch - start_epoch) // 86400) + 1 if end_epoch >= start_epoch else 0
+    if inclusive_days <= 7:
+        key = "7d"
+    elif inclusive_days <= 14:
+        key = "14d"
+    else:
+        key = "30d"
+
+    dates = []
+    for offset in range(max_len):
+        dates.append(epoch_to_cn_date(start_epoch + offset * 86400))
+
+    return key, {
+        "start_date": epoch_to_cn_date(start_epoch),
+        "end_date": epoch_to_cn_date(end_epoch),
+        "dates": dates,
+        "sources": source_values,
+    }
+
+
+async def read_deep_analytics(page, runtime, book_id: str) -> dict:
+    """Read chapter quality + traffic composition from the dashboard's own requests.
+
+    Signed query values are observed only in memory and are intentionally discarded.
+    """
+    chapter_payloads: dict[str, dict] = {}
+    traffic_windows: dict[str, dict] = {}
+    tasks: set[asyncio.Task] = set()
+
+    async def handle(response):
+        try:
+            parsed = urlparse(response.url)
+            if parsed.netloc != "fanqienovel.com" or response.request.method.upper() != "GET":
+                return
+            if parsed.path not in {CHAPTER_LIST_PATH, BOOK_INCREASE_PATH}:
+                return
+            body = await asyncio.wait_for(response.json(), timeout=5)
+            data = unwrap(body)
+            query = dict(parse_qsl(parsed.query, keep_blank_values=True))
+
+            if parsed.path == CHAPTER_LIST_PATH:
+                stats_type = query.get("stats_type")
+                if stats_type in {"3", "4"} and isinstance(data, dict):
+                    chapter_payloads[stats_type] = data
+                return
+
+            safe_query = {
+                key: query.get(key, "")
+                for key in ("start_date", "end_date", "stats_types")
+            }
+            key, window = traffic_window_from_capture(safe_query, data)
+            if key and window:
+                traffic_windows[key] = window
+        except Exception:
+            return
+
+    def listener(response):
+        task = asyncio.create_task(handle(response))
+        tasks.add(task)
+        task.add_done_callback(tasks.discard)
+
+    page.on("response", listener)
+    try:
+        if not await runtime.goto_with_login_retry(page, DATA_URL.format(book_id=book_id)):
+            return {"quality": merge_chapter_quality({}, {}), "traffic": {}}
+        await page.wait_for_timeout(1800)
+
+        # The quality page defaults to chapter completion; switching tabs causes the
+        # dashboard to issue its own signed requests, which we observe rather than forge.
+        await click_exact(page, "质量分析", 1500)
+        await click_exact(page, "章节完读率", 1000)
+        await click_exact(page, "章节跟读率", 1400)
+        # Click for future compatibility/discovery, but do not persist a guessed value.
+        await click_exact(page, "字数读完率", 1000)
+
+        await click_exact(page, "流量构成", 1500)
+        for label in ("7天", "14天", "30天"):
+            await click_exact(page, label, 1400)
+        await page.wait_for_timeout(1800)
+
+        if tasks:
+            _, pending = await asyncio.wait(list(tasks), timeout=8)
+            for task in pending:
+                task.cancel()
+
+        return {
+            "quality": merge_chapter_quality(chapter_payloads.get("3", {}), chapter_payloads.get("4", {})),
+            "traffic": {key: traffic_windows[key] for key in ("7d", "14d", "30d") if key in traffic_windows},
+        }
+    finally:
+        page.remove_listener("response", listener)
+        for task in list(tasks):
+            task.cancel()
+
+
 def write_snapshots(novel_dirs: list[Path], report: dict, collected_at: datetime):
     filename = collected_at.strftime("%Y-%m-%dT%H-%M-%S%z") + ".json"
     written = []
@@ -207,12 +414,14 @@ def write_snapshots(novel_dirs: list[Path], report: dict, collected_at: datetime
         if not book:
             continue
         snapshot = {
-            "schema_version": 1,
+            "schema_version": 2,
             "source": "fanqie-author-dashboard",
             "collected_at": collected_at.isoformat(),
             "project": slug,
             "stats": book.get("stats", {}),
             "income": book.get("income", {}),
+            "quality": book.get("quality", {}),
+            "traffic": book.get("traffic", {}),
         }
         out_dir = novel_dir / "platform-sync" / "analytics" / "snapshots"
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -243,12 +452,18 @@ async def run(novel_dirs: list[Path], runtime_arg: str | None, write: bool):
             names = {str(row.get("book_id")): str(row.get("book_name") or "") for row in rows if isinstance(row, dict)}
             stats_template = await capture_stats_query_template(page, runtime)
 
-            report = {"schema_version": 1, "collected_at": collected_at.isoformat(), "books": {}}
+            report = {"schema_version": 2, "collected_at": collected_at.isoformat(), "books": {}}
             for novel_dir, book_id in projects:
                 slug = novel_dir.name
                 stats = await read_stats(page, book_id, stats_template)
+                deep = await read_deep_analytics(page, runtime, book_id)
                 income = await read_income(page, runtime, names.get(book_id, ""))
-                report["books"][slug] = {"stats": stats, "income": income}
+                report["books"][slug] = {
+                    "stats": stats,
+                    "income": income,
+                    "quality": deep.get("quality", {}),
+                    "traffic": deep.get("traffic", {}),
+                }
 
             await runtime.save_auth(context)
             if write:
