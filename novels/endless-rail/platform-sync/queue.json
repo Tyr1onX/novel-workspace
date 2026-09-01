@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-01T01:50:00+00:00",
+  "updated_at": "2026-09-01T02:03:07+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -22,15 +22,49 @@
         "title_mismatches": 0,
         "position_mismatches": 0,
         "schedule": {
-          "2026-08-30": [82, 83, 84],
-          "2026-08-31": [85, 86, 87],
-          "2026-09-01": [88, 89, 90],
-          "2026-09-02": [91, 92, 93],
-          "2026-09-03": [94, 95, 96],
-          "2026-09-04": [97, 98, 99],
-          "2026-09-05": [100, 101, 102],
-          "2026-09-06": [103, 104, 105],
-          "2026-09-07": [106]
+          "2026-08-30": [
+            82,
+            83,
+            84
+          ],
+          "2026-08-31": [
+            85,
+            86,
+            87
+          ],
+          "2026-09-01": [
+            88,
+            89,
+            90
+          ],
+          "2026-09-02": [
+            91,
+            92,
+            93
+          ],
+          "2026-09-03": [
+            94,
+            95,
+            96
+          ],
+          "2026-09-04": [
+            97,
+            98,
+            99
+          ],
+          "2026-09-05": [
+            100,
+            101,
+            102
+          ],
+          "2026-09-06": [
+            103,
+            104,
+            105
+          ],
+          "2026-09-07": [
+            106
+          ]
         }
       }
     },
@@ -91,14 +125,15 @@
       "action": "create",
       "chapters": "107-116",
       "schedule_mode": "auto_continue",
-      "status": "pending",
+      "status": "completed",
       "authorized": true,
       "audit": {
         "status": "passed",
         "commit": "934e1dd4fce504db234a10768ee51136a5ea8c1a",
         "basis": "The author explicitly authorized chapters 107-116 to enter the Fanqie schedule on 2026-09-01 after the full Narrative / Dialogue / Humanizer / Prose / Meta / continuity audit passed. PR #22 Fanqie validation and Meta narrative guard also passed. The publisher must re-read current platform state and create only authorized chapters 107-116 that do not already exist on Fanqie."
       },
-      "reason": "Append audited chapters 107-116 to the existing Fanqie release inventory under the active policy: preserve chapter order, existing published/scheduled chapters, and the normal three-chapter 00:00 Asia/Shanghai cadence."
+      "reason": "Append audited chapters 107-116 to the existing Fanqie release inventory under the active policy: preserve chapter order, existing published/scheduled chapters, and the normal three-chapter 00:00 Asia/Shanghai cadence.",
+      "completed_at": "2026-09-01T02:03:07+00:00"
     }
   ]
 }

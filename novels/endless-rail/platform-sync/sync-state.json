@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-08-30T13:39:55+00:00",
+  "last_sync_at": "2026-09-01T02:03:07+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -93,6 +93,66 @@
       "last_action": "update",
       "last_synced_at": "2026-08-30T13:39:55+00:00",
       "queue_operation_id": "humanizer-sync-ch103-106-2026-08-30"
+    },
+    "107": {
+      "local_sha256": "b3496b79349377b45ae1ea432128f92e5f208bf9d06ca32fb4fe445c05b91cbe",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "108": {
+      "local_sha256": "d18c8b00515bd17a685145c6c127cc12459857625938b7da5cbbce1d1be070ba",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "109": {
+      "local_sha256": "4b9c1979f3cc312ca2f5f88d807b1b005634b6823bf503b00586c95288535c55",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "110": {
+      "local_sha256": "14de0e207583cd28de99fad4c0f3323dcc8f048ac6f96a4fc316341d8db1316a",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "111": {
+      "local_sha256": "1e64ecfffa1f2b117635d2f60d241a8e254da98d6fbddb651e41dc5a731e7958",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "112": {
+      "local_sha256": "ac0b777c927cde0f31f1e782e98b88fedbdcbf55bb2febcfdbe6f444353bad30",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "113": {
+      "local_sha256": "9410afb6184159ad436bfb2f7de89214a33cb7d2a5b8d5dfb29a26760cc2e350",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "114": {
+      "local_sha256": "6223b216a26b6c93e4c7809e935534e763221c1fb994cf7d42426afaeecb282f",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "115": {
+      "local_sha256": "f4110cb4d07ccd95dbd150450213e1f8cd3a141bf23232ae51f409f23613b6ce",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
+    },
+    "116": {
+      "local_sha256": "e5d6045d903f5393e4fc4fb81aef6bba780d2a69ec8d3c004a2c36e706a37d80",
+      "last_action": "create",
+      "last_synced_at": "2026-09-01T02:03:07+00:00",
+      "queue_operation_id": "create-ch107-116-schedule-2026-09-01"
     }
   }
 }
