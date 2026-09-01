@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
 
-# Temporary branch-only audit; this edit intentionally retriggers after expansion.
+# Temporary branch-only audit; this edit intentionally retriggers after the second expansion pass.
 jobs:
   audit:
     runs-on: ubuntu-latest
