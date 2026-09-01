@@ -112,6 +112,16 @@
 | 104 | 锁销只差两毫米，这趟货先别推 | 2838 | 第三卷新稿·逐章审计通过 |
 | 105 | 这一班跑六站，工具箱没再临时切一块铁 | 2932 | 第三卷新稿·全量审计回修后通过 |
 | 106 | 七张需求单，今天只接两件急的 | 2824 | 第三卷新稿·逐章审计通过 |
+| 107 | 六十四箱，今天先去麦丘 | 2935 | 第三卷新稿·Narrative Pass审计通过 |
+| 108 | 医疗两个字，今天先等 | 2905 | 第三卷新稿·Narrative Pass审计通过 |
+| 109 | 这条线以下不动 | 2801 | 第三卷新稿·Narrative Pass审计通过 |
+| 110 | 三只空水箱，自己回沉泉 | 2825 | 第三卷新稿·Narrative Pass审计通过 |
+| 111 | 今天归途站没发车 | 2865 | 第三卷新稿·Narrative Pass审计通过 |
+| 112 | 三十六箱，只跑到炉坪 | 2840 | 第三卷新稿·Narrative Pass审计通过 |
+| 113 | 先看时限，后面才看货名 | 2864 | 第三卷新稿·Narrative Pass审计通过 |
+| 114 | K-17回位慢了半秒 | 2893 | 第三卷新稿·Narrative Pass审计通过 |
+| 115 | 六吨以内，五公里过桥 | 2834 | 第三卷新稿·Narrative Pass审计通过 |
+| 116 | 门锁能开了，电池还在掉温 | 2924 | 第三卷新稿·Narrative Pass审计通过 |
 
 ## 当前分卷
 
@@ -121,27 +131,33 @@
 
 ## 当前状态
 
-- 最新仓库正文：第106章《七张需求单，今天只接两件急的》。
-- 下一章：第107章。
-- 第87～106章逐章审计 + 全量项目审计见 `../docs/audit-087-106.md`。
-- 第106章已经进入寒季供应；后续从真实候选任务建立优先级，不重新教学95～105已验证接口工具。
+- 最新仓库正文：第116章《门锁能开了，电池还在掉温》。
+- 下一章：第117章。
+- 第107～116章去空白正文字符均为2801～2935，已完成 Narrative / Dialogue / Humanizer / Prose / Meta / Continuity 审计。
+- 全书第1～116章 Narrative Pass 无剩余 heuristic review；Novel Gate `HARD=0`；Meta `hard=0 / warn=0`。
+- 权威审计：`../docs/narrative-pass-audit-001-116-20260901.md`。
+- 最新连续性：`../docs/continuity-update-107-116.md`。
+- 最新人物记忆：`../docs/character-memory-update-107-116.md`。
 
-## 第107章续写入口
+## 第117章续写入口
 
 按以下顺序读取：
 
-1. `volume-03/chapter-104.md`
-2. `volume-03/chapter-105.md`
-3. `volume-03/chapter-106.md`
-4. `../docs/next-window-handoff.md`
-5. `../docs/continuity-ledger.md`
-6. `../docs/continuity-update-087-106.md`
-7. `../docs/character-memory-ledger.md`
-8. `../docs/character-memory-update-087-106.md`
-9. `../docs/writing-rules.md`
-10. `../docs/reading-payoff-rules.md`
-11. `../docs/short-term-outline.md`
-12. `../docs/long-term-outline.md`
-13. `../docs/master-outline.md`
-14. `../../../shared/RULES.md`
+1. `volume-03/chapter-113.md`
+2. `volume-03/chapter-114.md`
+3. `volume-03/chapter-115.md`
+4. `volume-03/chapter-116.md`
+5. `../docs/next-window-handoff.md`
+6. `../docs/continuity-update-107-116.md`
+7. `../docs/character-memory-update-107-116.md`
+8. `../docs/narrative-pass-audit-001-116-20260901.md`
+9. `../docs/short-term-outline.md`
+10. `../docs/capability-growth-ledger.md`
+11. `../../../shared/NARRATIVE_PASS_RULES.md`
+12. `../../../shared/RULES.md`
+13. `../../../shared/DIALOGUE_RULES.md`
+14. `../../../shared/HUMANIZER_RULES.md`
 15. `../../../shared/PROSE_RULES.md`
+16. `../../../shared/META_NARRATIVE_RULES.md`
+
+第117章只负责寒季供应篇的有限收束：读取第116章夜间电池温度对照，确认可验证的低温改造，并让货运门/P-01/低温工具位至少再承担一次真实使用。不得提前进入成熟保险/信用体系，也不得把西侧备用线写成常规主路。

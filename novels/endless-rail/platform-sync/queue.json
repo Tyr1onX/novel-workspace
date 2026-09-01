@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-08-31T01:11:30+00:00",
+  "updated_at": "2026-09-01T01:50:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -85,6 +85,20 @@
       },
       "reason": "Sync the final approved Humanizer prose revisions for chapters 103-106 while preserving existing chapter IDs, order and scheduled release times.",
       "completed_at": "2026-08-30T13:39:55+00:00"
+    },
+    {
+      "id": "create-ch107-116-schedule-2026-09-01",
+      "action": "create",
+      "chapters": "107-116",
+      "schedule_mode": "auto_continue",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "commit": "934e1dd4fce504db234a10768ee51136a5ea8c1a",
+        "basis": "The author explicitly authorized chapters 107-116 to enter the Fanqie schedule on 2026-09-01 after the full Narrative / Dialogue / Humanizer / Prose / Meta / continuity audit passed. PR #22 Fanqie validation and Meta narrative guard also passed. The publisher must re-read current platform state and create only authorized chapters 107-116 that do not already exist on Fanqie."
+      },
+      "reason": "Append audited chapters 107-116 to the existing Fanqie release inventory under the active policy: preserve chapter order, existing published/scheduled chapters, and the normal three-chapter 00:00 Asia/Shanghai cadence."
     }
   ]
 }
