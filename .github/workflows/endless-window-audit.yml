@@ -1,0 +1,61 @@
+name: Endless Window Audit
+
+on:
+  push:
+    branches:
+      - write/endless-rail-107-116-narrative-pass
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Audit chapters 107-116 and both books
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p audit-output
+          mapfile -t newchap < <(printf 'novels/endless-rail/chapters/volume-03/chapter-%03d.md\n' {107..116})
+          mapfile -t rail < <(find novels/endless-rail/chapters -type f -name 'chapter-*.md' | sort)
+          mapfile -t walk < <(find novels/walk-to-earn/chapters -type f -name 'chapter-*.md' | sort)
+          python shared/tools/narrative_guard.py "${newchap[@]}" > audit-output/new-narrative.log 2>&1 || true
+          python shared/tools/dialogue_guard.py "${newchap[@]}" > audit-output/new-dialogue.log 2>&1 || true
+          python shared/tools/humanizer_guard.py "${newchap[@]}" > audit-output/new-humanizer.log 2>&1 || true
+          python shared/tools/prose_guard.py "${newchap[@]}" > audit-output/new-prose.log 2>&1 || true
+          python shared/tools/meta_narrative_guard.py "${newchap[@]}" > audit-output/new-meta.log 2>&1 || true
+          python shared/tools/novel_gate.py "${newchap[@]}" > audit-output/new-novel-gate.log 2>&1 || true
+          python shared/tools/narrative_guard.py "${rail[@]}" > audit-output/rail-narrative.log 2>&1 || true
+          python shared/tools/novel_gate.py "${rail[@]}" > audit-output/rail-novel-gate.log 2>&1 || true
+          python shared/tools/narrative_guard.py "${walk[@]}" > audit-output/walk-narrative.log 2>&1 || true
+          python shared/tools/novel_gate.py "${walk[@]}" > audit-output/walk-novel-gate.log 2>&1 || true
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          out=[]
+          for n in range(107,117):
+              p=Path(f'novels/endless-rail/chapters/volume-03/chapter-{n:03d}.md')
+              s=p.read_text(encoding='utf-8')
+              body='\n'.join(s.splitlines()[1:])
+              count=len(re.sub(r'\s+','',body))
+              out.append(f'{n}: {count}')
+          Path('audit-output/lengths.txt').write_text('\n'.join(out)+'\n', encoding='utf-8')
+          print('\n'.join(out))
+          for name in ['new-narrative','new-dialogue','new-humanizer','new-prose','new-meta','new-novel-gate','rail-narrative','rail-novel-gate','walk-narrative','walk-novel-gate']:
+              text=Path(f'audit-output/{name}.log').read_text(encoding='utf-8', errors='replace')
+              hard=len(re.findall(r'\bHARD\b',text))
+              review=len(re.findall(r'REVIEW \[',text))
+              totals=[x for x in text.splitlines() if x.startswith('TOTAL ') or x.startswith('SUMMARY')][-5:]
+              print(f'=== {name} hard_tokens={hard} narrative_reviews={review} ===')
+              for x in totals: print(x)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: endless-window-audit
+          path: audit-output/
+          if-no-files-found: error
