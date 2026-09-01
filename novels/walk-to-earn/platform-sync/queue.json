@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-01T07:21:14+00:00",
+  "updated_at": "2026-09-01T07:23:51+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -240,11 +240,12 @@
       "action": "update",
       "chapters": "10",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "basis": "User explicitly authorized continuing through completion of the audited cold-start rewrite migration. Chapter 9 is now completed on Fanqie. Chapter 10 kept its platform position but its body was edited in rewrite commit ddfa03a and was not processed by the original partial run, so the final cold-start body refresh is required. This operation edits only existing chapter 10 and does not change numbering, position, publication state, or any future schedule."
-      }
+      },
+      "completed_at": "2026-09-01T07:23:51+00:00"
     }
   ]
 }
