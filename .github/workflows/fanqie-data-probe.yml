@@ -1,3 +1,4 @@
+# One-shot trigger for the first production schema-v2 analytics snapshot.
 name: Fanqie Data Probe
 
 on:
