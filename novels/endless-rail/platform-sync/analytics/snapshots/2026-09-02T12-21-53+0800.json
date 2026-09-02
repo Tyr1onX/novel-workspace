@@ -1,0 +1,1259 @@
+{
+  "schema_version": 2,
+  "source": "fanqie-author-dashboard",
+  "collected_at": "2026-09-02T12:21:53+08:00",
+  "project": "endless-rail",
+  "stats": {
+    "stats_col_time": "1788192000",
+    "update_time": "1788309773",
+    "reader_uv_daily": "662",
+    "reader_uv_daily_incr": "-29.64",
+    "reader_uv_14day_cnt": 11865,
+    "reader_uv_14day_incr": "-8.01",
+    "shelf_cnt_daily": 80,
+    "shelf_cnt_daily_incr": "-42.85",
+    "pursue_cnt_daily": 15,
+    "pursue_cnt_daily_incr": "36.36",
+    "reminder_cnt_daily": 2,
+    "reminder_cnt_daily_incr": "-33.33",
+    "comment_cnt_incr": "-100",
+    "pursue_read_rate": "0",
+    "read_completion_rate": "0.24",
+    "read_completion_level": 6,
+    "mark_score": "0",
+    "mark_score_incr": "0"
+  },
+  "income": {
+    "verified_book": true,
+    "stats_through": "08-31 24:00",
+    "yesterday_fanqie_income": 8.52,
+    "cumulative_fanqie_income": 131.72
+  },
+  "quality": {
+    "stats_update_time": "2026-09-01T00:00:00+08:00",
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "title": "第1章 别人还在求救，我已经开始拆车了",
+        "word_number": 2932,
+        "publish_time": "2026-08-05T18:05:28+08:00",
+        "read_completion_rate": 100,
+        "follow_read_rate": 61.12
+      },
+      {
+        "chapter_number": 2,
+        "title": "第2章 别人还在找水，我已经开始收材料了",
+        "word_number": 2333,
+        "publish_time": "2026-08-05T18:32:16+08:00",
+        "read_completion_rate": 61.3,
+        "follow_read_rate": 84
+      },
+      {
+        "chapter_number": 3,
+        "title": "第3章 别人还在徒步，我已经有车了",
+        "word_number": 3932,
+        "publish_time": "2026-08-06T00:01:42+08:00",
+        "read_completion_rate": 51.68,
+        "follow_read_rate": 88.98
+      },
+      {
+        "chapter_number": 4,
+        "title": "第4章 下一站，红岩车辆段",
+        "word_number": 3726,
+        "publish_time": "2026-08-06T00:01:40+08:00",
+        "read_completion_rate": 46.31,
+        "follow_read_rate": 87.66
+      },
+      {
+        "chapter_number": 5,
+        "title": "第5章 你们要他的列车，问过我了吗",
+        "word_number": 4056,
+        "publish_time": "2026-08-07T00:01:50+08:00",
+        "read_completion_rate": 42.12,
+        "follow_read_rate": 90.9
+      },
+      {
+        "chapter_number": 6,
+        "title": "第6章 寒潮来临前，先给列车穿件衣服",
+        "word_number": 2737,
+        "publish_time": "2026-08-07T00:01:41+08:00",
+        "read_completion_rate": 39.05,
+        "follow_read_rate": 83.47
+      },
+      {
+        "chapter_number": 7,
+        "title": "第7章 前路冻住了，那就把它融开",
+        "word_number": 3715,
+        "publish_time": "2026-08-08T00:00:45+08:00",
+        "read_completion_rate": 32.77,
+        "follow_read_rate": 88.23
+      },
+      {
+        "chapter_number": 8,
+        "title": "第8章 先别拆，我把整座温室带走",
+        "word_number": 3659,
+        "publish_time": "2026-08-08T00:00:52+08:00",
+        "read_completion_rate": 30.97,
+        "follow_read_rate": 92.82
+      },
+      {
+        "chapter_number": 9,
+        "title": "第9章 这次，我要把整座车站开走",
+        "word_number": 4200,
+        "publish_time": "2026-08-09T00:01:19+08:00",
+        "read_completion_rate": 30.2,
+        "follow_read_rate": 85.79
+      },
+      {
+        "chapter_number": 10,
+        "title": "第10章 缺电？那就把水电站装上车",
+        "word_number": 5822,
+        "publish_time": "2026-08-10T00:00:55+08:00",
+        "read_completion_rate": 26.99,
+        "follow_read_rate": 80.74
+      },
+      {
+        "chapter_number": 11,
+        "title": "第11章 别人追货，我把整列运输车扣下了",
+        "word_number": 6288,
+        "publish_time": "2026-08-11T00:00:50+08:00",
+        "read_completion_rate": 22.31,
+        "follow_read_rate": 76.56
+      },
+      {
+        "chapter_number": 12,
+        "title": "第12章 三十分钟不够，那就自己铺一条路",
+        "word_number": 4425,
+        "publish_time": "2026-08-12T00:00:46+08:00",
+        "read_completion_rate": 17.28,
+        "follow_read_rate": 83.49
+      },
+      {
+        "chapter_number": 13,
+        "title": "第13章 17%的成功率？那就先不赌",
+        "word_number": 4561,
+        "publish_time": "2026-08-13T00:00:27+08:00",
+        "read_completion_rate": 14.8,
+        "follow_read_rate": 84.09
+      },
+      {
+        "chapter_number": 14,
+        "title": "第14章 陌生人的警告",
+        "word_number": 2192,
+        "publish_time": "2026-08-14T00:00:31+08:00",
+        "read_completion_rate": 12.77,
+        "follow_read_rate": 89.31
+      },
+      {
+        "chapter_number": 15,
+        "title": "第15章 这不是求援，是征用",
+        "word_number": 2028,
+        "publish_time": "2026-08-14T00:00:21+08:00",
+        "read_completion_rate": 12.77,
+        "follow_read_rate": 88.36
+      },
+      {
+        "chapter_number": 16,
+        "title": "第16章 一千八百人的枢纽站",
+        "word_number": 2492,
+        "publish_time": "2026-08-14T00:00:31+08:00",
+        "read_completion_rate": 11.93,
+        "follow_read_rate": 81.86
+      },
+      {
+        "chapter_number": 17,
+        "title": "第17章 少掉的四百个人",
+        "word_number": 2078,
+        "publish_time": "2026-08-15T00:00:43+08:00",
+        "read_completion_rate": 9.82,
+        "follow_read_rate": 87.43
+      },
+      {
+        "chapter_number": 18,
+        "title": "第18章 零号设备该归谁",
+        "word_number": 2151,
+        "publish_time": "2026-08-15T00:00:38+08:00",
+        "read_completion_rate": 8.92,
+        "follow_read_rate": 90.1
+      },
+      {
+        "chapter_number": 19,
+        "title": "第19章 雾区采集队",
+        "word_number": 2290,
+        "publish_time": "2026-08-15T00:00:39+08:00",
+        "read_completion_rate": 8.14,
+        "follow_read_rate": 89.46
+      },
+      {
+        "chapter_number": 20,
+        "title": "第20章 第一次停电",
+        "word_number": 1690,
+        "publish_time": "2026-08-16T00:00:23+08:00",
+        "read_completion_rate": 7.46,
+        "follow_read_rate": 88.49
+      },
+      {
+        "chapter_number": 21,
+        "title": "第21章 黑雾里还有七十三个人",
+        "word_number": 1903,
+        "publish_time": "2026-08-16T00:00:21+08:00",
+        "read_completion_rate": 6.67,
+        "follow_read_rate": 90.2
+      },
+      {
+        "chapter_number": 22,
+        "title": "第22章 先送进去一车物资",
+        "word_number": 1913,
+        "publish_time": "2026-08-16T00:00:22+08:00",
+        "read_completion_rate": 6.15,
+        "follow_read_rate": 90.96
+      },
+      {
+        "chapter_number": 23,
+        "title": "第23章 六号节点的旧支线",
+        "word_number": 3138,
+        "publish_time": "2026-08-17T00:00:10+08:00",
+        "read_completion_rate": 5.7,
+        "follow_read_rate": 89.11
+      },
+      {
+        "chapter_number": 24,
+        "title": "第24章 把他们接回来",
+        "word_number": 3235,
+        "publish_time": "2026-08-17T00:00:14+08:00",
+        "read_completion_rate": 5.3,
+        "follow_read_rate": 89.28
+      },
+      {
+        "chapter_number": 25,
+        "title": "第25章 旧相位锚撑不住了",
+        "word_number": 1777,
+        "publish_time": "2026-08-17T00:00:05+08:00",
+        "read_completion_rate": 4.99,
+        "follow_read_rate": 90.98
+      },
+      {
+        "chapter_number": 26,
+        "title": "第26章 把零号相位锚点亮",
+        "word_number": 2487,
+        "publish_time": "2026-08-18T00:00:21+08:00",
+        "read_completion_rate": 4.95,
+        "follow_read_rate": 91.58
+      },
+      {
+        "chapter_number": 27,
+        "title": "第27章 最后一批人",
+        "word_number": 2060,
+        "publish_time": "2026-08-18T00:00:24+08:00",
+        "read_completion_rate": 4.69,
+        "follow_read_rate": 93.04
+      },
+      {
+        "chapter_number": 28,
+        "title": "第28章 二十四小时之后",
+        "word_number": 1834,
+        "publish_time": "2026-08-18T00:00:23+08:00",
+        "read_completion_rate": 5.04,
+        "follow_read_rate": 78.47
+      },
+      {
+        "chapter_number": 29,
+        "title": "第29章 第一盘新鲜蔬菜",
+        "word_number": 2291,
+        "publish_time": "2026-08-19T00:00:24+08:00",
+        "read_completion_rate": 4.27,
+        "follow_read_rate": 91.39
+      },
+      {
+        "chapter_number": 30,
+        "title": "第30章 移动站点的名字",
+        "word_number": 1948,
+        "publish_time": "2026-08-19T00:00:28+08:00",
+        "read_completion_rate": 4.45,
+        "follow_read_rate": 89.17
+      },
+      {
+        "chapter_number": 31,
+        "title": "第31章 七座失联小站",
+        "word_number": 2416,
+        "publish_time": "2026-08-19T00:00:14+08:00",
+        "read_completion_rate": 4.41,
+        "follow_read_rate": 68.51
+      },
+      {
+        "chapter_number": 32,
+        "title": "第32章 离开曙光之前",
+        "word_number": 1547,
+        "publish_time": "2026-08-20T00:00:35+08:00",
+        "read_completion_rate": 3.21,
+        "follow_read_rate": 85.49
+      },
+      {
+        "chapter_number": 33,
+        "title": "第33章 归途站第一次发车",
+        "word_number": 1994,
+        "publish_time": "2026-08-20T00:00:36+08:00",
+        "read_completion_rate": 2.96,
+        "follow_read_rate": 87.05
+      },
+      {
+        "chapter_number": 34,
+        "title": "第34章 白栎医疗站",
+        "word_number": 2519,
+        "publish_time": "2026-08-20T00:00:36+08:00",
+        "read_completion_rate": 3.01,
+        "follow_read_rate": 82.72
+      },
+      {
+        "chapter_number": 35,
+        "title": "第35章 第一条医疗合作规则",
+        "word_number": 2010,
+        "publish_time": "2026-08-21T00:00:33+08:00",
+        "read_completion_rate": 2.5,
+        "follow_read_rate": 84.31
+      },
+      {
+        "chapter_number": 36,
+        "title": "第36章 归途站的第九个人",
+        "word_number": 2567,
+        "publish_time": "2026-08-21T00:00:27+08:00",
+        "read_completion_rate": 2.18,
+        "follow_read_rate": 86.94
+      },
+      {
+        "chapter_number": 37,
+        "title": "第37章 先把清洁区分出来",
+        "word_number": 2645,
+        "publish_time": "2026-08-21T00:00:27+08:00",
+        "read_completion_rate": 2.02,
+        "follow_read_rate": 81.04
+      },
+      {
+        "chapter_number": 38,
+        "title": "第38章 第一次远程咨询",
+        "word_number": 2792,
+        "publish_time": "2026-08-22T00:00:23+08:00",
+        "read_completion_rate": 1.73,
+        "follow_read_rate": 88.63
+      },
+      {
+        "chapter_number": 39,
+        "title": "第39章 主泵的第七十二小时",
+        "word_number": 1608,
+        "publish_time": "2026-08-22T00:00:26+08:00",
+        "read_completion_rate": 1.49,
+        "follow_read_rate": 88.52
+      },
+      {
+        "chapter_number": 40,
+        "title": "第40章 药柜里的空格",
+        "word_number": 2481,
+        "publish_time": "2026-08-22T00:01:03+08:00",
+        "read_completion_rate": 1.46,
+        "follow_read_rate": 86.03
+      },
+      {
+        "chapter_number": 41,
+        "title": "第41章 两个郭成",
+        "word_number": 1997,
+        "publish_time": "2026-08-23T00:00:54+08:00",
+        "read_completion_rate": 1.35,
+        "follow_read_rate": 84.93
+      },
+      {
+        "chapter_number": 42,
+        "title": "第42章 别信广播里的下一句话",
+        "word_number": 2485,
+        "publish_time": "2026-08-23T00:00:55+08:00",
+        "read_completion_rate": 1.24,
+        "follow_read_rate": 87.5
+      },
+      {
+        "chapter_number": 43,
+        "title": "第43章 归途站不进暖桥",
+        "word_number": 2243,
+        "publish_time": "2026-08-23T00:00:56+08:00",
+        "read_completion_rate": 1.24,
+        "follow_read_rate": 94.26
+      },
+      {
+        "chapter_number": 44,
+        "title": "第44章 只记已经发生的事",
+        "word_number": 1837,
+        "publish_time": "2026-08-23T00:00:57+08:00",
+        "read_completion_rate": 1.29,
+        "follow_read_rate": 72.32
+      },
+      {
+        "chapter_number": 45,
+        "title": "第45章 把假的未来切出去",
+        "word_number": 1703,
+        "publish_time": "2026-08-24T00:01:00+08:00",
+        "read_completion_rate": 0.98,
+        "follow_read_rate": 92.5
+      },
+      {
+        "chapter_number": 46,
+        "title": "第46章 暖桥重新说话",
+        "word_number": 2212,
+        "publish_time": "2026-08-24T00:01:00+08:00",
+        "read_completion_rate": 1.02,
+        "follow_read_rate": 91.53
+      },
+      {
+        "chapter_number": 47,
+        "title": "第47章 沉泉不缺水",
+        "word_number": 2270,
+        "publish_time": "2026-08-24T00:01:01+08:00",
+        "read_completion_rate": 0.93,
+        "follow_read_rate": 87.71
+      },
+      {
+        "chapter_number": 48,
+        "title": "第48章 一吨水的价钱",
+        "word_number": 1676,
+        "publish_time": "2026-08-24T00:01:01+08:00",
+        "read_completion_rate": 1.22,
+        "follow_read_rate": 52.66
+      },
+      {
+        "chapter_number": 49,
+        "title": "第49章 你们扔掉的滤芯，我要了",
+        "word_number": 1517,
+        "publish_time": "2026-08-25T00:00:45+08:00",
+        "read_completion_rate": 0.71,
+        "follow_read_rate": 84.09
+      },
+      {
+        "chapter_number": 50,
+        "title": "第50章 先别换新的",
+        "word_number": 2220,
+        "publish_time": "2026-08-25T00:00:46+08:00",
+        "read_completion_rate": 0.62,
+        "follow_read_rate": 90.9
+      },
+      {
+        "chapter_number": 51,
+        "title": "第51章 井下那条灰线",
+        "word_number": 3412,
+        "publish_time": "2026-08-25T00:00:45+08:00",
+        "read_completion_rate": 0.58,
+        "follow_read_rate": 87.32
+      },
+      {
+        "chapter_number": 52,
+        "title": "第52章 这口井不是沉泉一个人的",
+        "word_number": 2018,
+        "publish_time": "2026-08-25T00:00:46+08:00",
+        "read_completion_rate": 0.68,
+        "follow_read_rate": 64.28
+      },
+      {
+        "chapter_number": 53,
+        "title": "第53章 先别关那根管",
+        "word_number": 1926,
+        "publish_time": "2026-08-26T00:00:31+08:00",
+        "read_completion_rate": 0.52,
+        "follow_read_rate": 91.04
+      },
+      {
+        "chapter_number": 54,
+        "title": "第54章 把不存在的管子钉住",
+        "word_number": 2089,
+        "publish_time": "2026-08-26T00:00:31+08:00",
+        "read_completion_rate": 0.41,
+        "follow_read_rate": 94.11
+      },
+      {
+        "chapter_number": 55,
+        "title": "第55章 把净水站装上货车",
+        "word_number": 2251,
+        "publish_time": "2026-08-26T00:00:31+08:00",
+        "read_completion_rate": 0.49,
+        "follow_read_rate": 88.33
+      },
+      {
+        "chapter_number": 56,
+        "title": "第56章 沉泉的水，归途的路",
+        "word_number": 3494,
+        "publish_time": "2026-08-26T00:00:31+08:00",
+        "read_completion_rate": 0.51,
+        "follow_read_rate": 73.01
+      },
+      {
+        "chapter_number": 57,
+        "title": "第57章 麦丘只收能进机器的东西",
+        "word_number": 1978,
+        "publish_time": "2026-08-26T09:37:09+08:00",
+        "read_completion_rate": 0.48,
+        "follow_read_rate": 86.88
+      },
+      {
+        "chapter_number": 58,
+        "title": "第58章 三十二公斤土豆",
+        "word_number": 2864,
+        "publish_time": "2026-08-26T09:37:19+08:00",
+        "read_completion_rate": 0.44,
+        "follow_read_rate": 89.28
+      },
+      {
+        "chapter_number": 59,
+        "title": "第59章 没有包装，机器也是废铁",
+        "word_number": 2601,
+        "publish_time": "2026-08-26T09:37:28+08:00",
+        "read_completion_rate": 0.5,
+        "follow_read_rate": 71.87
+      },
+      {
+        "chapter_number": 60,
+        "title": "第60章 第一批不急着吃掉的食物",
+        "word_number": 1998,
+        "publish_time": "2026-08-27T00:00:36+08:00",
+        "read_completion_rate": 0.27,
+        "follow_read_rate": 97.05
+      },
+      {
+        "chapter_number": 61,
+        "title": "第61章 主线不要的东西",
+        "word_number": 2590,
+        "publish_time": "2026-08-27T00:00:29+08:00",
+        "read_completion_rate": 0.26,
+        "follow_read_rate": 96.96
+      },
+      {
+        "chapter_number": 62,
+        "title": "第62章 别什么都往机器里塞",
+        "word_number": 2391,
+        "publish_time": "2026-08-27T00:00:29+08:00",
+        "read_completion_rate": 0.28,
+        "follow_read_rate": 91.42
+      },
+      {
+        "chapter_number": 63,
+        "title": "第63章 能救的只有一半",
+        "word_number": 2197,
+        "publish_time": "2026-08-27T00:00:30+08:00",
+        "read_completion_rate": 0.34,
+        "follow_read_rate": 97.72
+      },
+      {
+        "chapter_number": 64,
+        "title": "第64章 热水一冲就能吃",
+        "word_number": 2495,
+        "publish_time": "2026-08-27T00:00:31+08:00",
+        "read_completion_rate": 0.26,
+        "follow_read_rate": 96.96
+      },
+      {
+        "chapter_number": 65,
+        "title": "第65章 停电以后那顿饭",
+        "word_number": 1975,
+        "publish_time": "2026-08-27T00:00:31+08:00",
+        "read_completion_rate": 0.35,
+        "follow_read_rate": 91.11
+      },
+      {
+        "chapter_number": 66,
+        "title": "第66章 麦丘重新开了一扇小门",
+        "word_number": 2866,
+        "publish_time": "2026-08-27T00:00:31+08:00",
+        "read_completion_rate": 0.34,
+        "follow_read_rate": 90.9
+      },
+      {
+        "chapter_number": 67,
+        "title": "第67章 没有人的炉坪还在开工",
+        "word_number": 2263,
+        "publish_time": "2026-08-27T00:00:31+08:00",
+        "read_completion_rate": 0.43,
+        "follow_read_rate": 54.71
+      },
+      {
+        "chapter_number": 68,
+        "title": "第68章 十九个人都在下面",
+        "word_number": 2821,
+        "publish_time": "2026-08-28T00:00:41+08:00",
+        "read_completion_rate": 0.23,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 69,
+        "title": "第69章 停不下来的工务站",
+        "word_number": 3482,
+        "publish_time": "2026-08-28T00:00:41+08:00",
+        "read_completion_rate": 0.3,
+        "follow_read_rate": 94.87
+      },
+      {
+        "chapter_number": 70,
+        "title": "第70章 炉坪今天第一次下班",
+        "word_number": 2396,
+        "publish_time": "2026-08-28T00:00:42+08:00",
+        "read_completion_rate": 0.22,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 71,
+        "title": "第71章 想进旧港，先上秤",
+        "word_number": 2922,
+        "publish_time": "2026-08-28T00:01:29+08:00",
+        "read_completion_rate": 0.23,
+        "follow_read_rate": 93.1
+      },
+      {
+        "chapter_number": 72,
+        "title": "第72章 前六辆车从哪来",
+        "word_number": 2379,
+        "publish_time": "2026-08-28T00:01:57+08:00",
+        "read_completion_rate": 0.22,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 73,
+        "title": "第73章 旧港不替别人发路牌",
+        "word_number": 2674,
+        "publish_time": "2026-08-28T00:01:53+08:00",
+        "read_completion_rate": 0.3,
+        "follow_read_rate": 94.73
+      },
+      {
+        "chapter_number": 74,
+        "title": "第74章 白牌要两边都认",
+        "word_number": 2983,
+        "publish_time": "2026-08-28T00:01:59+08:00",
+        "read_completion_rate": 0.3,
+        "follow_read_rate": 62.16
+      },
+      {
+        "chapter_number": 75,
+        "title": "第75章 白牌上的第一张货单",
+        "word_number": 3026,
+        "publish_time": "2026-08-29T00:00:57+08:00",
+        "read_completion_rate": 0.18,
+        "follow_read_rate": 95.65
+      },
+      {
+        "chapter_number": 76,
+        "title": "第76章 北岬三号收货",
+        "word_number": 2669,
+        "publish_time": "2026-08-29T00:01:01+08:00",
+        "read_completion_rate": 0.23,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 77,
+        "title": "第77章 一号货位只留二十分钟",
+        "word_number": 2740,
+        "publish_time": "2026-08-29T00:01:23+08:00",
+        "read_completion_rate": 0.19,
+        "follow_read_rate": 91.66
+      },
+      {
+        "chapter_number": 78,
+        "title": "第78章 北岬送来两只废滤芯",
+        "word_number": 2915,
+        "publish_time": "2026-08-29T12:34:19+08:00",
+        "read_completion_rate": 0.19,
+        "follow_read_rate": 87.5
+      },
+      {
+        "chapter_number": 79,
+        "title": "第79章 第一只只能降级用",
+        "word_number": 2612,
+        "publish_time": "2026-08-29T12:34:44+08:00",
+        "read_completion_rate": 0.23,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 80,
+        "title": "第80章 洗过的旧滤筒重新上机",
+        "word_number": 2431,
+        "publish_time": "2026-08-29T12:34:47+08:00",
+        "read_completion_rate": 0.24,
+        "follow_read_rate": 73.33
+      },
+      {
+        "chapter_number": 81,
+        "title": "第81章 二十四小时以后，只送四只",
+        "word_number": 2464,
+        "publish_time": "2026-08-29T18:24:02+08:00",
+        "read_completion_rate": 0.24,
+        "follow_read_rate": 63.33
+      },
+      {
+        "chapter_number": 82,
+        "title": "第82章 四只旧滤筒，第一只就不用洗",
+        "word_number": 2639,
+        "publish_time": "2026-08-30T00:01:25+08:00",
+        "read_completion_rate": 0.16,
+        "follow_read_rate": 90
+      },
+      {
+        "chapter_number": 83,
+        "title": "第83章 四十九升水，只换回一个前端位",
+        "word_number": 1995,
+        "publish_time": "2026-08-30T00:01:20+08:00",
+        "read_completion_rate": 0.2,
+        "follow_read_rate": 92.3
+      },
+      {
+        "chapter_number": 84,
+        "title": "第84章 洗到二十九升，压折还在",
+        "word_number": 2408,
+        "publish_time": "2026-08-30T00:01:07+08:00",
+        "read_completion_rate": 0.28,
+        "follow_read_rate": 52.77
+      },
+      {
+        "chapter_number": 85,
+        "title": "第85章 四只试批，最后留下两只",
+        "word_number": 2146,
+        "publish_time": "2026-08-30T18:46:17+08:00",
+        "read_completion_rate": 0.15,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 86,
+        "title": "第86章 下一批六只，先检再洗",
+        "word_number": 2675,
+        "publish_time": "2026-08-30T18:47:12+08:00",
+        "read_completion_rate": 0.15,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 87,
+        "title": "第87章 六只都到了，第一只停在门口",
+        "word_number": 2873,
+        "publish_time": "2026-08-30T18:48:09+08:00",
+        "read_completion_rate": 0.18,
+        "follow_read_rate": 66.66
+      },
+      {
+        "chapter_number": 88,
+        "title": "第88章 第二次白03回来以后，N-3-4结单",
+        "word_number": 2805,
+        "publish_time": "2026-08-31T00:00:58+08:00",
+        "read_completion_rate": 0.08,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 89,
+        "title": "第89章 空桶回去，也要烧油",
+        "word_number": 2861,
+        "publish_time": "2026-08-31T00:00:59+08:00",
+        "read_completion_rate": 0.08,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 90,
+        "title": "第90章 十桶油到了，三桶先留在炉坪",
+        "word_number": 2571,
+        "publish_time": "2026-08-31T00:00:59+08:00",
+        "read_completion_rate": 0.13,
+        "follow_read_rate": 62.5
+      },
+      {
+        "chapter_number": 91,
+        "title": "第91章 这块滑床板，不能只让一趟车买单",
+        "word_number": 2579,
+        "publish_time": "2026-08-31T09:03:35+08:00",
+        "read_completion_rate": 0.14,
+        "follow_read_rate": 83.33
+      },
+      {
+        "chapter_number": 92,
+        "title": "第92章 多走九公里，备用路才有了价钱",
+        "word_number": 2755,
+        "publish_time": "2026-08-31T09:05:08+08:00",
+        "read_completion_rate": 0.06,
+        "follow_read_rate": 100
+      },
+      {
+        "chapter_number": 93,
+        "title": "第93章 第一班，不等所有货都凑齐",
+        "word_number": 2759,
+        "publish_time": "2026-08-31T09:06:23+08:00",
+        "read_completion_rate": 0.17,
+        "follow_read_rate": 59.09
+      },
+      {
+        "chapter_number": 94,
+        "title": "第94章 第一班晚了四十分钟，还是跑完了",
+        "word_number": 2755,
+        "publish_time": "2026-09-01T00:00:59+08:00",
+        "read_completion_rate": 0,
+        "follow_read_rate": 0
+      },
+      {
+        "chapter_number": 95,
+        "title": "第95章 同一车水，到了暖桥却接不上",
+        "word_number": 2481,
+        "publish_time": "2026-09-01T00:01:00+08:00",
+        "read_completion_rate": 0.11,
+        "follow_read_rate": 92.85
+      },
+      {
+        "chapter_number": 96,
+        "title": "第96章 七座站，量出来十一种接法",
+        "word_number": 2676,
+        "publish_time": "2026-09-01T00:01:00+08:00",
+        "read_completion_rate": 0,
+        "follow_read_rate": 0
+      },
+      {
+        "chapter_number": 97,
+        "title": "第97章 一块桥板，三种站台都能靠",
+        "word_number": 2722,
+        "publish_time": "2026-09-02T00:01:32+08:00",
+        "read_completion_rate": 0,
+        "follow_read_rate": 0
+      },
+      {
+        "chapter_number": 98,
+        "title": "第98章 四十八伏的炉坪，不能直接接二十四伏灯条",
+        "word_number": 2508,
+        "publish_time": "2026-09-02T00:01:32+08:00",
+        "read_completion_rate": 0,
+        "follow_read_rate": 0
+      },
+      {
+        "chapter_number": 99,
+        "title": "第99章 八百一十七毫米，差三毫米就卡住",
+        "word_number": 2382,
+        "publish_time": "2026-09-02T00:01:32+08:00",
+        "read_completion_rate": 0,
+        "follow_read_rate": 0
+      }
+    ],
+    "word_completion": {
+      "available": false,
+      "reason": "dashboard numeric payload not yet mapped to a stable API field"
+    }
+  },
+  "traffic": {
+    "7d": {
+      "start_date": "2026-08-26",
+      "end_date": "2026-09-01",
+      "dates": [
+        "2026-08-26",
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-08-31",
+        "2026-09-01"
+      ],
+      "sources": {
+        "bookstore": [
+          336,
+          532,
+          184,
+          482,
+          562,
+          558,
+          365
+        ],
+        "category": [
+          6,
+          4,
+          3,
+          4,
+          5,
+          4,
+          4
+        ],
+        "shelf": [
+          212,
+          228,
+          200,
+          196,
+          220,
+          305,
+          218
+        ],
+        "continue_reading": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "search": [
+          74,
+          92,
+          80,
+          57,
+          66,
+          40,
+          45
+        ],
+        "other": [
+          35,
+          26,
+          27,
+          30,
+          37,
+          34,
+          30
+        ]
+      }
+    },
+    "14d": {
+      "start_date": "2026-08-19",
+      "end_date": "2026-09-01",
+      "dates": [
+        "2026-08-19",
+        "2026-08-20",
+        "2026-08-21",
+        "2026-08-22",
+        "2026-08-23",
+        "2026-08-24",
+        "2026-08-25",
+        "2026-08-26",
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-08-31",
+        "2026-09-01"
+      ],
+      "sources": {
+        "bookstore": [
+          1480,
+          388,
+          207,
+          50,
+          1009,
+          1264,
+          488,
+          336,
+          532,
+          184,
+          482,
+          562,
+          558,
+          365
+        ],
+        "category": [
+          5,
+          7,
+          2,
+          8,
+          4,
+          18,
+          9,
+          6,
+          4,
+          3,
+          4,
+          5,
+          4,
+          4
+        ],
+        "shelf": [
+          851,
+          490,
+          260,
+          139,
+          405,
+          563,
+          315,
+          212,
+          228,
+          200,
+          196,
+          220,
+          305,
+          218
+        ],
+        "continue_reading": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "search": [
+          130,
+          143,
+          106,
+          109,
+          77,
+          71,
+          71,
+          74,
+          92,
+          80,
+          57,
+          66,
+          40,
+          45
+        ],
+        "other": [
+          133,
+          60,
+          35,
+          17,
+          65,
+          66,
+          35,
+          35,
+          26,
+          27,
+          30,
+          37,
+          34,
+          30
+        ]
+      }
+    },
+    "30d": {
+      "start_date": "2026-08-02",
+      "end_date": "2026-09-01",
+      "dates": [
+        "2026-08-02",
+        "2026-08-03",
+        "2026-08-04",
+        "2026-08-05",
+        "2026-08-06",
+        "2026-08-07",
+        "2026-08-08",
+        "2026-08-09",
+        "2026-08-10",
+        "2026-08-11",
+        "2026-08-12",
+        "2026-08-13",
+        "2026-08-14",
+        "2026-08-15",
+        "2026-08-16",
+        "2026-08-17",
+        "2026-08-18",
+        "2026-08-19",
+        "2026-08-20",
+        "2026-08-21",
+        "2026-08-22",
+        "2026-08-23",
+        "2026-08-24",
+        "2026-08-25",
+        "2026-08-26",
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-29",
+        "2026-08-30",
+        "2026-08-31",
+        "2026-09-01"
+      ],
+      "sources": {
+        "bookstore": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          20,
+          1493,
+          1480,
+          388,
+          207,
+          50,
+          1009,
+          1264,
+          488,
+          336,
+          532,
+          184,
+          482,
+          562,
+          558,
+          365
+        ],
+        "category": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          5,
+          5,
+          5,
+          7,
+          2,
+          8,
+          4,
+          18,
+          9,
+          6,
+          4,
+          3,
+          4,
+          5,
+          4,
+          4
+        ],
+        "shelf": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          7,
+          27,
+          394,
+          851,
+          490,
+          260,
+          139,
+          405,
+          563,
+          315,
+          212,
+          228,
+          200,
+          196,
+          220,
+          305,
+          218
+        ],
+        "continue_reading": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "search": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          2,
+          1,
+          1,
+          1,
+          4,
+          0,
+          9,
+          43,
+          125,
+          112,
+          130,
+          143,
+          106,
+          109,
+          77,
+          71,
+          71,
+          74,
+          92,
+          80,
+          57,
+          66,
+          40,
+          45
+        ],
+        "other": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          2,
+          2,
+          1,
+          0,
+          3,
+          55,
+          133,
+          60,
+          35,
+          17,
+          65,
+          66,
+          35,
+          35,
+          26,
+          27,
+          30,
+          37,
+          34,
+          30
+        ]
+      }
+    }
+  }
+}
