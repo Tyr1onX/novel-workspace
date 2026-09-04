@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-04T03:55:00+00:00",
+  "updated_at": "2026-09-04T04:09:43+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -275,12 +275,13 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-14",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "basis": "Fresh read-only reconciliation after the partial batch confirmed Fanqie has chapters 1-84 and only 85-88 remain local-only. The pinned publisher logged chapter 85 at 993 editor characters and documents the platform minimum of 1000, so the still-unpublished canonical chapter was minimally extended without changing its plot or title. This one-chapter fixed-start operation fills the unused third slot on 2026-09-14 without touching chapters 83-84 or any existing item ID."
       },
-      "reason": "Create only chapter 85 at 2026-09-14 00:00 to complete the 83-85 release group."
+      "reason": "Create only chapter 85 at 2026-09-14 00:00 to complete the 83-85 release group.",
+      "completed_at": "2026-09-04T04:09:43+00:00"
     },
     {
       "id": "walk-recover-create-086-088-20260904",
@@ -289,12 +290,13 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-15",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "basis": "Fresh read-only reconciliation confirmed chapters 86-88 do not exist on Fanqie. Chapter 86 was also below a safe margin for the platform's 1000-character editor minimum and was minimally extended while still unpublished; chapters 87-88 are unchanged. Using fixed_start avoids the pinned upstream keep-ahead behavior that deliberately skips a partially filled tail day and would otherwise move chapter 88 to 2026-09-16."
       },
-      "reason": "Create chapters 86-88 together at 2026-09-15 00:00, preserving the intended final three-chapter release group and schedule horizon."
+      "reason": "Create chapters 86-88 together at 2026-09-15 00:00, preserving the intended final three-chapter release group and schedule horizon.",
+      "completed_at": "2026-09-04T04:09:43+00:00"
     }
   ]
 }

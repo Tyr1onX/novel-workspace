@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "last_sync_at": "2026-09-01T07:23:51+00:00",
+  "last_sync_at": "2026-09-04T04:09:43+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "18": {
@@ -369,6 +369,30 @@
       "last_action": "create",
       "last_synced_at": "2026-08-31T15:30:55+00:00",
       "queue_operation_id": "walk-create-044-061-20260831"
+    },
+    "85": {
+      "local_sha256": "bf4fd9f31515041cd68ff772b0b3f75b906cabfac034ad923a067394bbe87402",
+      "last_action": "create",
+      "last_synced_at": "2026-09-04T04:09:43+00:00",
+      "queue_operation_id": "walk-recover-create-085-20260904"
+    },
+    "86": {
+      "local_sha256": "bf6a263b4d48792cb1d0b04936b22c8c7f194497fdd9174193090373e37555e5",
+      "last_action": "create",
+      "last_synced_at": "2026-09-04T04:09:43+00:00",
+      "queue_operation_id": "walk-recover-create-086-088-20260904"
+    },
+    "87": {
+      "local_sha256": "84c2d58d509b9a0157fca1fdfb62fc65aba707fa50bf28cd968aa8fe06ffa65b",
+      "last_action": "create",
+      "last_synced_at": "2026-09-04T04:09:43+00:00",
+      "queue_operation_id": "walk-recover-create-086-088-20260904"
+    },
+    "88": {
+      "local_sha256": "be5b6aa35d23a9dfec9866fb4d53c2244984dca56a9ecd3e0b5b7b60b376b1e7",
+      "last_action": "create",
+      "last_synced_at": "2026-09-04T04:09:43+00:00",
+      "queue_operation_id": "walk-recover-create-086-088-20260904"
     }
   }
 }
