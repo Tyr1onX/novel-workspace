@@ -207,7 +207,7 @@
       "status": "completed",
       "audit": {
         "status": "passed",
-        "basis": "User explicitly authorized continuing the audited cold-start migration. The earlier isolated chapter-3 retry failed because canonical chapter 3 still overlapped the then-existing old chapter 4. Chapters 8→7→6→5→4→3→2 have now all been successfully migrated, and chapter 4's old body/title '坐两站，还是走两站' has been released. Canonical chapter 3 can therefore now be retried without the duplicate-content dependency that blocked run 209. This operation edits only existing chapter 3 and leaves numbering, platform position, publication state, and future schedules unchanged."
+        "basis": "User explicitly authorized continuing the audited cold-start migration. The earlier isolated chapter-3 retry failed because canonical chapter 3 still overlapped the then-existing old chapter 4. Chapters 8→7→6→5→4 have now all been successfully migrated, and chapter 4's old body/title '坐两站，还是走两站' has been released. Canonical chapter 3 can therefore now be retried without the duplicate-content dependency that blocked run 209. This operation edits only existing chapter 3 and leaves numbering, platform position, publication state, and future schedules unchanged."
       },
       "completed_at": "2026-09-01T07:09:34+00:00"
     },
@@ -219,7 +219,7 @@
       "status": "completed",
       "audit": {
         "status": "passed",
-        "basis": "User explicitly authorized continuing the audited cold-start migration. Chapter 3 has now been successfully migrated, releasing the old chapter-3 body/title '先买双鞋'. Canonical chapter 2 is the final dependency in the 8→7→6→5→4→3→2 migration chain and can now replace existing chapter 2 without duplicate-content overlap. This operation edits only existing chapter 2 and leaves numbering, platform position, publication state, and future schedules unchanged."
+        "basis": "User explicitly authorized continuing the audited cold-start migration. Chapter 3 has now been successfully migrated, releasing the old chapter-3 body/title '先买双鞋'. Canonical chapter 2 is the final dependency in the 8→7→6→5→4→3→2 migration chain and can now replace existing chapter 2 without duplicate-content overlap. This operation edits only chapter 2 and leaves numbering, platform position, publication state, and future schedules unchanged."
       },
       "completed_at": "2026-09-01T07:12:30+00:00"
     },
@@ -243,7 +243,7 @@
       "status": "completed",
       "audit": {
         "status": "passed",
-        "basis": "User explicitly authorized continuing through completion of the audited cold-start rewrite migration. Chapter 9 is now completed on Fanqie. Chapter 10 kept its platform position but its body was edited in rewrite commit ddfa03a and was not processed by the original partial run, so the final cold-start body refresh is required even though title reconciliation cannot detect it. This operation edits only existing chapter 10 and does not change numbering, position, publication state, or any future schedule."
+        "basis": "User explicitly authorized continuing through completion of the audited cold-start rewrite migration. Chapter 9 is now completed on Fanqie. Chapter 10 kept its platform position but its body was edited in rewrite commit ddfa03a and was not processed by the original partial run, so the final cold-start body refresh is required. This operation edits only existing chapter 10 and does not change numbering, position, publication state, or any future schedule."
       },
       "completed_at": "2026-09-01T07:23:51+00:00"
     },
