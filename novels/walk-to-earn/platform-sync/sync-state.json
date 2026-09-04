@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "last_sync_at": "2026-09-04T04:09:43+00:00",
+  "last_sync_at": "2026-09-04T07:21:56+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "18": {
@@ -371,28 +371,154 @@
       "queue_operation_id": "walk-create-044-061-20260831"
     },
     "85": {
-      "local_sha256": "bf4fd9f31515041cd68ff772b0b3f75b906cabfac034ad923a067394bbe87402",
-      "last_action": "create",
-      "last_synced_at": "2026-09-04T04:09:43+00:00",
-      "queue_operation_id": "walk-recover-create-085-20260904"
+      "local_sha256": "08c7f5a9ea05a54a2dbbaf587534d0dee625ae3ff2ef97da862a9bff08c6eb24",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
     },
     "86": {
-      "local_sha256": "bf6a263b4d48792cb1d0b04936b22c8c7f194497fdd9174193090373e37555e5",
-      "last_action": "create",
-      "last_synced_at": "2026-09-04T04:09:43+00:00",
-      "queue_operation_id": "walk-recover-create-086-088-20260904"
+      "local_sha256": "ed96bf1f32fb81d96bb433d3878a2258fb27e931e3526a9b85e49cc9b5ff1ede",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
     },
     "87": {
-      "local_sha256": "84c2d58d509b9a0157fca1fdfb62fc65aba707fa50bf28cd968aa8fe06ffa65b",
-      "last_action": "create",
-      "last_synced_at": "2026-09-04T04:09:43+00:00",
-      "queue_operation_id": "walk-recover-create-086-088-20260904"
+      "local_sha256": "d99617252b0c4fcbbfc1f302b524c43f653344397aaa8db7aef6b70c52bae3c9",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
     },
     "88": {
-      "local_sha256": "be5b6aa35d23a9dfec9866fb4d53c2244984dca56a9ecd3e0b5b7b60b376b1e7",
-      "last_action": "create",
-      "last_synced_at": "2026-09-04T04:09:43+00:00",
-      "queue_operation_id": "walk-recover-create-086-088-20260904"
+      "local_sha256": "622b3a15c4bf9dd4887f08cc3fbe23e30603d8b4ddb1f3113ba3e036e5c87fa7",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "64": {
+      "local_sha256": "684f3c8181956cbe831034389f81d4efad8d32e2ab881840149fdea83d1e89b0",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "65": {
+      "local_sha256": "6f8e79bdf57a6ae028aac1cad66a7f0baa460f0aea4906ca55649ac9bb53ea01",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "66": {
+      "local_sha256": "69a968e292b392d42389ea6a7b75fe3b240c52d01725d11872576fc6200c5d19",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "67": {
+      "local_sha256": "74896b3de7c44eee5f579f0c6798a3c70001f4821f1c41a6b6f6b0f66270b071",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "68": {
+      "local_sha256": "34f51b5bf6672b38e6e63e2846a8fe3a90c95212bdce7bb0a904854fc363182d",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "69": {
+      "local_sha256": "52679b500402b0bc2f2a17222f583430c127776d061ddef48dcef6e8a72148b1",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "70": {
+      "local_sha256": "8cb50ea04462400ae29260fca3dd3b23407ad7fe35629c8703ded421679af3fc",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "71": {
+      "local_sha256": "76ae42ee3f6171c9c61693e9de715a1a9848a156dfc4344df5afcf428ebdfde3",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "72": {
+      "local_sha256": "82aaee5dd63b0c5f68598089e44003a62704f2bfe561f25e3fe630ef09d8c90d",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "73": {
+      "local_sha256": "4898b6885b8b2e28c82d73fd28cd3438368c68d1fc4482214e638c5ff6278ef3",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "74": {
+      "local_sha256": "c44f891293799126e65a7c2db6058ad2458bcc86adb9315f7b9fb07c87eb4207",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "75": {
+      "local_sha256": "090b7b6780ec219f972c96c76b38f33376b188045f4798f57bad9ec0bc2a1fad",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "76": {
+      "local_sha256": "b15eefe691f5613288c04fdff51eaa8d77aa3d4dc9fcb9265ff0ba78f6a8a527",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "77": {
+      "local_sha256": "cabeca598051961ad3c5e5283968909c292c23361227c377a3a57fbe760c1c4e",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "78": {
+      "local_sha256": "2fb3bc2d91179d5ed122a1a0a9a4701743a3aef0e055b7b3b390d952733755b4",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "79": {
+      "local_sha256": "9b8ec3ad3d99c90fd6fdadebf64ed013a0872c3b10862d888e0f106c15bd72f2",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "80": {
+      "local_sha256": "5c69bb599b8e243f080349c5e83f43afd6dd18e142b81ad2a198d6e12231f74c",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "81": {
+      "local_sha256": "9ecf7214589bb0e0db9d18aecb20f02fe87df94f285980a9bb77a68f732ba908",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "82": {
+      "local_sha256": "f20cf44b91e820ce2e1c6dc8109486f856ee0211fa0ba5a133fed85c03aa5d73",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "83": {
+      "local_sha256": "521cb01ab75f97170b19d4373951c1a623207be644f747c0c376c593e1fa58c3",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "84": {
+      "local_sha256": "93893752cae753d2f4d4f43d2c18373a21ef666ee0ab4352a1176b80876dde22",
+      "last_action": "update",
+      "last_synced_at": "2026-09-04T07:21:56+00:00",
+      "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
     }
   }
 }

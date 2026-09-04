@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-04T07:11:00+00:00",
+  "updated_at": "2026-09-04T07:21:56+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -303,12 +303,13 @@
       "action": "update",
       "chapters": "64-88",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "basis": "PR #56 merged as 1be64a60437a18fe9176452316ed8a32dfefcb36 and substantively revised every canonical Walk chapter 64-88 after those platform items had already been created. Post-merge audit commit 717d37938d4c0e1b11c849352695212a502e8e03 confirms all 88 chapters pass the hard 2001-character floor with short_count=0. Fresh read-only Fanqie Sync run 33847111887 confirms remote chapters exactly 1-88, no local-only or remote-only chapters, no duplicate chapter numbers, no title mismatches, and chapters 64-88 remain scheduled in the intended three-chapter daily groups through 2026-09-15. The only position mismatch is the historical published 23/24 order anomaly, which is out of scope and must remain untouched. This operation edits only the existing chapter 64-88 items in place so their body text matches audited main; it must not create, delete, reorder, reschedule, or touch chapters 1-63."
       },
-      "reason": "Replace only the existing scheduled chapters 64-88 with the audited PR #56 canonical bodies while preserving every existing item ID, chapter number, platform position, publication status, and schedule."
+      "reason": "Replace only the existing scheduled chapters 64-88 with the audited PR #56 canonical bodies while preserving every existing item ID, chapter number, platform position, publication status, and schedule.",
+      "completed_at": "2026-09-04T07:21:56+00:00"
     }
   ]
 }
