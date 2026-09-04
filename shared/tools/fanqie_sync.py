@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Repository-driven Fanqie publishing controller.
 
-The repository owns policy, authorization, and sync state. Browser automation is
-performed by a pinned, locally installed fanqie-publisher runtime. No platform
-mutation happens unless an operation is both audit-passed and explicitly
-authorized.
+The repository owns policy, authorization, sync state, and release constraints.
+Browser automation is performed by a pinned, locally installed fanqie-publisher
+runtime. No platform mutation happens unless an operation is audit-passed,
+explicitly authorized, and satisfies the active release policy.
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ CHAPTER_HEADING_RE = re.compile(r"^#\s*第\s*(\d+)\s*章\s*(.*?)\s*$")
 RANGE_TOKEN_RE = re.compile(r"^(\d+)(?:-(\d+))?$")
 SUMMARY_RE = re.compile(r"成功:\s*(\d+)\s+失败:\s*(\d+)")
 EDIT_SUMMARY_RE = re.compile(r"修改完成!\s*成功:\s*(\d+)\s+失败:\s*(\d+)")
-RESCHEDULE_SUMMARY_RE = re.compile(r"修改排期完成!\s*成功:\s*(\d+)\s*失败:\s*(\d+)")
+RESCHEDULE_SUMMARY_RE = re.compile(r"修改排期完成!\s*成功:\s*(\d+)\s+失败:\s*(\d+)")
 
 
 class SyncError(RuntimeError):
@@ -169,6 +169,28 @@ def validate_policy(policy: dict[str, Any], config: dict[str, Any]) -> None:
     per_day = schedule.get("chapters_per_day")
     if not isinstance(per_day, int) or per_day < 1 or per_day > 20:
         raise SyncError("policy.schedule.chapters_per_day must be 1..20")
+    group_size = schedule.get("group_size", per_day)
+    if not isinstance(group_size, int) or group_size < 1:
+        raise SyncError("policy.schedule.group_size must be a positive integer")
+    if schedule.get("require_complete_groups") is True and group_size != per_day:
+        raise SyncError("require_complete_groups=true requires group_size=chapters_per_day")
+
+    chapter_length = policy.get("chapter_length") or {}
+    hard_minimum = chapter_length.get("hard_minimum_chars")
+    if hard_minimum is not None and (not isinstance(hard_minimum, int) or hard_minimum < 1):
+        raise SyncError("policy.chapter_length.hard_minimum_chars must be a positive integer")
+
+    floor = schedule.get("daily_word_floor") or {}
+    if floor.get("enabled") is True:
+        minimum = floor.get("minimum_chars_exclusive", floor.get("minimum_chars"))
+        if not isinstance(minimum, int) or minimum < 0:
+            raise SyncError("enabled daily_word_floor needs a non-negative integer minimum")
+        normal = floor.get("normal_chapters", group_size)
+        if not isinstance(normal, int) or normal < 1:
+            raise SyncError("daily_word_floor.normal_chapters must be a positive integer")
+        if schedule.get("require_complete_groups") is True and normal != group_size:
+            raise SyncError("strict release groups require daily_word_floor.normal_chapters=group_size")
+
     if config.get("book_id") != policy.get("book_id"):
         raise SyncError("book_id differs between config.json and policy.json")
     if config.get("sync_enabled") and policy.get("policy_status") != "active":
@@ -192,6 +214,92 @@ def validate_operation(op: dict[str, Any], chapters: dict[int, Chapter]) -> list
     audit = op.get("audit") or {}
     if op.get("authorized") is True and audit.get("status") != "passed":
         raise SyncError(f"{op_id}: authorized operation must have audit.status='passed'")
+    return nums
+
+
+def _require_consecutive(op_id: str, nums: list[int]) -> None:
+    if not nums:
+        raise SyncError(f"{op_id}: release group is empty")
+    expected = list(range(nums[0], nums[-1] + 1))
+    if nums != expected:
+        raise SyncError(f"{op_id}: release chapters must be consecutive: {compact_spec(nums)}")
+
+
+def _validate_release_groups(
+    op_id: str,
+    nums: list[int],
+    chapters: dict[int, Chapter],
+    policy: dict[str, Any],
+) -> None:
+    schedule = policy.get("schedule") or {}
+    group_size = int(schedule.get("group_size") or schedule.get("chapters_per_day") or 1)
+    _require_consecutive(op_id, nums)
+    if len(nums) % group_size != 0:
+        raise SyncError(
+            f"{op_id}: {len(nums)} chapters leave a partial release day; "
+            f"strict group size is {group_size}"
+        )
+
+    floor = schedule.get("daily_word_floor") or {}
+    if floor.get("enabled") is not True:
+        return
+    minimum = int(floor.get("minimum_chars_exclusive", floor.get("minimum_chars", 0)))
+    for i in range(0, len(nums), group_size):
+        group = nums[i : i + group_size]
+        total = sum(chapters[n].char_count for n in group)
+        if total <= minimum:
+            raise SyncError(
+                f"{op_id}: chapters {compact_spec(group)} total {total} chars; "
+                f"daily release must be > {minimum}"
+            )
+
+
+def validate_release_operation(
+    op: dict[str, Any],
+    chapters: dict[int, Chapter],
+    policy: dict[str, Any],
+) -> list[int]:
+    """Fail closed on content/schedule constraints before a pending mutation."""
+    nums = validate_operation(op, chapters)
+    op_id = str(op["id"])
+    action = op["action"]
+
+    chapter_length = policy.get("chapter_length") or {}
+    hard_minimum = chapter_length.get("hard_minimum_chars")
+    if action in {"create", "update"} and isinstance(hard_minimum, int):
+        short = [n for n in nums if chapters[n].char_count < hard_minimum]
+        if short:
+            details = ", ".join(f"{n}={chapters[n].char_count}" for n in short)
+            raise SyncError(
+                f"{op_id}: chapters below hard body floor {hard_minimum}: {details}"
+            )
+
+    schedule = policy.get("schedule") or {}
+    strict_groups = schedule.get("require_complete_groups") is True
+    if action == "create" and strict_groups:
+        mode = op.get("schedule_mode") or schedule.get("mode")
+        if mode != "fixed_start":
+            raise SyncError(
+                f"{op_id}: strict complete release groups require fixed_start; got {mode!r}"
+            )
+        if not (op.get("start_date") or schedule.get("start_date")):
+            raise SyncError(f"{op_id}: strict fixed_start create requires an explicit start_date")
+        _validate_release_groups(op_id, nums, chapters, policy)
+
+    if action == "reschedule_all" and strict_groups:
+        audit = op.get("audit") or {}
+        expected_spec = audit.get("expected_pending_chapters")
+        if not expected_spec:
+            raise SyncError(
+                f"{op_id}: strict reschedule_all requires audit.expected_pending_chapters "
+                "from a fresh read-only reconcile"
+            )
+        expected = parse_chapter_spec(expected_spec)
+        missing = [n for n in expected if n not in chapters]
+        if missing:
+            raise SyncError(f"{op_id}: expected pending chapters missing locally: {compact_spec(missing)}")
+        _validate_release_groups(op_id, expected, chapters, policy)
+
     return nums
 
 
@@ -244,7 +352,7 @@ def build_plan(novel_dir: Path) -> dict[str, Any]:
     config, policy, queue, chapters = load_model(novel_dir)
     ops = []
     for op in pending_operations(queue):
-        nums = validate_operation(op, chapters)
+        nums = validate_release_operation(op, chapters, policy)
         entry = {
             "id": op["id"],
             "action": op["action"],
@@ -275,7 +383,7 @@ def resolve_runtime(runtime_arg: str | None) -> Path:
     if runtime_arg:
         runtime = Path(os.path.expandvars(os.path.expanduser(runtime_arg)))
     elif os.environ.get("FANQIE_RUNTIME_DIR"):
-        runtime = Path(os.path.expandvars(os.path.expanduser(os.environ["FANQIE_RUNTIME_DIR"])))
+        runtime = Path(os.path.expandvars(os.path.expanduser(os.environ["FANQIE_RUNTIME_DIR"]))
     else:
         runtime = Path.home() / ".novel-workspace" / "fanqie-publisher"
     return runtime.resolve()
@@ -358,7 +466,7 @@ def operation_command(
     action = op["action"]
 
     if action in {"create", "update"}:
-        nums = validate_operation(op, chapters)
+        nums = validate_release_operation(op, chapters, policy)
         spec = compact_spec(nums)
         args = ["upload", str((novel_dir / "chapters").resolve()), "--book-id", book_id, "--chapters", spec]
         if action == "update":
@@ -381,6 +489,7 @@ def operation_command(
         return runtime_command(runtime, args), len(nums), action == "update"
 
     if action == "reschedule_all":
+        validate_release_operation(op, chapters, policy)
         start_date = op.get("start_date") or schedule.get("start_date")
         if not start_date:
             raise SyncError(f"{op['id']}: reschedule_all requires explicit start_date")
@@ -437,7 +546,9 @@ def update_local_state(
 
 
 def cmd_validate(novel_dir: Path) -> int:
-    config, _policy, queue, chapters = load_model(novel_dir)
+    config, policy, queue, chapters = load_model(novel_dir)
+    for op in pending_operations(queue):
+        validate_release_operation(op, chapters, policy)
     print(f"OK: {novel_dir}")
     print(f"book_id: {config['book_id']}")
     print(f"chapters: {min(chapters)}-{max(chapters)} ({len(chapters)})")
@@ -471,7 +582,7 @@ def cmd_sync(novel_dir: Path, runtime_arg: str | None, dry_run: bool) -> int:
         print("Sync is disabled in platform-sync/config.json; no platform mutation performed.")
         return 0
     mutation_count = sum(
-        len(validate_operation(op, chapters))
+        len(validate_release_operation(op, chapters, policy))
         for op in ops
         if op.get("action") in {"create", "update"}
     )
