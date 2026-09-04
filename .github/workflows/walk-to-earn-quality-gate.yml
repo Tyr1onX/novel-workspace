@@ -53,22 +53,22 @@ jobs:
           fi
           python shared/tools/novel_gate.py "${chapters[@]}" 2>&1 | tee .audit/walk-to-earn-novel-gate.log
 
-      - name: Audit 2000-char minimum for every chapter
+      - name: Enforce per-chapter body floor
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p novels/walk-to-earn/audits
-          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 \
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2001 --fail \
             | tee .audit/walk-to-earn-chapter-lengths.log \
             > novels/walk-to-earn/audits/chapter-lengths-current.json
           cat novels/walk-to-earn/audits/chapter-lengths-current.json
 
-      - name: Plan release batches against 6000-char floor
+      - name: Enforce three-chapter daily release floor
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p novels/walk-to-earn/audits
-          python novels/walk-to-earn/tools/check_release_floor.py --start 44 \
+          python novels/walk-to-earn/tools/check_release_floor.py --start 44 --minimum 6000 --normal 3 --maximum 3 --require-all \
             | tee .audit/walk-to-earn-release-floor.log \
             > novels/walk-to-earn/audits/release-floor-current.json
           cat novels/walk-to-earn/audits/release-floor-current.json
