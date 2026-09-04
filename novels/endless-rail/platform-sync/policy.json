@@ -6,8 +6,15 @@
   "declaration": {
     "use_ai": true
   },
+  "chapter_length": {
+    "hard_minimum_chars": 2001,
+    "preferred_target_chars": "flexible",
+    "counting_basis": "body_non_whitespace_characters",
+    "applies_to_existing_chapters": false,
+    "notes": "New or substantively updated chapters entering future release inventory must contain at least 2001 non-whitespace正文 characters. Existing historical chapters are not retroactively blocked by this publishing gate unless they are being updated."
+  },
   "schedule": {
-    "mode": "auto_continue",
+    "mode": "fixed_start",
     "chapters_per_day": 3,
     "slots": [
       "00:00"
@@ -15,10 +22,18 @@
     "start_date": null,
     "group_size": 3,
     "same_timestamp_within_group": true,
+    "require_complete_groups": true,
+    "daily_word_floor": {
+      "enabled": true,
+      "minimum_chars_exclusive": 6000,
+      "normal_chapters": 3,
+      "preserve_order": true,
+      "same_timestamp": true,
+      "notes": "Every normal release day is exactly three consecutive chapters at 00:00 Asia/Shanghai and must contain strictly more than 6000 non-whitespace正文 characters. Partial release days and auto-continue scheduling are forbidden."
+    },
     "extra_release": {
       "unit": "chapter",
-      "allow_partial_group": true,
-      "strategy": "publish_early_then_pull_forward",
+      "allow_partial_group": false,
       "preserve_daily_quota": true,
       "daily_quota": 3,
       "reflow": "compact_remaining_schedule_forward_in_chapter_order",
@@ -26,5 +41,5 @@
       "do_not_reduce_original_day_count": true
     }
   },
-  "notes": "Confirmed default release policy: publish three consecutive chapters at exactly 00:00 Asia/Shanghai each normal release day. A temporary extra release may contain any explicitly approved number of chapters, including a single chapter. Extra releases consume chapters early but do NOT reduce the three-chapter quota of their originally scheduled future day. After an early release, compact the remaining scheduled chapters forward in chapter-number order so every normal release day is refilled to three chapters at 00:00 where inventory permits. Example: if 82/83/84 were scheduled for Aug 30 and chapter 82 is released early, Aug 30 becomes 83/84/85, Aug 31 becomes 86/87/88, and all later scheduled chapters shift forward by one slot. Never skip or reorder chapter numbers. Repository sync remains separately gated by config.json sync_enabled and explicit audited authorization."
+  "notes": "Hard release invariant: each normal day publishes exactly three consecutive audited chapters at 00:00 Asia/Shanghai with a daily正文 total strictly greater than 6000. Future creates must use an explicit fixed start date. A fresh read-only reconcile is required before any strict reschedule so the expected pending chapter set is recorded and auditable."
 }

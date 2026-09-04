@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Plan Walk to Earn release batches against the 6000-character daily floor.
+"""Plan Walk to Earn release batches against the strict daily release floor.
 
 Default policy:
-- 3 consecutive chapters per normal day;
-- if those 3 total < 6000 non-whitespace正文 characters, append the next
-  consecutive chapter as a fourth chapter;
-- if remaining inventory cannot reach 6000 within 4 chapters, hold that tail
-  instead of scheduling a sub-floor release day.
+- at least 3 consecutive chapters per normal day;
+- the day's body text must be strictly greater than 6000 non-whitespace characters;
+- if 3 chapters do not exceed the floor, an optional consecutive fourth chapter may
+  be added only when the active publishing policy supports it;
+- fewer than 3 remaining chapters are always held, regardless of their combined length;
+- if remaining inventory cannot satisfy both the chapter-count and character floors,
+  hold that tail instead of scheduling an invalid release day.
 
 The script is read-only and is intended for CI/audit output before Fanqie
 queue authorization.
@@ -63,6 +65,10 @@ def load_chapters(start: int, end: int | None) -> list[dict]:
     return items
 
 
+def exceeds_floor(total: int, minimum: int) -> bool:
+    return total > minimum
+
+
 def plan(items: list[dict], minimum: int, normal: int, maximum: int) -> dict:
     batches = []
     i = 0
@@ -70,39 +76,38 @@ def plan(items: list[dict], minimum: int, normal: int, maximum: int) -> dict:
         remaining = len(items) - i
         if remaining < normal:
             tail = items[i:]
-            total = sum(x["chars"] for x in tail)
             batches.append({
                 "chapters": [x["number"] for x in tail],
-                "chars": total,
-                "status": "ready" if total >= minimum else "hold",
-                "reason": None if total >= minimum else "remaining inventory below daily floor",
+                "chars": sum(x["chars"] for x in tail),
+                "status": "hold",
+                "reason": f"fewer than required {normal} chapters remain",
             })
             break
 
         group = items[i : i + normal]
         total = sum(x["chars"] for x in group)
-        if total >= minimum:
+        if exceeds_floor(total, minimum):
             batches.append({
                 "chapters": [x["number"] for x in group],
                 "chars": total,
                 "status": "ready",
-                "reason": "normal three-chapter group meets floor",
+                "reason": f"{normal}-chapter group strictly exceeds daily floor",
             })
             i += normal
             continue
 
-        if remaining >= maximum:
+        if maximum > normal and remaining >= maximum:
             group = items[i : i + maximum]
             total = sum(x["chars"] for x in group)
-            status = "ready" if total >= minimum else "hold"
+            status = "ready" if exceeds_floor(total, minimum) else "hold"
             batches.append({
                 "chapters": [x["number"] for x in group],
                 "chars": total,
                 "status": status,
                 "reason": (
-                    "fourth consecutive chapter added to meet floor"
+                    "extra consecutive chapter added to strictly exceed daily floor"
                     if status == "ready"
-                    else "even four chapters remain below daily floor"
+                    else f"even {maximum} chapters do not strictly exceed daily floor"
                 ),
             })
             if status == "hold":
@@ -115,17 +120,27 @@ def plan(items: list[dict], minimum: int, normal: int, maximum: int) -> dict:
             "chapters": [x["number"] for x in tail],
             "chars": sum(x["chars"] for x in tail),
             "status": "hold",
-            "reason": "not enough consecutive inventory to add a fourth chapter",
+            "reason": "normal group does not strictly exceed daily floor and no supported larger group is available",
         })
         break
 
+    scheduled_count = sum(
+        len(batch["chapters"])
+        for batch in batches
+        if batch["status"] == "ready"
+    )
     return {
-        "minimum_chars": minimum,
+        "minimum_chars_exclusive": minimum,
+        "comparison": ">",
         "normal_chapters": normal,
         "max_chapters": maximum,
         "inventory": items,
         "batches": batches,
-        "all_inventory_schedulable": bool(batches) and batches[-1]["status"] == "ready",
+        "all_inventory_schedulable": (
+            bool(batches)
+            and scheduled_count == len(items)
+            and all(batch["status"] == "ready" for batch in batches)
+        ),
     }
 
 
@@ -136,9 +151,11 @@ def main() -> int:
     parser.add_argument("--minimum", type=int, default=6000)
     parser.add_argument("--normal", type=int, default=3)
     parser.add_argument("--maximum", type=int, default=4)
-    parser.add_argument("--require-all", action="store_true", help="fail if any tail must be held")
+    parser.add_argument("--require-all", action="store_true", help="fail unless all inventory can be scheduled without violating either hard floor")
     args = parser.parse_args()
 
+    if args.minimum < 0:
+        raise SystemExit("minimum must be non-negative")
     if not (1 <= args.normal <= args.maximum):
         raise SystemExit("normal/max chapter counts are invalid")
     items = load_chapters(args.start, args.end)

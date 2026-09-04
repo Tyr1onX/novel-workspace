@@ -25,6 +25,38 @@ assert compat_spec.loader is not None
 compat_spec.loader.exec_module(fanqie_compat)
 
 
+def strict_policy() -> dict:
+    return {
+        "version": 1,
+        "book_id": "book",
+        "chapter_length": {"hard_minimum_chars": 2001},
+        "schedule": {
+            "mode": "fixed_start",
+            "chapters_per_day": 3,
+            "group_size": 3,
+            "slots": ["00:00"],
+            "require_complete_groups": True,
+            "daily_word_floor": {
+                "enabled": True,
+                "minimum_chars_exclusive": 6000,
+                "normal_chapters": 3,
+            },
+        },
+    }
+
+
+def make_chapters(root: Path, lengths: list[int]) -> dict[int, object]:
+    chapters = {}
+    for number, length in enumerate(lengths, 1):
+        path = root / f"chapter-{number}.md"
+        path.write_text(
+            f"# 第{number}章 标题{number}\n\n" + ("字" * length) + "\n",
+            encoding="utf-8",
+        )
+        chapters[number] = fanqie_sync.parse_chapter(path)
+    return chapters
+
+
 class FanqieSyncTests(unittest.TestCase):
     def test_parse_chapter_separates_heading_and_body(self):
         with tempfile.TemporaryDirectory() as td:
@@ -88,6 +120,82 @@ class FanqieSyncTests(unittest.TestCase):
             }
             with self.assertRaises(fanqie_sync.SyncError):
                 fanqie_sync.validate_operation(op, chapters)
+
+    def test_strict_create_rejects_auto_continue(self):
+        with tempfile.TemporaryDirectory() as td:
+            chapters = make_chapters(Path(td), [2001, 2001, 2001])
+            op = {
+                "id": "bad-auto",
+                "action": "create",
+                "chapters": "1-3",
+                "schedule_mode": "auto_continue",
+                "authorized": True,
+                "audit": {"status": "passed"},
+            }
+            with self.assertRaisesRegex(fanqie_sync.SyncError, "require fixed_start"):
+                fanqie_sync.validate_release_operation(op, chapters, strict_policy())
+
+    def test_strict_create_rejects_partial_day(self):
+        with tempfile.TemporaryDirectory() as td:
+            chapters = make_chapters(Path(td), [2100, 2100, 2100, 2100])
+            op = {
+                "id": "partial",
+                "action": "create",
+                "chapters": "1-4",
+                "schedule_mode": "fixed_start",
+                "start_date": "2026-09-05",
+                "authorized": True,
+                "audit": {"status": "passed"},
+            }
+            with self.assertRaisesRegex(fanqie_sync.SyncError, "partial release day"):
+                fanqie_sync.validate_release_operation(op, chapters, strict_policy())
+
+    def test_strict_create_requires_daily_total_strictly_over_floor(self):
+        with tempfile.TemporaryDirectory() as td:
+            policy = strict_policy()
+            policy["chapter_length"]["hard_minimum_chars"] = 2000
+            chapters = make_chapters(Path(td), [2000, 2000, 2000])
+            op = {
+                "id": "exactly-six-thousand",
+                "action": "create",
+                "chapters": "1-3",
+                "schedule_mode": "fixed_start",
+                "start_date": "2026-09-05",
+                "authorized": True,
+                "audit": {"status": "passed"},
+            }
+            with self.assertRaisesRegex(fanqie_sync.SyncError, "must be > 6000"):
+                fanqie_sync.validate_release_operation(op, chapters, policy)
+
+    def test_strict_create_accepts_complete_group_over_floor(self):
+        with tempfile.TemporaryDirectory() as td:
+            chapters = make_chapters(Path(td), [2001, 2001, 2001])
+            op = {
+                "id": "good",
+                "action": "create",
+                "chapters": "1-3",
+                "schedule_mode": "fixed_start",
+                "start_date": "2026-09-05",
+                "authorized": True,
+                "audit": {"status": "passed"},
+            }
+            self.assertEqual(
+                fanqie_sync.validate_release_operation(op, chapters, strict_policy()),
+                [1, 2, 3],
+            )
+
+    def test_strict_reschedule_requires_reconciled_pending_set(self):
+        with tempfile.TemporaryDirectory() as td:
+            chapters = make_chapters(Path(td), [2001, 2001, 2001])
+            op = {
+                "id": "reschedule",
+                "action": "reschedule_all",
+                "start_date": "2026-09-05",
+                "authorized": True,
+                "audit": {"status": "passed"},
+            }
+            with self.assertRaisesRegex(fanqie_sync.SyncError, "expected_pending_chapters"):
+                fanqie_sync.validate_release_operation(op, chapters, strict_policy())
 
     def test_empty_queue_is_safe(self):
         with tempfile.TemporaryDirectory() as td:
