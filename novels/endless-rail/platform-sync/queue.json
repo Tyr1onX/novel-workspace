@@ -134,6 +134,20 @@
       },
       "reason": "Append audited chapters 107-116 to the existing Fanqie release inventory under the active policy: preserve chapter order, existing published/scheduled chapters, and the normal three-chapter 00:00 Asia/Shanghai cadence.",
       "completed_at": "2026-09-01T02:03:07+00:00"
+    },
+    {
+      "id": "rail-create-117-134-schedule-through-20260915",
+      "action": "create",
+      "chapters": "117-134",
+      "schedule_mode": "auto_continue",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "commit": "71beae31c80c72db9f14cf6fe0fc02fbffb0e153",
+        "basis": "PR #52 canonical content passed the Endless Rail hard length audit, Novel Gate with HARD=0, repository Meta guard with hard=0 warn=0, continuity/character/capability ledger review, and the author's manual cold read. Fresh read-only Fanqie reconciliation on 2026-09-04 confirmed remote chapters exactly 1-116 with 105 published and 11 scheduled, local-only chapters exactly 117-134, zero duplicate remote numbers, zero title mismatches and zero position mismatches. Existing chapter 116 remains scheduled for 2026-09-09 00:00 Asia/Shanghai. This operation is create-only and must append 117-134 under the active auto-continue policy without editing or rescheduling any existing chapter."
+      },
+      "reason": "Append audited chapters 117-134 after the existing chapter 116 schedule, preserving all existing published/scheduled item IDs and the three-consecutive-chapters-at-00:00 Asia/Shanghai cadence through 2026-09-15."
     }
   ]
 }
