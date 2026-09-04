@@ -102,6 +102,131 @@
       "number": 63,
       "title": "四小时以后，先走到江边",
       "chars": 2510
+    },
+    {
+      "number": 64,
+      "title": "雨下到十点，早市还没散",
+      "chars": 1497
+    },
+    {
+      "number": 65,
+      "title": "回到学校，周一只走七千步",
+      "chars": 1570
+    },
+    {
+      "number": 66,
+      "title": "工资没变，决定还是变了",
+      "chars": 1573
+    },
+    {
+      "number": 67,
+      "title": "二十四个点，先别按直线走",
+      "chars": 1669
+    },
+    {
+      "number": 68,
+      "title": "食堂最挤的时候，数据开始乱跳",
+      "chars": 1854
+    },
+    {
+      "number": 69,
+      "title": "周航也有自己的去处",
+      "chars": 1353
+    },
+    {
+      "number": 70,
+      "title": "少一根线，四个人又走了一圈",
+      "chars": 1450
+    },
+    {
+      "number": 71,
+      "title": "周六回家，包里只多了一张旧证明",
+      "chars": 1385
+    },
+    {
+      "number": 72,
+      "title": "父亲要去的地方，公交只到路口",
+      "chars": 1357
+    },
+    {
+      "number": 73,
+      "title": "那张旧证明，只看了三分钟",
+      "chars": 1233
+    },
+    {
+      "number": 74,
+      "title": "十八公斤的箱子，先坐校车",
+      "chars": 1347
+    },
+    {
+      "number": 75,
+      "title": "晚上九点，那条干扰还在",
+      "chars": 1287
+    },
+    {
+      "number": 76,
+      "title": "唐梨说请饭，先陪她取一块牌子",
+      "chars": 1372
+    },
+    {
+      "number": 77,
+      "title": "早上七点十二，先试一次砚海通勤",
+      "chars": 1422
+    },
+    {
+      "number": 78,
+      "title": "下过雨以后，旧鞋先打了一下滑",
+      "chars": 1148
+    },
+    {
+      "number": 79,
+      "title": "毕业照还没拍，班里先自己拍了一轮",
+      "chars": 1412
+    },
+    {
+      "number": 80,
+      "title": "周航看房，第一套离地铁不是五分钟",
+      "chars": 1182
+    },
+    {
+      "number": 81,
+      "title": "一周没出校门，里程也没停",
+      "chars": 1089
+    },
+    {
+      "number": 82,
+      "title": "四个馆，先去最里面那个",
+      "chars": 1270
+    },
+    {
+      "number": 83,
+      "title": "地图上有站，街口已经没有站牌",
+      "chars": 1327
+    },
+    {
+      "number": 84,
+      "title": "降到三度以后，早课那段路改骑车",
+      "chars": 1025
+    },
+    {
+      "number": 85,
+      "title": "显示器不走地铁，直接叫车",
+      "chars": 993
+    },
+    {
+      "number": 86,
+      "title": "第一场雪，只走到食堂",
+      "chars": 954
+    },
+    {
+      "number": 87,
+      "title": "走到桥下，还差一点到四位数",
+      "chars": 1200
+    },
+    {
+      "number": 88,
+      "title": "一千公里，没有新的提示音",
+      "chars": 1211
     }
   ],
   "batches": [
@@ -168,11 +293,34 @@
     {
       "chapters": [
         62,
-        63
+        63,
+        64
       ],
-      "chars": 4697,
+      "chars": 6194,
+      "status": "ready",
+      "reason": "normal three-chapter group meets floor"
+    },
+    {
+      "chapters": [
+        65,
+        66,
+        67,
+        68
+      ],
+      "chars": 6666,
+      "status": "ready",
+      "reason": "fourth consecutive chapter added to meet floor"
+    },
+    {
+      "chapters": [
+        69,
+        70,
+        71,
+        72
+      ],
+      "chars": 5545,
       "status": "hold",
-      "reason": "remaining inventory below daily floor"
+      "reason": "even four chapters remain below daily floor"
     }
   ],
   "all_inventory_schedulable": false
