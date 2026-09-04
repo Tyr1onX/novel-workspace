@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-01T07:25:25+00:00",
+  "updated_at": "2026-09-04T03:55:00+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -207,7 +207,7 @@
       "status": "completed",
       "audit": {
         "status": "passed",
-        "basis": "User explicitly authorized continuing the audited cold-start migration. The earlier isolated chapter-3 retry failed because canonical chapter 3 still overlapped the then-existing old chapter 4. Chapters 8→7→6→5→4 have now all been successfully migrated, and chapter 4's old body/title '坐两站，还是走两站' has been released. Canonical chapter 3 can therefore now be retried without the duplicate-content dependency that blocked run 209. This operation edits only existing chapter 3 and leaves numbering, platform position, publication state, and future schedules unchanged."
+        "basis": "User explicitly authorized continuing the audited cold-start migration. The earlier isolated chapter-3 retry failed because canonical chapter 3 still overlapped the then-existing old chapter 4. Chapters 8→7→6→5→4→3→2 have now all been successfully migrated, and chapter 4's old body/title '坐两站，还是走两站' has been released. Canonical chapter 3 can therefore now be retried without the duplicate-content dependency that blocked run 209. This operation edits only existing chapter 3 and leaves numbering, platform position, publication state, and future schedules unchanged."
       },
       "completed_at": "2026-09-01T07:09:34+00:00"
     },
@@ -219,7 +219,7 @@
       "status": "completed",
       "audit": {
         "status": "passed",
-        "basis": "User explicitly authorized continuing the audited cold-start migration. Chapter 3 has now been successfully migrated, releasing the old chapter-3 body/title '先买双鞋'. Canonical chapter 2 is the final dependency in the 8→7→6→5→4→3→2 migration chain and can now replace existing chapter 2 without duplicate-content overlap. This operation edits only chapter 2 and leaves numbering, platform position, publication state, and future schedules unchanged."
+        "basis": "User explicitly authorized continuing the audited cold-start migration. Chapter 3 has now been successfully migrated, releasing the old chapter-3 body/title '先买双鞋'. Canonical chapter 2 is the final dependency in the 8→7→6→5→4→3→2 migration chain and can now replace existing chapter 2 without duplicate-content overlap. This operation edits only existing chapter 2 and leaves numbering, platform position, publication state, and future schedules unchanged."
       },
       "completed_at": "2026-09-01T07:12:30+00:00"
     },
@@ -243,7 +243,7 @@
       "status": "completed",
       "audit": {
         "status": "passed",
-        "basis": "User explicitly authorized continuing through completion of the audited cold-start rewrite migration. Chapter 9 is now completed on Fanqie. Chapter 10 kept its platform position but its body was edited in rewrite commit ddfa03a and was not processed by the original partial run, so the final cold-start body refresh is required. This operation edits only existing chapter 10 and does not change numbering, position, publication state, or any future schedule."
+        "basis": "User explicitly authorized continuing through completion of the audited cold-start rewrite migration. Chapter 9 is now completed on Fanqie. Chapter 10 kept its platform position but its body was edited in rewrite commit ddfa03a and was not processed by the original partial run, so the final cold-start body refresh is required even though title reconciliation cannot detect it. This operation edits only existing chapter 10 and does not change numbering, position, publication state, or any future schedule."
       },
       "completed_at": "2026-09-01T07:23:51+00:00"
     },
@@ -252,14 +252,49 @@
       "action": "create",
       "chapters": "62-88",
       "schedule_mode": "auto_continue",
-      "status": "pending",
-      "authorized": true,
+      "status": "partial_failed",
+      "authorized": false,
       "audit": {
         "status": "passed",
         "commit": "71beae31c80c72db9f14cf6fe0fc02fbffb0e153",
-        "basis": "PR #52 canonical Walk continuation passed Walk Quality, Narrative and Continuity review, with the author's manual review retained as the final judgment for natural dialogue. Fresh read-only Fanqie reconciliation on 2026-09-04 confirmed remote chapters exactly 1-61 with 55 published and 6 scheduled, local-only chapters exactly 62-88, zero duplicate remote numbers and zero title mismatches. The only position anomaly is the already-published historical 23/24 swap, which this create-only operation must not touch. Existing chapters 56-58 remain scheduled for 2026-09-05 and 59-61 for 2026-09-06 at 00:00 Asia/Shanghai. Chapters 62-88 form nine consecutive three-chapter groups and satisfy the active release policy through 2026-09-15."
+        "basis": "PR #52 canonical Walk continuation passed Walk Quality, Narrative and Continuity review, with the author's manual review retained as the final judgment for natural dialogue. Fresh read-only Fanqie reconciliation on 2026-09-04 originally confirmed remote chapters exactly 1-61. Fanqie Sync run 33831090400 then created chapters 62-84 successfully. A subsequent fresh read-only reconcile confirmed remote 1-84, no duplicate remote numbers, and local-only 85-88. The operation is disabled after partial execution so later pushes cannot blindly retry auto-continue."
       },
-      "reason": "Append audited chapters 62-88 after the existing chapter 61 schedule, preserving all published/scheduled item IDs, leaving the historical 23/24 order anomaly untouched, and continuing the three-consecutive-chapters-at-00:00 Asia/Shanghai cadence through 2026-09-15."
+      "reason": "Append audited chapters 62-88 after the existing chapter 61 schedule, preserving all published/scheduled item IDs, leaving the historical 23/24 order anomaly untouched, and continuing the three-consecutive-chapters-at-00:00 Asia/Shanghai cadence through 2026-09-15.",
+      "attempted_at": "2026-09-04T03:09:02+00:00",
+      "result": {
+        "confirmed_success_chapters": "62-84",
+        "failed_or_unprocessed_chapters": "85-88",
+        "source_run": 33831090400,
+        "reason": "Chapter 85 repeatedly stopped before publish settings with platform editor count 993, below the platform's 1000-character minimum. A retry also confirmed upstream auto-continue intentionally starts on the next whole day when the tail day is partially filled, which would have pushed chapter 88 to 2026-09-16."
+      }
+    },
+    {
+      "id": "walk-recover-create-085-20260904",
+      "action": "create",
+      "chapters": "85",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-14",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "Fresh read-only reconciliation after the partial batch confirmed Fanqie has chapters 1-84 and only 85-88 remain local-only. The pinned publisher logged chapter 85 at 993 editor characters and documents the platform minimum of 1000, so the still-unpublished canonical chapter was minimally extended without changing its plot or title. This one-chapter fixed-start operation fills the unused third slot on 2026-09-14 without touching chapters 83-84 or any existing item ID."
+      },
+      "reason": "Create only chapter 85 at 2026-09-14 00:00 to complete the 83-85 release group."
+    },
+    {
+      "id": "walk-recover-create-086-088-20260904",
+      "action": "create",
+      "chapters": "86-88",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-15",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "Fresh read-only reconciliation confirmed chapters 86-88 do not exist on Fanqie. Chapter 86 was also below a safe margin for the platform's 1000-character editor minimum and was minimally extended while still unpublished; chapters 87-88 are unchanged. Using fixed_start avoids the pinned upstream keep-ahead behavior that deliberately skips a partially filled tail day and would otherwise move chapter 88 to 2026-09-16."
+      },
+      "reason": "Create chapters 86-88 together at 2026-09-15 00:00, preserving the intended final three-chapter release group and schedule horizon."
     }
   ]
 }
