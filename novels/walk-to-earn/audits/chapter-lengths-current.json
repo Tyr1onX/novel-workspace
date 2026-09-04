@@ -1,35 +1,9 @@
 {
-  "minimum_chars": 2000,
+  "minimum_chars": 2001,
   "count": 88,
-  "pass_count": 63,
-  "short_count": 25,
-  "short_chapters": [
-    64,
-    65,
-    66,
-    67,
-    68,
-    69,
-    70,
-    71,
-    72,
-    73,
-    74,
-    75,
-    76,
-    77,
-    78,
-    79,
-    80,
-    81,
-    82,
-    83,
-    84,
-    85,
-    86,
-    87,
-    88
-  ],
+  "pass_count": 88,
+  "short_count": 0,
+  "short_chapters": [],
   "chapters": [
     {
       "number": 1,
@@ -475,177 +449,177 @@
     {
       "number": 64,
       "heading": "第六十四章 雨下到十点，早市还没散",
-      "chars": 1497,
-      "status": "short",
-      "deficit": 503
+      "chars": 2154,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 65,
       "heading": "第六十五章 回到学校，周一只走七千步",
-      "chars": 1570,
-      "status": "short",
-      "deficit": 430
+      "chars": 2031,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 66,
       "heading": "第六十六章 工资没变，决定还是变了",
-      "chars": 1573,
-      "status": "short",
-      "deficit": 427
+      "chars": 2029,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 67,
       "heading": "第六十七章 二十四个点，先别按直线走",
-      "chars": 1669,
-      "status": "short",
-      "deficit": 331
+      "chars": 2052,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 68,
       "heading": "第六十八章 三个异常点，再走一遍",
-      "chars": 1854,
-      "status": "short",
-      "deficit": 146
+      "chars": 2003,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 69,
       "heading": "第六十九章 周航也有自己的去处",
-      "chars": 1353,
-      "status": "short",
-      "deficit": 647
+      "chars": 2010,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 70,
       "heading": "第七十章 少一根线，四个人又走了一圈",
-      "chars": 1450,
-      "status": "short",
-      "deficit": 550
+      "chars": 2007,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 71,
       "heading": "第七十一章 周六回家，包里只多了一张旧证明",
-      "chars": 1385,
-      "status": "short",
-      "deficit": 615
+      "chars": 2007,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 72,
       "heading": "第七十二章 父亲要去的地方，公交只到路口",
-      "chars": 1357,
-      "status": "short",
-      "deficit": 643
+      "chars": 2012,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 73,
       "heading": "第七十三章 那张旧证明，只看了三分钟",
-      "chars": 1233,
-      "status": "short",
-      "deficit": 767
+      "chars": 2010,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 74,
       "heading": "第七十四章 十八公斤的箱子，先坐校车",
-      "chars": 1347,
-      "status": "short",
-      "deficit": 653
+      "chars": 2011,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 75,
       "heading": "第七十五章 晚上九点，那条干扰还在",
-      "chars": 1287,
-      "status": "short",
-      "deficit": 713
+      "chars": 2002,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 76,
       "heading": "第七十六章 唐梨说请饭，先陪她取一块牌子",
-      "chars": 1372,
-      "status": "short",
-      "deficit": 628
+      "chars": 2085,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 77,
       "heading": "第七十七章 早上七点十二，先试一次砚海通勤",
-      "chars": 1422,
-      "status": "short",
-      "deficit": 578
+      "chars": 2050,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 78,
       "heading": "第七十八章 下过雨以后，旧鞋先打了一下滑",
-      "chars": 1148,
-      "status": "short",
-      "deficit": 852
+      "chars": 2011,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 79,
       "heading": "第七十九章 毕业照还没拍，班里先自己拍了一轮",
-      "chars": 1412,
-      "status": "short",
-      "deficit": 588
+      "chars": 2545,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 80,
       "heading": "第八十章 周航看房，第一套离地铁不是五分钟",
-      "chars": 1182,
-      "status": "short",
-      "deficit": 818
+      "chars": 2300,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 81,
       "heading": "第八十一章 一周没出校门，里程也没停",
-      "chars": 1089,
-      "status": "short",
-      "deficit": 911
+      "chars": 2275,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 82,
       "heading": "第八十二章 四个馆，先去最里面那个",
-      "chars": 1270,
-      "status": "short",
-      "deficit": 730
+      "chars": 2183,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 83,
       "heading": "第八十三章 地图上有站，街口已经没有站牌",
-      "chars": 1327,
-      "status": "short",
-      "deficit": 673
+      "chars": 2079,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 84,
       "heading": "第八十四章 降到三度以后，早课那段路改骑车",
-      "chars": 1025,
-      "status": "short",
-      "deficit": 975
+      "chars": 2015,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 85,
       "heading": "第八十五章 显示器不走地铁，直接叫车",
-      "chars": 1085,
-      "status": "short",
-      "deficit": 915
+      "chars": 2017,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 86,
       "heading": "第八十六章 第一场雪，只走到食堂",
-      "chars": 1040,
-      "status": "short",
-      "deficit": 960
+      "chars": 2023,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 87,
       "heading": "第八十七章 走到桥下，还差一点到四位数",
-      "chars": 1200,
-      "status": "short",
-      "deficit": 800
+      "chars": 2018,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 88,
       "heading": "第八十八章 一千公里，没有新的提示音",
-      "chars": 1211,
-      "status": "short",
-      "deficit": 789
+      "chars": 2006,
+      "status": "pass",
+      "deficit": 0
     }
   ]
 }

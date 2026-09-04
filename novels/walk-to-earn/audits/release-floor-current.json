@@ -1,7 +1,8 @@
 {
-  "minimum_chars": 6000,
+  "minimum_chars_exclusive": 6000,
+  "comparison": ">",
   "normal_chapters": 3,
-  "max_chapters": 4,
+  "max_chapters": 3,
   "inventory": [
     {
       "number": 44,
@@ -106,127 +107,127 @@
     {
       "number": 64,
       "title": "雨下到十点，早市还没散",
-      "chars": 1497
+      "chars": 2154
     },
     {
       "number": 65,
       "title": "回到学校，周一只走七千步",
-      "chars": 1570
+      "chars": 2031
     },
     {
       "number": 66,
       "title": "工资没变，决定还是变了",
-      "chars": 1573
+      "chars": 2029
     },
     {
       "number": 67,
       "title": "二十四个点，先别按直线走",
-      "chars": 1669
+      "chars": 2052
     },
     {
       "number": 68,
       "title": "三个异常点，再走一遍",
-      "chars": 1854
+      "chars": 2003
     },
     {
       "number": 69,
       "title": "周航也有自己的去处",
-      "chars": 1353
+      "chars": 2010
     },
     {
       "number": 70,
       "title": "少一根线，四个人又走了一圈",
-      "chars": 1450
+      "chars": 2007
     },
     {
       "number": 71,
       "title": "周六回家，包里只多了一张旧证明",
-      "chars": 1385
+      "chars": 2007
     },
     {
       "number": 72,
       "title": "父亲要去的地方，公交只到路口",
-      "chars": 1357
+      "chars": 2012
     },
     {
       "number": 73,
       "title": "那张旧证明，只看了三分钟",
-      "chars": 1233
+      "chars": 2010
     },
     {
       "number": 74,
       "title": "十八公斤的箱子，先坐校车",
-      "chars": 1347
+      "chars": 2011
     },
     {
       "number": 75,
       "title": "晚上九点，那条干扰还在",
-      "chars": 1287
+      "chars": 2002
     },
     {
       "number": 76,
       "title": "唐梨说请饭，先陪她取一块牌子",
-      "chars": 1372
+      "chars": 2085
     },
     {
       "number": 77,
       "title": "早上七点十二，先试一次砚海通勤",
-      "chars": 1422
+      "chars": 2050
     },
     {
       "number": 78,
       "title": "下过雨以后，旧鞋先打了一下滑",
-      "chars": 1148
+      "chars": 2011
     },
     {
       "number": 79,
       "title": "毕业照还没拍，班里先自己拍了一轮",
-      "chars": 1412
+      "chars": 2545
     },
     {
       "number": 80,
       "title": "周航看房，第一套离地铁不是五分钟",
-      "chars": 1182
+      "chars": 2300
     },
     {
       "number": 81,
       "title": "一周没出校门，里程也没停",
-      "chars": 1089
+      "chars": 2275
     },
     {
       "number": 82,
       "title": "四个馆，先去最里面那个",
-      "chars": 1270
+      "chars": 2183
     },
     {
       "number": 83,
       "title": "地图上有站，街口已经没有站牌",
-      "chars": 1327
+      "chars": 2079
     },
     {
       "number": 84,
       "title": "降到三度以后，早课那段路改骑车",
-      "chars": 1025
+      "chars": 2015
     },
     {
       "number": 85,
       "title": "显示器不走地铁，直接叫车",
-      "chars": 1085
+      "chars": 2017
     },
     {
       "number": 86,
       "title": "第一场雪，只走到食堂",
-      "chars": 1040
+      "chars": 2023
     },
     {
       "number": 87,
       "title": "走到桥下，还差一点到四位数",
-      "chars": 1200
+      "chars": 2018
     },
     {
       "number": 88,
       "title": "一千公里，没有新的提示音",
-      "chars": 1211
+      "chars": 2006
     }
   ],
   "batches": [
@@ -238,7 +239,7 @@
       ],
       "chars": 6372,
       "status": "ready",
-      "reason": "normal three-chapter group meets floor"
+      "reason": "3-chapter group strictly exceeds daily floor"
     },
     {
       "chapters": [
@@ -248,7 +249,7 @@
       ],
       "chars": 6804,
       "status": "ready",
-      "reason": "normal three-chapter group meets floor"
+      "reason": "3-chapter group strictly exceeds daily floor"
     },
     {
       "chapters": [
@@ -258,7 +259,7 @@
       ],
       "chars": 6898,
       "status": "ready",
-      "reason": "normal three-chapter group meets floor"
+      "reason": "3-chapter group strictly exceeds daily floor"
     },
     {
       "chapters": [
@@ -268,7 +269,7 @@
       ],
       "chars": 6615,
       "status": "ready",
-      "reason": "normal three-chapter group meets floor"
+      "reason": "3-chapter group strictly exceeds daily floor"
     },
     {
       "chapters": [
@@ -278,7 +279,7 @@
       ],
       "chars": 6326,
       "status": "ready",
-      "reason": "normal three-chapter group meets floor"
+      "reason": "3-chapter group strictly exceeds daily floor"
     },
     {
       "chapters": [
@@ -288,7 +289,7 @@
       ],
       "chars": 6536,
       "status": "ready",
-      "reason": "normal three-chapter group meets floor"
+      "reason": "3-chapter group strictly exceeds daily floor"
     },
     {
       "chapters": [
@@ -296,32 +297,90 @@
         63,
         64
       ],
-      "chars": 6194,
+      "chars": 6851,
       "status": "ready",
-      "reason": "normal three-chapter group meets floor"
+      "reason": "3-chapter group strictly exceeds daily floor"
     },
     {
       "chapters": [
         65,
         66,
-        67,
-        68
+        67
       ],
-      "chars": 6666,
+      "chars": 6112,
       "status": "ready",
-      "reason": "fourth consecutive chapter added to meet floor"
+      "reason": "3-chapter group strictly exceeds daily floor"
     },
     {
       "chapters": [
+        68,
         69,
-        70,
-        71,
-        72
+        70
       ],
-      "chars": 5545,
-      "status": "hold",
-      "reason": "even four chapters remain below daily floor"
+      "chars": 6020,
+      "status": "ready",
+      "reason": "3-chapter group strictly exceeds daily floor"
+    },
+    {
+      "chapters": [
+        71,
+        72,
+        73
+      ],
+      "chars": 6029,
+      "status": "ready",
+      "reason": "3-chapter group strictly exceeds daily floor"
+    },
+    {
+      "chapters": [
+        74,
+        75,
+        76
+      ],
+      "chars": 6098,
+      "status": "ready",
+      "reason": "3-chapter group strictly exceeds daily floor"
+    },
+    {
+      "chapters": [
+        77,
+        78,
+        79
+      ],
+      "chars": 6606,
+      "status": "ready",
+      "reason": "3-chapter group strictly exceeds daily floor"
+    },
+    {
+      "chapters": [
+        80,
+        81,
+        82
+      ],
+      "chars": 6758,
+      "status": "ready",
+      "reason": "3-chapter group strictly exceeds daily floor"
+    },
+    {
+      "chapters": [
+        83,
+        84,
+        85
+      ],
+      "chars": 6111,
+      "status": "ready",
+      "reason": "3-chapter group strictly exceeds daily floor"
+    },
+    {
+      "chapters": [
+        86,
+        87,
+        88
+      ],
+      "chars": 6047,
+      "status": "ready",
+      "reason": "3-chapter group strictly exceeds daily floor"
     }
   ],
-  "all_inventory_schedulable": false
+  "all_inventory_schedulable": true
 }
