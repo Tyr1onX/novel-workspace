@@ -383,7 +383,7 @@ def resolve_runtime(runtime_arg: str | None) -> Path:
     if runtime_arg:
         runtime = Path(os.path.expandvars(os.path.expanduser(runtime_arg)))
     elif os.environ.get("FANQIE_RUNTIME_DIR"):
-        runtime = Path(os.path.expandvars(os.path.expanduser(os.environ["FANQIE_RUNTIME_DIR"]))
+        runtime = Path(os.path.expandvars(os.path.expanduser(os.environ["FANQIE_RUNTIME_DIR"])))
     else:
         runtime = Path.home() / ".novel-workspace" / "fanqie-publisher"
     return runtime.resolve()
