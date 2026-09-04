@@ -7,14 +7,14 @@
     "use_ai": true
   },
   "chapter_length": {
-    "hard_minimum_chars": 2000,
+    "hard_minimum_chars": 2001,
     "preferred_target_chars": "flexible",
     "counting_basis": "body_non_whitespace_characters",
     "applies_to_existing_chapters": true,
-    "notes": "Every chapter must contain at least 2000正文 characters after whitespace removal. There is no upper target or preferred cap: 2200-3000 is common, but chapters may naturally exceed 3000 or 4000 when the scene, conflict, or character work needs the space. Do not shorten a complete scene merely to fit a target, and do not pad with repetitive explanation, summaries, or AI-style dialogue. Existing published chapters are not grandfathered: any chapter below the floor must be substantively revised and re-audited before/through a platform update."
+    "notes": "Every chapter must contain at least 2001正文 characters after whitespace removal. This is the smallest per-chapter floor that makes a normal three-chapter day strictly exceed 6000 characters. There is no upper target or preferred cap; never pad or shorten a complete scene merely to hit a number. Existing published short chapters are not grandfathered and must be substantively revised, re-audited, then updated in place."
   },
   "schedule": {
-    "mode": "auto_continue",
+    "mode": "fixed_start",
     "chapters_per_day": 3,
     "slots": [
       "00:00"
@@ -22,20 +22,18 @@
     "start_date": null,
     "group_size": 3,
     "same_timestamp_within_group": true,
+    "require_complete_groups": true,
     "daily_word_floor": {
       "enabled": true,
-      "minimum_chars": 6000,
+      "minimum_chars_exclusive": 6000,
       "normal_chapters": 3,
-      "max_chapters": 4,
-      "strategy": "append_next_consecutive_chapter_if_three_chapters_are_below_floor",
       "preserve_order": true,
       "same_timestamp": true,
-      "notes": "Each normal release day should publish at least 6000 Chinese正文 characters. Schedule three consecutive chapters by default. If those three total fewer than 6000 characters, append exactly the next consecutive chapter as a fourth chapter at the same 00:00 slot. Never skip or reorder chapters. Writing should normally make each chapter complete on its own; the fourth chapter is a fallback for the daily floor, not a reason to write shorter chapters."
+      "notes": "Every normal release day is exactly three consecutive chapters at the same 00:00 Asia/Shanghai timestamp and must contain strictly more than 6000 non-whitespace正文 characters. Partial release days and auto-continue scheduling are forbidden."
     },
     "extra_release": {
       "unit": "chapter",
-      "allow_partial_group": true,
-      "strategy": "publish_early_then_pull_forward",
+      "allow_partial_group": false,
       "preserve_daily_quota": true,
       "daily_quota": 3,
       "reflow": "compact_remaining_schedule_forward_in_chapter_order",
@@ -43,5 +41,5 @@
       "do_not_reduce_original_day_count": true
     }
   },
-  "notes": "Every chapter has a hard 2000-character正文 floor with no upper target cap. Normal publication is three consecutive chapters at exactly 00:00 Asia/Shanghai, and each release day must reach at least 6000正文 characters. If a three-chapter group is below 6000 characters, add only the next consecutive chapter as a fourth chapter at the same timestamp. Never skip or reorder chapter numbers. Existing published short chapters must be repaired through audited body-only updates. Automatic mutation remains separately gated by config.json sync_enabled plus explicit audited authorization."
+  "notes": "Hard release invariant: each normal day publishes exactly three consecutive audited chapters at 00:00 Asia/Shanghai; every chapter has at least 2001正文 characters and the day's total is strictly greater than 6000. New creates must use an explicit fixed start date. Repository sync remains separately gated by sync_enabled plus explicit audited authorization, and strict reschedules require a fresh reconciled pending-chapter set."
 }
