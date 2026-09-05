@@ -2,13 +2,10 @@
 """Plan Walk to Earn release batches against the strict daily release floor.
 
 Default policy:
-- at least 3 consecutive chapters per normal day;
-- the day's body text must be strictly greater than 6000 non-whitespace characters;
-- if 3 chapters do not exceed the floor, an optional consecutive fourth chapter may
-  be added only when the active publishing policy supports it;
-- fewer than 3 remaining chapters are always held, regardless of their combined length;
-- if remaining inventory cannot satisfy both the chapter-count and character floors,
-  hold that tail instead of scheduling an invalid release day.
+- exactly 5 consecutive chapters per normal day;
+- the day's body text must contain at least 10000 non-whitespace characters;
+- fewer than 5 remaining chapters are held;
+- if a five-chapter batch cannot satisfy the character floor, hold that batch instead of scheduling it.
 
 The script is read-only and is intended for CI/audit output before Fanqie
 queue authorization.
@@ -91,7 +88,7 @@ def plan(items: list[dict], minimum: int, normal: int, maximum: int) -> dict:
                 "chapters": [x["number"] for x in group],
                 "chars": total,
                 "status": "ready",
-                "reason": f"{normal}-chapter group strictly exceeds daily floor",
+                "reason": f"{normal}-chapter group meets the daily floor",
             })
             i += normal
             continue
@@ -105,9 +102,9 @@ def plan(items: list[dict], minimum: int, normal: int, maximum: int) -> dict:
                 "chars": total,
                 "status": status,
                 "reason": (
-                    "extra consecutive chapter added to strictly exceed daily floor"
+                    "extra consecutive chapter added to meet the daily floor"
                     if status == "ready"
-                    else f"even {maximum} chapters do not strictly exceed daily floor"
+                    else f"even {maximum} chapters do not meet the daily floor"
                 ),
             })
             if status == "hold":
@@ -120,7 +117,7 @@ def plan(items: list[dict], minimum: int, normal: int, maximum: int) -> dict:
             "chapters": [x["number"] for x in tail],
             "chars": sum(x["chars"] for x in tail),
             "status": "hold",
-            "reason": "normal group does not strictly exceed daily floor and no supported larger group is available",
+            "reason": "normal group does not meet the daily floor and no supported larger group is available",
         })
         break
 
@@ -146,11 +143,11 @@ def plan(items: list[dict], minimum: int, normal: int, maximum: int) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--start", type=int, default=44)
+    parser.add_argument("--start", type=int, default=61)
     parser.add_argument("--end", type=int)
-    parser.add_argument("--minimum", type=int, default=6000)
-    parser.add_argument("--normal", type=int, default=3)
-    parser.add_argument("--maximum", type=int, default=4)
+    parser.add_argument("--minimum", type=int, default=9999)
+    parser.add_argument("--normal", type=int, default=5)
+    parser.add_argument("--maximum", type=int, default=5)
     parser.add_argument("--require-all", action="store_true", help="fail unless all inventory can be scheduled without violating either hard floor")
     args = parser.parse_args()
 
