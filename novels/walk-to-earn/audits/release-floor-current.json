@@ -239,7 +239,7 @@
       ],
       "chars": 6372,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -249,7 +249,7 @@
       ],
       "chars": 6804,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -259,7 +259,7 @@
       ],
       "chars": 6898,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -269,7 +269,7 @@
       ],
       "chars": 6615,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -279,7 +279,7 @@
       ],
       "chars": 6326,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -289,7 +289,7 @@
       ],
       "chars": 6536,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -299,7 +299,7 @@
       ],
       "chars": 6851,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -309,7 +309,7 @@
       ],
       "chars": 6112,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -319,7 +319,7 @@
       ],
       "chars": 6020,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -329,7 +329,7 @@
       ],
       "chars": 6029,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -339,7 +339,7 @@
       ],
       "chars": 6098,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -349,7 +349,7 @@
       ],
       "chars": 6606,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -359,7 +359,7 @@
       ],
       "chars": 6758,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -369,7 +369,7 @@
       ],
       "chars": 6111,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     },
     {
       "chapters": [
@@ -379,7 +379,7 @@
       ],
       "chars": 6047,
       "status": "ready",
-      "reason": "3-chapter group strictly exceeds daily floor"
+      "reason": "3-chapter group meets the daily floor"
     }
   ],
   "all_inventory_schedulable": true
