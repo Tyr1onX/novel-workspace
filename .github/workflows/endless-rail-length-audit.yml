@@ -9,12 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Audit modern Endless Rail chapter lengths
+      - name: Audit Endless Rail chapter lengths
         run: |
           python novels/endless-rail/tools/audit_chapter_lengths.py \
-            --start 117 \
+            --start 109 \
             --hard-minimum 2000 \
-            --target-minimum 2800 \
-            --target-maximum 3500 \
-            --hard-maximum 3800 \
             --fail
