@@ -303,6 +303,28 @@ def validate_release_operation(
     return nums
 
 
+def create_execution_numbers(op: dict[str, Any], nums: list[int]) -> list[int]:
+    """Filter chapters confirmed by the operation audit as already present remotely."""
+    if op.get("action") != "create":
+        return nums
+    audit = op.get("audit") or {}
+    existing_spec = audit.get("already_present_chapters")
+    if not existing_spec:
+        return nums
+    existing = parse_chapter_spec(existing_spec)
+    outside = [n for n in existing if n not in nums]
+    if outside:
+        raise SyncError(
+            f"{op['id']}: audit.already_present_chapters outside create selector: "
+            f"{compact_spec(outside)}"
+        )
+    existing_set = set(existing)
+    remaining = [n for n in nums if n not in existing_set]
+    if not remaining:
+        raise SyncError(f"{op['id']}: all selected create chapters are already present remotely")
+    return remaining
+
+
 def get_paths(novel_dir: Path) -> dict[str, Path]:
     sync_dir = novel_dir / "platform-sync"
     return {
@@ -467,7 +489,8 @@ def operation_command(
 
     if action in {"create", "update"}:
         nums = validate_release_operation(op, chapters, policy)
-        spec = compact_spec(nums)
+        execution_nums = create_execution_numbers(op, nums)
+        spec = compact_spec(execution_nums)
         args = ["upload", str((novel_dir / "chapters").resolve()), "--book-id", book_id, "--chapters", spec]
         if action == "update":
             args.append("--edit")
@@ -486,7 +509,7 @@ def operation_command(
             args.append("--use-ai")
         if headless:
             args.append("--headless")
-        return runtime_command(runtime, args), len(nums), action == "update"
+        return runtime_command(runtime, args), len(execution_nums), action == "update"
 
     if action == "reschedule_all":
         validate_release_operation(op, chapters, policy)
@@ -602,6 +625,7 @@ def cmd_sync(novel_dir: Path, runtime_arg: str | None, dry_run: bool) -> int:
         if code != 0:
             raise SyncError(f"publisher process exited with code {code} for {op['id']}")
         nums = validate_operation(op, chapters)
+        nums = create_execution_numbers(op, nums)
         if expected >= 0:
             parse_success(
                 output,

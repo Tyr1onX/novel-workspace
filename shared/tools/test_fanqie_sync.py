@@ -184,6 +184,26 @@ class FanqieSyncTests(unittest.TestCase):
                 [1, 2, 3],
             )
 
+    def test_create_execution_numbers_filters_audited_existing_subset(self):
+        op = {
+            "id": "create-missing",
+            "action": "create",
+            "audit": {"already_present_chapters": "86-88"},
+        }
+        self.assertEqual(
+            fanqie_sync.create_execution_numbers(op, [86, 87, 88, 89, 90]),
+            [89, 90],
+        )
+
+    def test_create_execution_numbers_rejects_audited_chapters_outside_selector(self):
+        op = {
+            "id": "bad-existing",
+            "action": "create",
+            "audit": {"already_present_chapters": "85"},
+        }
+        with self.assertRaisesRegex(fanqie_sync.SyncError, "outside create selector"):
+            fanqie_sync.create_execution_numbers(op, [86, 87, 88, 89, 90])
+
     def test_strict_reschedule_requires_reconciled_pending_set(self):
         with tempfile.TemporaryDirectory() as td:
             chapters = make_chapters(Path(td), [2001, 2001, 2001])
