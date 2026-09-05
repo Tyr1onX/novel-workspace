@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-05T13:45:32+00:00",
+  "updated_at": "2026-09-05T14:01:10+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -360,27 +360,29 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-11",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "commit": "a1c123b9f40af45c6661fca5356887639d3b109d",
         "already_present_chapters": "86-88",
         "basis": "Fresh read-only Fanqie reconcile run 33969565651 / job 101315582336 on 2026-09-05 confirmed Walk remote exactly 1-88: published 1-60, scheduled 61-88, local-only 89-110, no remote-only chapters, no duplicate remote chapter numbers, no title mismatches, and only the historical published 23/24 position anomaly. Chapters 86-110 remain the complete strict five-day audit selector and all five groups satisfy the active per-chapter and daily word floors. Reconciled existing chapters 86-88 are explicitly filtered from upstream create execution, so the publisher receives only missing chapters 89-110 while strict release-group validation remains on 86-110."
       },
-      "reason": "Create only missing Walk chapters 89-110 after fresh reconcile, while retaining 86-110 as the complete strict-group audit selector."
+      "reason": "Create only missing Walk chapters 89-110 after fresh reconcile, while retaining 86-110 as the complete strict-group audit selector.",
+      "completed_at": "2026-09-05T14:01:10+00:00"
     },
     {
       "id": "walk-reschedule-061-110-after-create-20260905",
       "action": "reschedule_all",
       "start_date": "2026-09-06",
       "authorized": true,
-      "status": "pending",
+      "status": "completed",
       "audit": {
         "status": "passed",
         "expected_pending_chapters": "61-110",
         "basis": "Fresh read-only Fanqie reconcile run 33969565651 / job 101315582336 confirmed the pre-mutation pending set is exactly 61-88 and local-only is exactly 89-110. The preceding create operation executes only 89-110, yielding pending chapters exactly 61-110. Repository release-floor audit confirms all ten consecutive groups 61-65 through 106-110 satisfy exactly five chapters per day and at least 10000 non-whitespace body characters. Rescheduling touches pending chapters only, preserves published 1-60 and existing item IDs, and leaves the historical published 23/24 position anomaly untouched."
       },
-      "reason": "Reflow all pending Walk chapters into ten five-chapter release days: 61-65 on 2026-09-06 through 106-110 on 2026-09-15."
+      "reason": "Reflow all pending Walk chapters into ten five-chapter release days: 61-65 on 2026-09-06 through 106-110 on 2026-09-15.",
+      "completed_at": "2026-09-05T14:01:10+00:00"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "last_sync_at": "2026-09-04T07:21:56+00:00",
+  "last_sync_at": "2026-09-05T14:01:10+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "18": {
@@ -519,6 +519,138 @@
       "last_action": "update",
       "last_synced_at": "2026-09-04T07:21:56+00:00",
       "queue_operation_id": "walk-repair-update-scheduled-064-088-20260904"
+    },
+    "89": {
+      "local_sha256": "70dd0f656e25da8ebf842d352e56831e2cfdbd40e7417e522b14da0d203b2b65",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "90": {
+      "local_sha256": "bb3927cf2d628dadf25210d8948ab1b2e135135975af6f3a663cbd1492ea3c7e",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "91": {
+      "local_sha256": "2e6ce31e1b325ca8fe0f4336a0ca88e81736418eaeb3a19fb8e8b1b215c86e96",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "92": {
+      "local_sha256": "70de24d7db3be109d97165b118d28f68b5a59c2038fc9bda2f37f28b56e5f1b4",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "93": {
+      "local_sha256": "784398908edf1461a8ef5a1b5ff9d695262cdbea8f35eba3df106bb1bba94871",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "94": {
+      "local_sha256": "462b2d7902dcf04c4a785df8dc4915a6868e81cf247acced78f56a570ac0d5be",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "95": {
+      "local_sha256": "44ceb0ef1676aa369171b7e43abbec0490e6ab663e5dde870ab45d70b667efd7",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "96": {
+      "local_sha256": "b7004db36faf65c7c1298cae1fc8725be0a0e4ead7918e9fc557600217abf3f6",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "97": {
+      "local_sha256": "0d38f6a9e223c18c9f9e1939d47d56996a2b35a03ee6cb44399cc2e914c3137f",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "98": {
+      "local_sha256": "2533c909c8b7b366e68ccd1a121444dd736a6bec342956009ccdbd9046ea9dda",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "99": {
+      "local_sha256": "a5066928c7169b5055253f9d92a8a730d46b5a0b9c839434464345819605cf61",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "100": {
+      "local_sha256": "409af54e970756e2417f3a701ebb9f449a84c6be488adeac655022f852a739e6",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "101": {
+      "local_sha256": "17aa15f6c93de5d93d7589061e1c0ef6d438ebc48656675730715ef7bb30f320",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "102": {
+      "local_sha256": "fdaabdbce293e6667a811c24cbae047051b347d77f9df91ef48ed206b1917ba1",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "103": {
+      "local_sha256": "48512aa83a8161bceef9453602e6881ec9947efd7e716e4dc0110f21713d99a7",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "104": {
+      "local_sha256": "e2e3c87d212cd4e6b1b199d46aaf875ac8b3a013e2305b8f237ffa5ed5e97dff",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "105": {
+      "local_sha256": "c78b2f9bc82bddb221362b82ee5ca48220407cf14de2cbb8a1a34c9fbe09449d",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "106": {
+      "local_sha256": "0ce7a971e927f2fac3d6fcc6f66b6ae79bd13553866ce61493f05c58ff93fb85",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "107": {
+      "local_sha256": "d2ed260d084dc4e5dda741591d73f23031b727c58bb01e899f5e09466dae8bca",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "108": {
+      "local_sha256": "a36a7a7d6cb7536118f63c7ba07902195a98e39606d044f62323352b2d0c9a42",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "109": {
+      "local_sha256": "c0876b86ca87ff0b716f5a5d82a4b54e92d938f6b75889ea9e50de792b945859",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
+    },
+    "110": {
+      "local_sha256": "6e4c92bf3911ee4d310dd1d9b85c0a596d89cac91831191531d2cdaeb0f4a0ba",
+      "last_action": "create",
+      "last_synced_at": "2026-09-05T14:01:10+00:00",
+      "queue_operation_id": "walk-create-089-110-after-reconcile-20260905"
     }
   }
 }
