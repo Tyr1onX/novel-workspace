@@ -1,7 +1,7 @@
 {
-  "minimum_chars": 2001,
-  "count": 88,
-  "pass_count": 88,
+  "minimum_chars": 2000,
+  "count": 110,
+  "pass_count": 110,
   "short_count": 0,
   "short_chapters": [],
   "chapters": [
@@ -618,6 +618,160 @@
       "number": 88,
       "heading": "第八十八章 一千公里，没有新的提示音",
       "chars": 2006,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 89,
+      "heading": "第八十九章 两栋楼之间，材料少了一页",
+      "chars": 2208,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 90,
+      "heading": "第九十章 七公斤的箱子，先坐校车",
+      "chars": 2282,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 91,
+      "heading": "第九十一章 八块牌子，最后一块插在北门",
+      "chars": 2491,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 92,
+      "heading": "第九十二章 唐梨来临岚，只带了一个帆布袋",
+      "chars": 2293,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 93,
+      "heading": "第九十三章 周航卖掉的先是一把椅子",
+      "chars": 2194,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 94,
+      "heading": "第九十四章 一箱毕业照，先送到正确的楼",
+      "chars": 2129,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 95,
+      "heading": "第九十五章 回家第一件事，是把羽绒服拉链换掉",
+      "chars": 2110,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 96,
+      "heading": "第九十六章 妈妈买年货，不按地图最短路线",
+      "chars": 2175,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 97,
+      "heading": "第九十七章 父亲说走半小时，就只走半小时",
+      "chars": 2109,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 98,
+      "heading": "第九十八章 年初三，车停在两公里外",
+      "chars": 2024,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 99,
+      "heading": "第九十九章 返校那天，行李箱只走到地铁口",
+      "chars": 2013,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 100,
+      "heading": "第一百章 十二个测点，第二轮只去三个",
+      "chars": 2020,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 101,
+      "heading": "第一百零一章 图书馆关门前，先把参考书还掉",
+      "chars": 2001,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 102,
+      "heading": "第一百零二章 去砚海看房，先看早高峰",
+      "chars": 2003,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 103,
+      "heading": "第一百零三章 答辩材料，只补一张图",
+      "chars": 2023,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 104,
+      "heading": "第一百零四章 一千五百公里，十二分钱",
+      "chars": 2006,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 105,
+      "heading": "第一百零五章 答辩那天，先把水放门口",
+      "chars": 2000,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 106,
+      "heading": "第一百零六章 四个纸箱，两个直接寄走",
+      "chars": 2025,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 107,
+      "heading": "第一百零七章 毕业照散场以后，胡凯去还相机",
+      "chars": 2009,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 108,
+      "heading": "第一百零八章 寝室最后一晚，先把床板擦干净",
+      "chars": 2003,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 109,
+      "heading": "第一百零九章 去砚海那天，箱子全程坐车",
+      "chars": 2037,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 110,
+      "heading": "第一百一十章 第一天上班，三公里通勤",
+      "chars": 2004,
       "status": "pass",
       "deficit": 0
     }

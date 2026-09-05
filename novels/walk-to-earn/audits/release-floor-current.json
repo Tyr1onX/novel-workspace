@@ -1,94 +1,9 @@
 {
-  "minimum_chars_exclusive": 6000,
+  "minimum_chars_exclusive": 9999,
   "comparison": ">",
-  "normal_chapters": 3,
-  "max_chapters": 3,
+  "normal_chapters": 5,
+  "max_chapters": 5,
   "inventory": [
-    {
-      "number": 44,
-      "title": "周五，他只回了一句“继续推进”",
-      "chars": 2148
-    },
-    {
-      "number": 45,
-      "title": "离公司七公里，房租差六百",
-      "chars": 2046
-    },
-    {
-      "number": 46,
-      "title": "晚上九点，这条街还有灯",
-      "chars": 2178
-    },
-    {
-      "number": 47,
-      "title": "三十六个测点，不在一栋楼里",
-      "chars": 2330
-    },
-    {
-      "number": 48,
-      "title": "食堂最挤的时候，数据开始乱跳",
-      "chars": 2318
-    },
-    {
-      "number": 49,
-      "title": "最后六个点，背着设备坐校车",
-      "chars": 2156
-    },
-    {
-      "number": 50,
-      "title": "这次去青篁，不走云岭古道",
-      "chars": 2180
-    },
-    {
-      "number": 51,
-      "title": "下午四点，集市还没逛完",
-      "chars": 2368
-    },
-    {
-      "number": 52,
-      "title": "河滩那条路，走到水边就停",
-      "chars": 2350
-    },
-    {
-      "number": 53,
-      "title": "十二公里以后，先等下一班车",
-      "chars": 2117
-    },
-    {
-      "number": 54,
-      "title": "合同签完，他只走到湖边",
-      "chars": 2023
-    },
-    {
-      "number": 55,
-      "title": "七公斤的显示器，回程不算步数",
-      "chars": 2475
-    },
-    {
-      "number": 56,
-      "title": "唐梨八点四十的车",
-      "chars": 2077
-    },
-    {
-      "number": 57,
-      "title": "清晨五点四十，志愿者先坐地铁",
-      "chars": 2065
-    },
-    {
-      "number": 58,
-      "title": "最后一袋纸杯装车以后",
-      "chars": 2184
-    },
-    {
-      "number": 59,
-      "title": "拔完智齿，周航不坐地铁",
-      "chars": 2325
-    },
-    {
-      "number": 60,
-      "title": "八百公里，没有新的提示音",
-      "chars": 2171
-    },
     {
       "number": 61,
       "title": "山脚机房，最后一段路不铺水泥",
@@ -228,158 +143,238 @@
       "number": 88,
       "title": "一千公里，没有新的提示音",
       "chars": 2006
+    },
+    {
+      "number": 89,
+      "title": "两栋楼之间，材料少了一页",
+      "chars": 2208
+    },
+    {
+      "number": 90,
+      "title": "七公斤的箱子，先坐校车",
+      "chars": 2282
+    },
+    {
+      "number": 91,
+      "title": "八块牌子，最后一块插在北门",
+      "chars": 2491
+    },
+    {
+      "number": 92,
+      "title": "唐梨来临岚，只带了一个帆布袋",
+      "chars": 2293
+    },
+    {
+      "number": 93,
+      "title": "周航卖掉的先是一把椅子",
+      "chars": 2194
+    },
+    {
+      "number": 94,
+      "title": "一箱毕业照，先送到正确的楼",
+      "chars": 2129
+    },
+    {
+      "number": 95,
+      "title": "回家第一件事，是把羽绒服拉链换掉",
+      "chars": 2110
+    },
+    {
+      "number": 96,
+      "title": "妈妈买年货，不按地图最短路线",
+      "chars": 2175
+    },
+    {
+      "number": 97,
+      "title": "父亲说走半小时，就只走半小时",
+      "chars": 2109
+    },
+    {
+      "number": 98,
+      "title": "年初三，车停在两公里外",
+      "chars": 2024
+    },
+    {
+      "number": 99,
+      "title": "返校那天，行李箱只走到地铁口",
+      "chars": 2013
+    },
+    {
+      "number": 100,
+      "title": "十二个测点，第二轮只去三个",
+      "chars": 2020
+    },
+    {
+      "number": 101,
+      "title": "图书馆关门前，先把参考书还掉",
+      "chars": 2001
+    },
+    {
+      "number": 102,
+      "title": "去砚海看房，先看早高峰",
+      "chars": 2003
+    },
+    {
+      "number": 103,
+      "title": "答辩材料，只补一张图",
+      "chars": 2023
+    },
+    {
+      "number": 104,
+      "title": "一千五百公里，十二分钱",
+      "chars": 2006
+    },
+    {
+      "number": 105,
+      "title": "答辩那天，先把水放门口",
+      "chars": 2000
+    },
+    {
+      "number": 106,
+      "title": "四个纸箱，两个直接寄走",
+      "chars": 2025
+    },
+    {
+      "number": 107,
+      "title": "毕业照散场以后，胡凯去还相机",
+      "chars": 2009
+    },
+    {
+      "number": 108,
+      "title": "寝室最后一晚，先把床板擦干净",
+      "chars": 2003
+    },
+    {
+      "number": 109,
+      "title": "去砚海那天，箱子全程坐车",
+      "chars": 2037
+    },
+    {
+      "number": 110,
+      "title": "第一天上班，三公里通勤",
+      "chars": 2004
     }
   ],
   "batches": [
     {
       "chapters": [
-        44,
-        45,
-        46
-      ],
-      "chars": 6372,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
-        47,
-        48,
-        49
-      ],
-      "chars": 6804,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
-        50,
-        51,
-        52
-      ],
-      "chars": 6898,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
-        53,
-        54,
-        55
-      ],
-      "chars": 6615,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
-        56,
-        57,
-        58
-      ],
-      "chars": 6326,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
-        59,
-        60,
-        61
-      ],
-      "chars": 6536,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
+        61,
         62,
         63,
-        64
+        64,
+        65
       ],
-      "chars": 6851,
+      "chars": 10922,
       "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
+      "reason": "5-chapter group meets the daily floor"
     },
     {
       "chapters": [
-        65,
         66,
-        67
-      ],
-      "chars": 6112,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
+        67,
         68,
         69,
         70
       ],
-      "chars": 6020,
+      "chars": 10101,
       "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
+      "reason": "5-chapter group meets the daily floor"
     },
     {
       "chapters": [
         71,
         72,
-        73
-      ],
-      "chars": 6029,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
+        73,
         74,
-        75,
-        76
+        75
       ],
-      "chars": 6098,
+      "chars": 10042,
       "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
+      "reason": "5-chapter group meets the daily floor"
     },
     {
       "chapters": [
+        76,
         77,
         78,
-        79
+        79,
+        80
       ],
-      "chars": 6606,
+      "chars": 10991,
       "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
+      "reason": "5-chapter group meets the daily floor"
     },
     {
       "chapters": [
-        80,
         81,
-        82
-      ],
-      "chars": 6758,
-      "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
-    },
-    {
-      "chapters": [
+        82,
         83,
         84,
         85
       ],
-      "chars": 6111,
+      "chars": 10569,
       "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
+      "reason": "5-chapter group meets the daily floor"
     },
     {
       "chapters": [
         86,
         87,
-        88
+        88,
+        89,
+        90
       ],
-      "chars": 6047,
+      "chars": 10537,
       "status": "ready",
-      "reason": "3-chapter group meets the daily floor"
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "chars": 11217,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "chars": 10341,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        101,
+        102,
+        103,
+        104,
+        105
+      ],
+      "chars": 10033,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        106,
+        107,
+        108,
+        109,
+        110
+      ],
+      "chars": 10078,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
     }
   ],
   "all_inventory_schedulable": true
