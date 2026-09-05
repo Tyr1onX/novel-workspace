@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-05T13:34:35+00:00",
+  "updated_at": "2026-09-05T13:39:31+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -317,27 +317,41 @@
       "chapters": "86-110",
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-11",
-      "authorized": true,
-      "status": "pending",
+      "authorized": false,
+      "status": "blocked_existing_chapter_collision",
       "audit": {
         "status": "passed",
         "commit": "a1c123b9f40af45c6661fca5356887639d3b109d",
         "basis": "Fresh read-only Fanqie reconciliation run 33969067683 on 2026-09-05 confirmed Walk remote exactly 1-88: published 1-60, scheduled 61-88, local-only 89-110, no duplicate remote chapter numbers, no title mismatches, and only the historical published 23/24 position anomaly. PR #57 merged chapters 89-110 as audited canonical main; the fresh chapter audit reports every chapter 89-110 >=2000 body characters and every five-chapter group 61-110 >=10000. Chapters 86-110 are intentionally selected as five complete strict release groups: already-present 86-88 are idempotent create inputs and must be skipped by the publisher, while only missing 89-110 are created. The following authorized reschedule_all operation immediately normalizes the complete pending inventory 61-110 to the new five-per-day schedule."
       },
-      "reason": "Create only the missing Walk chapters 89-110 without weakening strict five-chapter release validation. Including already-existing 86-88 aligns the create selector to complete groups; do not duplicate or edit those existing items."
+      "reason": "Create only the missing Walk chapters 89-110 without weakening strict five-chapter release validation. Including already-existing 86-88 aligns the create selector to complete groups; do not duplicate or edit those existing items.",
+      "attempted_at": "2026-09-05T13:39:31+00:00",
+      "result": {
+        "success": 0,
+        "failed": 25,
+        "confirmed_platform_writes": 0,
+        "first_failed_chapter": 86,
+        "source_run": 33969381306,
+        "reason": "publisher attempted existing chapter 86 instead of skipping it; Fanqie rejected duplicate title/paragraph and batch stopped before chapter 87"
+      }
     },
     {
       "id": "walk-reschedule-pending-061-110-five-per-day-20260905",
       "action": "reschedule_all",
       "start_date": "2026-09-06",
-      "authorized": true,
-      "status": "pending",
+      "authorized": false,
+      "status": "blocked_after_create_failure",
       "audit": {
         "status": "passed",
         "expected_pending_chapters": "61-110",
         "basis": "Fresh read-only Fanqie reconciliation run 33969067683 confirmed the pre-mutation pending set is exactly 61-88 and local-only is exactly 89-110. The immediately preceding create operation adds only 89-110, so the resulting pending set is exactly 61-110. Repository release-floor audit confirms all ten consecutive groups 61-65 through 106-110 satisfy the active rule of exactly five chapters and at least 10000 non-whitespace body characters per day. Rescheduling applies only to pending chapters, preserves published 1-60 and existing item IDs, and leaves the historical published 23/24 position anomaly untouched."
       },
-      "reason": "Reflow all pending Walk chapters into ten complete release days at 00:00 Asia/Shanghai: 61-65 on 2026-09-06 through 106-110 on 2026-09-15."
+      "reason": "Reflow all pending Walk chapters into ten complete release days at 00:00 Asia/Shanghai: 61-65 on 2026-09-06 through 106-110 on 2026-09-15.",
+      "result": {
+        "executed": false,
+        "source_run": 33969381306,
+        "reason": "preceding create failed before any confirmed platform write; reschedule_all was not executed"
+      }
     }
   ]
 }
