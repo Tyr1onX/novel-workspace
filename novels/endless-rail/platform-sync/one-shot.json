@@ -1,58 +1,18 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "id": "reader-extra-2026-08-31-ch91-93",
+  "id": "rail-extra-two-20260905-ch107-108",
   "action": "publish_now",
   "chapters": [
-    91,
-    92,
-    93
+    107,
+    108
   ],
-  "status": "completed",
+  "status": "pending",
   "authorized": true,
-  "triggered_at": "2026-08-31T08:57:00+08:00",
+  "triggered_at": "2026-09-05T18:32:00+08:00",
   "audit": {
     "status": "passed",
-    "basis": "The author explicitly requested three additional immediate chapters for the rail novel on 2026-08-31. The latest verified read-only Fanqie reconciliation showed chapters 88-90 published at 2026-08-31 00:00 and chapters 91-93 as the next scheduled group at 2026-09-01 00:00. The batch executor must re-read Fanqie immediately before mutation and refuse unless chapters 91,92,93 are exactly the first three remaining pending chapters (or are idempotently already published on a retry). After all three immediate releases succeed, the remaining pending schedule must be compacted forward from 2026-09-01 so the normal three-chapter 00:00 daily quota is preserved."
+    "basis": "The author explicitly requested two additional Endless Rail chapters today as the transition to the new five-chapter cadence. The latest reconciled schedule has chapter 106 on 2026-09-05 and chapters 107-108 as the first two remaining scheduled chapters. The publish-now executor must re-read Fanqie immediately before mutation and refuse unless 107-108 are exactly the first pending chapters (or idempotently already published on retry). No title/body edits or schedule reflow are authorized in this one-shot."
   },
-  "reason": "Reader-requested three-chapter extra release for the rail novel. Publish the next three pending chapters 91-93 immediately, then compact later scheduled chapters forward by one three-chapter group while preserving title/body content and chapter order.",
-  "reflow": {
-    "start_date": "2026-09-01"
-  },
-  "completed_at": "2026-08-31T01:08:51+00:00",
-  "result": {
-    "platform_status": "success",
-    "chapters": [
-      {
-        "chapter": 91,
-        "platform_status": "published",
-        "title": "第91章 这块滑床板，不能只让一趟车买单",
-        "scheduled_date_before": "2026-09-01",
-        "scheduled_time_before": "00:00"
-      },
-      {
-        "chapter": 92,
-        "platform_status": "published",
-        "title": "第92章 多走九公里，备用路才有了价钱",
-        "scheduled_date_before": "2026-09-01",
-        "scheduled_time_before": "00:00"
-      },
-      {
-        "chapter": 93,
-        "platform_status": "published",
-        "title": "第93章 第一班，不等所有货都凑齐",
-        "scheduled_date_before": "2026-09-01",
-        "scheduled_time_before": "00:00"
-      }
-    ],
-    "reflow": {
-      "performed": true,
-      "start_date": "2026-09-01",
-      "group_size": 3,
-      "time": "00:00",
-      "pending_count": 13,
-      "changed_or_confirmed": 13,
-      "verified": true
-    }
-  }
+  "reason": "Publish exactly two additional existing scheduled chapters today, preserving chapter order and content. Future five-chapter scheduling is handled separately after this one-shot completes."
 }
