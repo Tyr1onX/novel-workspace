@@ -5,11 +5,7 @@ Policy:
 - body only (Markdown heading excluded)
 - whitespace removed
 - hard minimum: 2000 characters
-- practical target: 2800-3500 characters
-- hard maximum: 3800 characters
-
-Being below the practical target is reported for manual review but is not a
-hard failure unless the chapter is also below the hard minimum.
+- no upper length cap
 """
 
 from __future__ import annotations
@@ -48,9 +44,6 @@ def main() -> int:
     ap.add_argument("--start", type=int, default=1)
     ap.add_argument("--end", type=int)
     ap.add_argument("--hard-minimum", type=int, default=2000)
-    ap.add_argument("--target-minimum", type=int, default=2800)
-    ap.add_argument("--target-maximum", type=int, default=3500)
-    ap.add_argument("--hard-maximum", type=int, default=3800)
     ap.add_argument("--fail", action="store_true")
     args = ap.parse_args()
 
@@ -61,34 +54,16 @@ def main() -> int:
             continue
         if args.end is not None and item["number"] > args.end:
             continue
-        chars = item["chars"]
-        if chars < args.hard_minimum:
-            status = "hard-short"
-        elif chars > args.hard_maximum:
-            status = "hard-long"
-        elif chars < args.target_minimum:
-            status = "below-target"
-        elif chars > args.target_maximum:
-            status = "above-target"
-        else:
-            status = "target"
-        item["status"] = status
+        item["status"] = "hard-short" if item["chars"] < args.hard_minimum else "ok"
         items.append(item)
 
-    hard = [x for x in items if x["status"].startswith("hard-")]
-    below = [x for x in items if x["status"] == "below-target"]
-    above = [x for x in items if x["status"] == "above-target"]
+    hard = [x for x in items if x["status"] == "hard-short"]
     result = {
         "hard_minimum": args.hard_minimum,
-        "target_range": [args.target_minimum, args.target_maximum],
-        "hard_maximum": args.hard_maximum,
+        "hard_maximum": None,
         "count": len(items),
         "hard_count": len(hard),
-        "below_target_count": len(below),
-        "above_target_count": len(above),
         "hard_chapters": [x["number"] for x in hard],
-        "below_target_chapters": [x["number"] for x in below],
-        "above_target_chapters": [x["number"] for x in above],
         "chapters": items,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
