@@ -7,39 +7,39 @@
     "use_ai": true
   },
   "chapter_length": {
-    "hard_minimum_chars": 2001,
+    "hard_minimum_chars": 2000,
     "preferred_target_chars": "flexible",
     "counting_basis": "body_non_whitespace_characters",
     "applies_to_existing_chapters": true,
-    "notes": "Every chapter must contain at least 2001正文 characters after whitespace removal. This is the smallest per-chapter floor that makes a normal three-chapter day strictly exceed 6000 characters. There is no upper target or preferred cap; never pad or shorten a complete scene merely to hit a number. Existing published short chapters are not grandfathered and must be substantively revised, re-audited, then updated in place."
+    "notes": "Every chapter must contain at least 2000正文 characters after whitespace removal. There is no upper target or preferred cap; never pad or shorten a complete scene merely to hit a number. Existing published short chapters are not grandfathered and must be substantively revised, re-audited, then updated in place."
   },
   "schedule": {
     "mode": "fixed_start",
-    "chapters_per_day": 3,
+    "chapters_per_day": 5,
     "slots": [
       "00:00"
     ],
     "start_date": null,
-    "group_size": 3,
+    "group_size": 5,
     "same_timestamp_within_group": true,
     "require_complete_groups": true,
     "daily_word_floor": {
       "enabled": true,
-      "minimum_chars_exclusive": 6000,
-      "normal_chapters": 3,
+      "minimum_chars_exclusive": 9999,
+      "normal_chapters": 5,
       "preserve_order": true,
       "same_timestamp": true,
-      "notes": "Every normal release day is exactly three consecutive chapters at the same 00:00 Asia/Shanghai timestamp and must contain strictly more than 6000 non-whitespace正文 characters. Partial release days and auto-continue scheduling are forbidden."
+      "notes": "Every normal release day is exactly five consecutive chapters at the same 00:00 Asia/Shanghai timestamp and must contain at least 10000 non-whitespace正文 characters. Partial release days and auto-continue scheduling are forbidden."
     },
     "extra_release": {
       "unit": "chapter",
       "allow_partial_group": false,
       "preserve_daily_quota": true,
-      "daily_quota": 3,
+      "daily_quota": 5,
       "reflow": "compact_remaining_schedule_forward_in_chapter_order",
       "preserve_same_timestamp_within_group": true,
       "do_not_reduce_original_day_count": true
     }
   },
-  "notes": "Hard release invariant: each normal day publishes exactly three consecutive audited chapters at 00:00 Asia/Shanghai; every chapter has at least 2001正文 characters and the day's total is strictly greater than 6000. New creates must use an explicit fixed start date. Repository sync remains separately gated by sync_enabled plus explicit audited authorization, and strict reschedules require a fresh reconciled pending-chapter set."
+  "notes": "Hard release invariant: each normal day publishes exactly five consecutive audited chapters at 00:00 Asia/Shanghai; every chapter has at least 2000正文 characters and the day's total is at least 10000. There is no maximum chapter length. New creates must use an explicit fixed start date. Repository sync remains separately gated by sync_enabled plus explicit audited authorization, and strict reschedules require a fresh reconciled pending-chapter set."
 }
