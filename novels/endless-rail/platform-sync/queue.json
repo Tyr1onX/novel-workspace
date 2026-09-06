@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-06T03:33:03+00:00",
+  "updated_at": "2026-09-06T03:34:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -22,49 +22,15 @@
         "title_mismatches": 0,
         "position_mismatches": 0,
         "schedule": {
-          "2026-08-30": [
-            82,
-            83,
-            84
-          ],
-          "2026-08-31": [
-            85,
-            86,
-            87
-          ],
-          "2026-09-01": [
-            88,
-            89,
-            90
-          ],
-          "2026-09-02": [
-            91,
-            92,
-            93
-          ],
-          "2026-09-03": [
-            94,
-            95,
-            96
-          ],
-          "2026-09-04": [
-            97,
-            98,
-            99
-          ],
-          "2026-09-05": [
-            100,
-            101,
-            102
-          ],
-          "2026-09-06": [
-            103,
-            104,
-            105
-          ],
-          "2026-09-07": [
-            106
-          ]
+          "2026-08-30": [82, 83, 84],
+          "2026-08-31": [85, 86, 87],
+          "2026-09-01": [88, 89, 90],
+          "2026-09-02": [91, 92, 93],
+          "2026-09-03": [94, 95, 96],
+          "2026-09-04": [97, 98, 99],
+          "2026-09-05": [100, 101, 102],
+          "2026-09-06": [103, 104, 105],
+          "2026-09-07": [106]
         }
       }
     },
@@ -218,11 +184,7 @@
         "source_run": 34008322569,
         "source_job": 101419606376,
         "inspection_anomaly": "bridge current-state inspection called extract_chapters_from_page at an invalid pagination state and received 0 chapter rows, so it planned 45 writes instead of the reconciled expected 18",
-        "confirmed_successful_groups": [
-          "2026-09-07",
-          "2026-09-08",
-          "2026-09-09"
-        ],
+        "confirmed_successful_groups": ["2026-09-07", "2026-09-08", "2026-09-09"],
         "confirmed_successful_chapters": "114-129",
         "first_failed_chapter": 133,
         "failed_chapters": "130-133",
@@ -244,7 +206,18 @@
         "basis": "Fresh read-only reconciliation run 34008623274 / job 101420336153 after quarantining the failed inspection recovery proves Rail local and remote chapters are both exactly 1-158, published chapters are exactly 1-113, scheduled chapters are exactly 114-158, local-only and remote-only sets are empty, duplicate remote chapter numbers are zero, title mismatches are zero and position mismatches are zero. The chapter-table schedule is already final for 114-156: 114-118 on 2026-09-07, 119-123 on 2026-09-08, 124-128 on 2026-09-09, 129-133 on 2026-09-10, 134-138 on 2026-09-11, 139-143 on 2026-09-12, 144-148 on 2026-09-13, 149-153 on 2026-09-14 and 154-156 on 2026-09-15, all at 00:00 Asia/Shanghai. Only chapters 157-158 remain at 2026-09-20 00:00 and must move to 2026-09-15 00:00. Runtime bridge commit 7939ff769eb0ea9f34ef691d998a661329691f3c resets the shared browser page to the canonical chapter-manage entry before idempotence inspection and fails closed on zero rows; regression commit 43e8eb01e2ee92f7933cd2df3f2f6c3763de7b30 passes 22 Fanqie unit tests, helper compilation and both novel config validations. The bridge must re-read the stable current platform state, skip the 43 chapters already at their exact target date/time and perform actual browser writes only for chapters 157 and 158. Final strict five-chapter group totals remain 114-118=13952, 119-123=13461, 124-128=12730, 129-133=13038, 134-138=11261, 139-143=10416, 144-148=10810, 149-153=10584 and 154-158=11516; every group is above the 10000-character daily floor and every individual chapter is at least 2000 non-whitespace body characters. No create or body update is authorized by this recovery."
       },
       "reason": "Complete the final Rail schedule convergence by moving only chapters 157 and 158 from Sep 20 to Sep 15 after stable current-state inspection, leaving all already-correct chapters untouched.",
-      "completed_at": "2026-09-06T03:33:03+00:00"
+      "completed_at": "2026-09-06T03:33:03+00:00",
+      "result": {
+        "source_run": 34009181849,
+        "source_job": 101421962047,
+        "idempotent_skipped_chapters": 43,
+        "execution_chapters": "157-158",
+        "confirmed_platform_writes": 2,
+        "success": 2,
+        "failed": 0,
+        "ledger_persisted": true,
+        "needs_fresh_read_only_reconcile": true
+      }
     }
   ]
 }
