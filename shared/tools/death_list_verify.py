@@ -1,50 +1,213 @@
 #!/usr/bin/env python3
-import argparse, json, re
+import argparse
+import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
-S=Path("novels/death-list/platform-sync"); TITLE="每天零点我都会收到一份死亡名单"
-def load(p): return json.loads(Path(p).read_text(encoding="utf-8"))
-def before(p):
-    r=load(p); x=r.get("remote") or {}
-    if x.get("item_count") != 0 or x.get("numbered_item_count") != 0: raise RuntimeError(f"remote not empty: {x}")
-    print("EMPTY_REMOTE_OK")
-def after(p):
-    r=load(p); x=r.get("remote") or {}; d=r.get("differences") or {}
-    if x.get("numbered_item_count") != 9: raise RuntimeError(f"expected 9 remote chapters: {x}")
-    for k in ("local_only_chapters","remote_only_chapters","title_mismatches","duplicate_remote_chapter_numbers","position_mismatches"):
-        if d.get(k): raise RuntimeError(f"reconcile mismatch {k}: {d.get(k)}")
-    nums=sorted(row.get("chapter") for row in r.get("scheduled",[]) if isinstance(row.get("chapter"),int))
-    if nums != list(range(1,10)): raise RuntimeError(f"expected scheduled 1-9: {nums}")
-    print("POST_CREATE_OK")
-def classify(code):
-    one=load(S/"one-shot.json"); res=one.get("result") or {}
-    if code==0 and res.get("platform_status")=="success": print("success"); return
-    msg=str(res.get("message") or "")
-    period=r"(每日|当日|今日|本日|单日|今天|每月|本月|单月|月度)"
-    limit=r"(上限|限制|限额|额度|已达|达到|超出|超过)"
-    if re.search(period+r"[^，。;；]{0,24}"+limit,msg) or re.search(limit+r"[^，。;；]{0,24}"+period,msg):
-        print("daily_limit"); return
-    raise RuntimeError(f"publish-now non-limit failure: code={code}, message={msg!r}")
-def final(p,result):
-    r=load(p); rows=[x for x in r.get("remote_items",[]) if isinstance(x.get("chapter_number"),int)]
-    if sorted(x["chapter_number"] for x in rows) != list(range(1,10)): raise RuntimeError("unexpected final remote set")
-    bad=[(x["chapter_number"],x.get("status")) for x in rows if x.get("status") not in {"published","scheduled"}]
-    if bad: raise RuntimeError(f"unexpected statuses {bad}")
-    pub=sorted(x["chapter_number"] for x in rows if x.get("status")=="published"); sch=sorted(x["chapter_number"] for x in rows if x.get("status")=="scheduled")
-    if result=="success" and sch: raise RuntimeError(f"publisher said success but still scheduled {sch}")
-    if result=="daily_limit" and not sch: result="success"
-    done=datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-    out={"version":1,"book_title":TITLE,"completed_at":done,"requested_chapters":list(range(1,10)),"published_chapters":pub,"still_scheduled_chapters":sch,"publish_result":result,"verified_by_read_only_reconcile":True}
-    (S/"launch-result.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    one=load(S/"one-shot.json"); one.update({"status":"completed","completed_at":done,"result":{"platform_status":"published" if not sch else "partial_daily_limit","published_chapters":pub,"still_scheduled_chapters":sch}}); (S/"one-shot.json").write_text(json.dumps(one,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps(out,ensure_ascii=False))
+import fanqie_compat
+import fanqie_sync
 
-ap=argparse.ArgumentParser(); sp=ap.add_subparsers(dest="cmd",required=True)
-for n in ("before","after"): q=sp.add_parser(n); q.add_argument("report")
-q=sp.add_parser("classify"); q.add_argument("code",type=int)
-q=sp.add_parser("final"); q.add_argument("report"); q.add_argument("result",choices=("success","daily_limit"))
-a=ap.parse_args()
-try:
-    {"before":lambda:before(a.report),"after":lambda:after(a.report),"classify":lambda:classify(a.code),"final":lambda:final(a.report,a.result)}[a.cmd]()
-except Exception as e: print(f"ERROR: {e}"); raise SystemExit(2)
+NOVEL = Path("novels/death-list")
+S = NOVEL / "platform-sync"
+TITLE = "每天零点我都会收到一份死亡名单"
+EXPECTED = list(range(1, 10))
+
+
+def load(path):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def numbered_rows(report):
+    return [
+        row for row in report.get("remote_items", [])
+        if isinstance(row.get("chapter_number"), int)
+    ]
+
+
+def assert_exact_existing(report):
+    rows = numbered_rows(report)
+    nums = sorted(row["chapter_number"] for row in rows)
+    if nums != EXPECTED:
+        raise RuntimeError(f"expected exact remote chapters 1-9, got {nums}")
+    diff = report.get("differences") or {}
+    for key in (
+        "local_only_chapters",
+        "remote_only_chapters",
+        "title_mismatches",
+        "duplicate_remote_chapter_numbers",
+        "position_mismatches",
+    ):
+        if diff.get(key):
+            raise RuntimeError(f"reconcile mismatch {key}: {diff.get(key)}")
+    return rows
+
+
+def preflight(path):
+    report = load(path)
+    remote = report.get("remote") or {}
+    if remote.get("item_count") == 0 and remote.get("numbered_item_count") == 0:
+        print("empty")
+        return 0
+    rows = assert_exact_existing(report)
+    bad = [
+        (row["chapter_number"], row.get("status"))
+        for row in rows
+        if row.get("status") not in {"scheduled", "reviewing", "published"}
+    ]
+    if bad:
+        raise RuntimeError(f"unexpected existing statuses: {bad}")
+    print("existing")
+    return 0
+
+
+def ready(path):
+    rows = assert_exact_existing(load(path))
+    reviewing = sorted(
+        row["chapter_number"] for row in rows if row.get("status") == "reviewing"
+    )
+    if reviewing:
+        print("REVIEW_PENDING chapters=" + ",".join(map(str, reviewing)))
+        return 3
+    bad = [
+        (row["chapter_number"], row.get("status"))
+        for row in rows
+        if row.get("status") not in {"scheduled", "published"}
+    ]
+    if bad:
+        raise RuntimeError(f"chapters are not publish-ready: {bad}")
+    print("PUBLISH_READY")
+    return 0
+
+
+def classify(code):
+    one = load(S / "one-shot.json")
+    result = one.get("result") or {}
+    if code == 0 and result.get("platform_status") == "success":
+        print("success")
+        return 0
+    message = str(result.get("message") or "")
+    period = r"(每日|当日|今日|本日|单日|今天|每月|本月|单月|月度)"
+    limit = r"(上限|限制|限额|额度|已达|达到|超出|超过)"
+    if re.search(period + r"[^，。;；]{0,24}" + limit, message) or re.search(
+        limit + r"[^，。;；]{0,24}" + period, message
+    ):
+        print("daily_limit")
+        return 0
+    raise RuntimeError(
+        f"publish-now non-limit failure: code={code}, message={message!r}"
+    )
+
+
+def final(path, publish_result):
+    rows = assert_exact_existing(load(path))
+    bad = [
+        (row["chapter_number"], row.get("status"))
+        for row in rows
+        if row.get("status") not in {"published", "scheduled"}
+    ]
+    if bad:
+        raise RuntimeError(f"unexpected final statuses: {bad}")
+
+    published = sorted(
+        row["chapter_number"] for row in rows if row.get("status") == "published"
+    )
+    scheduled = sorted(
+        row["chapter_number"] for row in rows if row.get("status") == "scheduled"
+    )
+    if publish_result == "success" and scheduled:
+        raise RuntimeError(f"publisher said success but still scheduled {scheduled}")
+    if publish_result == "daily_limit" and not scheduled:
+        publish_result = "success"
+
+    completed_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    launch_result = {
+        "version": 1,
+        "book_title": TITLE,
+        "completed_at": completed_at,
+        "requested_chapters": EXPECTED,
+        "published_chapters": published,
+        "still_scheduled_chapters": scheduled,
+        "publish_result": publish_result,
+        "verified_by_read_only_reconcile": True,
+    }
+    (S / "launch-result.json").write_text(
+        json.dumps(launch_result, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    one = load(S / "one-shot.json")
+    one.update(
+        {
+            "status": "completed",
+            "completed_at": completed_at,
+            "result": {
+                "platform_status": "published" if not scheduled else "partial_daily_limit",
+                "published_chapters": published,
+                "still_scheduled_chapters": scheduled,
+            },
+        }
+    )
+    (S / "one-shot.json").write_text(
+        json.dumps(one, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+    queue = load(S / "queue.json")
+    for operation in queue.get("operations", []):
+        if operation.get("id") == "death-list-create-001-009-20260906":
+            operation["status"] = "completed"
+            operation["completed_at"] = completed_at
+    queue["updated_at"] = completed_at
+    (S / "queue.json").write_text(
+        json.dumps(queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+    fanqie_compat.install_compat()
+    _config, _policy, _queue, local = fanqie_sync.load_model(NOVEL.resolve())
+    state = load(S / "sync-state.json")
+    state["last_sync_at"] = completed_at
+    state["remote_snapshot_at"] = completed_at
+    state["chapters"] = {
+        str(n): {
+            "local_sha256": local[n].digest,
+            "last_action": "create",
+            "last_synced_at": completed_at,
+            "queue_operation_id": "death-list-create-001-009-20260906",
+        }
+        for n in EXPECTED
+    }
+    (S / "sync-state.json").write_text(
+        json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+    print(json.dumps(launch_result, ensure_ascii=False))
+    return 0
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    subs = parser.add_subparsers(dest="cmd", required=True)
+    for name in ("preflight", "ready"):
+        sub = subs.add_parser(name)
+        sub.add_argument("report")
+    sub = subs.add_parser("classify")
+    sub.add_argument("code", type=int)
+    sub = subs.add_parser("final")
+    sub.add_argument("report")
+    sub.add_argument("result", choices=("success", "daily_limit"))
+    args = parser.parse_args()
+    try:
+        if args.cmd == "preflight":
+            return preflight(args.report)
+        if args.cmd == "ready":
+            return ready(args.report)
+        if args.cmd == "classify":
+            return classify(args.code)
+        return final(args.report, args.result)
+    except Exception as exc:
+        print(f"ERROR: {exc}")
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
