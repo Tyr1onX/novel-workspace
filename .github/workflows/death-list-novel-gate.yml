@@ -24,3 +24,32 @@ jobs:
         run: |
           python shared/tools/novel_gate.py \
             novels/death-list/chapters/chapter-*.md
+      - name: Count chapter body characters
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          files = sorted(Path('novels/death-list/chapters').glob('chapter-[0-9][0-9][0-9].md'))
+          numbers = [int(p.stem.rsplit('-', 1)[1]) for p in files]
+          if numbers != list(range(1, len(files) + 1)):
+              raise SystemExit(f'Chapter sequence has gaps or duplicates: {numbers}')
+          rows = []
+          for path in files:
+              text = path.read_text(encoding='utf-8-sig')
+              body = re.sub(r'^# .*(?:\r?\n)+', '', text, count=1)
+              count = len(re.sub(r'\s+', '', body))
+              rows.append((path.stem, count))
+          total = sum(count for _, count in rows)
+          print(f'CHAPTER_COUNT={len(rows)}')
+          print(f'BODY_NONWHITESPACE_CHARACTERS={total}')
+          print(f'TARGET_100000_REACHED={str(total >= 100000).lower()}')
+          print('COUNT_RULE=remove first Markdown H1 and all Unicode whitespace; include punctuation and in-story text')
+          for name, count in rows:
+              print(f'{name}: {count}')
+          if os.environ.get('GITHUB_STEP_SUMMARY'):
+              with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
+                  out.write(f'### Death List length\n\n{len(rows)} chapters; {total:,} non-whitespace body characters.\n')
+          PY
