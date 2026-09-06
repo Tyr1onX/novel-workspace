@@ -10,12 +10,56 @@
     112,
     113
   ],
-  "status": "pending",
+  "status": "completed",
   "authorized": true,
   "triggered_at": "2026-09-06T09:49:00+08:00",
   "audit": {
     "status": "passed",
     "basis": "Fresh read-only reconcile run 34004747596 / job 101409806081 confirms Endless Rail remote chapters are exactly 1-134 with published 1-109 and scheduled 110-134; there are no remote-only chapters, duplicate chapter numbers, title mismatches, or position mismatches. Chapter 109 was published at 2026-09-06 00:00 +08:00, and 110-113 are the first four pending chapters. The complete audited release group is 109-113: all five local chapter bodies are >=2000 non-whitespace chars and total 14195 chars (>9999). The publish-now executor must re-read Fanqie immediately before mutation, accept 109 only if already published, and refuse unless remaining targets 110-113 are exactly the first pending chapters. No title/body edits and no schedule reflow are authorized in this one-shot."
   },
-  "reason": "Complete the 2026-09-06 five-chapter release group 109-113 under the active five-chapters-per-day policy. Chapter 109 is already published; only scheduled chapters 110-113 should require platform mutation."
+  "reason": "Complete the 2026-09-06 five-chapter release group 109-113 under the active five-chapters-per-day policy. Chapter 109 is already published; only scheduled chapters 110-113 should require platform mutation.",
+  "completed_at": "2026-09-06T01:56:47+00:00",
+  "result": {
+    "platform_status": "success",
+    "chapters": [
+      {
+        "chapter": 109,
+        "platform_status": "published",
+        "title": "第109章 这条线以下不动",
+        "scheduled_date_before": "2026-09-06",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 110,
+        "platform_status": "published",
+        "title": "第110章 三只空水箱，自己回沉泉",
+        "scheduled_date_before": "2026-09-07",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 111,
+        "platform_status": "published",
+        "title": "第111章 今天归途站没发车",
+        "scheduled_date_before": "2026-09-07",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 112,
+        "platform_status": "published",
+        "title": "第112章 三十六箱，只跑到炉坪",
+        "scheduled_date_before": "2026-09-07",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 113,
+        "platform_status": "published",
+        "title": "第113章 先看时限，后面才看货名",
+        "scheduled_date_before": "2026-09-08",
+        "scheduled_time_before": "00:00"
+      }
+    ],
+    "reflow": {
+      "performed": false
+    }
+  }
 }
