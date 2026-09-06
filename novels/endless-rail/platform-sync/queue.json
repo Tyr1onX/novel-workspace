@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-04T04:07:42+00:00",
+  "updated_at": "2026-09-06T02:02:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -22,49 +22,15 @@
         "title_mismatches": 0,
         "position_mismatches": 0,
         "schedule": {
-          "2026-08-30": [
-            82,
-            83,
-            84
-          ],
-          "2026-08-31": [
-            85,
-            86,
-            87
-          ],
-          "2026-09-01": [
-            88,
-            89,
-            90
-          ],
-          "2026-09-02": [
-            91,
-            92,
-            93
-          ],
-          "2026-09-03": [
-            94,
-            95,
-            96
-          ],
-          "2026-09-04": [
-            97,
-            98,
-            99
-          ],
-          "2026-09-05": [
-            100,
-            101,
-            102
-          ],
-          "2026-09-06": [
-            103,
-            104,
-            105
-          ],
-          "2026-09-07": [
-            106
-          ]
+          "2026-08-30": [82, 83, 84],
+          "2026-08-31": [85, 86, 87],
+          "2026-09-01": [88, 89, 90],
+          "2026-09-02": [91, 92, 93],
+          "2026-09-03": [94, 95, 96],
+          "2026-09-04": [97, 98, 99],
+          "2026-09-05": [100, 101, 102],
+          "2026-09-06": [103, 104, 105],
+          "2026-09-07": [106]
         }
       }
     },
@@ -149,6 +115,35 @@
       },
       "reason": "Append audited chapters 117-134 after the existing chapter 116 schedule, preserving all existing published/scheduled item IDs and the three-consecutive-chapters-at-00:00 Asia/Shanghai cadence through 2026-09-15.",
       "completed_at": "2026-09-04T04:07:42+00:00"
+    },
+    {
+      "id": "rail-create-135-158-after-reconcile-20260906",
+      "action": "create",
+      "chapters": "134-158",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-16",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "commit": "741e157e1d63a284abb597b85a8d1cc16d4dc031",
+        "already_present_chapters": "134",
+        "basis": "PR #58 chapters 135-158 passed the Endless Rail hard length audit, combined Novel Gate and independent Meta guard before squash merge. Fresh read-only Fanqie reconciliation run 34005270499 / job 101411183949 after completing today's five-chapter group confirms local chapters exactly 1-158, remote chapters exactly 1-134, published exactly 1-113, scheduled exactly 114-134, local-only exactly 135-158, zero remote-only chapters, zero duplicate remote chapter numbers, zero title mismatches and zero position mismatches. The strict audited create selector is 134-158 so it forms five complete five-chapter groups; chapter 134 is reconciled as already present and must be filtered from execution, leaving actual platform creation exactly 135-158. Group body totals are 134-138=11261, 139-143=10416, 144-148=10810, 149-153=10584, 154-158=11516, all above the 10000-character daily floor and every individual chapter is at least 2000 non-whitespace body characters. The temporary fixed start 2026-09-16 avoids overlap with the existing 114-134 schedule if the following reschedule operation does not execute."
+      },
+      "reason": "Create only reconciled-missing chapters 135-158 while preserving strict complete-group validation and avoiding any overlap with the existing schedule before final reflow."
+    },
+    {
+      "id": "rail-reschedule-114-158-five-per-day-20260906",
+      "action": "reschedule_all",
+      "start_date": "2026-09-07",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "expected_pending_chapters": "114-158",
+        "basis": "Fresh read-only Fanqie reconciliation run 34005270499 / job 101411183949 confirms the pre-mutation pending set is exactly 114-134. The immediately preceding authorized create operation is restricted to reconciled-missing chapters 135-158, so after successful creation the pending set must be exactly the contiguous range 114-158: 45 chapters, nine complete five-chapter groups. Final group totals are 114-118=13952, 119-123=13461, 124-128=12730, 129-133=13038, 134-138=11261, 139-143=10416, 144-148=10810, 149-153=10584, 154-158=11516; every group exceeds 10000 and every chapter is at least 2000 non-whitespace body characters. Reschedule all pending chapters from 2026-09-07 at five per day, all at 00:00 Asia/Shanghai, preserving published chapters 1-113."
+      },
+      "reason": "After successful creation, compact all pending Rail chapters into exact five-chapter daily groups: 114-118 on Sep 7, 119-123 Sep 8, 124-128 Sep 9, 129-133 Sep 10, 134-138 Sep 11, 139-143 Sep 12, 144-148 Sep 13, 149-153 Sep 14, and 154-158 Sep 15, all at 00:00 Asia/Shanghai."
     }
   ]
 }
