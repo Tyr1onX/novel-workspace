@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "book_id": "7682312977067822142",
+  "policy_status": "draft",
+  "timezone": "Asia/Shanghai",
+  "declaration": {
+    "use_ai": true
+  },
+  "chapter_length": {
+    "hard_minimum_chars": 2000,
+    "counting_basis": "body_non_whitespace_characters"
+  },
+  "schedule": {
+    "mode": "fixed_start",
+    "chapters_per_day": 1,
+    "slots": ["00:00"],
+    "start_date": null,
+    "group_size": 1,
+    "require_complete_groups": false
+  },
+  "notes": "Read-only registration. Scheduling and daily publication limits must be confirmed from this book's real platform state before any release authorization. No operations are authorized."
+}
