@@ -1,0 +1,145 @@
+name: Death List Initial Launch Resume
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/death-list-launch-resume.yml"
+      - "shared/tools/death_list_discover.py"
+      - "shared/tools/death_list_prepare.py"
+      - "shared/tools/death_list_verify.py"
+
+concurrency:
+  group: fanqie-death-list-launch
+  cancel-in-progress: false
+
+jobs:
+  launch:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Verify canonical launch batch
+        shell: powershell
+        run: |
+          $chapters = 1..9 | ForEach-Object { "novels/death-list/chapters/chapter-{0:D3}.md" -f $_ }
+          python shared/tools/novel_gate.py @chapters
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+
+      - name: Discover exact Fanqie book
+        shell: powershell
+        run: |
+          python shared/tools/death_list_discover.py --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Prepare audited repository launch model
+        shell: powershell
+        run: |
+          python shared/tools/death_list_prepare.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/fanqie_compat.py validate novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/fanqie_compat.py plan novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Verify saved session sees configured book
+        shell: powershell
+        run: |
+          python shared/tools/fanqie_probe.py probe novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Read-only reconcile before create
+        shell: powershell
+        run: |
+          $report = Join-Path $env:RUNNER_TEMP "death-list-before.json"
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/death_list_verify.py before $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Create chapters 1-9 as scheduled placeholders
+        shell: powershell
+        run: |
+          python shared/tools/fanqie_compat.py sync novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Read-only reconcile after create
+        shell: powershell
+        run: |
+          $report = Join-Path $env:RUNNER_TEMP "death-list-after-create.json"
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/death_list_verify.py after $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Publish launch batch now up to the real platform limit
+        id: publish_now
+        shell: powershell
+        run: |
+          python shared/tools/fanqie_compat.py publish-now novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --request novels/death-list/platform-sync/one-shot.json
+          $publisherCode = $LASTEXITCODE
+          $result = python shared/tools/death_list_verify.py classify $publisherCode
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "result=$result" >> $env:GITHUB_OUTPUT
+
+      - name: Final read-only reconcile
+        shell: powershell
+        env:
+          PUBLISH_RESULT: ${{ steps.publish_now.outputs.result }}
+        run: |
+          $report = Join-Path $env:RUNNER_TEMP "death-list-final.json"
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/death_list_verify.py final $report $env:PUBLISH_RESULT
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Persist canonical state and remove one-time launch machinery
+        if: success()
+        shell: powershell
+        run: |
+          Remove-Item -Force -ErrorAction SilentlyContinue .github/death-list-launch-payload.b64
+          Remove-Item -Force -ErrorAction SilentlyContinue .github/workflows/death-list-launch.yml
+          Remove-Item -Force -ErrorAction SilentlyContinue .github/workflows/death-list-launch-resume.yml
+          Remove-Item -Force -ErrorAction SilentlyContinue shared/tools/death_list_discover.py
+          Remove-Item -Force -ErrorAction SilentlyContinue shared/tools/death_list_prepare.py
+          Remove-Item -Force -ErrorAction SilentlyContinue shared/tools/death_list_verify.py
+          Remove-Item -Force -ErrorAction SilentlyContinue novels/death-list/platform-sync/.discovered-book-id
+
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          git add -A -- novels/death-list .github/death-list-launch-payload.b64 .github/workflows/death-list-launch.yml .github/workflows/death-list-launch-resume.yml shared/tools/death_list_discover.py shared/tools/death_list_prepare.py shared/tools/death_list_verify.py
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "No canonical changes to persist."
+            exit 0
+          }
+          git commit -m "feat(death-list): publish initial audited batch [skip ci]"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
