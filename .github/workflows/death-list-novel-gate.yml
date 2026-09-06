@@ -1,0 +1,26 @@
+name: Death List Novel Gate
+
+on:
+  pull_request:
+    paths:
+      - "novels/death-list/**"
+      - "shared/tools/**"
+      - ".github/workflows/death-list-novel-gate.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "novels/death-list/**"
+      - "shared/tools/**"
+      - ".github/workflows/death-list-novel-gate.yml"
+
+jobs:
+  death-list-novel-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run dialogue, humanizer, prose and meta guards
+        shell: bash
+        run: |
+          python shared/tools/novel_gate.py \
+            novels/death-list/chapters/chapter-*.md
