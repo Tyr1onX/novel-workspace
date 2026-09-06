@@ -21,7 +21,10 @@ def classify(code):
     one=load(S/"one-shot.json"); res=one.get("result") or {}
     if code==0 and res.get("platform_status")=="success": print("success"); return
     msg=str(res.get("message") or "")
-    if re.search(r"(每日|当日|今日|本日|单日|今天|每月|本月|单月|月度)[^，。;；]{0,16}上限",msg): print("daily_limit"); return
+    period=r"(每日|当日|今日|本日|单日|今天|每月|本月|单月|月度)"
+    limit=r"(上限|限制|限额|额度|已达|达到|超出|超过)"
+    if re.search(period+r"[^，。;；]{0,24}"+limit,msg) or re.search(limit+r"[^，。;；]{0,24}"+period,msg):
+        print("daily_limit"); return
     raise RuntimeError(f"publish-now non-limit failure: code={code}, message={msg!r}")
 def final(p,result):
     r=load(p); rows=[x for x in r.get("remote_items",[]) if isinstance(x.get("chapter_number"),int)]
