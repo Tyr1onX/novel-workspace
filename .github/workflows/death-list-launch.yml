@@ -1,0 +1,398 @@
+name: Death List Initial Launch
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/death-list-launch.yml"
+      - ".github/death-list-launch-payload.b64"
+
+concurrency:
+  group: fanqie-death-list-launch
+  cancel-in-progress: false
+
+jobs:
+  launch:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+
+      - name: Materialize audited initial batch
+        shell: powershell
+        run: |
+          @'
+          import base64, json, lzma
+          from pathlib import Path
+
+          payload = Path('.github/death-list-launch-payload.b64')
+          files = json.loads(lzma.decompress(base64.b64decode(payload.read_text(encoding='ascii'))).decode('utf-8'))
+          for rel, content in files.items():
+              path = Path(rel)
+              path.parent.mkdir(parents=True, exist_ok=True)
+              path.write_text(content, encoding='utf-8', newline='\n')
+          print(f'Materialized {len(files)} canonical files.')
+          '@ | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Run full fiction quality gate
+        shell: powershell
+        run: |
+          $chapters = 1..9 | ForEach-Object { "novels/death-list/chapters/chapter-{0:D3}.md" -f $_ }
+          python shared/tools/novel_gate.py @chapters
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Check launch word count
+        shell: powershell
+        run: |
+          @'
+          import re
+          from pathlib import Path
+
+          counts = {}
+          for n in range(1, 10):
+              path = Path(f'novels/death-list/chapters/chapter-{n:03d}.md')
+              lines = path.read_text(encoding='utf-8').splitlines()
+              body = '\n'.join(lines[1:])
+              counts[n] = len(re.sub(r'\s', '', body))
+          total = sum(counts.values())
+          print('chapter_chars=' + ','.join(f'{k}:{v}' for k,v in counts.items()))
+          print(f'launch_total_chars={total}')
+          if any(v < 2000 for v in counts.values()):
+              raise SystemExit('Every launch chapter must have at least 2000 non-whitespace body chars.')
+          if total < 19000:
+              raise SystemExit(f'Launch batch is unexpectedly short: {total}')
+          if total > 20500:
+              raise SystemExit(f'Launch batch is too close to/above the expected daily platform cap: {total}')
+          '@ | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+
+      - name: Discover exact Fanqie book id
+        shell: powershell
+        env:
+          FANQIE_RUNTIME: ${{ steps.runtime.outputs.path }}
+        run: |
+          @'
+          import asyncio, importlib.util, json, os
+          from pathlib import Path
+
+          TITLE = '每天零点我都会收到一份死亡名单'
+          runtime_dir = Path(os.environ['FANQIE_RUNTIME'])
+          script = runtime_dir / 'fanqie_upload.py'
+          spec = importlib.util.spec_from_file_location('fanqie_runtime_death_list_discovery', script)
+          if spec is None or spec.loader is None:
+              raise SystemExit(f'Cannot load runtime: {script}')
+          runtime = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(runtime)
+          runtime.load_config()
+
+          async def main():
+              async with runtime.async_playwright() as p:
+                  browser, context = await runtime.create_context(p, headless=True)
+                  page = await context.new_page()
+                  try:
+                      if not await runtime.goto_with_login_retry(page, runtime.BOOK_MANAGE_URL):
+                          raise RuntimeError('Saved Fanqie login cannot open writer book management.')
+                      await runtime.settle_page(page)
+                      body = await page.evaluate("""async () => {
+                          const u = new URL('/api/author/book/book_list/v0', location.origin);
+                          u.searchParams.set('page_index', '0');
+                          u.searchParams.set('page_count', '50');
+                          const r = await fetch(u.toString(), {credentials:'include'});
+                          return {status:r.status, body: await r.json()};
+                      }""")
+                      if body.get('status') != 200:
+                          raise RuntimeError(f'book_list http status {body.get("status")}')
+                      data = body.get('body') or {}
+                      data = data.get('data', data) if isinstance(data, dict) else {}
+                      rows = data.get('book_list', []) if isinstance(data, dict) else []
+                      matches = [row for row in rows if isinstance(row, dict) and str(row.get('book_name') or '').strip() == TITLE]
+                      if len(matches) != 1:
+                          available = [str(row.get('book_name') or '').strip() for row in rows if isinstance(row, dict)]
+                          raise RuntimeError(f'Expected exactly one exact-title match, got {len(matches)}. Visible titles: {available}')
+                      book_id = str(matches[0].get('book_id') or '').strip()
+                      if not book_id.isdigit():
+                          raise RuntimeError('Exact-title book has no numeric book_id.')
+                      out = Path('novels/death-list/platform-sync/.discovered-book-id')
+                      out.parent.mkdir(parents=True, exist_ok=True)
+                      out.write_text(book_id, encoding='utf-8')
+                      print(f'DISCOVERED_BOOK_ID={book_id}')
+                      await runtime.save_auth(context)
+                  finally:
+                      await runtime.close_browser_safely(browser)
+
+          asyncio.run(main())
+          '@ | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Build repository-driven platform launch model
+        shell: powershell
+        run: |
+          @'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          root = Path('novels/death-list/platform-sync')
+          root.mkdir(parents=True, exist_ok=True)
+          book_id = (root / '.discovered-book-id').read_text(encoding='utf-8').strip()
+          if not book_id.isdigit():
+              raise SystemExit('Invalid discovered book id')
+
+          config = {
+              'version': 1,
+              'platform': 'fanqie',
+              'book_id': book_id,
+              'novel_slug': 'death-list',
+              'chapter_glob': 'chapters/chapter-*.md',
+              'sync_enabled': True,
+              'browser': {'headless': True},
+              'safety': {
+                  'require_explicit_authorization': True,
+                  'require_audit_passed': True,
+                  'stop_on_create_failure': True,
+                  'max_mutations_per_run': 20,
+              },
+          }
+          policy = {
+              'version': 1,
+              'book_id': book_id,
+              'policy_status': 'active',
+              'timezone': 'Asia/Shanghai',
+              'declaration': {'use_ai': True},
+              'chapter_length': {
+                  'hard_minimum_chars': 2000,
+                  'preferred_target_chars': 'about 2000-2600 for the launch cadence; scene completeness wins',
+                  'counting_basis': 'body_non_whitespace_characters',
+              },
+              'schedule': {
+                  'mode': 'fixed_start',
+                  'chapters_per_day': 9,
+                  'slots': ['00:00'],
+                  'start_date': None,
+                  'group_size': 9,
+                  'same_timestamp_within_group': True,
+                  'require_complete_groups': True,
+                  'daily_word_floor': {
+                      'enabled': True,
+                      'minimum_chars_exclusive': 18999,
+                      'normal_chapters': 9,
+                      'preserve_order': True,
+                      'same_timestamp': True,
+                      'notes': 'Author requested filling the approximately 20k-character daily publishing allowance. Local floor prevents thin batches; the Fanqie runtime remains the final authority on the real platform cap.',
+                  },
+              },
+              'notes': 'Initial cadence targets one approximately-20k-character release batch per day without padding. The platform daily-limit detector is authoritative and must stop further submission when Fanqie reports the cap.',
+          }
+          now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+          queue = {
+              'version': 1,
+              'book_id': book_id,
+              'updated_at': now,
+              'operations': [{
+                  'id': 'death-list-create-001-009-20260906',
+                  'action': 'create',
+                  'chapters': '1-9',
+                  'schedule_mode': 'fixed_start',
+                  'start_date': '2026-09-07',
+                  'authorized': True,
+                  'status': 'pending',
+                  'audit': {
+                      'status': 'passed',
+                      'basis': 'The author explicitly authorized creating and writing the finished launch batch up to the approximately 20k daily limit. Chapters 1-9 are canonical, each is >=2000 body characters, the complete batch passed the repository fiction gate and manual opening audit, and an exact-title authenticated lookup uniquely resolved this Fanqie book before mutation. A read-only reconcile must still confirm the remote book has zero chapters immediately before create.',
+                  },
+              }],
+          }
+          state = {'version': 1, 'book_id': book_id, 'last_sync_at': None, 'chapters': {}}
+          one_shot = {
+              'version': 1,
+              'book_id': book_id,
+              'id': 'death-list-publish-now-001-009-20260906',
+              'action': 'publish_now',
+              'chapters': list(range(1, 10)),
+              'status': 'pending',
+              'authorized': True,
+              'triggered_at': '2026-09-06T15:31:00+08:00',
+              'audit': {
+                  'status': 'passed',
+                  'basis': 'The author explicitly requested that the newly created Death List book be filled today to the approximate 20k daily release allowance. This request is valid only after chapters 1-9 are created as the exact first pending remote chapters and a post-create reconcile confirms title/order/status. The publisher daily-limit detector remains authoritative and must stop on the first real cap response.',
+              },
+              'reason': 'Publish the audited launch batch today in chapter order, stopping if and only if Fanqie reports the real daily/monthly submission cap.',
+          }
+          for name, data in [('config.json', config), ('policy.json', policy), ('queue.json', queue), ('sync-state.json', state), ('one-shot.json', one_shot)]:
+              (root / name).write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          '@ | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Validate repository launch plan
+        shell: powershell
+        run: |
+          python shared/tools/fanqie_compat.py validate novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/fanqie_compat.py plan novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Verify saved session sees exact configured book
+        shell: powershell
+        run: |
+          python shared/tools/fanqie_probe.py probe novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Read-only reconcile before first chapter creation
+        shell: powershell
+        run: |
+          $report = Join-Path $env:RUNNER_TEMP "death-list-before.json"
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          @'
+          import json, os
+          from pathlib import Path
+          report = json.loads(Path(os.environ['BEFORE_REPORT']).read_text(encoding='utf-8'))
+          remote = report.get('remote') or {}
+          if remote.get('item_count') != 0 or remote.get('numbered_item_count') != 0:
+              raise SystemExit(f'Remote book is not empty; refusing create: {remote}')
+          print('Pre-create reconcile confirmed remote chapter count = 0.')
+          '@ | python -
+        env:
+          BEFORE_REPORT: ${{ runner.temp }}\death-list-before.json
+
+      - name: Create chapters 1-9 on Fanqie as tomorrow-scheduled placeholders
+        shell: powershell
+        run: |
+          python shared/tools/fanqie_compat.py sync novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Read-only reconcile after create
+        shell: powershell
+        env:
+          AFTER_CREATE_REPORT: ${{ runner.temp }}\death-list-after-create.json
+        run: |
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $env:AFTER_CREATE_REPORT
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          @'
+          import json, os
+          from pathlib import Path
+          report = json.loads(Path(os.environ['AFTER_CREATE_REPORT']).read_text(encoding='utf-8'))
+          remote = report.get('remote') or {}
+          diff = report.get('differences') or {}
+          scheduled = report.get('scheduled') or []
+          if remote.get('numbered_item_count') != 9:
+              raise SystemExit(f'Expected 9 remote numbered chapters after create: {remote}')
+          if diff.get('local_only_chapters') or diff.get('remote_only_chapters') or diff.get('title_mismatches') or diff.get('duplicate_remote_chapter_numbers'):
+              raise SystemExit(f'Post-create reconciliation mismatch: {diff}')
+          nums = sorted(row.get('chapter') for row in scheduled if isinstance(row.get('chapter'), int))
+          if nums != list(range(1, 10)):
+              raise SystemExit(f'Expected chapters 1-9 to be pending/scheduled before publish-now, got {nums}')
+          print('Post-create reconcile confirmed exact chapters 1-9 pending.')
+          '@ | python -
+
+      - name: Publish launch batch now up to the real platform daily limit
+        id: publish_now
+        shell: powershell
+        run: |
+          $log = Join-Path $env:RUNNER_TEMP "death-list-publish-now.log"
+          python shared/tools/fanqie_compat.py publish-now novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --request novels/death-list/platform-sync/one-shot.json 2>&1 | Tee-Object -FilePath $log
+          $code = $LASTEXITCODE
+          if ($code -eq 0) {
+            "result=success" >> $env:GITHUB_OUTPUT
+            exit 0
+          }
+          $text = Get-Content -Raw -Path $log
+          if ($text -match '(每日|当日|今日|本日|单日|今天|每月|本月|单月|月度).{0,16}上限') {
+            Write-Host "Fanqie reported the real publication limit; stopping the batch as required."
+            "result=daily_limit" >> $env:GITHUB_OUTPUT
+            exit 0
+          }
+          Write-Error "publish-now failed for a reason other than the daily/monthly limit."
+          exit $code
+
+      - name: Final read-only reconcile and persist sanitized result
+        shell: powershell
+        env:
+          FINAL_REPORT: ${{ runner.temp }}\death-list-final.json
+          PUBLISH_RESULT: ${{ steps.publish_now.outputs.result }}
+        run: |
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $env:FINAL_REPORT
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          @'
+          import json, os, re
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          report = json.loads(Path(os.environ['FINAL_REPORT']).read_text(encoding='utf-8'))
+          rows = report.get('remote_items') or []
+          published = sorted(int(r['chapter_number']) for r in rows if isinstance(r.get('chapter_number'), int) and r.get('status') == 'published')
+          scheduled = sorted(int(r['chapter_number']) for r in rows if isinstance(r.get('chapter_number'), int) and r.get('status') == 'scheduled')
+          if sorted(published + scheduled) != list(range(1, 10)):
+              raise SystemExit(f'Unexpected final remote chapter set. published={published}, scheduled={scheduled}')
+          result = {
+              'version': 1,
+              'book_title': '每天零点我都会收到一份死亡名单',
+              'completed_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+              'requested_chapters': list(range(1, 10)),
+              'published_chapters': published,
+              'still_scheduled_chapters': scheduled,
+              'publish_result': os.environ.get('PUBLISH_RESULT') or 'unknown',
+              'verified_by_read_only_reconcile': True,
+          }
+          out = Path('novels/death-list/platform-sync/launch-result.json')
+          out.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          one_path = Path('novels/death-list/platform-sync/one-shot.json')
+          one = json.loads(one_path.read_text(encoding='utf-8'))
+          if scheduled and os.environ.get('PUBLISH_RESULT') == 'daily_limit':
+              one['status'] = 'completed'
+              one['completed_at'] = result['completed_at']
+              one['result'] = {
+                  'platform_status': 'partial_daily_limit',
+                  'published_chapters': published,
+                  'still_scheduled_chapters': scheduled,
+                  'note': 'Stopped immediately when Fanqie reported the real daily/monthly publication limit. A fresh one-shot is required for the remaining chapters on a later day.',
+              }
+              one_path.write_text(json.dumps(one, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(result, ensure_ascii=False))
+          '@ | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Persist canonical repository state and remove one-time launcher
+        if: success()
+        shell: powershell
+        run: |
+          Remove-Item -Force -ErrorAction SilentlyContinue .github/death-list-launch-payload.b64
+          Remove-Item -Force -ErrorAction SilentlyContinue .github/workflows/death-list-launch.yml
+          Remove-Item -Force -ErrorAction SilentlyContinue novels/death-list/platform-sync/.discovered-book-id
+
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          git add -A -- novels/death-list .github/death-list-launch-payload.b64 .github/workflows/death-list-launch.yml
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "No canonical changes to persist."
+            exit 0
+          }
+          git commit -m "feat(death-list): publish initial audited batch [skip ci]"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
