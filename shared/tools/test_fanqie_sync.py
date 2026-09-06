@@ -1,3 +1,4 @@
+import asyncio
 import importlib.util
 import json
 import sys
@@ -98,6 +99,38 @@ class FanqieSyncTests(unittest.TestCase):
                 ("2026-09-09", "00:00"),
                 ("2026-09-10", "00:00"),
                 ("2026-09-10", "00:00"),
+            ],
+        )
+
+    def test_reset_manage_page_before_safe_inspection(self):
+        events = []
+
+        class FakePage:
+            async def goto(self, url):
+                events.append(("goto", url))
+
+            async def wait_for_selector(self, selector, timeout):
+                events.append(("wait", selector, timeout))
+
+        class FakeRuntime:
+            CHAPTER_MANAGE_URL_TPL = "https://example.test/book/{book_id}/manage"
+            _browser_timeout = 4321
+
+            @staticmethod
+            async def settle_page(page):
+                events.append(("settle", page.__class__.__name__))
+
+        asyncio.run(
+            fanqie_runtime_bridge.reset_manage_page_for_inspection(
+                FakeRuntime, FakePage(), "book-42"
+            )
+        )
+        self.assertEqual(
+            events,
+            [
+                ("goto", "https://example.test/book/book-42/manage"),
+                ("settle", "FakePage"),
+                ("wait", "tr td", 4321),
             ],
         )
 
