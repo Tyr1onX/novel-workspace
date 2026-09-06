@@ -17,7 +17,7 @@ concurrency:
 jobs:
   launch:
     runs-on: [self-hosted, windows, fanqie]
-    timeout-minutes: 90
+    timeout-minutes: 300
     permissions:
       contents: write
     env:
@@ -91,37 +91,59 @@ jobs:
           python shared/tools/fanqie_compat.py sync novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-      - name: Wait until all launch chapters leave review
-        shell: powershell
-        run: |
-          $report = Join-Path $env:RUNNER_TEMP "death-list-ready.json"
-          $ready = $false
-          for ($attempt = 1; $attempt -le 40; $attempt++) {
-            Write-Host "Read-only readiness check $attempt/40"
-            python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-            python shared/tools/death_list_verify.py ready $report
-            $readyCode = $LASTEXITCODE
-            if ($readyCode -eq 0) {
-              $ready = $true
-              break
-            }
-            if ($readyCode -ne 3) { exit $readyCode }
-            Start-Sleep -Seconds 15
-          }
-          if (-not $ready) {
-            Write-Error "Fanqie review did not finish within the bounded wait window."
-            exit 2
-          }
-
-      - name: Publish launch batch now up to the real platform limit
+      - name: Publish each chapter immediately today in strict order
         id: publish_now
         shell: powershell
         run: |
-          python shared/tools/fanqie_compat.py publish-now novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --request novels/death-list/platform-sync/one-shot.json
-          $publisherCode = $LASTEXITCODE
-          $result = python shared/tools/death_list_verify.py classify $publisherCode
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $report = Join-Path $env:RUNNER_TEMP "death-list-live.json"
+          $request = Join-Path $env:RUNNER_TEMP "death-list-publish-one.json"
+          $result = "success"
+          $finished = $false
+
+          for ($attempt = 1; $attempt -le 1000; $attempt++) {
+            Write-Host "Immediate-release state check $attempt/1000"
+            python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+            $next = python shared/tools/death_list_verify.py next $report $request
+            $nextCode = $LASTEXITCODE
+            Write-Host "next action: $next"
+
+            if ($nextCode -eq 3) {
+              Start-Sleep -Seconds 15
+              continue
+            }
+            if ($nextCode -ne 0) { exit $nextCode }
+
+            if ($next -eq "done") {
+              $finished = $true
+              break
+            }
+            if (-not $next.StartsWith("publish:")) {
+              Write-Error "Unexpected next action: $next"
+              exit 2
+            }
+
+            python shared/tools/fanqie_compat.py publish-now novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --request $request
+            $publisherCode = $LASTEXITCODE
+            $classification = python shared/tools/death_list_verify.py classify $publisherCode $request
+            $classifyCode = $LASTEXITCODE
+            if ($classifyCode -ne 0) { exit $classifyCode }
+            Write-Host "publish result: $classification"
+
+            if ($classification -eq "daily_limit") {
+              $result = "daily_limit"
+              $finished = $true
+              break
+            }
+
+            Start-Sleep -Seconds 3
+          }
+
+          if (-not $finished) {
+            Write-Error "Fanqie review did not clear within the bounded same-day wait window."
+            exit 2
+          }
           "result=$result" >> $env:GITHUB_OUTPUT
 
       - name: Final read-only reconcile

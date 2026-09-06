@@ -18,6 +18,15 @@ def load(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def write_json(path, data):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
 def numbered_rows(report):
     return [
         row for row in report.get("remote_items", [])
@@ -80,8 +89,57 @@ def ready(path):
     return 0
 
 
-def classify(code):
-    one = load(S / "one-shot.json")
+def next_action(report_path, request_path):
+    """Prepare one safe immediate-release request in strict chapter order."""
+    rows = assert_exact_existing(load(report_path))
+    by_number = {row["chapter_number"]: row for row in rows}
+
+    for chapter in EXPECTED:
+        status = by_number[chapter].get("status")
+        if status == "published":
+            continue
+        if status == "reviewing":
+            print(f"wait:{chapter}")
+            return 3
+        if status != "scheduled":
+            raise RuntimeError(
+                f"chapter {chapter} has unexpected status before immediate release: {status!r}"
+            )
+
+        config = load(S / "config.json")
+        now = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+        request = {
+            "version": 1,
+            "book_id": str(config["book_id"]),
+            "id": f"death-list-publish-now-{chapter:03d}",
+            "action": "publish_now",
+            "chapters": [chapter],
+            "status": "pending",
+            "authorized": True,
+            "triggered_at": now,
+            "audit": {
+                "status": "passed",
+                "basis": (
+                    "Author explicitly requested immediate publication today. "
+                    "This request targets only the first unpublished chapter "
+                    "after read-only reconciliation."
+                ),
+            },
+            "reason": (
+                f"Publish chapter {chapter} immediately today; preserve strict order "
+                "and stop on the first real daily/monthly platform limit."
+            ),
+        }
+        write_json(request_path, request)
+        print(f"publish:{chapter}")
+        return 0
+
+    print("done")
+    return 0
+
+
+def classify(code, request_path=None):
+    one = load(request_path or (S / "one-shot.json"))
     result = one.get("result") or {}
     if code == 0 and result.get("platform_status") == "success":
         print("success")
@@ -131,10 +189,7 @@ def final(path, publish_result):
         "publish_result": publish_result,
         "verified_by_read_only_reconcile": True,
     }
-    (S / "launch-result.json").write_text(
-        json.dumps(launch_result, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    write_json(S / "launch-result.json", launch_result)
 
     one = load(S / "one-shot.json")
     one.update(
@@ -148,9 +203,7 @@ def final(path, publish_result):
             },
         }
     )
-    (S / "one-shot.json").write_text(
-        json.dumps(one, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    write_json(S / "one-shot.json", one)
 
     queue = load(S / "queue.json")
     for operation in queue.get("operations", []):
@@ -158,9 +211,7 @@ def final(path, publish_result):
             operation["status"] = "completed"
             operation["completed_at"] = completed_at
     queue["updated_at"] = completed_at
-    (S / "queue.json").write_text(
-        json.dumps(queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    write_json(S / "queue.json", queue)
 
     fanqie_compat.install_compat()
     _config, _policy, _queue, local = fanqie_sync.load_model(NOVEL.resolve())
@@ -176,9 +227,7 @@ def final(path, publish_result):
         }
         for n in EXPECTED
     }
-    (S / "sync-state.json").write_text(
-        json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    write_json(S / "sync-state.json", state)
 
     print(json.dumps(launch_result, ensure_ascii=False))
     return 0
@@ -190,8 +239,12 @@ def main():
     for name in ("preflight", "ready"):
         sub = subs.add_parser(name)
         sub.add_argument("report")
+    sub = subs.add_parser("next")
+    sub.add_argument("report")
+    sub.add_argument("request")
     sub = subs.add_parser("classify")
     sub.add_argument("code", type=int)
+    sub.add_argument("request", nargs="?")
     sub = subs.add_parser("final")
     sub.add_argument("report")
     sub.add_argument("result", choices=("success", "daily_limit"))
@@ -201,8 +254,10 @@ def main():
             return preflight(args.report)
         if args.cmd == "ready":
             return ready(args.report)
+        if args.cmd == "next":
+            return next_action(args.report, args.request)
         if args.cmd == "classify":
-            return classify(args.code)
+            return classify(args.code, args.request)
         return final(args.report, args.result)
     except Exception as exc:
         print(f"ERROR: {exc}")
