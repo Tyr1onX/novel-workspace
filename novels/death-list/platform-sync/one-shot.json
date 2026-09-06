@@ -3,13 +3,63 @@
   "book_id": "7682312977067822142",
   "id": "death-list-publish-now-010-014-20260907",
   "action": "publish_now",
-  "chapters": [10, 11, 12, 13, 14],
-  "status": "pending",
+  "chapters": [
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "status": "completed",
   "authorized": true,
   "triggered_at": "2026-09-07T07:35:00+08:00",
   "audit": {
     "status": "passed",
     "basis": "The author requested continued actual publication. Canonical Fanqie Sync run 34067100491 created and verified exactly chapters 10-14 as scheduled for 2026-09-08 00:00 Asia/Shanghai; the completed queue and synchronization ledger are persisted. Chapter 10 was substantively revised to meet the 2000-character minimum and the novel gate passed. The executor must re-read the remote chapter table, require these to be the first pending chapters, publish in order, respect the platform's actual daily/monthly limits, and stop on any failure. No chapter creation, title/body edits, or schedule reflow is authorized by this request."
   },
-  "reason": "Publish the first existing scheduled five-chapter batch immediately, stopping at the platform limit and preserving all remaining scheduled chapters."
+  "reason": "Publish the first existing scheduled five-chapter batch immediately, stopping at the platform limit and preserving all remaining scheduled chapters.",
+  "completed_at": "2026-09-06T23:40:21+00:00",
+  "result": {
+    "platform_status": "success",
+    "chapters": [
+      {
+        "chapter": 10,
+        "platform_status": "published",
+        "title": "第10章 没有火",
+        "scheduled_date_before": "2026-09-08",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 11,
+        "platform_status": "published",
+        "title": "第11章 床底下的快递",
+        "scheduled_date_before": "2026-09-08",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 12,
+        "platform_status": "published",
+        "title": "第12章 死因改变",
+        "scheduled_date_before": "2026-09-08",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 13,
+        "platform_status": "published",
+        "title": "第13章 不是那件东西",
+        "scheduled_date_before": "2026-09-08",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 14,
+        "platform_status": "published",
+        "title": "第14章 第二次消失",
+        "scheduled_date_before": "2026-09-08",
+        "scheduled_time_before": "00:00"
+      }
+    ],
+    "reflow": {
+      "performed": false
+    }
+  }
 }
