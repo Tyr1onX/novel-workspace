@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-06T02:53:00+00:00",
+  "updated_at": "2026-09-06T03:10:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -166,6 +166,20 @@
         "final_state_unknown_until_reconcile": true,
         "ledger_persisted": false
       }
+    },
+    {
+      "id": "rail-reschedule-114-158-safe-recovery-20260906",
+      "action": "reschedule_all",
+      "start_date": "2026-09-07",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "commit": "d3a38d80b805be618dd5abe45b449d1feb90f2e2",
+        "expected_pending_chapters": "114-158",
+        "basis": "Fresh read-only reconciliation run 34007665519 / job 101417757046 after the failed first reflow proves Rail local and remote chapters are both exactly 1-158; published chapters are exactly 1-113; scheduled chapters are exactly 114-158; local-only and remote-only sets are empty; duplicate remote numbers, title mismatches and position mismatches are all zero. The reconciled intermediate schedule shows 27 chapters already at their final target times and only 18 chapters still require mutation. The repository runtime bridge fix cd482d1b44137c39c191bdfda4823e88cea81c51 replaces unsafe newest-first DOM mutation with fail-closed target-day dependency ordering, and regression commit d3a38d80b805be618dd5abe45b449d1feb90f2e2 passes 21 Fanqie unit tests plus config validation. For the exact reconciled Rail state the safe topological target-day order is 2026-09-07, 2026-09-15, 2026-09-08, 2026-09-09, 2026-09-10; this drains each blocking target day before filling it and allows the independent 2026-09-15 group to complete directly. Final five-chapter body totals remain 114-118=13952, 119-123=13461, 124-128=12730, 129-133=13038, 134-138=11261, 139-143=10416, 144-148=10810, 149-153=10584, 154-158=11516, all above the 10000-character floor, with every chapter at least 2000 non-whitespace body characters. No create or update operation is authorized by this recovery."
+      },
+      "reason": "Finish only the remaining Rail schedule repair with the repository-owned safe dependency order, preserving published chapters 1-113 and converging scheduled chapters 114-158 to nine exact five-chapter groups at 00:00 Asia/Shanghai."
     }
   ]
 }
