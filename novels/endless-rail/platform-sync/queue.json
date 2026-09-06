@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-06T03:15:30+00:00",
+  "updated_at": "2026-09-06T03:29:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -192,6 +192,20 @@
         "ledger_persisted": false,
         "final_state_unknown_until_reconcile": true
       }
+    },
+    {
+      "id": "rail-reschedule-157-158-final-recovery-20260906",
+      "action": "reschedule_all",
+      "start_date": "2026-09-07",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "commit": "43e8eb01e2ee92f7933cd2df3f2f6c3763de7b30",
+        "expected_pending_chapters": "114-158",
+        "basis": "Fresh read-only reconciliation run 34008623274 / job 101420336153 after quarantining the failed inspection recovery proves Rail local and remote chapters are both exactly 1-158, published chapters are exactly 1-113, scheduled chapters are exactly 114-158, local-only and remote-only sets are empty, duplicate remote chapter numbers are zero, title mismatches are zero and position mismatches are zero. The chapter-table schedule is already final for 114-156: 114-118 on 2026-09-07, 119-123 on 2026-09-08, 124-128 on 2026-09-09, 129-133 on 2026-09-10, 134-138 on 2026-09-11, 139-143 on 2026-09-12, 144-148 on 2026-09-13, 149-153 on 2026-09-14 and 154-156 on 2026-09-15, all at 00:00 Asia/Shanghai. Only chapters 157-158 remain at 2026-09-20 00:00 and must move to 2026-09-15 00:00. Runtime bridge commit 7939ff769eb0ea9f34ef691d998a661329691f3c resets the shared browser page to the canonical chapter-manage entry before idempotence inspection and fails closed on zero rows; regression commit 43e8eb01e2ee92f7933cd2df3f2f6c3763de7b30 passes 22 Fanqie unit tests, helper compilation and both novel config validations. The bridge must re-read the stable current platform state, skip the 43 chapters already at their exact target date/time and perform actual browser writes only for chapters 157 and 158. Final strict five-chapter group totals remain 114-118=13952, 119-123=13461, 124-128=12730, 129-133=13038, 134-138=11261, 139-143=10416, 144-148=10810, 149-153=10584 and 154-158=11516; every group is above the 10000-character daily floor and every individual chapter is at least 2000 non-whitespace body characters. No create or body update is authorized by this recovery."
+      },
+      "reason": "Complete the final Rail schedule convergence by moving only chapters 157 and 158 from Sep 20 to Sep 15 after stable current-state inspection, leaving all already-correct chapters untouched."
     }
   ]
 }
