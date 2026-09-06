@@ -101,6 +101,88 @@ class FanqieSyncTests(unittest.TestCase):
             ],
         )
 
+    def test_safe_reschedule_plan_matches_partial_rail_recovery(self):
+        current_days = {}
+        for number in (114, 115):
+            current_days[number] = "2026-09-08"
+        current_days[116] = "2026-09-09"
+        for number in range(117, 120):
+            current_days[number] = "2026-09-10"
+        for number in range(120, 123):
+            current_days[number] = "2026-09-11"
+        for number in range(123, 126):
+            current_days[number] = "2026-09-12"
+        for number in range(126, 129):
+            current_days[number] = "2026-09-13"
+        current_days[129] = "2026-09-14"
+        for number in range(130, 134):
+            current_days[number] = "2026-09-10"
+        for number in range(134, 139):
+            current_days[number] = "2026-09-11"
+        for number in range(139, 144):
+            current_days[number] = "2026-09-12"
+        for number in range(144, 149):
+            current_days[number] = "2026-09-13"
+        for number in range(149, 154):
+            current_days[number] = "2026-09-14"
+        for number in range(154, 157):
+            current_days[number] = "2026-09-15"
+        for number in (157, 158):
+            current_days[number] = "2026-09-20"
+
+        rows = [
+            {
+                "title": f"第{number}章",
+                "date": current_days[number],
+                "time": "00:00",
+            }
+            for number in range(114, 159)
+        ]
+        schedule_map = {
+            f"第{number}章": (
+                f"2026-09-{7 + (number - 114) // 5:02d}",
+                "00:00",
+            )
+            for number in range(114, 159)
+        }
+
+        filtered, skipped, day_order = fanqie_runtime_bridge.build_safe_reschedule_plan(
+            rows, schedule_map
+        )
+        self.assertEqual(len(filtered), 18)
+        self.assertEqual(len(skipped), 27)
+        self.assertEqual(
+            day_order,
+            [
+                "2026-09-07",
+                "2026-09-08",
+                "2026-09-09",
+                "2026-09-10",
+                "2026-09-15",
+            ],
+        )
+
+    def test_safe_reschedule_plan_rejects_dependency_cycle(self):
+        rows = [
+            {"title": "A", "date": "2026-09-07", "time": "00:00"},
+            {"title": "B", "date": "2026-09-08", "time": "00:00"},
+        ]
+        schedule_map = {
+            "A": ("2026-09-08", "00:00"),
+            "B": ("2026-09-07", "00:00"),
+        }
+        with self.assertRaisesRegex(fanqie_runtime_bridge.BridgeError, "dependency cycle"):
+            fanqie_runtime_bridge.build_safe_reschedule_plan(rows, schedule_map)
+
+    def test_safe_reschedule_plan_rejects_unmanaged_target_day_occupant(self):
+        rows = [
+            {"title": "managed", "date": "2026-09-08", "time": "00:00"},
+            {"title": "foreign", "date": "2026-09-07", "time": "00:00"},
+        ]
+        schedule_map = {"managed": ("2026-09-07", "00:00")}
+        with self.assertRaisesRegex(fanqie_runtime_bridge.BridgeError, "unmanaged chapter"):
+            fanqie_runtime_bridge.build_safe_reschedule_plan(rows, schedule_map)
+
     def test_chapter_range_round_trip(self):
         nums = fanqie_sync.parse_chapter_spec("1,3,5-8,10")
         self.assertEqual(nums, [1, 3, 5, 6, 7, 8, 10])
