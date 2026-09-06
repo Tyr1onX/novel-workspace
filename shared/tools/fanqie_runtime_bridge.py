@@ -158,6 +158,36 @@ def build_safe_reschedule_plan(rows, schedule_map):
     return filtered, skipped, ordered
 
 
+async def reset_manage_page_for_inspection(runtime, page, book_id) -> None:
+    """Return the shared browser page to a stable chapter-list entry point.
+
+    Upstream performs its own full-table scan before calling the patched rescheduler.
+    That scan leaves the SPA on whichever pagination page it finished on. Running the
+    extractor again from that inherited middle-page state can return an empty/partial
+    set, which defeats the bridge's idempotent filtering. Reload the canonical manage
+    URL first and fail closed if the stable table cannot be restored.
+    """
+    url_tpl = getattr(runtime, "CHAPTER_MANAGE_URL_TPL", None)
+    settle = getattr(runtime, "settle_page", None)
+    if not url_tpl or settle is None:
+        raise BridgeError("pinned Fanqie runtime is missing chapter-manage reset hooks")
+
+    url = str(url_tpl).format(book_id=book_id)
+    try:
+        await page.goto(url)
+        await settle(page)
+        wait_for_selector = getattr(page, "wait_for_selector", None)
+        if wait_for_selector is not None:
+            timeout = int(getattr(runtime, "_browser_timeout", 10000) or 10000)
+            await wait_for_selector("tr td", timeout=timeout)
+    except BridgeError:
+        raise
+    except Exception as exc:
+        raise BridgeError(
+            f"cannot reset chapter manage page before safe inspection: {exc}"
+        ) from exc
+
+
 def patch_reschedule_noops(runtime) -> None:
     original = getattr(runtime, "reschedule_on_manage_page", None)
     extractor = getattr(runtime, "extract_chapters_from_page", None)
@@ -172,7 +202,12 @@ def patch_reschedule_noops(runtime) -> None:
             )
 
         try:
+            await reset_manage_page_for_inspection(runtime, page, book_id)
             rows, _last = await extractor(page, book_id)
+            if not rows:
+                raise BridgeError(
+                    "safe reschedule inspection returned zero chapter rows after page reset"
+                )
             filtered, skipped, day_order = build_safe_reschedule_plan(rows, schedule_map)
         except BridgeError:
             raise
