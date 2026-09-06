@@ -41,9 +41,10 @@ def _load_runtime(runtime_dir: Path):
 
 def _platform_title_tail(title: str) -> str:
     title = (title or "").strip()
-    title = re.sub(r"^第\s*\d+\s*[章回节话]\s*", "", title).strip()
-    title = re.sub(r"^\d+(?=$|[\s:：_\-.、章回节话])\s*", "", title).strip()
-    return title
+    without_chapter_prefix = re.sub(r"^第\s*\d+\s*[章回节话]\s*", "", title).strip()
+    if without_chapter_prefix != title:
+        return without_chapter_prefix
+    return re.sub(r"^\d+(?=$|[\s:：_\-.、章回节话])\s*", "", title).strip()
 
 
 def _epoch_to_local(value, timezone: str) -> str | None:
@@ -76,6 +77,8 @@ def _dom_datetime(date_value, time_value, timezone: str) -> str | None:
 def _status_name(value) -> str:
     if value == 1:
         return "published"
+    if value == 4:
+        return "reviewing"
     if value == 10:
         return "scheduled"
     return f"status_{value}"
