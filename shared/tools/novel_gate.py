@@ -12,6 +12,7 @@ are less likely to skip one layer.
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -37,6 +38,9 @@ def main() -> int:
     args = parse_args()
     files = [str(path) for path in args.files]
     failures: list[tuple[str, int]] = []
+    env = os.environ.copy()
+    env["PYTHONUTF8"] = "1"
+    env["PYTHONIOENCODING"] = "utf-8"
 
     for guard_name in GUARDS:
         guard_path = HERE / guard_name
@@ -48,7 +52,11 @@ def main() -> int:
         print("\n" + "=" * 72)
         print(f"RUN {guard_name}")
         print("=" * 72)
-        completed = subprocess.run([sys.executable, str(guard_path), *files], check=False)
+        completed = subprocess.run(
+            [sys.executable, str(guard_path), *files],
+            check=False,
+            env=env,
+        )
         if completed.returncode != 0:
             failures.append((guard_name, completed.returncode))
 
