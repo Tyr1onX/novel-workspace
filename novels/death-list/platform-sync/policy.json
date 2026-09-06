@@ -1,22 +1,29 @@
 {
   "version": 1,
   "book_id": "7682312977067822142",
-  "policy_status": "draft",
+  "policy_status": "active",
   "timezone": "Asia/Shanghai",
-  "declaration": {
-    "use_ai": true
-  },
+  "declaration": {"use_ai": true},
   "chapter_length": {
     "hard_minimum_chars": 2000,
-    "counting_basis": "body_non_whitespace_characters"
+    "counting_basis": "body_non_whitespace_characters",
+    "notes": "No padding or truncation to meet a target."
   },
   "schedule": {
     "mode": "fixed_start",
-    "chapters_per_day": 1,
+    "chapters_per_day": 5,
     "slots": ["00:00"],
     "start_date": null,
-    "group_size": 1,
-    "require_complete_groups": false
+    "group_size": 5,
+    "same_timestamp_within_group": true,
+    "require_complete_groups": true,
+    "daily_word_floor": {
+      "enabled": true,
+      "minimum_chars_exclusive": 9999,
+      "normal_chapters": 5,
+      "preserve_order": true,
+      "same_timestamp": true
+    }
   },
-  "notes": "Read-only registration. Scheduling and daily publication limits must be confirmed from this book's real platform state before any release authorization. No operations are authorized."
+  "notes": "Release only explicitly audited consecutive batches. Existing published chapters are never recreated. Platform limits are authoritative; stop on any create or publish failure."
 }

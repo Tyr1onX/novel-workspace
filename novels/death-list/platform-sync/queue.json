@@ -1,5 +1,24 @@
 {
   "version": 1,
   "book_id": "7682312977067822142",
-  "operations": []
+  "operations": [
+    {
+      "id": "death-list-create-010-014-20260907",
+      "action": "create",
+      "chapters": "10-14",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate and read-only Fanqie reconciliation",
+        "source_run": "34063542204",
+        "remote_prefix": "1-9",
+        "remote_status": "published",
+        "remote_differences": "local-only 10-50; no duplicates, title mismatches, or position mismatches",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-08"
+    }
+  ]
 }
