@@ -72,29 +72,47 @@ jobs:
           python shared/tools/fanqie_probe.py probe novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-      - name: Read-only reconcile before create
+      - name: Reconcile existing launch state
+        id: preflight
         shell: powershell
         run: |
-          $report = Join-Path $env:RUNNER_TEMP "death-list-before.json"
+          $report = Join-Path $env:RUNNER_TEMP "death-list-preflight.json"
           python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python shared/tools/death_list_verify.py before $report
+          $mode = python shared/tools/death_list_verify.py preflight $report
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "launch mode: $mode"
+          "mode=$mode" >> $env:GITHUB_OUTPUT
 
       - name: Create chapters 1-9 as scheduled placeholders
+        if: steps.preflight.outputs.mode == 'empty'
         shell: powershell
         run: |
           python shared/tools/fanqie_compat.py sync novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-      - name: Read-only reconcile after create
+      - name: Wait until all launch chapters leave review
         shell: powershell
         run: |
-          $report = Join-Path $env:RUNNER_TEMP "death-list-after-create.json"
-          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python shared/tools/death_list_verify.py after $report
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $report = Join-Path $env:RUNNER_TEMP "death-list-ready.json"
+          $ready = $false
+          for ($attempt = 1; $attempt -le 40; $attempt++) {
+            Write-Host "Read-only readiness check $attempt/40"
+            python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            python shared/tools/death_list_verify.py ready $report
+            $readyCode = $LASTEXITCODE
+            if ($readyCode -eq 0) {
+              $ready = $true
+              break
+            }
+            if ($readyCode -ne 3) { exit $readyCode }
+            Start-Sleep -Seconds 15
+          }
+          if (-not $ready) {
+            Write-Error "Fanqie review did not finish within the bounded wait window."
+            exit 2
+          }
 
       - name: Publish launch batch now up to the real platform limit
         id: publish_now
@@ -131,7 +149,7 @@ jobs:
 
           git config user.name "fanqie-sync-bot"
           git config user.email "fanqie-sync-bot@users.noreply.github.com"
-          git add -A -- novels/death-list .github/death-list-launch-payload.b64 .github/workflows/death-list-launch.yml .github/workflows/death-list-launch-resume.yml shared/tools/death_list_discover.py shared/tools/death_list_prepare.py shared/tools/death_list_verify.py
+          git add -A -- novels/death-list .github/death-list-launch-payload.b64 .github/workflows/death-list-launch.yml .github/workflows/death-list-launch-resume.yml shared/tools/death_list_discover.py shared/tools/death_list_prepare.py shared/tools/death_list_verify.py shared/tools/fanqie_reconcile.py
           git diff --cached --quiet
           if ($LASTEXITCODE -eq 0) {
             Write-Host "No canonical changes to persist."
