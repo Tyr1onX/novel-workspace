@@ -2,15 +2,17 @@
 """Run the pinned Fanqie publisher with repository-owned scheduling semantics.
 
 Upstream intentionally makes every chapter time unique (e.g. 00:00/00:01/00:02).
-The author's established Fanqie habit is different: a release group of three chapters
-is intentionally scheduled at the exact same 00:00 timestamp. This bridge keeps the
+The author's established Fanqie habit is different: a release group of chapters is
+intentionally scheduled at the exact same 00:00 timestamp. This bridge keeps the
 upstream browser/publish implementation intact and replaces only the scheduling
 semantics explicitly owned by the repository.
 
-For rescheduling, the bridge also skips chapters whose existing platform date/time is
-already exactly the requested target. This makes retries idempotent and avoids sending
-no-op modify-timer requests, which Fanqie can reject with a misleading server-error
-message.
+For rescheduling, the bridge skips chapters whose existing platform date/time is
+already exactly the requested target. It also plans the remaining writes by target
+day dependencies instead of accepting the chapter table's newest-first DOM order.
+That matters when a reflow moves old chapters out of a date while moving newer
+chapters into it: filling the date first can temporarily exceed Fanqie's daily word
+limit even though the final release group itself is valid.
 """
 
 from __future__ import annotations
@@ -69,53 +71,148 @@ def _row_datetime(row):
     return date, time
 
 
+def build_safe_reschedule_plan(rows, schedule_map):
+    """Return (filtered_map, skipped_titles, target_day_order) for a safe reflow.
+
+    Fanqie's chapter table is newest-first and upstream mutates in that DOM order.
+    During a compaction this can fill a target day before its old occupants have been
+    moved away, tripping the platform's daily word limit. A target day therefore
+    depends on the destination days of any requested chapters that currently occupy
+    it. Processing a topological order of those day dependencies drains blockers
+    before filling the day.
+
+    The planner is intentionally fail-closed. If a target day is occupied by a chapter
+    outside the requested schedule, or the dependency graph contains a cycle, it does
+    not fall back to upstream's unsafe order.
+    """
+    by_title = {}
+    for row in rows:
+        title = str(row.get("title") or "").strip()
+        if title:
+            by_title[title] = row
+
+    filtered = {}
+    skipped = []
+    target_day_by_title = {}
+    group_days = []
+    for title, target in schedule_map.items():
+        clean_title = str(title).strip()
+        desired = (str(target[0]), str(target[1]))
+        target_day_by_title[clean_title] = desired[0]
+        row = by_title.get(clean_title)
+        current = _row_datetime(row or {})
+        if row is not None and current == desired:
+            skipped.append(title)
+            continue
+        filtered[title] = target
+        if desired[0] not in group_days:
+            group_days.append(desired[0])
+
+    if not filtered:
+        return filtered, skipped, []
+
+    group_set = set(group_days)
+    dependencies = {day: set() for day in group_days}
+
+    for row in rows:
+        title = str(row.get("title") or "").strip()
+        current_day, _current_time = _row_datetime(row)
+        if not current_day or current_day not in group_set:
+            continue
+        if title not in target_day_by_title:
+            raise BridgeError(
+                f"unsafe reschedule: target day {current_day} is occupied by "
+                f"unmanaged chapter {title!r}"
+            )
+        destination_day = target_day_by_title[title]
+        if destination_day == current_day:
+            continue
+        if destination_day not in group_set:
+            raise BridgeError(
+                f"unsafe reschedule: blocker {title!r} on {current_day} moves to "
+                f"unplanned target day {destination_day}"
+            )
+        dependencies[current_day].add(destination_day)
+
+    rank = {day: i for i, day in enumerate(group_days)}
+    pending = set(group_days)
+    ordered = []
+    while pending:
+        ready = [
+            day
+            for day in group_days
+            if day in pending and not (dependencies[day] & pending)
+        ]
+        if not ready:
+            detail = ", ".join(
+                f"{day}<-{','.join(sorted(dependencies[day] & pending))}"
+                for day in group_days
+                if day in pending
+            )
+            raise BridgeError(f"unsafe reschedule: target-day dependency cycle: {detail}")
+        ready.sort(key=lambda day: rank[day])
+        for day in ready:
+            ordered.append(day)
+            pending.remove(day)
+
+    return filtered, skipped, ordered
+
+
 def patch_reschedule_noops(runtime) -> None:
     original = getattr(runtime, "reschedule_on_manage_page", None)
     extractor = getattr(runtime, "extract_chapters_from_page", None)
     if original is None or extractor is None:
-        return
+        raise BridgeError("pinned Fanqie runtime is missing reschedule/extractor hooks")
 
     async def filtered_reschedule(page, book_id, schedule_map, **kwargs):
-        # The current production books are single-volume. For a true multi-volume
-        # invocation, preserve upstream behavior unless we can inspect the whole
-        # requested set in one table view; correctness is more important than an
-        # optimization.
         volume_texts = kwargs.get("volume_texts")
         if volume_texts and len(volume_texts) > 1:
-            return await original(page, book_id, schedule_map, **kwargs)
+            raise BridgeError(
+                "safe reschedule ordering is not implemented for multi-volume books"
+            )
 
         try:
             rows, _last = await extractor(page, book_id)
-            by_title = {
-                str(row.get("title") or "").strip(): row
-                for row in rows
-                if str(row.get("title") or "").strip()
-            }
-            filtered = {}
-            skipped = []
-            for title, target in schedule_map.items():
-                row = by_title.get(str(title).strip())
-                current = _row_datetime(row or {})
-                desired = (str(target[0]), str(target[1]))
-                if row is not None and current == desired:
-                    skipped.append(title)
-                    continue
-                filtered[title] = target
-
-            if skipped:
-                runtime.logger.info(
-                    f"排期幂等检查：{len(skipped)} 章已处于目标时间，跳过重复提交"
-                )
-            if not filtered:
-                runtime.logger.info("排期幂等检查：全部待发布章节已符合目标排期，无需修改")
-                return 0, 0
-            return await original(page, book_id, filtered, **kwargs)
+            filtered, skipped, day_order = build_safe_reschedule_plan(rows, schedule_map)
+        except BridgeError:
+            raise
         except Exception as exc:
-            # Fail open only for this optimization: if platform DOM extraction changes,
-            # fall back to the pinned upstream rescheduler rather than guessing that a
-            # chapter is already correct.
-            runtime.logger.warning(f"排期幂等检查不可用，回退上游重排逻辑: {exc}")
-            return await original(page, book_id, schedule_map, **kwargs)
+            raise BridgeError(
+                f"cannot inspect current platform schedule safely: {exc}"
+            ) from exc
+
+        if skipped:
+            runtime.logger.info(
+                f"排期幂等检查：{len(skipped)} 章已处于目标时间，跳过重复提交"
+            )
+        if not filtered:
+            runtime.logger.info("排期幂等检查：全部待发布章节已符合目标排期，无需修改")
+            return 0, 0
+
+        runtime.logger.info(
+            "安全排期顺序：" + " -> ".join(day_order)
+            + f"（实际需修改 {len(filtered)} 章）"
+        )
+        success = 0
+        for index, day in enumerate(day_order, 1):
+            subset = {
+                title: target
+                for title, target in filtered.items()
+                if str(target[0]) == day
+            }
+            if not subset:
+                continue
+            runtime.logger.info(
+                f"安全排期组 [{index}/{len(day_order)}] {day}: {len(subset)} 章"
+            )
+            ok, bad = await original(page, book_id, subset, **kwargs)
+            success += ok
+            if bad != 0 or ok != len(subset):
+                raise BridgeError(
+                    f"safe reschedule group {day} incomplete: "
+                    f"expected={len(subset)}, success={ok}, failed={bad}"
+                )
+        return success, 0
 
     runtime.reschedule_on_manage_page = filtered_reschedule
 
