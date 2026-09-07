@@ -124,7 +124,7 @@
         "reconcile_job": "101636014437",
         "remote_prefix": "1-29",
         "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00; 20-24 scheduled for 2026-09-09T00:00+08:00; 25-29 scheduled for 2026-09-10T00:00+08:00",
-        "remote_differences": "local-only 30-50; no remote-only chapters, duplicates, title mismatches, or position mismatches",
+        "remote_differences": "local-only 30-50; no duplicates, title mismatches, or position mismatches",
         "chapter_body_characters": {
           "30": 3636,
           "31": 2487,
@@ -174,10 +174,25 @@
       "action": "create",
       "chapters": "40-44",
       "status": "pending",
-      "authorized": false,
+      "authorized": true,
       "audit": {
-        "status": "pending",
-        "source": "Awaiting manual review and fresh read-only Fanqie reconciliation",
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34100530731",
+        "source_commit": "054abeae5a290c417625ef4403e67146057697b6",
+        "reconcile_run": "34106603939",
+        "reconcile_job": "101693017039",
+        "remote_prefix": "1-39",
+        "remote_status": "1-14 published; 15-39 scheduled for 2026-09-08 through 2026-09-12, 00:00 Asia/Shanghai",
+        "remote_differences": "local-only 40-50; no remote-only chapters, duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "40": 3642,
+          "41": 2557,
+          "42": 2557,
+          "43": 2308,
+          "44": 2291
+        },
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 13355. Automated hard findings are zero. Read chapters 40-45 in context, reviewed the D032 aftermath, ordinary course and sleep obligations, and D033 approach through the presentation and property worker leaving the maintenance door open. The chapter 40 dialogue is a survivor asking for answers, while the chapter 43-44 time checks track the collision between classes and the known deadline. No new mechanism or unsupported knowledge is introduced. Preserve the existing 1-39 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms 39 numbered items, 14 published and 25 scheduled, with no mismatches. Full body text was not compared in that pass.",
         "already_present_chapters": []
       },
       "schedule_mode": "fixed_start",
@@ -198,5 +213,5 @@
       "start_date": "2026-09-14"
     }
   ],
-  "updated_at": "2026-09-07T09:29:00+00:00"
+  "updated_at": "2026-09-07T09:35:00+00:00"
 }
