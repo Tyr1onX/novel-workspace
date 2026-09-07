@@ -72,7 +72,7 @@
           "23": 2170,
           "24": 2070
         },
-        "review_notes": "All five chapters meet the 2000-character floor; batch total 10681. Automated hard findings are zero. Reviewed the remaining advisory prose/dialogue flags in context, the D004 B1/B2 carbon-monoxide causal chain, the transition to the midnight multi-person list, and the chapter 24 to 25 handoff. Preserve the existing 1-19 remote prefix; no recreation or publish-now requested.",
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 10681. Automated hard findings are zero. Reviewed the remaining advisory prose/dialogue flags in context, the D004 B1/B2 carbon-monoxide causal chain, the transition to the midnight multi-person list, and the chapter 24 to 25 handoff. Preserve the existing 1-19 remote prefix; no recreation or publish-now requested. Completion evidence: Fanqie Sync run 34081875179, publish job 101618742294, remote reconciliation 5/5 present and 0 failures; ledger commit fc21582. A fresh read-only reconciliation is requested before authorizing chapters 25-29.",
         "already_present_chapters": []
       },
       "schedule_mode": "fixed_start",
