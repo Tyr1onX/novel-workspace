@@ -162,7 +162,7 @@
           "38": 2212,
           "39": 3234
         },
-        "review_notes": "All five chapters meet the 2000-character floor; batch total 12709. Automated hard findings are zero. Reviewed advisory dialogue and prose findings in context, the D032 route/driver/passenger decisions, the distinction between a changed forecast and a proven cause, and the chapter 39 to 40 handoff. Corrected the chapter 39 typo and unintroduced passenger before the fresh gate. The remaining short exchanges serve urgent phone coordination, and the exact timestamps preserve the causal sequence. Preserve the existing 1-34 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 34 numbered remote items, 14 published and 20 scheduled, with no mismatches. Full body text was not compared in that pass.",
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 12709. Automated hard findings are zero. Reviewed advisory dialogue and prose findings in context, the D032 route/driver/passenger decisions, the distinction between a changed forecast and a proven cause, and the chapter 39 to 40 handoff. Corrected the chapter 39 typo and unintroduced passenger before the fresh gate. The remaining short exchanges serve urgent phone coordination, and the exact timestamps preserve the causal sequence. Preserve the existing 1-34 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 34 numbered items, 14 published and 20 scheduled, with no mismatches. Full body text was not compared in that pass.",
         "already_present_chapters": []
       },
       "schedule_mode": "fixed_start",
@@ -207,12 +207,22 @@
       "authorized": false,
       "audit": {
         "status": "pending",
-        "source": "Awaiting manual review and fresh read-only Fanqie reconciliation",
+        "source": "Death List Novel Gate and manual scene/continuity review completed; awaiting fresh read-only Fanqie reconciliation",
+        "source_run": "34100530731",
+        "source_commit": "054abeae5a290c417625ef4403e67146057697b6",
+        "chapter_body_characters": {
+          "45": 3047,
+          "46": 2489,
+          "47": 2177,
+          "48": 2559,
+          "49": 2356
+        },
+        "review_notes": "Read chapters 45-50 in context. The D033 near-fall sequence preserves the 15:39:31 warning, 15:39:46 exit, and approximately 15:39:49 disappearance; the video and system-usage evidence remain limited to what the characters can actually observe. All five chapters exceed 2000 body non-whitespace characters; batch total 12628, automated hard findings zero. The remaining short exchanges serve immediate emergency coordination or character-specific questioning. No new mechanism, source revelation, or unsafe reenactment is introduced. Keep chapters 1-44 untouched, do not publish immediately, and do not create chapter 50 as an incomplete release group. Fresh remote reconciliation is required before authorization.",
         "already_present_chapters": []
       },
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-14"
     }
   ],
-  "updated_at": "2026-09-07T09:40:25+00:00"
+  "updated_at": "2026-09-07T09:41:00+00:00"
 }
