@@ -132,7 +132,7 @@
           "33": 2462,
           "34": 2155
         },
-        "review_notes": "All five chapters meet the 2000-character floor; batch total 13275. Automated hard findings are zero. Reviewed the advisory dialogue/prose flags in context, the GROUP-001 resolution and SELF causal chain, the safe recovery of the computer bag, the school follow-up, and the chapter 34 to 35 transition. The dialogue-heavy aftermath and exact event timestamps serve character and scene continuity; no mechanical warning erasure or unsupported rule expansion is requested. Preserve the existing 1-29 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 29 numbered remote items, 14 published and 15 scheduled, with no mismatches. Full body text was not compared in that pass.",
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 13275. Automated hard findings are zero. Reviewed the advisory dialogue/prose flags in context, the GROUP-001 resolution and SELF causal chain, the safe recovery of the computer bag, the school follow-up, and the chapter 34 to 35 transition. The dialogue-heavy aftermath and exact event timestamps serve character and scene continuity; no mechanical warning erasure or unsupported rule expansion is requested. Preserve the existing 1-29 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 29 numbered items, 14 published and 15 scheduled, with no mismatches. Full body text was not compared in that pass.",
         "already_present_chapters": []
       },
       "schedule_mode": "fixed_start",
@@ -204,12 +204,17 @@
       "action": "create",
       "chapters": "45-49",
       "status": "pending",
-      "authorized": false,
+      "authorized": true,
       "audit": {
-        "status": "pending",
-        "source": "Death List Novel Gate and manual scene/continuity review completed; awaiting fresh read-only Fanqie reconciliation",
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
         "source_run": "34100530731",
         "source_commit": "054abeae5a290c417625ef4403e67146057697b6",
+        "reconcile_run": "34107509261",
+        "reconcile_job": "101696046222",
+        "remote_prefix": "1-44",
+        "remote_status": "1-14 published; 15-41 and 44 scheduled; 42-43 reviewing; all five chapter 40-44 entries retain 2026-09-13T00:00+08:00",
+        "remote_differences": "local-only 45-50; no remote-only chapters, duplicates, title mismatches, or position mismatches",
         "chapter_body_characters": {
           "45": 3047,
           "46": 2489,
@@ -217,12 +222,12 @@
           "48": 2559,
           "49": 2356
         },
-        "review_notes": "Read chapters 45-50 in context. The D033 near-fall sequence preserves the 15:39:31 warning, 15:39:46 exit, and approximately 15:39:49 disappearance; the video and system-usage evidence remain limited to what the characters can actually observe. All five chapters exceed 2000 body non-whitespace characters; batch total 12628, automated hard findings zero. The remaining short exchanges serve immediate emergency coordination or character-specific questioning. No new mechanism, source revelation, or unsafe reenactment is introduced. Keep chapters 1-44 untouched, do not publish immediately, and do not create chapter 50 as an incomplete release group. Fresh remote reconciliation is required before authorization.",
+        "review_notes": "Read chapters 45-50 in context. The D033 near-fall sequence preserves the 15:39:31 warning, 15:39:46 exit, and approximately 15:39:49 disappearance; the video and system-usage evidence remain limited to what the characters can actually observe. All five chapters exceed 2000 body non-whitespace characters; batch total 12628, automated hard findings zero. The remaining short exchanges serve immediate emergency coordination or character-specific questioning. No new mechanism, source revelation, or unsafe reenactment is introduced. Keep chapters 1-44 untouched, do not publish immediately, and do not create chapter 50 as an incomplete release group. Fresh reconciliation confirmed 44 numbered items and no duplicate, title, or position mismatches. Full body text was not compared. Chapters 42-43 remain under review; their existing scheduled time must not be changed.",
         "already_present_chapters": []
       },
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-14"
     }
   ],
-  "updated_at": "2026-09-07T09:41:00+00:00"
+  "updated_at": "2026-09-07T09:46:00+00:00"
 }
