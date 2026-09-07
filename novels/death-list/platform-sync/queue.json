@@ -48,7 +48,36 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-08",
       "completed_at": "2026-09-07T03:03:55+00:00"
+    },
+    {
+      "id": "death-list-create-020-024-20260907",
+      "action": "create",
+      "chapters": "20-24",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34081675619",
+        "source_commit": "cc2036f90d56b23a40a36bcbe0a335f1e4ccd0c6",
+        "reconcile_run": "34063542204",
+        "reconcile_job": "101616865189",
+        "remote_prefix": "1-19",
+        "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00",
+        "remote_differences": "local-only 20-50; no duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "20": 2207,
+          "21": 2093,
+          "22": 2141,
+          "23": 2170,
+          "24": 2070
+        },
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 10681. Automated hard findings are zero. Reviewed the remaining advisory prose/dialogue flags in context, the D004 B1/B2 carbon-monoxide causal chain, the transition to the midnight multi-person list, and the chapter 24 to 25 handoff. Preserve the existing 1-19 remote prefix; no recreation or publish-now requested.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-09"
     }
   ],
-  "updated_at": "2026-09-07T03:03:55+00:00"
+  "updated_at": "2026-09-07T04:06:00+00:00"
 }
