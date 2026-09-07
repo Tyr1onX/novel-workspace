@@ -108,7 +108,36 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-10",
       "completed_at": "2026-09-07T04:49:14+00:00"
+    },
+    {
+      "id": "death-list-create-030-034-20260907",
+      "action": "create",
+      "chapters": "30-34",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34083774191",
+        "source_commit": "d2bd69ceb7fac609461f5f89deda0aaf86a2b59c",
+        "reconcile_run": "34084069314",
+        "reconcile_job": "101636014437",
+        "remote_prefix": "1-29",
+        "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00; 20-24 scheduled for 2026-09-09T00:00+08:00; 25-29 scheduled for 2026-09-10T00:00+08:00",
+        "remote_differences": "local-only 30-50; no remote-only chapters, duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "30": 3636,
+          "31": 2487,
+          "32": 2535,
+          "33": 2462,
+          "34": 2155
+        },
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 13275. Automated hard findings are zero. Reviewed the advisory dialogue/prose flags in context, the GROUP-001 resolution and SELF causal chain, the safe recovery of the computer bag, the school follow-up, and the chapter 34 to 35 transition. The dialogue-heavy aftermath and exact event timestamps serve character and scene continuity; no mechanical warning erasure or unsupported rule expansion is requested. Preserve the existing 1-29 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 29 numbered remote items, 14 published and 15 scheduled, with no mismatches. Full body text was not compared in that pass.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-11"
     }
   ],
-  "updated_at": "2026-09-07T04:49:14+00:00"
+  "updated_at": "2026-09-07T05:48:35+00:00"
 }
