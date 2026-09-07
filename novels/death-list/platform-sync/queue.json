@@ -168,7 +168,35 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-12",
       "completed_at": "2026-09-07T08:35:18+00:00"
+    },
+    {
+      "id": "death-list-create-040-044-20260907",
+      "action": "create",
+      "chapters": "40-44",
+      "status": "pending",
+      "authorized": false,
+      "audit": {
+        "status": "pending",
+        "source": "Awaiting manual review and fresh read-only Fanqie reconciliation",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-13"
+    },
+    {
+      "id": "death-list-create-045-049-20260907",
+      "action": "create",
+      "chapters": "45-49",
+      "status": "pending",
+      "authorized": false,
+      "audit": {
+        "status": "pending",
+        "source": "Awaiting manual review and fresh read-only Fanqie reconciliation",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-14"
     }
   ],
-  "updated_at": "2026-09-07T08:35:18+00:00"
+  "updated_at": "2026-09-07T09:29:00+00:00"
 }
