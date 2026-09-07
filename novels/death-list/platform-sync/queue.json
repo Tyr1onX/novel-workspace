@@ -53,7 +53,7 @@
       "id": "death-list-create-020-024-20260907",
       "action": "create",
       "chapters": "20-24",
-      "status": "pending",
+      "status": "completed",
       "authorized": true,
       "audit": {
         "status": "passed",
@@ -76,8 +76,9 @@
         "already_present_chapters": []
       },
       "schedule_mode": "fixed_start",
-      "start_date": "2026-09-09"
+      "start_date": "2026-09-09",
+      "completed_at": "2026-09-07T04:10:03+00:00"
     }
   ],
-  "updated_at": "2026-09-07T04:06:00+00:00"
+  "updated_at": "2026-09-07T04:10:03+00:00"
 }
