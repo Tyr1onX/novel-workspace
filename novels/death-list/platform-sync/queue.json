@@ -20,7 +20,34 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-08",
       "completed_at": "2026-09-06T23:34:51+00:00"
+    },
+    {
+      "id": "death-list-create-015-019-20260907",
+      "action": "create",
+      "chapters": "15-19",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate and fresh read-only Fanqie reconciliation",
+        "source_run": "34067329225",
+        "reconcile_run": "34063542204",
+        "reconcile_job": "101607121571",
+        "remote_prefix": "1-14",
+        "remote_status": "published",
+        "remote_differences": "local-only 15-50; no duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "15": 2086,
+          "16": 2103,
+          "17": 2132,
+          "18": 2594,
+          "19": 2021
+        },
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-08"
     }
   ],
-  "updated_at": "2026-09-06T23:34:51+00:00"
+  "updated_at": "2026-09-07T02:54:42+00:00"
 }
