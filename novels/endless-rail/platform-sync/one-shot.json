@@ -61,5 +61,9 @@
     "reflow": {
       "performed": false
     }
+  },
+  "last_read_only_reconcile_request": {
+    "requested_at": "2026-09-10T06:08:00+08:00",
+    "reason": "Before creating or scheduling chapters 159-203, refresh the real Fanqie remote chapter/status/schedule state through the local self-hosted Fanqie runtime. This marker is not a publish-now request and must not authorize platform mutation."
   }
 }
