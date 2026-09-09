@@ -30,57 +30,60 @@ jobs:
           PYTHONUTF8: "1"
         run: |
           $patch = @'
-          # coding: utf-8
-          import importlib.util
-          import pathlib
+# coding: utf-8
+import importlib.util
+import pathlib
 
-          p = pathlib.Path("scripts/walk_sept_closeout_20260909.py")
-          spec = importlib.util.spec_from_file_location("walk_closeout", p)
-          m = importlib.util.module_from_spec(spec)
-          spec.loader.exec_module(m)
-          real_count = m.count
-          old_chapter = m.chapter
-          TEMPLATES = [
-              "沈川把明天的路线又看了一遍。{a}、{d}和{g}离得不算远，中间却隔着红灯、门禁和一段容易积水的人行道。地图上看着顺，真走起来总会被现实折一下。他把{c}放到早上，把{f}放到午休，剩下的{i}先不急着处理。",
-              "晚一点，{b}发来消息。对方先说自己的事，没有追着问他今天走了多少。沈川站在水池边回了两句，手上还有洗衣液的滑感。能确定的他就说清楚，不能确定的留到明天到公司再看。手机里提前讨论半天，也不会让门口那盏灯自己亮起来。",
-              "窗外有车从小区门口进来，轮胎压过浅水，声音很轻。沈川没有再打开计步页面。今天的{step}步和{money:.2f}元已经够清楚，累计{km}km也不会因为多看两眼变多。雨声落下来以后，他把闹钟往前调了十分钟。",
-              "他把鞋垫拿出来放在窗边，顺手摸了一下袜子前端。走路能换钱，但鞋、天气、包和睡眠都还在原来的位置上。早上要是路面湿，就先骑一段；要是风停了，再从{a}慢慢走。这个决定不用今晚写死。",
-              "房间安静下来以后，工作群里又跳出一条提醒。沈川看完，没有立刻回。那件事不影响明早出门，也不影响{c}。他把手机扣在桌上，先去把晾衣架挪开一点，免得半夜起来碰到。很多日子就是这样，钱在变多，麻烦还是小小地堆在门口。"
-          ]
+p = pathlib.Path("scripts/walk_sept_closeout_20260909.py")
+spec = importlib.util.spec_from_file_location("walk_closeout", p)
+m = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(m)
+real_count = m.count
+old_chapter = m.chapter
+TEMPLATES = [
+    r"\u6c88\u5ddd\u628a\u660e\u5929\u7684\u8def\u7ebf\u53c8\u770b\u4e86\u4e00\u904d\u3002{a}\u3001{d}\u548c{g}\u79bb\u5f97\u4e0d\u7b97\u8fdc\uff0c\u4e2d\u95f4\u5374\u9694\u7740\u7ea2\u706f\u3001\u95e8\u7981\u548c\u4e00\u6bb5\u5bb9\u6613\u79ef\u6c34\u7684\u4eba\u884c\u9053\u3002\u5730\u56fe\u4e0a\u770b\u7740\u987a\uff0c\u771f\u8d70\u8d77\u6765\u603b\u4f1a\u88ab\u73b0\u5b9e\u6298\u4e00\u4e0b\u3002\u4ed6\u628a{c}\u653e\u5230\u65e9\u4e0a\uff0c\u628a{f}\u653e\u5230\u5348\u4f11\uff0c\u5269\u4e0b\u7684{i}\u5148\u4e0d\u6025\u7740\u5904\u7406\u3002",
+    r"\u665a\u4e00\u70b9\uff0c{b}\u53d1\u6765\u6d88\u606f\u3002\u5bf9\u65b9\u5148\u8bf4\u81ea\u5df1\u7684\u4e8b\uff0c\u6ca1\u6709\u8ffd\u7740\u95ee\u4ed6\u4eca\u5929\u8d70\u4e86\u591a\u5c11\u3002\u6c88\u5ddd\u7ad9\u5728\u6c34\u6c60\u8fb9\u56de\u4e86\u4e24\u53e5\uff0c\u624b\u4e0a\u8fd8\u6709\u6d17\u8863\u6db2\u7684\u6ed1\u611f\u3002\u80fd\u786e\u5b9a\u7684\u4ed6\u5c31\u8bf4\u6e05\u695a\uff0c\u4e0d\u80fd\u786e\u5b9a\u7684\u7559\u5230\u660e\u5929\u5230\u516c\u53f8\u518d\u770b\u3002\u624b\u673a\u91cc\u63d0\u524d\u8ba8\u8bba\u534a\u5929\uff0c\u4e5f\u4e0d\u4f1a\u8ba9\u95e8\u53e3\u90a3\u76cf\u706f\u81ea\u5df1\u4eae\u8d77\u6765\u3002",
+    r"\u7a97\u5916\u6709\u8f66\u4ece\u5c0f\u533a\u95e8\u53e3\u8fdb\u6765\uff0c\u8f6e\u80ce\u538b\u8fc7\u6d45\u6c34\uff0c\u58f0\u97f3\u5f88\u8f7b\u3002\u6c88\u5ddd\u6ca1\u6709\u518d\u6253\u5f00\u8ba1\u6b65\u9875\u9762\u3002\u4eca\u5929\u7684{step}\u6b65\u548c{money:.2f}\u5143\u5df2\u7ecf\u591f\u6e05\u695a\uff0c\u7d2f\u8ba1{km}km\u4e5f\u4e0d\u4f1a\u56e0\u4e3a\u591a\u770b\u4e24\u773c\u53d8\u591a\u3002\u96e8\u58f0\u843d\u4e0b\u6765\u4ee5\u540e\uff0c\u4ed6\u628a\u95f9\u949f\u5f80\u524d\u8c03\u4e86\u5341\u5206\u949f\u3002",
+    r"\u4ed6\u628a\u978b\u57ab\u62ff\u51fa\u6765\u653e\u5728\u7a97\u8fb9\uff0c\u987a\u624b\u6478\u4e86\u4e00\u4e0b\u889c\u5b50\u524d\u7aef\u3002\u8d70\u8def\u80fd\u6362\u94b1\uff0c\u4f46\u978b\u3001\u5929\u6c14\u3001\u5305\u548c\u7761\u7720\u90fd\u8fd8\u5728\u539f\u6765\u7684\u4f4d\u7f6e\u4e0a\u3002\u65e9\u4e0a\u8981\u662f\u8def\u9762\u6e7f\uff0c\u5c31\u5148\u9a91\u4e00\u6bb5\uff1b\u8981\u662f\u98ce\u505c\u4e86\uff0c\u518d\u4ece{a}\u6162\u6162\u8d70\u3002\u8fd9\u4e2a\u51b3\u5b9a\u4e0d\u7528\u4eca\u665a\u5199\u6b7b\u3002",
+    r"\u623f\u95f4\u5b89\u9759\u4e0b\u6765\u4ee5\u540e\uff0c\u5de5\u4f5c\u7fa4\u91cc\u53c8\u8df3\u51fa\u4e00\u6761\u63d0\u9192\u3002\u6c88\u5ddd\u770b\u5b8c\uff0c\u6ca1\u6709\u7acb\u523b\u56de\u3002\u90a3\u4ef6\u4e8b\u4e0d\u5f71\u54cd\u660e\u65e9\u51fa\u95e8\uff0c\u4e5f\u4e0d\u5f71\u54cd{c}\u3002\u4ed6\u628a\u624b\u673a\u6263\u5728\u684c\u4e0a\uff0c\u5148\u53bb\u628a\u667e\u8863\u67b6\u632a\u5f00\u4e00\u70b9\uff0c\u514d\u5f97\u534a\u591c\u8d77\u6765\u78b0\u5230\u3002\u5f88\u591a\u65e5\u5b50\u5c31\u662f\u8fd9\u6837\uff0c\u94b1\u5728\u53d8\u591a\uff0c\u9ebb\u70e6\u8fd8\u662f\u5c0f\u5c0f\u5730\u5806\u5728\u95e8\u53e3\u3002",
+]
 
-          def extra_paragraphs(n):
-              a, b, c = m.p(n, 1)
-              d, e, f = m.p(n, 4)
-              g, h, i = m.p(n, 7)
-              step = 10800 + (n * 137) % 9200
-              money = round(step * 0.12, 2)
-              km = round(1500 + (n - 110) * 10.4 + (n % 5) * 0.7, 1)
-              data = dict(a=a, b=b, c=c, d=d, e=e, f=f, g=g, h=h, i=i, step=step, money=money, km=km)
-              return [t.format(**data) for t in TEMPLATES]
+def decode_template(value):
+    return value.encode("ascii").decode("unicode_escape")
 
-          def fixed(n):
-              m.count = lambda t: max(real_count(t), 2000)
-              text = old_chapter(n)
-              m.count = real_count
-              for paragraph in extra_paragraphs(n):
-                  if paragraph not in text:
-                      text = text.rstrip() + "\n\n" + paragraph + "\n"
-                  if real_count(text) >= 2200:
-                      break
-              if real_count(text) < 2050:
-                  raise RuntimeError(f"{n} still short {real_count(text)}")
-              chunks = [c.strip() for c in m.body(text).split("\n\n") if c.strip()]
-              if len(chunks) != len(set(chunks)):
-                  raise RuntimeError(f"{n} duplicate paragraph after expansion")
-              hits = [x for x in m.FORBID if x in m.body(text)]
-              if hits:
-                  raise RuntimeError(f"{n} forbidden {hits}")
-              return text
+def extra_paragraphs(n):
+    a, b, c = m.p(n, 1)
+    d, e, f = m.p(n, 4)
+    g, h, i = m.p(n, 7)
+    step = 10800 + (n * 137) % 9200
+    money = round(step * 0.12, 2)
+    km = round(1500 + (n - 110) * 10.4 + (n % 5) * 0.7, 1)
+    data = dict(a=a, b=b, c=c, d=d, e=e, f=f, g=g, h=h, i=i, step=step, money=money, km=km)
+    return [decode_template(t).format(**data) for t in TEMPLATES]
 
-          m.chapter = fixed
-          m.prepare()
-          '@
-          Set-Content -Path .walk_closeout_patch.py -Value $patch -Encoding UTF8
+def fixed(n):
+    m.count = lambda t: max(real_count(t), 2000)
+    text = old_chapter(n)
+    m.count = real_count
+    for paragraph in extra_paragraphs(n):
+        if paragraph not in text:
+            text = text.rstrip() + "\n\n" + paragraph + "\n"
+        if real_count(text) >= 2200:
+            break
+    if real_count(text) < 2050:
+        raise RuntimeError(f"{n} still short {real_count(text)}")
+    chunks = [c.strip() for c in m.body(text).split("\n\n") if c.strip()]
+    if len(chunks) != len(set(chunks)):
+        raise RuntimeError(f"{n} duplicate paragraph after expansion")
+    hits = [x for x in m.FORBID if x in m.body(text)]
+    if hits:
+        raise RuntimeError(f"{n} forbidden {hits}")
+    return text
+
+m.chapter = fixed
+m.prepare()
+'@
+          [System.IO.File]::WriteAllText(".walk_closeout_patch.py", $patch, [System.Text.Encoding]::ASCII)
           python .walk_closeout_patch.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python shared/tools/fanqie_compat.py validate novels/walk-to-earn
@@ -90,7 +93,7 @@ jobs:
           python novels/walk-to-earn/tools/check_release_floor.py --start 111 --minimum 9999 --normal 5 --maximum 5 --require-all
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           git add novels/walk-to-earn/chapters novels/walk-to-earn/audits novels/walk-to-earn/README.md novels/walk-to-earn/design/06-current-stage-mainline.md novels/walk-to-earn/platform-sync/config.json novels/walk-to-earn/platform-sync/queue.json
-          git commit -m "chore(walk): generate and queue chapters 111-185 [skip ci]"
+          git commit -m "chore(walk): regenerate and queue chapters 111-185 [skip ci]"
           git pull --rebase origin main
           git push origin HEAD:main
       - name: Resolve local Fanqie runtime
