@@ -18,6 +18,8 @@ creator-workflow/
   archive/                  # 已做内容归档
   data/                     # 排期与数据台账
   docs/platforms/           # 平台工作流说明
+  scripts/                  # 台账校验与待发布队列
+  templates/                # 新内容模板
 ```
 
 ## 当前账号
@@ -34,11 +36,32 @@ creator-workflow/
   ↓
 归档到 archive
   ↓
-写入 data/posts.csv
+写入 data/posts.csv / data/douyin_posts.csv
+  ↓
+校验台账
   ↓
 手动或自动发布
   ↓
 回填发布时间、链接、播放/阅读数据
 ```
 
-先保证内容资产和排期台账统一，再接自动发布。
+## 本地命令
+
+在仓库根目录执行：
+
+```bash
+python creator-workflow/scripts/queue.py validate
+python creator-workflow/scripts/queue.py due --platform douyin
+```
+
+`validate` 用来发现台账字段错位、状态拼写错误、归档路径丢失等问题。`due` 只列出到期内容，不会自动发布。
+
+## 状态流转
+
+```text
+idea → draft → ready → scheduled → published → archived
+                         ↓
+                       failed
+```
+
+抖音真实发布接口必须等开放平台权限、授权账号和访问令牌确认后再接入。当前脚本只处理排期与校验，不做假发布。
