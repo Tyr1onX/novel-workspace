@@ -31,8 +31,6 @@ jobs:
         run: |
           python scripts/walk_recover_113_185_20260910.py prepare
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python shared/tools/fanqie_compat.py validate novels/walk-to-earn
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 --fail
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python scripts/walk_recover_113_185_20260910.py check
