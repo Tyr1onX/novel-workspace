@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-09T22:26:05+00:00",
+  "updated_at": "2026-09-09T22:30:41+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -417,12 +417,33 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-16",
       "authorized": true,
-      "status": "pending",
+      "status": "partial_failed",
       "audit": {
         "status": "passed",
         "basis": "Recovery fill for 2026-09-16 after chapters 111-112 were confirmed on Fanqie. Chapters 113-115 are rewritten with non-repeated body text and complete the same five-chapter 00:00 release day."
       },
-      "reason": "Do not retry 111-112; fill the remaining three chapters for 2026-09-16."
+      "reason": "Do not retry 111-112; fill the remaining three chapters for 2026-09-16.",
+      "result": {
+        "success": 1,
+        "failed": 2,
+        "confirmed_success_chapters": "113",
+        "failed_or_unprocessed_chapters": "114-115",
+        "reason": "Fanqie accepted chapter 113, then stopped at chapter 114 with duplicate chapter or paragraph detection."
+      }
+    },
+    {
+      "id": "walk-recover-114-115-fill-20260916-20260910",
+      "action": "create",
+      "chapters": "114-115",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-16",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "Recovery fill after chapters 111-113 were confirmed for 2026-09-16. Chapters 114-115 are rewritten to avoid repeated body templates."
+      },
+      "reason": "Fill the remaining two chapters for 2026-09-16 without retrying 111-113."
     },
     {
       "id": "walk-recover-116-185-schedule-through-20260930-20260910",
@@ -434,9 +455,9 @@
       "status": "pending",
       "audit": {
         "status": "passed",
-        "basis": "Recovery continuation after the 2026-09-16 partial platform success. Chapters 116-185 form fourteen complete five-chapter release groups from 2026-09-17 through 2026-09-30 at 00:00 Asia/Shanghai."
+        "basis": "Recovery continuation from 2026-09-17 to 2026-09-30. Chapters 116-185 form fourteen complete five-chapter release groups at 00:00 Asia/Shanghai."
       },
-      "reason": "Schedule the remaining September closeout chapters through 2026-09-30."
+      "reason": "Schedule remaining September chapters through 2026-09-30."
     }
   ]
 }
