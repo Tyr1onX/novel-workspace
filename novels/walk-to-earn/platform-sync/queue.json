@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-05T14:01:10+00:00",
+  "updated_at": "2026-09-09T14:31:59+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -383,6 +383,20 @@
       },
       "reason": "Reflow all pending Walk chapters into ten five-chapter release days: 61-65 on 2026-09-06 through 106-110 on 2026-09-15.",
       "completed_at": "2026-09-05T14:01:10+00:00"
+    },
+    {
+      "id": "walk-create-111-185-schedule-through-20260930-20260909",
+      "action": "create",
+      "chapters": "111-185",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-16",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "Author requested completing Walk to Earn through 2026-09-30. Current completed schedule ends at chapter 110 on 2026-09-15. Chapters 111-185 are local continuation text, each above 2000 non-whitespace body characters, forming 15 complete five-chapter release groups from 2026-09-16 through 2026-09-30 at 00:00 Asia/Shanghai. The batch keeps the 0.12元/有效步 stage, uses no second system, and keeps time, weather, transport, body and work constraints active."
+      },
+      "reason": "Create missing Walk chapters 111-185 as complete daily groups: 111-115 on 2026-09-16 through 181-185 on 2026-09-30."
     }
   ]
 }

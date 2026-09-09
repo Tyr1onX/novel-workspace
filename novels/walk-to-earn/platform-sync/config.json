@@ -12,6 +12,6 @@
     "require_explicit_authorization": true,
     "require_audit_passed": true,
     "stop_on_create_failure": true,
-    "max_mutations_per_run": 30
+    "max_mutations_per_run": 90
   }
 }
