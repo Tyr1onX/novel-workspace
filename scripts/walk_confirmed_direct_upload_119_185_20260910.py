@@ -60,9 +60,10 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--runtime", required=True)
     args = parser.parse_args()
-    run_upload(args.runtime, "119-120", "2026-09-17", 2)
+    # 119-120 have already been confirmed on platform at 2026-09-17 00:00.
+    # Do not touch them again; continue from the first remaining gap.
     run_upload(args.runtime, "121-185", "2026-09-18", 65)
-    print("CONFIRMED_RECOVERY_UPLOAD_COMPLETE chapters=119-185")
+    print("CONFIRMED_RECOVERY_UPLOAD_COMPLETE chapters=121-185")
     return 0
 
 
