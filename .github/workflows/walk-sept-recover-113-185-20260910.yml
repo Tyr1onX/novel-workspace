@@ -61,14 +61,14 @@ jobs:
         env:
           PYTHONUTF8: "1"
         run: |
-          python shared/tools/fanqie_runtime_bridge.py --runtime "${{ steps.runtime.outputs.path }}" --same-time-group-size 5 --same-time 00:00 -- upload novels/walk-to-earn/chapters --book-id 7677956141673892926 --chapters 113-115 --schedule 2026-09-16 --per-day 5 --time 00:00 --use-ai --headless
+          "y" | python shared/tools/fanqie_runtime_bridge.py --runtime "${{ steps.runtime.outputs.path }}" --same-time-group-size 5 --same-time 00:00 -- upload novels/walk-to-earn/chapters --book-id 7677956141673892926 --chapters 113-115 --schedule 2026-09-16 --per-day 5 --time 00:00 --use-ai --headless
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Upload recovery continuation through 2026-09-30
         shell: powershell
         env:
           PYTHONUTF8: "1"
         run: |
-          python shared/tools/fanqie_runtime_bridge.py --runtime "${{ steps.runtime.outputs.path }}" --same-time-group-size 5 --same-time 00:00 -- upload novels/walk-to-earn/chapters --book-id 7677956141673892926 --chapters 116-185 --schedule 2026-09-17 --per-day 5 --time 00:00 --use-ai --headless
+          "y" | python shared/tools/fanqie_runtime_bridge.py --runtime "${{ steps.runtime.outputs.path }}" --same-time-group-size 5 --same-time 00:00 -- upload novels/walk-to-earn/chapters --book-id 7677956141673892926 --chapters 116-185 --schedule 2026-09-17 --per-day 5 --time 00:00 --use-ai --headless
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Finalize recovery and remove temporary files
         shell: powershell
