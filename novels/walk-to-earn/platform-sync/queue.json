@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-09T22:11:58+00:00",
+  "updated_at": "2026-09-09T22:21:18+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -391,12 +391,52 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-16",
       "authorized": true,
-      "status": "pending",
+      "status": "partial_failed",
       "audit": {
         "status": "passed",
         "basis": "Author requested completing Walk to Earn through 2026-09-30. Current completed schedule ends at chapter 110 on 2026-09-15. Chapters 111-185 are local continuation text, each above 2000 non-whitespace body characters, forming 15 complete five-chapter release groups from 2026-09-16 through 2026-09-30 at 00:00 Asia/Shanghai. The batch keeps the 0.12元/有效步 stage, uses no second system, and keeps time, weather, transport, body and work constraints active."
       },
-      "reason": "Create missing Walk chapters 111-185 as complete daily groups: 111-115 on 2026-09-16 through 181-185 on 2026-09-30."
+      "reason": "Create missing Walk chapters 111-185 as complete daily groups: 111-115 on 2026-09-16 through 181-185 on 2026-09-30.",
+      "attempted_at": "2026-09-09T22:21:18+00:00",
+      "result": {
+        "success": 2,
+        "failed": 73,
+        "confirmed_success_chapters": "111-112",
+        "failed_or_unprocessed_chapters": "113-185",
+        "reason": "Fanqie accepted chapters 111-112, then stopped at chapter 113 with duplicate chapter or paragraph detection. Recovery must not retry 111-112."
+      },
+      "recovery": [
+        "walk-recover-113-115-fill-20260916-20260910",
+        "walk-recover-116-185-schedule-through-20260930-20260910"
+      ]
+    },
+    {
+      "id": "walk-recover-113-115-fill-20260916-20260910",
+      "action": "create",
+      "chapters": "113-115",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-16",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "Recovery fill for 2026-09-16 after chapters 111-112 were confirmed on Fanqie. Chapters 113-115 are rewritten with non-repeated body text and complete the same five-chapter 00:00 release day."
+      },
+      "reason": "Do not retry 111-112; fill the remaining three chapters for 2026-09-16."
+    },
+    {
+      "id": "walk-recover-116-185-schedule-through-20260930-20260910",
+      "action": "create",
+      "chapters": "116-185",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-17",
+      "authorized": true,
+      "status": "pending",
+      "audit": {
+        "status": "passed",
+        "basis": "Recovery continuation after the 2026-09-16 partial platform success. Chapters 116-185 form fourteen complete five-chapter release groups from 2026-09-17 through 2026-09-30 at 00:00 Asia/Shanghai."
+      },
+      "reason": "Schedule the remaining September closeout chapters through 2026-09-30."
     }
   ]
 }
