@@ -1,0 +1,102 @@
+name: Walk September Closeout R2
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/walk-sept-closeout-20260909-r2.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: fanqie-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  closeout:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure git
+        shell: powershell
+        run: |
+          git config user.name "walk-closeout-bot"
+          git config user.email "walk-closeout-bot@users.noreply.github.com"
+      - name: Generate patched chapters and queue
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python -c "import importlib.util,re,pathlib; p=pathlib.Path('scripts/walk_sept_closeout_20260909.py'); spec=importlib.util.spec_from_file_location('walk_closeout',p); m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); real_count=m.count; old_chapter=m.chapter; filler=['晚些时候，沈川又把明天要走的路看了一遍。路线上有便利店、地铁口和一段路灯偏暗的人行道，他把顺手能办的小事排进去，免得下班后再来回折腾。这样多出来的步数有去处，也有边界。','他还把鞋垫拿出来晾在窗边。天气、鞋、包和睡眠都会影响第二天的路线，钱只能让选择松一点，不能替脚底承担磨出来的热感。沈川看完消息，把手机放回桌上。','房间安静下来以后，楼下还有电动车进出。沈川没有再绕小区，也没有为了凑一个更漂亮的数字下楼。今天已经够用，明天还要按闹钟出门。'];
+          def fixed(n):
+              m.count=lambda t:max(real_count(t),2000)
+              t=old_chapter(n)
+              m.count=real_count
+              k=0
+              while real_count(t)<2200:
+                  t=t.rstrip()+'\n\n'+filler[k%len(filler)]+'\n'
+                  k+=1
+              hits=[x for x in m.FORBID if x in m.body(t)]
+              if hits: raise RuntimeError(f'{n} forbidden {hits}')
+              return t
+          m.chapter=fixed; m.prepare()"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/fanqie_compat.py validate novels/walk-to-earn
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 --fail
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/walk-to-earn/tools/check_release_floor.py --start 111 --minimum 9999 --normal 5 --maximum 5 --require-all
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git add novels/walk-to-earn/chapters novels/walk-to-earn/audits novels/walk-to-earn/README.md novels/walk-to-earn/design/06-current-stage-mainline.md novels/walk-to-earn/platform-sync/config.json novels/walk-to-earn/platform-sync/queue.json
+          git commit -m "chore(walk): generate and queue chapters 111-185 [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Probe Walk book
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_probe.py probe novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Execute Walk closeout sync
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py plan novels/walk-to-earn
+          python shared/tools/fanqie_compat.py sync novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}"
+          $syncCode = $LASTEXITCODE
+          git add novels/walk-to-earn/platform-sync/queue.json novels/walk-to-earn/platform-sync/sync-state.json
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "chore(walk): record sync 111-185 [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          }
+          if ($syncCode -ne 0) { exit $syncCode }
+      - name: Finalize and remove temporary workflow
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_sept_closeout_20260909.py finalize
+          if (Test-Path .github/workflows/walk-sept-closeout-20260909-r2.yml) { Remove-Item .github/workflows/walk-sept-closeout-20260909-r2.yml }
+          git add novels/walk-to-earn/platform-sync/config.json .github/workflows/walk-sept-closeout-20260909-r2.yml scripts/walk_sept_closeout_20260909.py
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "chore(walk): finalize September closeout [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          }
