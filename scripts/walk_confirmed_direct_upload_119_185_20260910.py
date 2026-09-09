@@ -60,11 +60,11 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--runtime", required=True)
     args = parser.parse_args()
-    # 119-120 are confirmed on 2026-09-17; 121-122 are confirmed on 2026-09-18.
-    # Complete the remaining 2026-09-18 group, then continue full 5-chapter days.
-    run_upload(args.runtime, "123-125", "2026-09-18", 3)
-    run_upload(args.runtime, "126-185", "2026-09-19", 60)
-    print("CONFIRMED_RECOVERY_UPLOAD_COMPLETE chapters=123-185")
+    # 119-120 are confirmed on 2026-09-17; 121-125 are confirmed on 2026-09-18.
+    # Continue the full 2026-09-19 group first, then the remaining days.
+    run_upload(args.runtime, "126-130", "2026-09-19", 5)
+    run_upload(args.runtime, "131-185", "2026-09-20", 55)
+    print("CONFIRMED_RECOVERY_UPLOAD_COMPLETE chapters=126-185")
     return 0
 
 
