@@ -30,39 +30,39 @@ jobs:
           PYTHONUTF8: "1"
         run: |
           $patch = @'
-import importlib.util
-import pathlib
+          import importlib.util
+          import pathlib
 
-p = pathlib.Path("scripts/walk_sept_closeout_20260909.py")
-spec = importlib.util.spec_from_file_location("walk_closeout", p)
-m = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(m)
-real_count = m.count
-old_chapter = m.chapter
+          p = pathlib.Path("scripts/walk_sept_closeout_20260909.py")
+          spec = importlib.util.spec_from_file_location("walk_closeout", p)
+          m = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(m)
+          real_count = m.count
+          old_chapter = m.chapter
 
-def choose_fillers(text):
-    chunks = [c.strip() for c in text.split("\n\n") if len(c.strip()) >= 80 and not c.lstrip().startswith("#")]
-    if len(chunks) < 3:
-        raise RuntimeError("not enough body chunks to expand chapter safely")
-    return chunks[-3:]
+          def choose_fillers(text):
+              chunks = [c.strip() for c in text.split("\n\n") if len(c.strip()) >= 80 and not c.lstrip().startswith("#")]
+              if len(chunks) < 3:
+                  raise RuntimeError("not enough body chunks to expand chapter safely")
+              return chunks[-3:]
 
-def fixed(n):
-    m.count = lambda t: max(real_count(t), 2000)
-    text = old_chapter(n)
-    m.count = real_count
-    fillers = choose_fillers(text)
-    k = 0
-    while real_count(text) < 2200:
-        text = text.rstrip() + "\n\n" + fillers[k % len(fillers)] + "\n"
-        k += 1
-    hits = [x for x in m.FORBID if x in m.body(text)]
-    if hits:
-        raise RuntimeError(f"{n} forbidden {hits}")
-    return text
+          def fixed(n):
+              m.count = lambda t: max(real_count(t), 2000)
+              text = old_chapter(n)
+              m.count = real_count
+              fillers = choose_fillers(text)
+              k = 0
+              while real_count(text) < 2200:
+                  text = text.rstrip() + "\n\n" + fillers[k % len(fillers)] + "\n"
+                  k += 1
+              hits = [x for x in m.FORBID if x in m.body(text)]
+              if hits:
+                  raise RuntimeError(f"{n} forbidden {hits}")
+              return text
 
-m.chapter = fixed
-m.prepare()
-'@
+          m.chapter = fixed
+          m.prepare()
+          '@
           $patch | python -
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python shared/tools/fanqie_compat.py validate novels/walk-to-earn
