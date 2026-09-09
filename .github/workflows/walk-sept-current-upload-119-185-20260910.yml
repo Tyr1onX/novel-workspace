@@ -1,5 +1,5 @@
 name: Walk September Current Upload 119-185
-# rerun: 20260910-123-185-after-ch123-125-rewrite
+# rerun: 20260910-126-185-after-ch126-130-rewrite
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
         run: |
           python shared/tools/fanqie_probe.py probe novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Upload current recovery 123-185
+      - name: Upload current recovery 126-185
         shell: powershell
         env:
           PYTHONUTF8: "1"
