@@ -1,0 +1,64 @@
+name: Walk September Current Upload 119-185
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/walk-sept-current-upload-119-185-20260910.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upload:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate current chapters only
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 --fail
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Resolve runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Probe book
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_probe.py probe novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload current recovery 119-185
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_confirmed_direct_upload_119_185_20260910.py --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Finalize queue
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_recover_114_185_20260910.py finalize
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git config user.name "walk-recovery-bot"
+          git config user.email "walk-recovery-bot@users.noreply.github.com"
+          git add novels/walk-to-earn/platform-sync novels/walk-to-earn/audits
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "chore(walk): record September recovery completion [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          }
