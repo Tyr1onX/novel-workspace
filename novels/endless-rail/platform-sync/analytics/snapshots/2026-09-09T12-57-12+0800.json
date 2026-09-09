@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "source": "fanqie-author-dashboard",
+  "collected_at": "2026-09-09T12:57:12+08:00",
+  "project": "endless-rail",
+  "stats": {
+    "stats_col_time": "1788796800",
+    "update_time": "1788915441",
+    "reader_uv_daily": "317",
+    "reader_uv_daily_incr": "-58.88",
+    "reader_uv_14day_cnt": 8060,
+    "reader_uv_14day_incr": "-6.01",
+    "shelf_cnt_daily": 31,
+    "shelf_cnt_daily_incr": "-68.04",
+    "pursue_cnt_daily": 5,
+    "pursue_cnt_daily_incr": "25",
+    "reminder_cnt_daily": 2,
+    "reminder_cnt_daily_incr": "0",
+    "pursue_read_rate": "0",
+    "read_completion_rate": "0.03",
+    "read_completion_level": 2,
+    "mark_score": "0",
+    "mark_score_incr": "0"
+  },
+  "income": {
+    "verified_book": true,
+    "stats_through": "09-08 24:00",
+    "yesterday_fanqie_income": 2.59,
+    "cumulative_fanqie_income": 175.37
+  }
+}
