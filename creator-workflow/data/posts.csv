@@ -1,0 +1,10 @@
+id,platform,account,title,type,status,scheduled_at,published_at,archive_path,source_file,notes
+wzhy-001,wechat_mp,闻舟会用,微信越来越占空间？先清这3处，重要聊天别乱删,article,archived,,,creator-workflow/archive/wenzhouhuiyong/001-wechat-storage-cleanup.md,file_000000001ac88211b998b35f31a1cb7d,另有 docx 含截图版本 file_00000000a15481fa86e3ce27eb346a90
+wzhy-002,wechat_mp,闻舟会用,不会打字也没关系，直接给豆包“打个电话”就行,article,archived,,,creator-workflow/archive/wenzhouhuiyong/002-doubao-voice-call.md,file_000000004d8481fb8cb9b865c5cfa6ee,
+wzhy-003,wechat_mp,闻舟会用,有人让你打开“屏幕共享”，先挂电话：不管他说自己是谁,article,archived,,,creator-workflow/archive/wenzhouhuiyong/003-screen-sharing-scam.md,file_00000000c40c820697875b925f1ef41c,使用稳定版；旧版 file_00000000e6ac8206b8b9392003f754b6 仅保留为历史
+wzhy-004,wechat_mp,闻舟会用,微信消息不提醒怎么办？先检查这4个地方,article,archived,,,creator-workflow/archive/wenzhouhuiyong/004-wechat-notification.md,file_00000000e53881f59898cf196d90d930,
+wzhy-005,wechat_mp,闻舟会用,微信字体太小怎么调大？这2个地方一起调,article,archived,,,creator-workflow/archive/wenzhouhuiyong/005-wechat-font-size.md,file_00000000fd1c8206b7dd9657fb0622f6,
+wzhy-006,wechat_mp,闻舟会用,微信聊天记录怎么迁移到新手机？旧手机先别删,article,archived,,,creator-workflow/archive/wenzhouhuiyong/006-wechat-chat-migration.md,file_00000000d86881fb88f1980a97affdd5,
+wzhy-007,wechat_mp,闻舟会用,微信转账转错人了怎么办？先看这3种情况,article,archived,,,creator-workflow/archive/wenzhouhuiyong/007-wechat-transfer-mistake.md,file_00000000f080822fa68d219babe6df68,
+wzhy-008,wechat_mp,闻舟会用,微信语音声音太小怎么办？先检查这4个地方,article,archived,,,creator-workflow/archive/wenzhouhuiyong/008-wechat-voice-low-volume.md,file_00000000697482099e4152515481585d,
+7byte-asset-001,douyin,7BYTE,7BYTE：让计算机更简单,brand_asset,archived,,,creator-workflow/archive/7byte/ASSETS.md,file_00000000d17c821198c6486110b54b50,品牌图已在文件库，仓库先登记不上传二进制
