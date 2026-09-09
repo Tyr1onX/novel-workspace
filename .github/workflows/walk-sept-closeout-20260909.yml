@@ -1,0 +1,112 @@
+name: Walk September Closeout
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/walk-sept-closeout-20260909.yml"
+      - "scripts/walk_sept_closeout_20260909.py"
+  workflow_dispatch:
+
+concurrency:
+  group: walk-sept-closeout-20260909
+  cancel-in-progress: false
+
+jobs:
+  closeout:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        shell: powershell
+        run: |
+          git config user.name "walk-closeout-bot"
+          git config user.email "walk-closeout-bot@users.noreply.github.com"
+
+      - name: Generate chapters and queue operation
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_sept_closeout_20260909.py prepare
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Validate repository plan
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py validate novels/walk-to-earn
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/fanqie_compat.py plan novels/walk-to-earn
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Persist generated closeout before platform mutation
+        shell: powershell
+        run: |
+          git add novels/walk-to-earn/chapters/chapter-*.md `
+                  novels/walk-to-earn/chapters/index.md `
+                  novels/walk-to-earn/README.md `
+                  novels/walk-to-earn/design/06-current-stage-mainline.md `
+                  novels/walk-to-earn/audits/continuation-111-185-20260909.md `
+                  novels/walk-to-earn/platform-sync/config.json `
+                  novels/walk-to-earn/platform-sync/queue.json
+          git commit -m "feat(walk): add chapters 111-185 through September [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+
+      - name: Probe Walk book
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_probe.py probe novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Execute Walk September closeout sync
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py sync novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Finalize ledgers and remove temporary workflow
+        if: always()
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_sept_closeout_20260909.py finalize
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git add novels/walk-to-earn/platform-sync/config.json `
+                  novels/walk-to-earn/platform-sync/queue.json `
+                  novels/walk-to-earn/platform-sync/sync-state.json `
+                  .github/workflows/walk-sept-closeout-20260909.yml `
+                  scripts/walk_sept_closeout_20260909.py
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "chore(walk): record September closeout sync [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          } else {
+            Write-Host "No final ledger changes."
+          }
