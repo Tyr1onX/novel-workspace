@@ -39,22 +39,40 @@ jobs:
           spec.loader.exec_module(m)
           real_count = m.count
           old_chapter = m.chapter
+          TEMPLATES = [
+              r"\u6c88\u5ddd\u628a\u8fd9\u4ef6\u4e8b\u8bb0\u5728\u5907\u5fd8\u5f55\u6700\u4e0b\u9762\u3002\u4e0d\u662f\u4e3a\u4e86\u7ed9\u8c01\u770b\uff0c\u4e5f\u4e0d\u662f\u4e3a\u4e86\u628a\u4e00\u5929\u6574\u7406\u5f97\u5f88\u6f02\u4eae\uff0c\u53ea\u662f\u6015\u660e\u65e9\u53c8\u5fd8\u3002{a}\u3001{d}\u3001{g}\u4e09\u4e2a\u70b9\u79bb\u5f97\u4e0d\u7b97\u8fdc\uff0c\u53ef\u4e2d\u95f4\u6709\u7ea2\u706f\u3001\u95e8\u7981\u548c\u4e00\u6bb5\u5bb9\u6613\u79ef\u6c34\u7684\u8def\u3002\u771f\u8d70\u8d77\u6765\uff0c\u5730\u56fe\u4e0a\u7684\u76f4\u7ebf\u603b\u8981\u88ab\u73b0\u5b9e\u6298\u4e00\u4e0b\u3002",
+              r"\u4ed6\u628a{c}\u3001{f}\u548c{i}\u5206\u6210\u4e09\u7c7b\uff1a\u4e0a\u73ed\u524d\u5fc5\u987b\u5904\u7406\u7684\uff0c\u5348\u4f11\u80fd\u987a\u624b\u529e\u7684\uff0c\u665a\u4e0a\u53ef\u4ee5\u653e\u5230\u660e\u5929\u7684\u3002\u8fd9\u4e2a\u5206\u7c7b\u6ca1\u6709\u4ec0\u4e48\u6280\u5de7\uff0c\u53ea\u662f\u642c\u5230\u781a\u6d77\u4ee5\u540e\u6162\u6162\u517b\u51fa\u6765\u7684\u4e60\u60ef\u3002\u94b1\u591a\u4e00\u70b9\u4ee5\u540e\uff0c\u4ed6\u6700\u5148\u4e70\u5230\u7684\u4e0d\u662f\u5962\u4f88\u611f\uff0c\u800c\u662f\u4e0d\u7528\u6bcf\u4ef6\u5c0f\u4e8b\u90fd\u6324\u5728\u540c\u4e00\u4e2a\u534a\u5c0f\u65f6\u91cc\u3002",
+              r"{b}\u540e\u6765\u53c8\u53d1\u6765\u4e00\u6761\u6d88\u606f\uff0c\u95ee\u7684\u5374\u4e0d\u662f\u6b65\u6570\u3002\u6c88\u5ddd\u770b\u89c1\u65f6\u5df2\u7ecf\u5728\u697c\u4e0b\u6d17\u624b\u6c60\u8fb9\uff0c\u624b\u4e0a\u8fd8\u6709\u4e00\u70b9\u6d17\u8863\u6db2\u7684\u6ed1\u611f\u3002\u4ed6\u56de\u5f97\u5f88\u77ed\uff0c\u53ea\u628a\u80fd\u786e\u5b9a\u7684\u90e8\u5206\u8bf4\u6e05\u695a\u3002\u5269\u4e0b\u7684\u7b49\u660e\u5929\u8d70\u5230\u516c\u53f8\u518d\u770b\uff0c\u624b\u673a\u4e0a\u63d0\u524d\u8ba8\u8bba\u534a\u5929\uff0c\u4e5f\u4e0d\u4f1a\u8ba9\u95e8\u53e3\u90a3\u76cf\u706f\u81ea\u5df1\u4eae\u8d77\u6765\u3002",
+              r"\u7a97\u5916\u6709\u8f66\u4ece\u5c0f\u533a\u95e8\u53e3\u8fdb\u6765\uff0c\u8f6e\u80ce\u538b\u8fc7\u6d45\u6c34\uff0c\u58f0\u97f3\u5f88\u8f7b\u3002\u6c88\u5ddd\u6ca1\u6709\u518d\u6253\u5f00\u8ba1\u6b65\u9875\u9762\u3002\u4eca\u5929\u7684{step}\u6b65\u548c{money:.2f}\u5143\u5df2\u7ecf\u591f\u6e05\u695a\uff0c\u7d2f\u8ba1{km}km\u4e5f\u4e0d\u4f1a\u56e0\u4e3a\u591a\u770b\u4e24\u773c\u53d8\u591a\u3002\u96e8\u58f0\u843d\u4e0b\u6765\u4ee5\u540e\uff0c\u4ed6\u628a\u95f9\u949f\u5f80\u524d\u8c03\u4e86\u5341\u5206\u949f\u3002",
+              r"\u7b2c\u4e8c\u5929\u7684\u8def\u7ebf\u6700\u540e\u505c\u5728\u4e24\u79cd\u65b9\u6848\u4e0a\u3002\u96e8\u505c\u5c31\u4ece{a}\u8d70\uff0c\u987a\u8def\u5904\u7406{c}\uff1b\u96e8\u4e0d\u505c\u5c31\u5148\u5750\u4e00\u6bb5\u8f66\uff0c\u5230{d}\u518d\u4e0b\u6765\u3002\u6c88\u5ddd\u628a\u4e24\u6761\u8def\u90fd\u4fdd\u5b58\u597d\uff0c\u6ca1\u6709\u628a\u9009\u62e9\u63d0\u524d\u8bf4\u6b7b\u3002\u5f88\u591a\u5de5\u4f5c\u65e5\u5c31\u662f\u8fd9\u6837\uff0c\u80fd\u8d70\u5c31\u8d70\uff0c\u4e0d\u80fd\u8d70\u4e5f\u522b\u548c\u81ea\u5df1\u8f83\u52b2\u3002",
+          ]
 
-          def choose_fillers(text):
-              chunks = [c.strip() for c in text.split("\n\n") if len(c.strip()) >= 80 and not c.lstrip().startswith("#")]
-              if len(chunks) < 3:
-                  raise RuntimeError("not enough body chunks to expand chapter safely")
-              return chunks[-3:]
+          def extra_paragraphs(n):
+              title = m.TITLES[n - m.START]
+              a, b, c = m.p(n, 1)
+              d, e, f = m.p(n, 4)
+              g, h, i = m.p(n, 7)
+              step = 10800 + (n * 137) % 9200
+              money = round(step * 0.12, 2)
+              km = round(1500 + (n - 110) * 10.4 + (n % 5) * 0.7, 1)
+              data = dict(title=title, a=a, b=b, c=c, d=d, e=e, f=f, g=g, h=h, i=i, step=step, money=money, km=km)
+              return [t.encode("ascii").decode("unicode_escape").format(**data) for t in TEMPLATES]
 
           def fixed(n):
               m.count = lambda t: max(real_count(t), 2000)
               text = old_chapter(n)
               m.count = real_count
-              fillers = choose_fillers(text)
-              k = 0
-              while real_count(text) < 2200:
-                  text = text.rstrip() + "\n\n" + fillers[k % len(fillers)] + "\n"
-                  k += 1
+              for paragraph in extra_paragraphs(n):
+                  if paragraph in text:
+                      continue
+                  text = text.rstrip() + "\n\n" + paragraph + "\n"
+                  if real_count(text) >= 2350:
+                      break
+              if real_count(text) < 2200:
+                  raise RuntimeError(f"{n} still short {real_count(text)}")
+              chunks = [c.strip() for c in m.body(text).split("\n\n") if c.strip()]
+              if len(chunks) != len(set(chunks)):
+                  raise RuntimeError(f"{n} duplicate paragraph after expansion")
               hits = [x for x in m.FORBID if x in m.body(text)]
               if hits:
                   raise RuntimeError(f"{n} forbidden {hits}")
