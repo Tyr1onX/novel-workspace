@@ -1,0 +1,97 @@
+name: Walk September Recovery 113-185
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/walk-sept-recover-113-185-20260910.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  recover:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure git
+        shell: powershell
+        run: |
+          git config user.name "walk-recovery-bot"
+          git config user.email "walk-recovery-bot@users.noreply.github.com"
+      - name: Prepare recovery chapters and queue
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_recover_113_185_20260910.py prepare
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/fanqie_compat.py validate novels/walk-to-earn
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 --fail
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/walk_recover_113_185_20260910.py check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git add novels/walk-to-earn/chapters novels/walk-to-earn/audits novels/walk-to-earn/platform-sync/config.json novels/walk-to-earn/platform-sync/queue.json
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "chore(walk): recover chapters 113-185 after partial platform success [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          }
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Probe Walk book
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_probe.py probe novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload recovery fill for 2026-09-16
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_runtime_bridge.py --runtime "${{ steps.runtime.outputs.path }}" --same-time-group-size 5 --same-time 00:00 -- upload novels/walk-to-earn/chapters --book-id 7677956141673892926 --chapters 113-115 --schedule 2026-09-16 --per-day 5 --time 00:00 --use-ai --headless
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload recovery continuation through 2026-09-30
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_runtime_bridge.py --runtime "${{ steps.runtime.outputs.path }}" --same-time-group-size 5 --same-time 00:00 -- upload novels/walk-to-earn/chapters --book-id 7677956141673892926 --chapters 116-185 --schedule 2026-09-17 --per-day 5 --time 00:00 --use-ai --headless
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Finalize recovery and remove temporary files
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_recover_113_185_20260910.py finalize
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $paths = @(
+            ".github/workflows/walk-sept-closeout-20260909-r2.yml",
+            ".github/workflows/walk-sept-recover-113-185-20260910.yml",
+            "scripts/walk_sept_closeout_20260909.py",
+            "scripts/walk_closeout_patch_ascii_20260910.py",
+            "scripts/walk_recover_113_185_20260910.py"
+          )
+          foreach ($p in $paths) {
+            if (Test-Path $p) { Remove-Item $p }
+          }
+          git add -A novels/walk-to-earn/platform-sync novels/walk-to-earn/audits .github/workflows scripts
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "chore(walk): finalize September recovery [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          }
