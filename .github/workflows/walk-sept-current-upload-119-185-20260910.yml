@@ -1,5 +1,5 @@
 name: Walk September Current Upload 119-185
-# rerun: 20260910-126-185-final-topup-safe-powershell
+# rerun: 20260910-126-185-python-topup
 
 on:
   push:
@@ -21,25 +21,36 @@ jobs:
         with:
           fetch-depth: 0
       - name: Final local topup for 126 and 129
-        shell: powershell
+        shell: bash
         env:
           PYTHONUTF8: "1"
         run: |
-          $ch126 = "novels/walk-to-earn/chapters/chapter-126.md"
-          $ch129 = "novels/walk-to-earn/chapters/chapter-129.md"
-          if (-not (Select-String -Path $ch126 -Pattern "等门开不是空耗" -SimpleMatch -Quiet)) {
-            Add-Content -Path $ch126 -Encoding utf8 -Value '`r`n`r`n等门开不是空耗。周航后来把这句话念了两遍，像给自己找台阶，也像真想明白了。沈川没有拆穿他，只把纸巾递过去。早到、等候、重新确认尺寸，这些看起来不产生结果的时间，反而让他们少买错一件东西。系统不会给等待单独结算，可生活会。'
-          }
-          if (-not (Select-String -Path $ch129 -Pattern "三十块买到的是不添乱" -SimpleMatch -Quiet)) {
-            Add-Content -Path $ch129 -Encoding utf8 -Value '`r`n`r`n三十块买到的是不添乱。周航后来坐在新椅子上承认，如果那箱东西是他们硬抬上来的，他大概会在拧第一颗螺丝时就开始后悔。沈川把这句话记住了。余量有时候不是多做什么，而是少制造一个需要忍的麻烦。'
-          }
+          python - <<'PY'
+          from pathlib import Path
+          updates = [
+              (
+                  Path('novels/walk-to-earn/chapters/chapter-126.md'),
+                  '等门开不是空耗',
+                  '等门开不是空耗。周航后来把这句话念了两遍，像给自己找台阶，也像真想明白了。沈川没有拆穿他，只把纸巾递过去。早到、等候、重新确认尺寸，这些看起来不产生结果的时间，反而让他们少买错一件东西。系统不会给等待单独结算，可生活会。',
+              ),
+              (
+                  Path('novels/walk-to-earn/chapters/chapter-129.md'),
+                  '三十块买到的是不添乱',
+                  '三十块买到的是不添乱。周航后来坐在新椅子上承认，如果那箱东西是他们硬抬上来的，他大概会在拧第一颗螺丝时就开始后悔。沈川把这句话记住了。余量有时候不是多做什么，而是少制造一个需要忍的麻烦。',
+              ),
+          ]
+          for path, marker, text in updates:
+              body = path.read_text(encoding='utf-8')
+              if marker not in body:
+                  path.write_text(body.rstrip() + '\n\n' + text + '\n', encoding='utf-8')
+          PY
           git config user.name "walk-recovery-bot"
           git config user.email "walk-recovery-bot@users.noreply.github.com"
-          git add $ch126 $ch129
-          if (-not (git diff --cached --quiet)) {
+          git add novels/walk-to-earn/chapters/chapter-126.md novels/walk-to-earn/chapters/chapter-129.md
+          if ! git diff --cached --quiet; then
             git commit -m "fix(walk): final length topup for chapters 126 and 129 [skip ci]"
             git push origin HEAD:main
-          }
+          fi
       - name: Validate current chapters only
         shell: powershell
         env:
