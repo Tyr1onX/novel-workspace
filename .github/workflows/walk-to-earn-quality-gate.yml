@@ -38,6 +38,27 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Reject batch template markers
+        shell: bash
+        run: |
+          set -euo pipefail
+          forbidden=(
+            "这条记录只落在"
+            "旁边写着"
+            "第[0-9一二三四五六七八九十百零]+章第[0-9一二三四五六七八九十百零]+段"
+          )
+          failed=0
+          for pattern in "${forbidden[@]}"; do
+            if grep -R -n -E "$pattern" novels/walk-to-earn/chapters; then
+              echo "Forbidden batch/template marker found: $pattern" >&2
+              failed=1
+            fi
+          done
+          if [[ "$failed" -ne 0 ]]; then
+            echo "Walk to Earn quality gate failed: chapter text still contains batch-generated template markers." >&2
+            exit 1
+          fi
+
       - name: Check protected Walk to Earn facts
         run: python novels/walk-to-earn/tools/check_rebuild_invariants.py
 
