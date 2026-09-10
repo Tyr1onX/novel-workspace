@@ -63,7 +63,7 @@
     }
   },
   "last_read_only_reconcile_request": {
-    "requested_at": "2026-09-10T06:08:00+08:00",
-    "reason": "Before creating or scheduling chapters 159-203, refresh the real Fanqie remote chapter/status/schedule state through the local self-hosted Fanqie runtime. This marker is not a publish-now request and must not authorize platform mutation."
+    "requested_at": "2026-09-10T16:03:00+08:00",
+    "reason": "Trigger the repository's normal Fanqie Sync workflow through a monitored platform-sync path after confirming queue.json still contains the already-authorized pending create operation rail-create-159-168-authorized-20260910. This update does not add a new publish-now request, does not authorize chapter 169+, and does not override fail-closed remote-state checks."
   }
 }
