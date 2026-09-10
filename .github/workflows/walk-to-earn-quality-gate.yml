@@ -29,98 +29,94 @@ permissions:
 
 jobs:
   quality:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
 
       - name: Reject batch template markers
-        shell: bash
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
         run: |
-          set -euo pipefail
-          forbidden=(
-            "这条记录只落在"
-            "旁边写着"
-            "第[0-9一二三四五六七八九十百零]+章第[0-9一二三四五六七八九十百零]+段"
-          )
-          failed=0
-          for pattern in "${forbidden[@]}"; do
-            if grep -R -n -E "$pattern" novels/walk-to-earn/chapters; then
-              echo "Forbidden batch/template marker found: $pattern" >&2
-              failed=1
-            fi
-          done
-          if [[ "$failed" -ne 0 ]]; then
-            echo "Walk to Earn quality gate failed: chapter text still contains batch-generated template markers." >&2
-            exit 1
-          fi
+          python novels/walk-to-earn/tools/check_template_markers.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Check protected Walk to Earn facts
-        run: python novels/walk-to-earn/tools/check_rebuild_invariants.py
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/check_rebuild_invariants.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Run full novel gate on every current chapter
-        shell: bash
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
         run: |
-          set -euo pipefail
-          mkdir -p .audit
-          mapfile -t chapters < <(find novels/walk-to-earn/chapters -maxdepth 1 -type f -name 'chapter-*.md' | sort)
-          if (( ${#chapters[@]} == 0 )); then
-            echo "No Walk to Earn chapters found."
+          New-Item -ItemType Directory -Force .audit | Out-Null
+          $chapters = @(Get-ChildItem -Path "novels/walk-to-earn/chapters" -Filter "chapter-*.md" | Sort-Object Name | ForEach-Object { $_.FullName })
+          if ($chapters.Count -eq 0) {
+            Write-Error "No Walk to Earn chapters found."
             exit 1
-          fi
-          python shared/tools/novel_gate.py "${chapters[@]}" 2>&1 | tee .audit/walk-to-earn-novel-gate.log
+          }
+          python shared/tools/novel_gate.py @chapters *> .audit\walk-to-earn-novel-gate.log
+          $status = $LASTEXITCODE
+          Get-Content .audit\walk-to-earn-novel-gate.log
+          if ($status -ne 0) { exit $status }
 
       - name: Enforce per-chapter body floor
-        shell: bash
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
         run: |
-          set -euo pipefail
-          mkdir -p novels/walk-to-earn/audits
-          set +e
-          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 --fail \
-            | tee .audit/walk-to-earn-chapter-lengths.log \
-            > novels/walk-to-earn/audits/chapter-lengths-current.json
-          status=${PIPESTATUS[0]}
-          set -e
-          cat novels/walk-to-earn/audits/chapter-lengths-current.json
-          exit "$status"
+          New-Item -ItemType Directory -Force novels/walk-to-earn/audits | Out-Null
+          New-Item -ItemType Directory -Force .audit | Out-Null
+          $output = python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 --fail 2>&1
+          $status = $LASTEXITCODE
+          $output | Set-Content -Encoding UTF8 novels/walk-to-earn/audits/chapter-lengths-current.json
+          $output | Set-Content -Encoding UTF8 .audit\walk-to-earn-chapter-lengths.log
+          Get-Content novels/walk-to-earn/audits/chapter-lengths-current.json
+          if ($status -ne 0) { exit $status }
 
       - name: Enforce five-chapter daily release floor
-        shell: bash
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
         run: |
-          set -euo pipefail
-          mkdir -p novels/walk-to-earn/audits
-          set +e
-          python novels/walk-to-earn/tools/check_release_floor.py --start 61 --minimum 9999 --normal 5 --maximum 5 --require-all \
-            | tee .audit/walk-to-earn-release-floor.log \
-            > novels/walk-to-earn/audits/release-floor-current.json
-          status=${PIPESTATUS[0]}
-          set -e
-          cat novels/walk-to-earn/audits/release-floor-current.json
-          exit "$status"
+          New-Item -ItemType Directory -Force novels/walk-to-earn/audits | Out-Null
+          New-Item -ItemType Directory -Force .audit | Out-Null
+          $output = python novels/walk-to-earn/tools/check_release_floor.py --start 61 --minimum 9999 --normal 5 --maximum 5 --require-all 2>&1
+          $status = $LASTEXITCODE
+          $output | Set-Content -Encoding UTF8 novels/walk-to-earn/audits/release-floor-current.json
+          $output | Set-Content -Encoding UTF8 .audit\walk-to-earn-release-floor.log
+          Get-Content novels/walk-to-earn/audits/release-floor-current.json
+          if ($status -ne 0) { exit $status }
 
       - name: Persist current chapter audits
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        shell: bash
+        shell: powershell
         run: |
-          set -euo pipefail
-          paths=(
-            "novels/walk-to-earn/audits/chapter-lengths-current.json"
+          $paths = @(
+            "novels/walk-to-earn/audits/chapter-lengths-current.json",
             "novels/walk-to-earn/audits/release-floor-current.json"
           )
-          if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
-            echo "Chapter audits unchanged."
+          $changed = @(git status --porcelain -- $paths)
+          if ($changed.Count -eq 0) {
+            Write-Host "Chapter audits unchanged."
             exit 0
-          fi
+          }
           git config user.name "walk-quality-bot"
           git config user.email "walk-quality-bot@users.noreply.github.com"
-          git add -- "${paths[@]}"
+          foreach ($path in $paths) { git add -- $path }
           git commit -m "chore(walk): refresh chapter audits"
           git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Upload audit log
         if: always()
