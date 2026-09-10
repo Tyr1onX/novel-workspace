@@ -1,6 +1,7 @@
 name: Walk to Earn Quality Gate
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - "novels/walk-to-earn/chapters/**"
