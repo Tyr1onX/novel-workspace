@@ -1,0 +1,118 @@
+name: Fanqie Authorized Sync Selfhosted
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "novels/death-list/platform-sync/queue.json"
+  workflow_dispatch:
+
+concurrency:
+  group: fanqie-authorized-sync-selfhosted
+  cancel-in-progress: false
+
+jobs:
+  sync-death-list:
+    if: ${{ !contains(github.event.head_commit.message || '', 'record self-hosted sync result') }}
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Rebase to latest main before platform mutation
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+      - name: Validate local Death List sync configuration
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py validate novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/fanqie_compat.py plan novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $queue = Get-Content -Raw -Encoding UTF8 novels/death-list/platform-sync/queue.json | ConvertFrom-Json
+          $op = @($queue.operations | Where-Object { $_.id -eq 'death-list-create-050-054-20260907' })
+          if ($op.Count -ne 1) { throw 'Expected exactly one 50-54 queue operation.' }
+          if ($op[0].status -ne 'pending' -or -not $op[0].authorized -or $op[0].audit.status -ne 'passed') {
+            throw '50-54 is not a pending, explicitly authorized, audit-passed operation.'
+          }
+          if ($op[0].start_date -ne '2026-09-15') { throw 'Unexpected 50-54 schedule date.' }
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Fresh read-only preflight reconciliation
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\fanqie-preflight-death-list.json"
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $r = Get-Content -Raw -Encoding UTF8 $report | ConvertFrom-Json
+          if ($r.book_id -ne '7682312977067822142') { throw 'Book ID mismatch.' }
+          if ($r.remote.numbered_item_count -ne 49 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 49) {
+            throw "Remote prefix changed: expected exactly 1-49 before sync."
+          }
+          if (@($r.differences.remote_only_chapters).Count -ne 0) { throw 'Remote-only chapters detected.' }
+          if (@($r.differences.title_mismatches).Count -ne 0) { throw 'Title mismatch detected.' }
+          if (@($r.differences.position_mismatches).Count -ne 0) { throw 'Position mismatch detected.' }
+          if ($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties.Count -ne 0) { throw 'Duplicate remote chapter numbers detected.' }
+          $expectedLocalOnly = @(50,51,52,53,54,55,56,57,58,59)
+          $actualLocalOnly = @($r.differences.local_only_chapters)
+          if (($actualLocalOnly -join ',') -ne ($expectedLocalOnly -join ',')) {
+            throw "Unexpected local-only set: $($actualLocalOnly -join ',')"
+          }
+          Write-Host 'Preflight reconciliation PASS: remote is exactly 1-49, local-only is 50-59.'
+      - name: Execute authorized scheduled sync
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py sync novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Verify remote 50-54 after sync
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\fanqie-postsync-death-list.json"
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $r = Get-Content -Raw -Encoding UTF8 $report | ConvertFrom-Json
+          if ($r.remote.numbered_item_count -ne 54 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 54) {
+            throw 'Post-sync remote prefix is not exactly 1-54.'
+          }
+          if (@($r.differences.remote_only_chapters).Count -ne 0) { throw 'Remote-only chapters detected after sync.' }
+          if (@($r.differences.title_mismatches).Count -ne 0) { throw 'Title mismatch detected after sync.' }
+          if (@($r.differences.position_mismatches).Count -ne 0) { throw 'Position mismatch detected after sync.' }
+          if ($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties.Count -ne 0) { throw 'Duplicate remote chapter numbers detected after sync.' }
+          foreach ($n in 50..54) {
+            $item = @($r.remote_items | Where-Object { $_.chapter_number -eq $n })
+            if ($item.Count -ne 1) { throw "Chapter $n missing or duplicated after sync." }
+            if ($item[0].status -ne 'scheduled') { throw "Chapter $n is not scheduled after sync: $($item[0].status)" }
+            if ($item[0].scheduled_at -ne '2026-09-15T00:00+08:00') { throw "Chapter $n has unexpected schedule: $($item[0].scheduled_at)" }
+          }
+          Write-Host 'Post-sync verification PASS: chapters 50-54 exist once and are scheduled for 2026-09-15 00:00 +08:00.'
+      - name: Persist synchronization ledgers
+        shell: powershell
+        run: |
+          $paths = @(git diff --name-only | Where-Object { $_ -match '^novels/death-list/platform-sync/(queue|sync-state)\.json$' })
+          if ($paths.Count -eq 0) { throw 'Sync completed but no queue/sync-state changes were produced.' }
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          foreach ($path in $paths) { git add -- $path }
+          git commit -m "chore(fanqie): record self-hosted sync result"
+          git pull --rebase origin main
+          git push origin HEAD:main
