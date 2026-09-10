@@ -7,8 +7,8 @@ from pathlib import Path
 ROOT = Path('novels/walk-to-earn/chapters')
 PATTERNS = [
     ('record-only marker', re.compile('\u8fd9\u6761\u8bb0\u5f55\u53ea\u843d\u5728')),
-    ('beside-written marker', re.compile('\u65c1\u8fb9\u5199\u7740')),
     ('chapter-paragraph marker', re.compile(r'\u7b2c[0-9\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341\u767e\u96f6]+\u7ae0\u7b2c[0-9\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341\u767e\u96f6]+\u6bb5')),
+    ('chapter-title wrapper', re.compile(r'\u7b2c[0-9\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341\u767e\u96f6]+\u7ae0\u300a[^\u300b]{2,60}\u300b\u5f00\u59cb\u65f6')),
 ]
 
 
