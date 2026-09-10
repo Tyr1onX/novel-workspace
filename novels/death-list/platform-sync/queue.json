@@ -3,50 +3,267 @@
   "book_id": "7682312977067822142",
   "operations": [
     {
-      "id": "death-list-create-010-014-20260907", "action": "create", "chapters": "10-14", "status": "completed", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate and read-only Fanqie reconciliation", "source_run": "34063542204", "remote_prefix": "1-9", "remote_status": "published", "remote_differences": "local-only 10-50; no duplicates, title mismatches, or position mismatches", "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-08", "completed_at": "2026-09-06T23:34:51+00:00"
+      "id": "death-list-create-010-014-20260907",
+      "action": "create",
+      "chapters": "10-14",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate and read-only Fanqie reconciliation",
+        "source_run": "34063542204",
+        "remote_prefix": "1-9",
+        "remote_status": "published",
+        "remote_differences": "local-only 10-50; no duplicates, title mismatches, or position mismatches",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-08",
+      "completed_at": "2026-09-06T23:34:51+00:00"
     },
     {
-      "id": "death-list-create-015-019-20260907", "action": "create", "chapters": "15-19", "status": "completed", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate and fresh read-only Fanqie reconciliation", "source_run": "34067329225", "reconcile_run": "34063542204", "reconcile_job": "101607121571", "remote_prefix": "1-14", "remote_status": "published", "remote_differences": "local-only 15-50; no duplicates, title mismatches, or position mismatches", "chapter_body_characters": {"15": 2086, "16": 2103, "17": 2132, "18": 2594, "19": 2021}, "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-08", "completed_at": "2026-09-07T03:03:55+00:00"
+      "id": "death-list-create-015-019-20260907",
+      "action": "create",
+      "chapters": "15-19",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate and fresh read-only Fanqie reconciliation",
+        "source_run": "34067329225",
+        "reconcile_run": "34063542204",
+        "reconcile_job": "101607121571",
+        "remote_prefix": "1-14",
+        "remote_status": "published",
+        "remote_differences": "local-only 15-50; no duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "15": 2086,
+          "16": 2103,
+          "17": 2132,
+          "18": 2594,
+          "19": 2021
+        },
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-08",
+      "completed_at": "2026-09-07T03:03:55+00:00"
     },
     {
-      "id": "death-list-create-020-024-20260907", "action": "create", "chapters": "20-24", "status": "completed", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation", "source_run": "34081675619", "source_commit": "cc2036f90d56b23a40a36bcbe0a335f1e4ccd0c6", "reconcile_run": "34063542204", "reconcile_job": "101616865189", "remote_prefix": "1-19", "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00", "remote_differences": "local-only 20-50; no duplicates, title mismatches, or position mismatches", "chapter_body_characters": {"20": 2207, "21": 2093, "22": 2141, "23": 2170, "24": 2070}, "review_notes": "All five chapters meet the 2000-character floor; batch total 10681. Automated hard findings are zero. Reviewed the remaining advisory prose/dialogue flags in context, the D004 B1/B2 carbon-monoxide causal chain, the transition to the midnight multi-person list, and the chapter 24 to 25 handoff. Preserve the existing 1-19 remote prefix; no recreation or publish-now requested. Completion evidence: Fanqie Sync run 34081875179, publish job 101618742294, remote reconciliation 5/5 present and 0 failures; ledger commit fc21582. A fresh read-only reconciliation is requested before authorizing chapters 25-29.", "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-09", "completed_at": "2026-09-07T04:10:03+00:00"
+      "id": "death-list-create-020-024-20260907",
+      "action": "create",
+      "chapters": "20-24",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34081675619",
+        "source_commit": "cc2036f90d56b23a40a36bcbe0a335f1e4ccd0c6",
+        "reconcile_run": "34063542204",
+        "reconcile_job": "101616865189",
+        "remote_prefix": "1-19",
+        "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00",
+        "remote_differences": "local-only 20-50; no duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "20": 2207,
+          "21": 2093,
+          "22": 2141,
+          "23": 2170,
+          "24": 2070
+        },
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 10681. Automated hard findings are zero. Reviewed the remaining advisory prose/dialogue flags in context, the D004 B1/B2 carbon-monoxide causal chain, the transition to the midnight multi-person list, and the chapter 24 to 25 handoff. Preserve the existing 1-19 remote prefix; no recreation or publish-now requested. Completion evidence: Fanqie Sync run 34081875179, publish job 101618742294, remote reconciliation 5/5 present and 0 failures; ledger commit fc21582. A fresh read-only reconciliation is requested before authorizing chapters 25-29.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-09",
+      "completed_at": "2026-09-07T04:10:03+00:00"
     },
     {
-      "id": "death-list-create-025-029-20260907", "action": "create", "chapters": "25-29", "status": "completed", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation", "source_run": "34083774191", "source_commit": "d2bd69ceb7fac609461f5f89deda0aaf86a2b59c", "reconcile_run": "34084069314", "reconcile_job": "101624677979", "remote_prefix": "1-24", "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00; 20-24 scheduled for 2026-09-09T00:00+08:00", "remote_differences": "local-only 25-50; no remote-only chapters, duplicates, title mismatches, or position mismatches", "chapter_body_characters": {"25": 2155, "26": 2054, "27": 2110, "28": 2439, "29": 2768}, "review_notes": "All five chapters meet the 2000-character floor; batch total 11526. Automated hard findings are zero. Reviewed remaining advisory prose/dialogue flags in context, the 27-person roster and location distribution, the west-side traffic and corridor causal chain, and the chapter 29 to 30 handoff. Preserve the existing 1-24 remote prefix; no recreation or publish-now requested. The fresh read-only reconciliation confirms exactly 24 numbered remote items, 14 published and 10 scheduled, with no mismatches. Full body text was not compared in that pass.", "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-10", "completed_at": "2026-09-07T04:49:14+00:00"
+      "id": "death-list-create-025-029-20260907",
+      "action": "create",
+      "chapters": "25-29",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34083774191",
+        "source_commit": "d2bd69ceb7fac609461f5f89deda0aaf86a2b59c",
+        "reconcile_run": "34084069314",
+        "reconcile_job": "101624677979",
+        "remote_prefix": "1-24",
+        "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00; 20-24 scheduled for 2026-09-09T00:00+08:00",
+        "remote_differences": "local-only 25-50; no remote-only chapters, duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "25": 2155,
+          "26": 2054,
+          "27": 2110,
+          "28": 2439,
+          "29": 2768
+        },
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 11526. Automated hard findings are zero. Reviewed remaining advisory prose/dialogue flags in context, the 27-person roster and location distribution, the west-side traffic and corridor causal chain, and the chapter 29 to 30 handoff. Preserve the existing 1-24 remote prefix; no recreation or publish-now requested. The fresh read-only reconciliation confirms exactly 24 numbered remote items, 14 published and 10 scheduled, with no mismatches. Full body text was not compared in that pass.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-10",
+      "completed_at": "2026-09-07T04:49:14+00:00"
     },
     {
-      "id": "death-list-create-030-034-20260907", "action": "create", "chapters": "30-34", "status": "completed", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation", "source_run": "34083774191", "source_commit": "d2bd69ceb7fac609461f5f89deda0aaf86a2b59c", "reconcile_run": "34084069314", "reconcile_job": "101636014437", "remote_prefix": "1-29", "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00; 20-24 scheduled for 2026-09-09T00:00+08:00; 25-29 scheduled for 2026-09-10T00:00+08:00", "remote_differences": "local-only 30-50; no duplicates, title mismatches, or position mismatches", "chapter_body_characters": {"30": 3636, "31": 2487, "32": 2535, "33": 2462, "34": 2155}, "review_notes": "All five chapters meet the 2000-character floor; batch total 13275. Automated hard findings are zero. Reviewed the advisory dialogue/prose flags in context, the GROUP-001 resolution and SELF causal chain, the safe recovery of the computer bag, the school follow-up, and the chapter 34 to 35 transition. The dialogue-heavy aftermath and exact event timestamps serve character and scene continuity; no mechanical warning erasure or unsupported rule expansion is requested. Preserve the existing 1-29 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 29 numbered items, 14 published and 15 scheduled, with no mismatches. Full body text was not compared in that pass.", "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-11", "completed_at": "2026-09-07T05:53:31+00:00"
+      "id": "death-list-create-030-034-20260907",
+      "action": "create",
+      "chapters": "30-34",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34083774191",
+        "source_commit": "d2bd69ceb7fac609461f5f89deda0aaf86a2b59c",
+        "reconcile_run": "34084069314",
+        "reconcile_job": "101636014437",
+        "remote_prefix": "1-29",
+        "remote_status": "1-14 published; 15-19 scheduled for 2026-09-08T00:00+08:00; 20-24 scheduled for 2026-09-09T00:00+08:00; 25-29 scheduled for 2026-09-10T00:00+08:00",
+        "remote_differences": "local-only 30-50; no duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "30": 3636,
+          "31": 2487,
+          "32": 2535,
+          "33": 2462,
+          "34": 2155
+        },
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 13275. Automated hard findings are zero. Reviewed the advisory dialogue/prose flags in context, the GROUP-001 resolution and SELF causal chain, the safe recovery of the computer bag, the school follow-up, and the chapter 34 to 35 transition. The dialogue-heavy aftermath and exact event timestamps serve character and scene continuity; no mechanical warning erasure or unsupported rule expansion is requested. Preserve the existing 1-29 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 29 numbered items, 14 published and 15 scheduled, with no mismatches. Full body text was not compared in that pass.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-11",
+      "completed_at": "2026-09-07T05:53:31+00:00"
     },
     {
-      "id": "death-list-create-035-039-20260907", "action": "create", "chapters": "35-39", "status": "completed", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation", "source_run": "34100530731", "source_commit": "054abeae5a290c417625ef4403e67146057697b6", "reconcile_run": "34084069314", "reconcile_job": "101672298265", "remote_prefix": "1-34", "remote_status": "1-14 published; 15-39 scheduled for 2026-09-08 through 2026-09-12, 00:00 Asia/Shanghai", "remote_differences": "local-only 35-50; no remote-only chapters, duplicates, title mismatches, or position mismatches", "chapter_body_characters": {"35": 2302, "36": 2407, "37": 2554, "38": 2212, "39": 3234}, "review_notes": "All five chapters meet the 2000-character floor; batch total 12709. Automated hard findings are zero. Reviewed advisory dialogue and prose findings in context, the D032 route/driver/passenger decisions, the distinction between a changed forecast and a proven cause, and the chapter 39 to 40 handoff. Corrected the chapter 39 typo and unintroduced passenger before the fresh gate. The remaining short exchanges serve urgent phone coordination, and the exact timestamps preserve the causal sequence. Preserve the existing 1-34 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 34 numbered items, 14 published and 20 scheduled, with no mismatches. Full body text was not compared in that pass.", "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-12", "completed_at": "2026-09-07T08:35:18+00:00"
+      "id": "death-list-create-035-039-20260907",
+      "action": "create",
+      "chapters": "35-39",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34100530731",
+        "source_commit": "054abeae5a290c417625ef4403e67146057697b6",
+        "reconcile_run": "34084069314",
+        "reconcile_job": "101672298265",
+        "remote_prefix": "1-34",
+        "remote_status": "1-14 published; 15-39 scheduled for 2026-09-08 through 2026-09-12, 00:00 Asia/Shanghai",
+        "remote_differences": "local-only 35-50; no remote-only chapters, duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "35": 2302,
+          "36": 2407,
+          "37": 2554,
+          "38": 2212,
+          "39": 3234
+        },
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 12709. Automated hard findings are zero. Reviewed advisory dialogue and prose findings in context, the D032 route/driver/passenger decisions, the distinction between a changed forecast and a proven cause, and the chapter 39 to 40 handoff. Corrected the chapter 39 typo and unintroduced passenger before the fresh gate. The remaining short exchanges serve urgent phone coordination, and the exact timestamps preserve the causal sequence. Preserve the existing 1-34 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms exactly 34 numbered items, 14 published and 20 scheduled, with no mismatches. Full body text was not compared in that pass.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-12",
+      "completed_at": "2026-09-07T08:35:18+00:00"
     },
     {
-      "id": "death-list-create-040-044-20260907", "action": "create", "chapters": "40-44", "status": "completed", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation", "source_run": "34100530731", "source_commit": "054abeae5a290c417625ef4403e67146057697b6", "reconcile_run": "34106603939", "reconcile_job": "101693017039", "remote_prefix": "1-39", "remote_status": "1-14 published; 15-39 scheduled for 2026-09-08 through 2026-09-12, 00:00 Asia/Shanghai", "remote_differences": "local-only 40-50; no remote-only chapters, duplicates, title mismatches, or position mismatches", "chapter_body_characters": {"40": 3642, "41": 2557, "42": 2557, "43": 2308, "44": 2291}, "review_notes": "All five chapters meet the 2000-character floor; batch total 13355. Automated hard findings are zero. Read chapters 40-45 in context, reviewed the D032 aftermath, ordinary course and sleep obligations, and D033 approach through the presentation and property worker leaving the maintenance door open. The chapter 40 dialogue is a survivor asking for answers, while the chapter 43-44 time checks track the collision between classes and the known deadline. No new mechanism or unsupported knowledge is introduced. Preserve the existing 1-39 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms 39 numbered items, 14 published and 25 scheduled, with no mismatches. Full body text was not compared in that pass.", "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-13", "completed_at": "2026-09-07T09:40:25+00:00"
+      "id": "death-list-create-040-044-20260907",
+      "action": "create",
+      "chapters": "40-44",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34100530731",
+        "source_commit": "054abeae5a290c417625ef4403e67146057697b6",
+        "reconcile_run": "34106603939",
+        "reconcile_job": "101693017039",
+        "remote_prefix": "1-39",
+        "remote_status": "1-14 published; 15-39 scheduled for 2026-09-08 through 2026-09-12, 00:00 Asia/Shanghai",
+        "remote_differences": "local-only 40-50; no remote-only chapters, duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "40": 3642,
+          "41": 2557,
+          "42": 2557,
+          "43": 2308,
+          "44": 2291
+        },
+        "review_notes": "All five chapters meet the 2000-character floor; batch total 13355. Automated hard findings are zero. Read chapters 40-45 in context, reviewed the D032 aftermath, ordinary course and sleep obligations, and D033 approach through the presentation and property worker leaving the maintenance door open. The chapter 40 dialogue is a survivor asking for answers, while the chapter 43-44 time checks track the collision between classes and the known deadline. No new mechanism or unsupported knowledge is introduced. Preserve the existing 1-39 remote prefix; no recreation or publish-now requested. Fresh read-only reconciliation confirms 39 numbered items, 14 published and 25 scheduled, with no mismatches. Full body text was not compared in that pass.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-13",
+      "completed_at": "2026-09-07T09:40:25+00:00"
     },
     {
-      "id": "death-list-create-045-049-20260907", "action": "create", "chapters": "45-49", "status": "completed", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation", "source_run": "34100530731", "source_commit": "054abeae5a290c417625ef4403e67146057697b6", "reconcile_run": "34107509261", "reconcile_job": "101696046222", "remote_prefix": "1-44", "remote_status": "1-14 published; 15-41 and 44 scheduled; 42-43 reviewing; all five chapter 40-44 entries retain 2026-09-13T00:00+08:00", "remote_differences": "local-only 45-50; no remote-only chapters, duplicates, title mismatches, or position mismatches", "chapter_body_characters": {"45": 3047, "46": 2489, "47": 2177, "48": 2559, "49": 2356}, "review_notes": "Read chapters 45-50 in context. The D033 near-fall sequence preserves the 15:39:31 warning, 15:39:46 exit, and approximately 15:39:49 disappearance; the video and system-usage evidence remain limited to what the characters can actually observe. All five chapters exceed 2000 body non-whitespace characters; batch total 12628, automated hard findings zero. The remaining short exchanges serve immediate emergency coordination or character-specific questioning. No new mechanism, source revelation, or unsafe reenactment is introduced. Keep chapters 1-44 untouched, do not publish immediately, and do not create chapter 50 as an incomplete release group. Fresh reconciliation confirmed 44 numbered items and no duplicate, title, or position mismatches. Full body text was not compared. Chapters 42-43 remain under review; their existing scheduled time must not be changed.", "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-14", "completed_at": "2026-09-07T09:49:53+00:00"
+      "id": "death-list-create-045-049-20260907",
+      "action": "create",
+      "chapters": "45-49",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34100530731",
+        "source_commit": "054abeae5a290c417625ef4403e67146057697b6",
+        "reconcile_run": "34107509261",
+        "reconcile_job": "101696046222",
+        "remote_prefix": "1-44",
+        "remote_status": "1-14 published; 15-41 and 44 scheduled; 42-43 reviewing; all five chapter 40-44 entries retain 2026-09-13T00:00+08:00",
+        "remote_differences": "local-only 45-50; no remote-only chapters, duplicates, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "45": 3047,
+          "46": 2489,
+          "47": 2177,
+          "48": 2559,
+          "49": 2356
+        },
+        "review_notes": "Read chapters 45-50 in context. The D033 near-fall sequence preserves the 15:39:31 warning, 15:39:46 exit, and approximately 15:39:49 disappearance; the video and system-usage evidence remain limited to what the characters can actually observe. All five chapters exceed 2000 body non-whitespace characters; batch total 12628, automated hard findings zero. The remaining short exchanges serve immediate emergency coordination or character-specific questioning. No new mechanism, source revelation, or unsafe reenactment is introduced. Keep chapters 1-44 untouched, do not publish immediately, and do not create chapter 50 as an incomplete release group. Fresh reconciliation confirmed 44 numbered items and no duplicate, title, or position mismatches. Full body text was not compared. Chapters 42-43 remain under review; their existing scheduled time must not be changed.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-14",
+      "completed_at": "2026-09-07T09:49:53+00:00"
     },
     {
-      "id": "death-list-create-050-054-20260907", "action": "create", "chapters": "50-54", "status": "pending", "authorized": true,
-      "audit": {"status": "passed", "source": "Death List Novel Gate, manual scene/continuity review, and fresh self-hosted read-only Fanqie reconciliation", "source_run": "34110321809", "source_commit": "30bea093f3d3f36fad8225bfc17700c577f37500", "reconcile_run": "34453846513", "reconcile_job": "102795515174", "remote_prefix": "1-49", "remote_status": "29 published; 20 scheduled", "remote_differences": "local-only 50-59; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches", "chapter_body_characters": {"50": 2397, "51": 2011, "52": 2136, "53": 2020, "54": 2397}, "review_notes": "The complete five-chapter group totals 10961 non-whitespace body characters. All chapters exceed 2000; automated hard findings were zero in Death List Novel Gate run 34110321809 and the scenes/continuity were reviewed in context. Fresh real platform reconciliation on self-hosted runner YITUAN-fanqie (run 34453846513, job 102795515174) confirmed exactly 49 numbered remote items: chapters 1-29 published and 30-49 scheduled, with no remote-only chapters, duplicates, title mismatches, or position mismatches. Full body text was not compared in that reconciliation. Preserve chapters 1-49 and their existing schedules; create only 50-54, scheduled together for 2026-09-15 00:00 Asia/Shanghai. Do not publish immediately.", "already_present_chapters": []},
-      "schedule_mode": "fixed_start", "start_date": "2026-09-15"
+      "id": "death-list-create-050-054-20260907",
+      "action": "create",
+      "chapters": "50-54",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Novel Gate, manual scene/continuity review, and fresh self-hosted read-only Fanqie reconciliation",
+        "source_run": "34110321809",
+        "source_commit": "30bea093f3d3f36fad8225bfc17700c577f37500",
+        "reconcile_run": "34453846513",
+        "reconcile_job": "102795515174",
+        "remote_prefix": "1-49",
+        "remote_status": "29 published; 20 scheduled",
+        "remote_differences": "local-only 50-59; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "50": 2397,
+          "51": 2011,
+          "52": 2136,
+          "53": 2020,
+          "54": 2397
+        },
+        "review_notes": "The complete five-chapter group totals 10961 non-whitespace body characters. All chapters exceed 2000; automated hard findings were zero in Death List Novel Gate run 34110321809 and the scenes/continuity were reviewed in context. Fresh real platform reconciliation on self-hosted runner YITUAN-fanqie (run 34453846513, job 102795515174) confirmed exactly 49 numbered remote items: chapters 1-29 published and 30-49 scheduled, with no remote-only chapters, duplicates, title mismatches, or position mismatches. Full body text was not compared in that reconciliation. Preserve chapters 1-49 and their existing schedules; create only 50-54, scheduled together for 2026-09-15 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": [],
+        "sync_run": "34454457858",
+        "sync_job": "102797492494",
+        "post_sync_remote_prefix": "1-54",
+        "post_sync_status": "29 published; 24 scheduled; 1 reviewing",
+        "post_sync_note": "Chapters 50-53 scheduled for 2026-09-15 00:00 Asia/Shanghai; chapter 54 is reviewing and retains the same scheduled_at. Fresh post-sync reconciliation found no remote-only chapters, duplicate numbers, title mismatches, or position mismatches."
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-15",
+      "completed_at": "2026-09-10T08:21:26+00:00"
     }
   ],
-  "updated_at": "2026-09-10T08:18:00+00:00"
+  "updated_at": "2026-09-10T08:21:26+00:00"
 }
