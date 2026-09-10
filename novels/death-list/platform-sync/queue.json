@@ -263,7 +263,37 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-15",
       "completed_at": "2026-09-10T08:21:26+00:00"
+    },
+    {
+      "id": "death-list-create-055-059-20260910",
+      "action": "create",
+      "chapters": "55-59",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted, manual scene/continuity review, and fresh post-sync Fanqie reconciliation",
+        "source_run": "34455088438",
+        "source_job": "102799493875",
+        "source_commit": "0dfe8997b85ac4608ee92c5b3de82af70e151183",
+        "reconcile_run": "34454457858",
+        "reconcile_job": "102797492494",
+        "remote_prefix": "1-54",
+        "remote_status": "29 published; 24 scheduled; 1 reviewing",
+        "remote_differences": "local-only 55-59; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "55": 2593,
+          "56": 2072,
+          "57": 2024,
+          "58": 2217,
+          "59": 2120
+        },
+        "review_notes": "The complete five-chapter group totals 11026 non-whitespace body characters. The self-hosted full novel gate passed after clearing the one real prose hard finding in chapter 55. Chapters 55-59 were then reviewed together in context: D-034 stays within the established forecast-refresh rules; professional rescue and medical decisions remain with qualified personnel; chapter 57 does not promote a timing correlation into a unique root cause; chapter 58 explicitly preserves the multi-factor uncertainty; chapter 59 raises Zhou Yu's knowledge boundary only to the already established advance-warning facts. No new system feature or source explanation is introduced. The most recent real platform reconciliation after the 50-54 upload confirmed exactly 54 numbered remote items and local-only 55-59, with no duplicate, title, or position mismatches. Preserve chapters 1-54 and their existing schedules; create only 55-59 together for 2026-09-16 00:00 Asia/Shanghai. Reviewing is treated as a valid transient platform status, not a reason to recreate a chapter.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-16"
     }
   ],
-  "updated_at": "2026-09-10T08:21:26+00:00"
+  "updated_at": "2026-09-10T09:03:00+00:00"
 }
