@@ -1,0 +1,49 @@
+name: Fanqie Readonly Reconcile Selfhosted
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/fanqie-readonly-reconcile-selfhosted.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: fanqie-readonly-reconcile-selfhosted
+  cancel-in-progress: false
+
+jobs:
+  reconcile-death-list:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate local Death List sync configuration
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py validate novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python shared/tools/fanqie_compat.py plan novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+      - name: Read-only reconcile Death List
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\fanqie-reconcile-death-list.json"
+          python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "=== reconcile report ==="
+          Get-Content -Raw -Encoding UTF8 $report
