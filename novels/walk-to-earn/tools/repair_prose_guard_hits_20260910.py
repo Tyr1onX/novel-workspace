@@ -42,6 +42,7 @@ EXPLAINER_REPLACEMENTS: tuple[tuple[str, str], ...] = (
 )
 
 TRIPLE_NO_SENTENCE = re.compile(r"[^。！？!?\n]*没有[^。！？!?\n]{0,28}没有[^。！？!?\n]{0,28}没有[^。！？!?\n]*")
+CROSS_SENTENCE_MARKERS = ("而是", "，是", "。是", "才是")
 
 
 def soften_triple_no(match: re.Match[str]) -> str:
@@ -68,6 +69,15 @@ def repair_line(line: str) -> tuple[str, list[str]]:
         if count:
             hits.append(f"{pattern.pattern} -> {replacement} x{count}")
             updated = next_updated
+
+    # prose_guard intentionally scans across punctuation with .{0,40}; the first
+    # repair pass handled same-sentence flips but can leave forms like
+    # "不是。真正...，是". If a prose line still contains a flip marker, soften
+    # every remaining literal "不是" on that line.
+    if "不是" in updated and any(marker in updated for marker in CROSS_SENTENCE_MARKERS):
+        count = updated.count("不是")
+        updated = updated.replace("不是", "并不只是")
+        hits.append(f"cross-sentence 不是 -> 并不只是 x{count}")
 
     for src, dst in EXPLAINER_REPLACEMENTS:
         if src in updated:
