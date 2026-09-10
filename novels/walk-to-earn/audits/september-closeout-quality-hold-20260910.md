@@ -4,7 +4,7 @@
 
 This audit file supersedes the temporary September closeout / recovery publishing attempts created on 2026-09-09 and 2026-09-10.
 
-Publishing is now frozen for Walk to Earn chapters 131-185 until the text is rebuilt as real chapter prose and passes the full repository quality gates.
+Publishing remains frozen for Walk to Earn chapters 131-185 until the rebuilt text passes the full repository quality gates and a separate explicit publishing audit authorizes the exact upload range.
 
 ## Confirmed platform state
 
@@ -28,6 +28,20 @@ The rejected chapters were not duplicate because the automation submitted the sa
 - repeated chapter-title insertion at the end of nearly every paragraph
 
 This violated the novel quality standard even when each chapter had a different number, title, step count, location, or small object. Platform duplicate detection correctly treated the prose as large-scale repeated content.
+
+## Rebuild status
+
+As of commit `118808228c201c5b1f0b9c5a45adbb08aca26fa0`, chapters 131-185 have been replaced in the repository with scene-based prose instead of the rejected template-generated text.
+
+The template-marker searches for `这条记录只落在`, `旁边写着`, and the artificial `第X章第Y段` pattern return no matches on the current repository text.
+
+This rebuild is not a publishing approval. The content still needs the full automated gate results plus a cold-read audit before any Fanqie mutation is allowed.
+
+## Safety rollback completed
+
+The temporary September publishing / recovery workflows and direct upload helper scripts have been removed.
+
+The Fanqie mutation safety cap has been restored from `90` to `30` in `novels/walk-to-earn/platform-sync/config.json` after the failed closeout flow left it elevated.
 
 ## Hard rule going forward
 
