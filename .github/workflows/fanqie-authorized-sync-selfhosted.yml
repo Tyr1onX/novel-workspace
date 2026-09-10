@@ -68,7 +68,7 @@ jobs:
           if (@($r.differences.remote_only_chapters).Count -ne 0) { throw 'Remote-only chapters detected.' }
           if (@($r.differences.title_mismatches).Count -ne 0) { throw 'Title mismatch detected.' }
           if (@($r.differences.position_mismatches).Count -ne 0) { throw 'Position mismatch detected.' }
-          if ($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties.Count -ne 0) { throw 'Duplicate remote chapter numbers detected.' }
+          if (@($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties).Count -ne 0) { throw 'Duplicate remote chapter numbers detected.' }
           $expectedLocalOnly = @(50,51,52,53,54,55,56,57,58,59)
           $actualLocalOnly = @($r.differences.local_only_chapters)
           if (($actualLocalOnly -join ',') -ne ($expectedLocalOnly -join ',')) {
@@ -97,7 +97,7 @@ jobs:
           if (@($r.differences.remote_only_chapters).Count -ne 0) { throw 'Remote-only chapters detected after sync.' }
           if (@($r.differences.title_mismatches).Count -ne 0) { throw 'Title mismatch detected after sync.' }
           if (@($r.differences.position_mismatches).Count -ne 0) { throw 'Position mismatch detected after sync.' }
-          if ($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties.Count -ne 0) { throw 'Duplicate remote chapter numbers detected after sync.' }
+          if (@($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties).Count -ne 0) { throw 'Duplicate remote chapter numbers detected after sync.' }
           foreach ($n in 50..54) {
             $item = @($r.remote_items | Where-Object { $_.chapter_number -eq $n })
             if ($item.Count -ne 1) { throw "Chapter $n missing or duplicated after sync." }
