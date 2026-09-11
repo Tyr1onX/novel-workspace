@@ -16,7 +16,8 @@ permissions:
   contents: write
 
 env:
-  STAGE: create1
+  STAGE: create1direct
+  BASE_STAGE: create1
 
 jobs:
   sync:
@@ -62,16 +63,12 @@ jobs:
           Write-Host "Resolved runtime: $runtime"
           "path=$runtime" >> $env:GITHUB_OUTPUT
 
-      - name: Prepare exactly one authorized stage operation
+      - name: Prepare exactly one direct authorized operation
         shell: powershell
         env:
           PYTHONUTF8: "1"
         run: |
-          python novels/walk-to-earn/tools/finalize_september_20260911.py prepare $env:STAGE
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python shared/tools/fanqie_compat.py validate novels/walk-to-earn
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python shared/tools/fanqie_compat.py plan novels/walk-to-earn
+          python scripts/walk_direct_closeout_ledger_20260911.py prepare $env:STAGE
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Fresh read-only preflight reconciliation
@@ -82,7 +79,7 @@ jobs:
           $report = "$env:RUNNER_TEMP\walk-september-preflight.json"
           python shared/tools/fanqie_compat.py reconcile novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}" --output $report
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python novels/walk-to-earn/tools/finalize_september_20260911.py assert-report $env:STAGE pre $report
+          python novels/walk-to-earn/tools/finalize_september_20260911.py assert-report $env:BASE_STAGE pre $report
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Fail closed if Walk inputs changed during preflight
@@ -101,21 +98,23 @@ jobs:
             "shared/HUMANIZER_RULES.md",
             "shared/HUMANIZER_EVOLUTION.md",
             "shared/PROSE_RULES.md",
-            "shared/META_NARRATIVE_RULES.md"
+            "shared/META_NARRATIVE_RULES.md",
+            "scripts/walk_final_direct_upload_20260911.py",
+            "scripts/walk_direct_closeout_ledger_20260911.py"
           )
           git diff --quiet HEAD..origin/main -- $critical
           if ($LASTEXITCODE -ne 0) { throw "Critical Walk inputs changed on main after quality/preflight checks; refusing platform mutation." }
           Write-Host "Critical Walk inputs remained stable through preflight."
 
-      - name: Execute one authorized stage
+      - name: Execute bounded direct stage
         shell: powershell
         env:
           PYTHONUTF8: "1"
         run: |
-          python shared/tools/fanqie_compat.py sync novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}"
+          python scripts/walk_final_direct_upload_20260911.py $env:STAGE --runtime "${{ steps.runtime.outputs.path }}"
           $code = $LASTEXITCODE
-          "SYNC_STATUS=$code" >> $env:GITHUB_ENV
-          Write-Host "SYNC_STATUS=$code"
+          "DIRECT_STATUS=$code" >> $env:GITHUB_ENV
+          Write-Host "DIRECT_STATUS=$code"
           exit 0
 
       - name: Read-only postflight reconciliation
@@ -139,42 +138,41 @@ jobs:
           PYTHONUTF8: "1"
         run: |
           $final = 1
-          $reason = "sync or postflight failed"
-          if ($env:SYNC_STATUS -eq "0" -and $env:POST_STATUS -eq "0" -and (Test-Path $env:POST_REPORT)) {
-            python novels/walk-to-earn/tools/finalize_september_20260911.py assert-report $env:STAGE post $env:POST_REPORT
+          $reason = "direct publisher or postflight failed"
+          if ($env:DIRECT_STATUS -eq "0" -and $env:POST_STATUS -eq "0" -and (Test-Path $env:POST_REPORT)) {
+            python novels/walk-to-earn/tools/finalize_september_20260911.py assert-report $env:BASE_STAGE post $env:POST_REPORT
             if ($LASTEXITCODE -eq 0) {
-              python novels/walk-to-earn/tools/finalize_september_20260911.py record-success $env:STAGE $env:POST_REPORT --run-id "${{ github.run_id }}"
+              python scripts/walk_direct_closeout_ledger_20260911.py complete $env:STAGE $env:POST_REPORT --run-id "${{ github.run_id }}"
               if ($LASTEXITCODE -eq 0) {
                 $final = 0
                 $reason = "success"
               } else {
-                $reason = "could not record successful stage"
+                $reason = "could not record direct stage success"
               }
             } else {
               $reason = "postflight reconciliation assertion failed"
             }
-          } elseif ($env:SYNC_STATUS -ne "0") {
-            $reason = "platform sync returned nonzero status $env:SYNC_STATUS"
+          } elseif ($env:DIRECT_STATUS -ne "0") {
+            $reason = "direct publisher returned nonzero status $env:DIRECT_STATUS"
           } elseif ($env:POST_STATUS -ne "0") {
             $reason = "postflight reconciliation returned nonzero status $env:POST_STATUS"
           }
           if ($final -ne 0) {
-            $args = @("novels/walk-to-earn/tools/finalize_september_20260911.py", "fail-close", $env:STAGE, "--run-id", "${{ github.run_id }}", "--reason", $reason)
+            $args = @("scripts/walk_direct_closeout_ledger_20260911.py", "fail", $env:STAGE, "--run-id", "${{ github.run_id }}", "--reason", $reason)
             if ($env:POST_REPORT -and (Test-Path $env:POST_REPORT)) { $args += @("--report", $env:POST_REPORT) }
             python @args
-            if ($LASTEXITCODE -ne 0) { Write-Host "WARNING: fail-close helper itself returned nonzero." }
+            if ($LASTEXITCODE -ne 0) { Write-Host "WARNING: direct fail-close helper itself returned nonzero." }
           }
-          "FINAL_STATUS=$final" >> $env:GITHUB_ENV
+          Set-Content -Path "$env:RUNNER_TEMP\walk-final-status.txt" -Value $final -Encoding ascii
           Write-Host "FINAL_STATUS=$final reason=$reason"
           exit 0
 
-      - name: Persist queue, sync-state, and finalization audit
+      - name: Persist queue and finalization audit
         if: always()
         shell: powershell
         run: |
           $paths = @(
             "novels/walk-to-earn/platform-sync/queue.json",
-            "novels/walk-to-earn/platform-sync/sync-state.json",
             "novels/walk-to-earn/audits/september-finalization-20260911.md"
           )
           $changed = @(git status --porcelain -- $paths)
@@ -187,7 +185,7 @@ jobs:
           foreach ($path in $paths) {
             if (Test-Path $path) { git add -- $path }
           }
-          git commit -m "chore(walk): record September $env:STAGE sync result [skip ci]"
+          git commit -m "chore(walk): record September $env:STAGE result [skip ci]"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           git pull --rebase origin main
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -198,5 +196,8 @@ jobs:
         if: always()
         shell: powershell
         run: |
-          if ($env:FINAL_STATUS -ne "0") { throw "Walk September stage $env:STAGE did not verify; authorization was fail-closed." }
+          $statusPath = "$env:RUNNER_TEMP\walk-final-status.txt"
+          if (-not (Test-Path $statusPath)) { throw "Final status file missing; treating stage as failed." }
+          $status = (Get-Content $statusPath -Raw).Trim()
+          if ($status -ne "0") { throw "Walk September stage $env:STAGE did not verify; authorization was fail-closed." }
           Write-Host "Walk September stage $env:STAGE verified successfully."
