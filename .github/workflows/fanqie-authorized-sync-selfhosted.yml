@@ -40,10 +40,10 @@ jobs:
           $queue = Get-Content -Raw -Encoding UTF8 novels/death-list/platform-sync/queue.json | ConvertFrom-Json
           $pending = @($queue.operations | Where-Object { $_.status -eq 'pending' -and $_.authorized -and $_.audit.status -eq 'passed' })
           if ($pending.Count -ne 1) { throw "Expected exactly one pending authorized operation; found $($pending.Count)." }
-          $op = @($pending | Where-Object { $_.id -eq 'death-list-create-055-059-20260910' })
-          if ($op.Count -ne 1) { throw 'Expected the pending operation to be death-list-create-055-059-20260910.' }
-          if ($op[0].chapters -ne '55-59') { throw 'Unexpected chapter selector for 55-59 operation.' }
-          if ($op[0].start_date -ne '2026-09-16') { throw 'Unexpected 55-59 schedule date.' }
+          $op = @($pending | Where-Object { $_.id -eq 'death-list-create-060-064-20260911' })
+          if ($op.Count -ne 1) { throw 'Expected the pending operation to be death-list-create-060-064-20260911.' }
+          if ($op[0].chapters -ne '60-64') { throw 'Unexpected chapter selector for 60-64 operation.' }
+          if ($op[0].start_date -ne '2026-09-17') { throw 'Unexpected 60-64 schedule date.' }
       - name: Resolve local Fanqie runtime
         id: runtime
         shell: powershell
@@ -62,26 +62,26 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $r = Get-Content -Raw -Encoding UTF8 $report | ConvertFrom-Json
           if ($r.book_id -ne '7682312977067822142') { throw 'Book ID mismatch.' }
-          if ($r.remote.numbered_item_count -ne 54 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 54) {
-            throw 'Remote prefix changed: expected exactly 1-54 before sync.'
+          if ($r.remote.numbered_item_count -ne 59 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 59) {
+            throw 'Remote prefix changed: expected exactly 1-59 before sync.'
           }
           if (@($r.differences.remote_only_chapters).Count -ne 0) { throw 'Remote-only chapters detected.' }
           if (@($r.differences.title_mismatches).Count -ne 0) { throw 'Title mismatch detected.' }
           if (@($r.differences.position_mismatches).Count -ne 0) { throw 'Position mismatch detected.' }
           if (@($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties).Count -ne 0) { throw 'Duplicate remote chapter numbers detected.' }
-          $expectedLocalOnly = @(55,56,57,58,59)
+          $expectedLocalOnly = @(60,61,62,63,64)
           $actualLocalOnly = @($r.differences.local_only_chapters)
           if (($actualLocalOnly -join ',') -ne ($expectedLocalOnly -join ',')) {
             throw "Unexpected local-only set: $($actualLocalOnly -join ',')"
           }
           $allowedStatuses = @('scheduled','reviewing')
-          foreach ($n in 50..54) {
+          foreach ($n in 55..59) {
             $item = @($r.remote_items | Where-Object { $_.chapter_number -eq $n })
-            if ($item.Count -ne 1) { throw "Chapter $n missing or duplicated before 55-59 sync." }
+            if ($item.Count -ne 1) { throw "Chapter $n missing or duplicated before 60-64 sync." }
             if ($allowedStatuses -notcontains $item[0].status) { throw "Chapter $n has unexpected preflight status: $($item[0].status)" }
-            if ($item[0].scheduled_at -ne '2026-09-15T00:00+08:00') { throw "Chapter $n has unexpected preflight schedule: $($item[0].scheduled_at)" }
+            if ($item[0].scheduled_at -ne '2026-09-16T00:00+08:00') { throw "Chapter $n has unexpected preflight schedule: $($item[0].scheduled_at)" }
           }
-          Write-Host 'Preflight reconciliation PASS: remote is exactly 1-54 and local-only is 55-59.'
+          Write-Host 'Preflight reconciliation PASS: remote is exactly 1-59 and local-only is 60-64.'
       - name: Execute authorized scheduled sync
         shell: powershell
         env:
@@ -89,7 +89,7 @@ jobs:
         run: |
           python shared/tools/fanqie_compat.py sync novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Verify remote 55-59 after sync
+      - name: Verify remote 60-64 after sync
         shell: powershell
         env:
           PYTHONUTF8: "1"
@@ -98,22 +98,22 @@ jobs:
           python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $r = Get-Content -Raw -Encoding UTF8 $report | ConvertFrom-Json
-          if ($r.remote.numbered_item_count -ne 59 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 59) {
-            throw 'Post-sync remote prefix is not exactly 1-59.'
+          if ($r.remote.numbered_item_count -ne 64 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 64) {
+            throw 'Post-sync remote prefix is not exactly 1-64.'
           }
-          if (@($r.differences.local_only_chapters).Count -ne 0) { throw 'Local-only chapters remain after 55-59 sync.' }
+          if (@($r.differences.local_only_chapters).Count -ne 0) { throw 'Local-only chapters remain after 60-64 sync.' }
           if (@($r.differences.remote_only_chapters).Count -ne 0) { throw 'Remote-only chapters detected after sync.' }
           if (@($r.differences.title_mismatches).Count -ne 0) { throw 'Title mismatch detected after sync.' }
           if (@($r.differences.position_mismatches).Count -ne 0) { throw 'Position mismatch detected after sync.' }
           if (@($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties).Count -ne 0) { throw 'Duplicate remote chapter numbers detected after sync.' }
           $allowedStatuses = @('scheduled','reviewing')
-          foreach ($n in 55..59) {
+          foreach ($n in 60..64) {
             $item = @($r.remote_items | Where-Object { $_.chapter_number -eq $n })
             if ($item.Count -ne 1) { throw "Chapter $n missing or duplicated after sync." }
             if ($allowedStatuses -notcontains $item[0].status) { throw "Chapter $n has unexpected post-sync status: $($item[0].status)" }
-            if ($item[0].scheduled_at -ne '2026-09-16T00:00+08:00') { throw "Chapter $n has unexpected schedule: $($item[0].scheduled_at)" }
+            if ($item[0].scheduled_at -ne '2026-09-17T00:00+08:00') { throw "Chapter $n has unexpected schedule: $($item[0].scheduled_at)" }
           }
-          Write-Host 'Post-sync verification PASS: chapters 55-59 exist once and retain 2026-09-16 00:00 +08:00.'
+          Write-Host 'Post-sync verification PASS: chapters 60-64 exist once and retain 2026-09-17 00:00 +08:00.'
       - name: Persist synchronization ledgers
         if: always()
         shell: powershell
