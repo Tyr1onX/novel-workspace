@@ -17,3 +17,11 @@ Policy: 5 chapters/day, 00:00 Asia/Shanghai, >=2000 each, five-chapter total >99
 - authorization disabled; no blind retry is permitted.
 - recorded at: 2026-09-11T08:13:03+00:00
 
+## create1direct — FAIL CLOSED
+- workflow run: 34578453850
+- operation: walk-create-131-160-direct-20260911
+- reason: direct publisher returned nonzero status 2
+- remote max after attempt: 135
+- authorization disabled; no blind replay is allowed.
+- recorded at: 2026-09-11T08:22:13+00:00
+

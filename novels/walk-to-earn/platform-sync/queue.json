@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-11T08:13:03+00:00",
+  "updated_at": "2026-09-11T08:22:13+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -626,6 +626,27 @@
           184,
           185
         ]
+      }
+    },
+    {
+      "id": "walk-create-131-160-direct-20260911",
+      "action": "create",
+      "chapters": "131-160",
+      "authorized": false,
+      "status": "platform_failed",
+      "method": "direct_runtime_bridge_daily_groups",
+      "audit": {
+        "status": "passed",
+        "quality_run": 34544962185,
+        "basis": "Final Walk quality freeze passed; direct fallback is bounded to five-chapter daily groups and guarded by read-only pre/post reconciliation."
+      },
+      "reason": "Generic sync returned nonzero before any create; postflight proved remote prefix unchanged, so use the previously proven direct publisher path without replaying confirmed chapters.",
+      "created_at": "2026-09-11T08:18:06+00:00",
+      "attempted_at": "2026-09-11T08:22:13+00:00",
+      "result": {
+        "workflow_run": "34578453850",
+        "reason": "direct publisher returned nonzero status 2",
+        "remote_max_chapter_after_attempt": 135
       }
     }
   ]
