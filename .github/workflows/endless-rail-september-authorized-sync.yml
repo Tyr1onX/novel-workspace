@@ -41,8 +41,7 @@ jobs:
           @'
           import json
           from pathlib import Path
-          p = Path('novels/endless-rail/platform-sync/policy.json')
-          policy = json.loads(p.read_text(encoding='utf-8'))
+          policy = json.loads(Path('novels/endless-rail/platform-sync/policy.json').read_text(encoding='utf-8'))
           s = policy['schedule']
           assert s['chapters_per_day'] == 3
           assert s['group_size'] == 3
@@ -84,8 +83,7 @@ jobs:
           @'
           import json, os
           from pathlib import Path
-          report = Path(os.environ['RUNNER_TEMP']) / 'fanqie-preflight-endless-rail.json'
-          r = json.loads(report.read_text(encoding='utf-8-sig'))
+          r = json.loads((Path(os.environ['RUNNER_TEMP']) / 'fanqie-preflight-endless-rail.json').read_text(encoding='utf-8-sig'))
           assert str(r['book_id']) == '7670480372831882302'
           remote = r['remote']
           assert remote['numbered_item_count'] == 158, remote
@@ -110,12 +108,7 @@ jobs:
           from pathlib import Path
           p = Path('novels/endless-rail/platform-sync/queue.json')
           q = json.loads(p.read_text(encoding='utf-8'))
-          target = None
-          for op in q['operations']:
-              if op['id'] == 'rail-create-159-170-three-per-day-20260911':
-                  target = op
-                  break
-          assert target is not None
+          target = next(op for op in q['operations'] if op['id'] == 'rail-create-159-170-three-per-day-20260911')
           assert target['status'] == 'awaiting_reconcile'
           assert target['authorized'] is False
           target['status'] = 'pending'
@@ -155,18 +148,35 @@ jobs:
           assert d['position_mismatches'] == [], d
           assert not d['duplicate_remote_chapter_numbers'], d
           assert d['local_only_chapters'] == list(range(171, 204)), d['local_only_chapters']
-          expected = {}
+          items = {int(x['chapter_number']): x for x in r['remote_items'] if x.get('chapter_number') is not None}
           for n in range(159, 171):
               day = 16 + (n - 159) // 3
-              expected[n] = f'2026-09-{day:02d}T00:00+08:00'
-          items = {int(x['chapter_number']): x for x in r['remote_items'] if x.get('chapter_number') is not None}
-          for n, when in expected.items():
+              expected = f'2026-09-{day:02d}T00:00+08:00'
               item = items[n]
-              assert item['scheduled_at'] == when, (n, item.get('scheduled_at'), when)
+              assert item['scheduled_at'] == expected, (n, item.get('scheduled_at'), expected)
               assert item['status'] in {'scheduled', 'reviewing'}, (n, item['status'])
           print('Post-sync PASS: 159-170 exist exactly once and are scheduled 3/day for Sep 16-19.')
           '@ | python -
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Fail close stage 1 authorization on any failure
+        if: failure()
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          @'
+          import json
+          from pathlib import Path
+          p = Path('novels/endless-rail/platform-sync/queue.json')
+          q = json.loads(p.read_text(encoding='utf-8'))
+          target = next((op for op in q['operations'] if op.get('id') == 'rail-create-159-170-three-per-day-20260911'), None)
+          if target and target.get('status') != 'completed':
+              target['authorized'] = False
+              target['status'] = 'blocked_selfhosted_failure_needs_reconcile'
+              target.setdefault('audit', {})['failure_guard'] = 'Self-hosted stage did not complete verification; authorization revoked. Fresh read-only reconcile required before retry.'
+              p.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          '@ | python -
 
       - name: Persist synchronization ledgers
         if: always()
