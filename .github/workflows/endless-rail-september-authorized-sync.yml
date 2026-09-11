@@ -1,0 +1,185 @@
+name: Endless Rail September Authorized Sync
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/endless-rail-september-authorized-sync.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: fanqie-platform-mutation
+  cancel-in-progress: false
+
+jobs:
+  sync-159-170:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main before platform mutation
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+
+      - name: Validate three-per-day policy and audited chapter lengths
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py validate novels/endless-rail
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/endless-rail/tools/audit_chapter_lengths.py --start 159 --end 203 --hard-minimum 2000 --fail
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          @'
+          import json
+          from pathlib import Path
+          p = Path('novels/endless-rail/platform-sync/policy.json')
+          policy = json.loads(p.read_text(encoding='utf-8'))
+          s = policy['schedule']
+          assert s['chapters_per_day'] == 3
+          assert s['group_size'] == 3
+          assert s['require_complete_groups'] is True
+          assert s['daily_word_floor']['minimum_chars_exclusive'] == 5999
+          assert s['daily_word_floor']['normal_chapters'] == 3
+          q = json.loads(Path('novels/endless-rail/platform-sync/queue.json').read_text(encoding='utf-8'))
+          ops = {op['id']: op for op in q['operations']}
+          old = ops['rail-create-159-168-authorized-20260910']
+          assert old['authorized'] is False
+          assert old['status'] == 'superseded_by_three_per_day'
+          op = ops['rail-create-159-170-three-per-day-20260911']
+          assert op['chapters'] == '159-170'
+          assert op['start_date'] == '2026-09-16'
+          assert op['status'] == 'awaiting_reconcile'
+          assert op['authorized'] is False
+          assert op['audit']['status'] == 'passed'
+          print('Repository three-per-day gate PASS.')
+          '@ | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+
+      - name: Fresh read-only preflight reconciliation
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\fanqie-preflight-endless-rail.json"
+          python shared/tools/fanqie_compat.py reconcile novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          @'
+          import json, os
+          from pathlib import Path
+          report = Path(os.environ['RUNNER_TEMP']) / 'fanqie-preflight-endless-rail.json'
+          r = json.loads(report.read_text(encoding='utf-8-sig'))
+          assert str(r['book_id']) == '7670480372831882302'
+          remote = r['remote']
+          assert remote['numbered_item_count'] == 158, remote
+          assert remote['min_chapter'] == 1 and remote['max_chapter'] == 158, remote
+          d = r['differences']
+          assert d['remote_only_chapters'] == [], d
+          assert d['title_mismatches'] == [], d
+          assert d['position_mismatches'] == [], d
+          assert not d['duplicate_remote_chapter_numbers'], d
+          assert d['local_only_chapters'] == list(range(159, 204)), d['local_only_chapters']
+          print('Fresh read-only preflight PASS: remote exactly 1-158; local-only exactly 159-203.')
+          '@ | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Authorize reconciled chapters 159-170 locally
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          @'
+          import json
+          from pathlib import Path
+          p = Path('novels/endless-rail/platform-sync/queue.json')
+          q = json.loads(p.read_text(encoding='utf-8'))
+          target = None
+          for op in q['operations']:
+              if op['id'] == 'rail-create-159-170-three-per-day-20260911':
+                  target = op
+                  break
+          assert target is not None
+          assert target['status'] == 'awaiting_reconcile'
+          assert target['authorized'] is False
+          target['status'] = 'pending'
+          target['authorized'] = True
+          target['audit']['reconcile'] = 'fresh self-hosted preflight in current workflow; remote exactly 1-158; local-only 159-203; zero duplicate/title/position mismatches'
+          q['updated_at'] = '2026-09-11T10:33:00+08:00'
+          p.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print('Authorized 159-170 after fresh reconcile.')
+          '@ | python -
+
+      - name: Execute authorized 159-170 scheduled sync
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py sync novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Verify remote 159-170 and three-per-day schedule
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\fanqie-postsync-endless-rail-170.json"
+          python shared/tools/fanqie_compat.py reconcile novels/endless-rail --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          @'
+          import json, os
+          from pathlib import Path
+          r = json.loads((Path(os.environ['RUNNER_TEMP']) / 'fanqie-postsync-endless-rail-170.json').read_text(encoding='utf-8-sig'))
+          remote = r['remote']
+          assert remote['numbered_item_count'] == 170, remote
+          assert remote['min_chapter'] == 1 and remote['max_chapter'] == 170, remote
+          d = r['differences']
+          assert d['remote_only_chapters'] == [], d
+          assert d['title_mismatches'] == [], d
+          assert d['position_mismatches'] == [], d
+          assert not d['duplicate_remote_chapter_numbers'], d
+          assert d['local_only_chapters'] == list(range(171, 204)), d['local_only_chapters']
+          expected = {}
+          for n in range(159, 171):
+              day = 16 + (n - 159) // 3
+              expected[n] = f'2026-09-{day:02d}T00:00+08:00'
+          items = {int(x['chapter_number']): x for x in r['remote_items'] if x.get('chapter_number') is not None}
+          for n, when in expected.items():
+              item = items[n]
+              assert item['scheduled_at'] == when, (n, item.get('scheduled_at'), when)
+              assert item['status'] in {'scheduled', 'reviewing'}, (n, item['status'])
+          print('Post-sync PASS: 159-170 exist exactly once and are scheduled 3/day for Sep 16-19.')
+          '@ | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Persist synchronization ledgers
+        if: always()
+        shell: powershell
+        run: |
+          $paths = @(git diff --name-only | Where-Object { $_ -match '^novels/endless-rail/platform-sync/(queue|sync-state)\.json$' })
+          if ($paths.Count -eq 0) {
+            Write-Host 'No queue/sync-state changes to persist.'
+            exit 0
+          }
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          foreach ($path in $paths) { git add -- $path }
+          git commit -m "chore(fanqie): record rail 159-170 self-hosted sync result"
+          git pull --rebase origin main
+          git push origin HEAD:main
