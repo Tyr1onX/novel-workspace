@@ -147,7 +147,26 @@ jobs:
           print('Stage 2 postflight PASS: 171-197 scheduled 3/day through Sep 28.')
           '@ | python -
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Fail close stage 2 authorization on any failure
+        if: failure()
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          @'
+          import json
+          from pathlib import Path
+          p = Path('novels/endless-rail/platform-sync/queue.json')
+          q = json.loads(p.read_text(encoding='utf-8'))
+          target = next((op for op in q['operations'] if op.get('id') == 'rail-create-171-197-three-per-day-20260911'), None)
+          if target and target.get('status') != 'completed':
+              target['authorized'] = False
+              target['status'] = 'blocked_selfhosted_failure_needs_reconcile'
+              target.setdefault('audit', {})['failure_guard'] = 'Self-hosted stage did not complete verification; authorization revoked. Fresh read-only reconcile required before retry.'
+              p.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          '@ | python -
       - name: Prepare final-stage trigger after verified stage 2
+        if: success()
         shell: powershell
         run: |
           Set-Content -Path novels/endless-rail/platform-sync/stage-198-203.trigger -Encoding UTF8 -Value "stage2_verified_run=${{ github.run_id }}"
