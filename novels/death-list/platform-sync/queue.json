@@ -294,7 +294,37 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-16",
       "completed_at": "2026-09-10T09:05:24+00:00"
+    },
+    {
+      "id": "death-list-create-060-064-20260911",
+      "action": "create",
+      "chapters": "60-64",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted post-merge, manual scene/continuity review, and fresh read-only Fanqie reconciliation",
+        "source_run": "34545928108",
+        "source_job": "103098399977",
+        "source_commit": "144ce6ae4b09bd10ee0976408dc37359cb70e36b",
+        "reconcile_run": "34546020170",
+        "reconcile_job": "103098688620",
+        "remote_prefix": "1-59",
+        "remote_status": "34 published; 25 scheduled",
+        "remote_differences": "local-only 60-64; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "60": 2347,
+          "61": 2603,
+          "62": 2460,
+          "63": 2416,
+          "64": 2561
+        },
+        "review_notes": "The complete five-chapter group totals 12387 non-whitespace body characters. The post-merge self-hosted full novel gate passed on the exact merged manuscript. Chapter 62 had one real prose hard finding in the first audit, which was corrected before the final passing run; all current hard findings are zero and remaining advisory findings were manually reviewed in context. Chapters 60-64 preserve ordinary competition obligations, the narrowed dangerous-outing reporting boundary, and D-035's uncertainty around an already-known allergy without granting students unsupported medical expertise or promoting an unverified food source into the unique cause. Fresh read-only Fanqie reconciliation run 34546020170/job 103098688620 confirmed exactly 59 numbered remote chapters: 34 published and 25 scheduled, with local-only 60-64 and no remote-only chapters, duplicate numbers, title mismatches, or position mismatches. Preserve chapters 1-59 and all existing schedules; create only 60-64 together for 2026-09-17 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-17"
     }
   ],
-  "updated_at": "2026-09-10T09:05:24+00:00"
+  "updated_at": "2026-09-11T00:20:23+00:00"
 }
