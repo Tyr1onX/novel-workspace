@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 env:
-  STAGE: refresh
+  STAGE: create1
 
 jobs:
   sync:
