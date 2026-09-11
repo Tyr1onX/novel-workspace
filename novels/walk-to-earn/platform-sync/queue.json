@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-09T22:30:41+00:00",
+  "updated_at": "2026-09-11T02:52:58+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -437,13 +437,20 @@
       "chapters": "114-115",
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-16",
-      "authorized": true,
-      "status": "pending",
+      "authorized": false,
+      "status": "completed",
       "audit": {
         "status": "passed",
         "basis": "Recovery fill after chapters 111-113 were confirmed for 2026-09-16. Chapters 114-115 are rewritten to avoid repeated body templates."
       },
-      "reason": "Fill the remaining two chapters for 2026-09-16 without retrying 111-113."
+      "reason": "Fill the remaining two chapters for 2026-09-16 without retrying 111-113.",
+      "completed_at": "2026-09-10T00:00:00+00:00",
+      "result": {
+        "success": 2,
+        "failed": 0,
+        "confirmed_success_chapters": "114-115",
+        "basis": "Confirmed by the direct recovery platform logs before the quality freeze."
+      }
     },
     {
       "id": "walk-recover-116-185-schedule-through-20260930-20260910",
@@ -451,13 +458,97 @@
       "chapters": "116-185",
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-17",
-      "authorized": true,
-      "status": "pending",
+      "authorized": false,
+      "status": "partial_failed",
       "audit": {
         "status": "passed",
         "basis": "Recovery continuation from 2026-09-17 to 2026-09-30. Chapters 116-185 form fourteen complete five-chapter release groups at 00:00 Asia/Shanghai."
       },
-      "reason": "Schedule remaining September chapters through 2026-09-30."
+      "reason": "Schedule remaining September chapters through 2026-09-30.",
+      "attempted_at": "2026-09-10T00:00:00+00:00",
+      "result": {
+        "success": 15,
+        "failed": 55,
+        "confirmed_success_chapters": "116-130",
+        "failed_or_unprocessed_chapters": "131-185",
+        "basis": "Recovery logs confirmed 116-130 before chapter 131 stopped; later chapters were not processed."
+      }
+    },
+    {
+      "id": "walk-refresh-111-130-audited-20260911",
+      "action": "update",
+      "chapters": "111-130",
+      "authorized": false,
+      "status": "platform_failed",
+      "audit": {
+        "status": "passed",
+        "quality_run": 34544962185,
+        "basis": "Author explicitly requested completion after the quality freeze. Walk quality run 34544962185 passed template, protected-fact, full novel_gate, per-chapter >=2000, and strict five-chapter >9999 release-floor checks."
+      },
+      "reason": "Finalize the audited September schedule without retrying already confirmed creates.",
+      "attempted_at": "2026-09-11T02:52:58+00:00",
+      "result": {
+        "workflow_run": "34555535005",
+        "reason": "platform sync returned nonzero status 2",
+        "remote_max_chapter_after_attempt": 130,
+        "local_only_chapters_after_attempt": [
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185
+        ]
+      }
     }
   ]
 }
