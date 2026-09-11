@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-10T06:08:00+08:00",
+  "updated_at": "2026-09-11T10:33:00+08:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -225,15 +225,29 @@
       "chapters": "159-168",
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-16",
-      "status": "pending",
-      "authorized": true,
+      "status": "superseded_by_three_per_day",
+      "authorized": false,
       "audit": {
         "status": "passed",
         "commit": "d707e0b4cd4c7972cb019f00b483dc5bf56e91e5",
-        "basis": "The author explicitly authorized using the local Fanqie publishing tool on 2026-09-10. Chapters 159-168 are repository new drafts covered by docs/audit-159-170.md and chapters/index-159-203.md. Their audited non-whitespace body counts are 159=2842, 160=2838, 161=2925, 162=2859, 163=2847, 164=2801, 165=2807, 166=2826, 167=2821, 168=2820. Fixed-start groups 159-163 and 164-168 are consecutive complete five-chapter groups and total 14311 and 14075 characters respectively, both above the 9999 daily floor. The publisher must re-read Fanqie state through the local runtime, create only chapters missing remotely, preserve existing published/scheduled chapters, and fail closed on duplicate numbers, title mismatch, login failure, server errors, or unexpected remote state."
+        "basis": "The author originally authorized this ten-chapter batch under the temporary five-chapter policy. On 2026-09-11 the author explicitly restored a three-chapter daily cadence, so this operation is quarantined without platform mutation and replaced by complete three-chapter groups."
       },
-      "reason": "Start moving the completed September inventory into Fanqie safely with the first two complete five-chapter groups, while keeping later chapters out of the queue until their script-level length gate is rechecked or expanded.
-"
+      "reason": "Superseded before execution because ten chapters cannot form complete three-chapter release groups. No platform write is authorized by this record."
+    },
+    {
+      "id": "rail-create-159-170-three-per-day-20260911",
+      "action": "create",
+      "chapters": "159-170",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-16",
+      "status": "awaiting_reconcile",
+      "authorized": false,
+      "audit": {
+        "status": "passed",
+        "commit": "d707e0b4cd4c7972cb019f00b483dc5bf56e91e5",
+        "basis": "The author explicitly confirmed a three-chapter daily cadence on 2026-09-11. Chapters 159-170 are covered by docs/audit-159-170.md with audited non-whitespace body counts 159=2842, 160=2838, 161=2925, 162=2859, 163=2847, 164=2801, 165=2807, 166=2826, 167=2821, 168=2820, 169=2849, 170=2877. The four complete three-chapter groups total 8605, 8507, 8454, and 8546 characters, each above the 6000-character daily floor. A fresh read-only Fanqie reconcile is required before this operation may be authorized."
+      },
+      "reason": "Prepare the first four complete three-chapter groups for Sep 16-19 while preserving all existing published and scheduled chapters. No platform mutation is authorized until fresh remote reconciliation confirms chapters 159-170 are absent and the existing 134-158 schedule is intact."
     }
   ]
 }
