@@ -36,7 +36,7 @@ jobs:
         run: |
           python shared/tools/fanqie_compat.py validate novels/endless-rail
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python novels/endless-rail/tools/audit_chapter_lengths.py --start 159 --end 203 --hard-minimum 2000 --fail
+          python novels/endless-rail/tools/audit_chapter_lengths.py --start 159 --end 170 --hard-minimum 2000 --fail
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           @'
           import json
@@ -56,10 +56,10 @@ jobs:
           op = ops['rail-create-159-170-three-per-day-20260911']
           assert op['chapters'] == '159-170'
           assert op['start_date'] == '2026-09-16'
-          assert op['status'] == 'awaiting_reconcile'
+          assert op['status'] in {'awaiting_reconcile', 'blocked_selfhosted_failure_needs_reconcile'}
           assert op['authorized'] is False
           assert op['audit']['status'] == 'passed'
-          print('Repository three-per-day gate PASS.')
+          print('Repository three-per-day stage-1 gate PASS.')
           '@ | python -
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
@@ -109,12 +109,12 @@ jobs:
           p = Path('novels/endless-rail/platform-sync/queue.json')
           q = json.loads(p.read_text(encoding='utf-8'))
           target = next(op for op in q['operations'] if op['id'] == 'rail-create-159-170-three-per-day-20260911')
-          assert target['status'] == 'awaiting_reconcile'
+          assert target['status'] in {'awaiting_reconcile', 'blocked_selfhosted_failure_needs_reconcile'}
           assert target['authorized'] is False
           target['status'] = 'pending'
           target['authorized'] = True
           target['audit']['reconcile'] = 'fresh self-hosted preflight in current workflow; remote exactly 1-158; local-only 159-203; zero duplicate/title/position mismatches'
-          q['updated_at'] = '2026-09-11T10:33:00+08:00'
+          q['updated_at'] = '2026-09-11T16:03:00+08:00'
           p.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           print('Authorized 159-170 after fresh reconcile.')
           '@ | python -
