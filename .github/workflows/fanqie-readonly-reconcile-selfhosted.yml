@@ -1,5 +1,6 @@
 name: Fanqie Readonly Reconcile Selfhosted
 
+# Manual reconciliation trigger refreshed after Death List chapters 60-64 merge.
 on:
   push:
     branches:
