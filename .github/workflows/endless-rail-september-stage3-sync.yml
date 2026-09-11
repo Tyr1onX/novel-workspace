@@ -48,6 +48,7 @@ jobs:
           q = json.loads(Path('novels/endless-rail/platform-sync/queue.json').read_text(encoding='utf-8'))
           previous = next(op for op in q['operations'] if op['id'] == 'rail-create-171-197-three-per-day-20260911')
           assert previous['status'] == 'completed' and previous['authorized'] is True
+          assert all(op.get('id') != 'rail-create-198-203-three-per-day-20260911' for op in q['operations'])
           print('Final stage repository gates PASS.')
           '@ | python -
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -146,11 +147,29 @@ jobs:
           print('FINAL PASS: remote 1-203 and September schedule through Sep 30 verified.')
           '@ | python -
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Fail close final-stage authorization on any failure
+        if: failure()
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          @'
+          import json
+          from pathlib import Path
+          p = Path('novels/endless-rail/platform-sync/queue.json')
+          q = json.loads(p.read_text(encoding='utf-8'))
+          target = next((op for op in q['operations'] if op.get('id') == 'rail-create-198-203-three-per-day-20260911'), None)
+          if target and target.get('status') != 'completed':
+              target['authorized'] = False
+              target['status'] = 'blocked_selfhosted_failure_needs_reconcile'
+              target.setdefault('audit', {})['failure_guard'] = 'Self-hosted final stage did not complete verification; authorization revoked. Fresh read-only reconcile required before retry.'
+              p.write_text(json.dumps(q, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          '@ | python -
       - name: Persist ledgers and completion record
         if: always()
         shell: powershell
         run: |
-          $paths = @(git diff --name-only | Where-Object { $_ -match '^novels/endless-rail/platform-sync/(queue|sync-state)\.json$' -or $_ -eq 'novels/endless-rail/docs/month-end-fanqie-completion-20260911.md' })
+          $paths = @(git status --porcelain | ForEach-Object { $_.Substring(3) } | Where-Object { $_ -match '^novels/endless-rail/platform-sync/(queue|sync-state)\.json$' -or $_ -eq 'novels/endless-rail/docs/month-end-fanqie-completion-20260911.md' })
           if ($paths.Count -eq 0) { exit 0 }
           git config user.name "fanqie-sync-bot"
           git config user.email "fanqie-sync-bot@users.noreply.github.com"
