@@ -23,7 +23,7 @@ jobs:
         run: |
           mkdir -p novels/endless-rail/docs
           cp endless-rail-length-audit.json novels/endless-rail/docs/length-audit-latest.json
-          if git diff --quiet -- novels/endless-rail/docs/length-audit-latest.json; then
+          if [ -z "$(git status --porcelain -- novels/endless-rail/docs/length-audit-latest.json)" ]; then
             echo "Length audit snapshot unchanged."
             exit 0
           fi
