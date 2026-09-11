@@ -1,4 +1,4 @@
-{
+﻿{
   "minimum_chars_exclusive": 9999,
   "comparison": ">",
   "normal_chapters": 5,
@@ -253,6 +253,381 @@
       "number": 110,
       "title": "第一天上班，三公里通勤",
       "chars": 2004
+    },
+    {
+      "number": 111,
+      "title": "例会前，先把伞放进包里",
+      "chars": 2186
+    },
+    {
+      "number": 112,
+      "title": "楼下那家面馆，晚上八点还开",
+      "chars": 2191
+    },
+    {
+      "number": 113,
+      "title": "权限没开，路先走熟",
+      "chars": 2332
+    },
+    {
+      "number": 114,
+      "title": "一把椅子，坐过再买",
+      "chars": 2278
+    },
+    {
+      "number": 115,
+      "title": "周末不去商场，先走到江边",
+      "chars": 2185
+    },
+    {
+      "number": 116,
+      "title": "新工牌刷不开南门",
+      "chars": 2220
+    },
+    {
+      "number": 117,
+      "title": "雨停以后，绕到菜店",
+      "chars": 2240
+    },
+    {
+      "number": 118,
+      "title": "午休四十分钟，楼下转一圈",
+      "chars": 2271
+    },
+    {
+      "number": 119,
+      "title": "许哥说，别把新人装太满",
+      "chars": 2253
+    },
+    {
+      "number": 120,
+      "title": "第一周结束，鞋柜多了一双拖鞋",
+      "chars": 2061
+    },
+    {
+      "number": 121,
+      "title": "周航入职，先问食堂远不远",
+      "chars": 2556
+    },
+    {
+      "number": 122,
+      "title": "旧公交卡，在临岚还能刷",
+      "chars": 2939
+    },
+    {
+      "number": 123,
+      "title": "胡凯发来一条山线照片",
+      "chars": 2243
+    },
+    {
+      "number": 124,
+      "title": "唐梨来砚海，先找考场",
+      "chars": 2230
+    },
+    {
+      "number": 125,
+      "title": "站外那段路，行李箱不该拖",
+      "chars": 2445
+    },
+    {
+      "number": 126,
+      "title": "周六早上，家具城还没开门",
+      "chars": 2270
+    },
+    {
+      "number": 127,
+      "title": "试坐半小时，比参数有用",
+      "chars": 2078
+    },
+    {
+      "number": 128,
+      "title": "回家路上，公交提前收班",
+      "chars": 2264
+    },
+    {
+      "number": 129,
+      "title": "椅子送到，小区电梯坏了半小时",
+      "chars": 2096
+    },
+    {
+      "number": 130,
+      "title": "坐舒服以后，也要出门",
+      "chars": 2270
+    },
+    {
+      "number": 131,
+      "title": "例会改到九点半",
+      "chars": 2205
+    },
+    {
+      "number": 132,
+      "title": "公司楼下的早餐摊换了位置",
+      "chars": 2266
+    },
+    {
+      "number": 133,
+      "title": "一条工牌挂绳，走了两条街",
+      "chars": 2202
+    },
+    {
+      "number": 134,
+      "title": "晚高峰地铁，先让同事上车",
+      "chars": 2224
+    },
+    {
+      "number": 135,
+      "title": "第二周的三公里，没有新鲜感",
+      "chars": 2217
+    },
+    {
+      "number": 136,
+      "title": "白榆的票，提前一天买",
+      "chars": 2077
+    },
+    {
+      "number": 137,
+      "title": "直达车晚点二十分钟",
+      "chars": 2207
+    },
+    {
+      "number": 138,
+      "title": "老仓库那条路，栏杆换了新漆",
+      "chars": 2086
+    },
+    {
+      "number": 139,
+      "title": "住一晚，第二天少赶一趟车",
+      "chars": 2178
+    },
+    {
+      "number": 140,
+      "title": "回来以后，工牌还在外套口袋",
+      "chars": 2063
+    },
+    {
+      "number": 141,
+      "title": "父亲说，别天天在外面晃",
+      "chars": 2235
+    },
+    {
+      "number": 142,
+      "title": "母亲的视频，看见了新椅子",
+      "chars": 2235
+    },
+    {
+      "number": 143,
+      "title": "工资条发来前，余额已经够用",
+      "chars": 2239
+    },
+    {
+      "number": 144,
+      "title": "请父母吃饭，不用选最便宜",
+      "chars": 2125
+    },
+    {
+      "number": 145,
+      "title": "送他们去车站，箱子放后备箱",
+      "chars": 2068
+    },
+    {
+      "number": 146,
+      "title": "胡凯到砚海，不先爬山",
+      "chars": 2061
+    },
+    {
+      "number": 147,
+      "title": "他要买鞋，沈川只负责带路",
+      "chars": 2052
+    },
+    {
+      "number": 148,
+      "title": "江边风大，路线缩短",
+      "chars": 2230
+    },
+    {
+      "number": 149,
+      "title": "夜里回小区，南门还开着",
+      "chars": 2243
+    },
+    {
+      "number": 150,
+      "title": "两千公里，没有提示音",
+      "chars": 2163
+    },
+    {
+      "number": 151,
+      "title": "周航周末来，不住沙发",
+      "chars": 2026
+    },
+    {
+      "number": 152,
+      "title": "游戏展小场，排队比路长",
+      "chars": 2272
+    },
+    {
+      "number": 153,
+      "title": "他买手柄，沈川买袜子",
+      "chars": 2121
+    },
+    {
+      "number": 154,
+      "title": "回程车上，谁都没数步数",
+      "chars": 2162
+    },
+    {
+      "number": 155,
+      "title": "周一早上，鞋底有点湿",
+      "chars": 2098
+    },
+    {
+      "number": 156,
+      "title": "项目上线前，晚饭先吃完",
+      "chars": 2171
+    },
+    {
+      "number": 157,
+      "title": "加班到九点，直接打车",
+      "chars": 2100
+    },
+    {
+      "number": 158,
+      "title": "第二天不补步",
+      "chars": 2239
+    },
+    {
+      "number": 159,
+      "title": "超市促销，买米叫配送",
+      "chars": 2100
+    },
+    {
+      "number": 160,
+      "title": "月底前，先把房租留出来",
+      "chars": 2048
+    },
+    {
+      "number": 161,
+      "title": "唐梨的面试提前了",
+      "chars": 2162
+    },
+    {
+      "number": 162,
+      "title": "她不问收入，只问路线",
+      "chars": 2117
+    },
+    {
+      "number": 163,
+      "title": "考场外的咖啡店没有座",
+      "chars": 2206
+    },
+    {
+      "number": 164,
+      "title": "把她送到站台，不进站",
+      "chars": 2137
+    },
+    {
+      "number": 165,
+      "title": "回家那段路，风吹得伞反翻",
+      "chars": 2036
+    },
+    {
+      "number": 166,
+      "title": "周航搬家，只搬自己的东西",
+      "chars": 2019
+    },
+    {
+      "number": 167,
+      "title": "他的新公司，在另一个园区",
+      "chars": 2064
+    },
+    {
+      "number": 168,
+      "title": "两个人各走各的通勤",
+      "chars": 2151
+    },
+    {
+      "number": 169,
+      "title": "晚上开黑，语音里少了背景声",
+      "chars": 2187
+    },
+    {
+      "number": 170,
+      "title": "临岚回来，公交卡还在钱包",
+      "chars": 2137
+    },
+    {
+      "number": 171,
+      "title": "周末去泊川，先看天气",
+      "chars": 2143
+    },
+    {
+      "number": 172,
+      "title": "旧码头边，轮渡今天停一班",
+      "chars": 2170
+    },
+    {
+      "number": 173,
+      "title": "民宿老板说，江风别硬扛",
+      "chars": 2199
+    },
+    {
+      "number": 174,
+      "title": "第二天只走半程",
+      "chars": 2038
+    },
+    {
+      "number": 175,
+      "title": "返程前，买了一袋热栗子",
+      "chars": 2039
+    },
+    {
+      "number": 176,
+      "title": "公司体检，体重没变太多",
+      "chars": 2264
+    },
+    {
+      "number": 177,
+      "title": "医生建议，脚底先休两天",
+      "chars": 2243
+    },
+    {
+      "number": 178,
+      "title": "午休不出楼，去茶水间接水",
+      "chars": 2255
+    },
+    {
+      "number": 179,
+      "title": "下班后去修鞋店",
+      "chars": 2239
+    },
+    {
+      "number": 180,
+      "title": "旧鞋补好，也不急着穿",
+      "chars": 2237
+    },
+    {
+      "number": 181,
+      "title": "九月最后一周，会议多起来",
+      "chars": 2256
+    },
+    {
+      "number": 182,
+      "title": "月底报销，票据别弄丢",
+      "chars": 2233
+    },
+    {
+      "number": 183,
+      "title": "许哥请奶茶，沈川没抢着付",
+      "chars": 2267
+    },
+    {
+      "number": 184,
+      "title": "晚上十点，南门侧门锁了",
+      "chars": 2278
+    },
+    {
+      "number": 185,
+      "title": "三公里路，留到明天早上",
+      "chars": 2120
     }
   ],
   "batches": [
@@ -373,6 +748,186 @@
         110
       ],
       "chars": 10078,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        111,
+        112,
+        113,
+        114,
+        115
+      ],
+      "chars": 11172,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        116,
+        117,
+        118,
+        119,
+        120
+      ],
+      "chars": 11045,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        121,
+        122,
+        123,
+        124,
+        125
+      ],
+      "chars": 12413,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "chars": 10978,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        131,
+        132,
+        133,
+        134,
+        135
+      ],
+      "chars": 11114,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "chars": 10611,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        141,
+        142,
+        143,
+        144,
+        145
+      ],
+      "chars": 10902,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        146,
+        147,
+        148,
+        149,
+        150
+      ],
+      "chars": 10749,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        151,
+        152,
+        153,
+        154,
+        155
+      ],
+      "chars": 10679,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        156,
+        157,
+        158,
+        159,
+        160
+      ],
+      "chars": 10658,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        161,
+        162,
+        163,
+        164,
+        165
+      ],
+      "chars": 10658,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        166,
+        167,
+        168,
+        169,
+        170
+      ],
+      "chars": 10558,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        171,
+        172,
+        173,
+        174,
+        175
+      ],
+      "chars": 10589,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        176,
+        177,
+        178,
+        179,
+        180
+      ],
+      "chars": 11238,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
+        181,
+        182,
+        183,
+        184,
+        185
+      ],
+      "chars": 11154,
       "status": "ready",
       "reason": "5-chapter group meets the daily floor"
     }

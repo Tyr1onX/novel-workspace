@@ -1,7 +1,7 @@
-{
+﻿{
   "minimum_chars": 2000,
-  "count": 110,
-  "pass_count": 110,
+  "count": 185,
+  "pass_count": 185,
   "short_count": 0,
   "short_chapters": [],
   "chapters": [
@@ -772,6 +772,531 @@
       "number": 110,
       "heading": "第一百一十章 第一天上班，三公里通勤",
       "chars": 2004,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 111,
+      "heading": "第一百十一章 例会前，先把伞放进包里",
+      "chars": 2186,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 112,
+      "heading": "第一百十二章 楼下那家面馆，晚上八点还开",
+      "chars": 2191,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 113,
+      "heading": "第一百十三章 权限没开，路先走熟",
+      "chars": 2332,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 114,
+      "heading": "第一百十四章 一把椅子，坐过再买",
+      "chars": 2278,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 115,
+      "heading": "第一百十五章 周末不去商场，先走到江边",
+      "chars": 2185,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 116,
+      "heading": "第一百十六章 新工牌刷不开南门",
+      "chars": 2220,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 117,
+      "heading": "第一百十七章 雨停以后，绕到菜店",
+      "chars": 2240,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 118,
+      "heading": "第一百十八章 午休四十分钟，楼下转一圈",
+      "chars": 2271,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 119,
+      "heading": "第一百十九章 许哥说，别把新人装太满",
+      "chars": 2253,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 120,
+      "heading": "第一百二十章 第一周结束，鞋柜多了一双拖鞋",
+      "chars": 2061,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 121,
+      "heading": "第一百二十一章 周航入职，先问食堂远不远",
+      "chars": 2556,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 122,
+      "heading": "第一百二十二章 旧公交卡，在临岚还能刷",
+      "chars": 2939,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 123,
+      "heading": "第一百二十三章 胡凯发来一条山线照片",
+      "chars": 2243,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 124,
+      "heading": "第一百二十四章 唐梨来砚海，先找考场",
+      "chars": 2230,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 125,
+      "heading": "第一百二十五章 站外那段路，行李箱不该拖",
+      "chars": 2445,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 126,
+      "heading": "第一百二十六章 周六早上，家具城还没开门",
+      "chars": 2270,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 127,
+      "heading": "第一百二十七章 试坐半小时，比参数有用",
+      "chars": 2078,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 128,
+      "heading": "第一百二十八章 回家路上，公交提前收班",
+      "chars": 2264,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 129,
+      "heading": "第一百二十九章 椅子送到，小区电梯坏了半小时",
+      "chars": 2096,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 130,
+      "heading": "第一百三十章 坐舒服以后，也要出门",
+      "chars": 2270,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 131,
+      "heading": "第一百三十一章 例会改到九点半",
+      "chars": 2205,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 132,
+      "heading": "第一百三十二章 公司楼下的早餐摊换了位置",
+      "chars": 2266,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 133,
+      "heading": "第一百三十三章 一条工牌挂绳，走了两条街",
+      "chars": 2202,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 134,
+      "heading": "第一百三十四章 晚高峰地铁，先让同事上车",
+      "chars": 2224,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 135,
+      "heading": "第一百三十五章 第二周的三公里，没有新鲜感",
+      "chars": 2217,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 136,
+      "heading": "第一百三十六章 白榆的票，提前一天买",
+      "chars": 2077,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 137,
+      "heading": "第一百三十七章 直达车晚点二十分钟",
+      "chars": 2207,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 138,
+      "heading": "第一百三十八章 老仓库那条路，栏杆换了新漆",
+      "chars": 2086,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 139,
+      "heading": "第一百三十九章 住一晚，第二天少赶一趟车",
+      "chars": 2178,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 140,
+      "heading": "第一百四十章 回来以后，工牌还在外套口袋",
+      "chars": 2063,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 141,
+      "heading": "第一百四十一章 父亲说，别天天在外面晃",
+      "chars": 2235,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 142,
+      "heading": "第一百四十二章 母亲的视频，看见了新椅子",
+      "chars": 2235,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 143,
+      "heading": "第一百四十三章 工资条发来前，余额已经够用",
+      "chars": 2239,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 144,
+      "heading": "第一百四十四章 请父母吃饭，不用选最便宜",
+      "chars": 2125,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 145,
+      "heading": "第一百四十五章 送他们去车站，箱子放后备箱",
+      "chars": 2068,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 146,
+      "heading": "第一百四十六章 胡凯到砚海，不先爬山",
+      "chars": 2061,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 147,
+      "heading": "第一百四十七章 他要买鞋，沈川只负责带路",
+      "chars": 2052,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 148,
+      "heading": "第一百四十八章 江边风大，路线缩短",
+      "chars": 2230,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 149,
+      "heading": "第一百四十九章 夜里回小区，南门还开着",
+      "chars": 2243,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 150,
+      "heading": "第一百五十章 两千公里，没有提示音",
+      "chars": 2163,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 151,
+      "heading": "第一百五十一章 周航周末来，不住沙发",
+      "chars": 2026,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 152,
+      "heading": "第一百五十二章 游戏展小场，排队比路长",
+      "chars": 2272,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 153,
+      "heading": "第一百五十三章 他买手柄，沈川买袜子",
+      "chars": 2121,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 154,
+      "heading": "第一百五十四章 回程车上，谁都没数步数",
+      "chars": 2162,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 155,
+      "heading": "第一百五十五章 周一早上，鞋底有点湿",
+      "chars": 2098,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 156,
+      "heading": "第一百五十六章 项目上线前，晚饭先吃完",
+      "chars": 2171,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 157,
+      "heading": "第一百五十七章 加班到九点，直接打车",
+      "chars": 2100,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 158,
+      "heading": "第一百五十八章 第二天不补步",
+      "chars": 2239,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 159,
+      "heading": "第一百五十九章 超市促销，买米叫配送",
+      "chars": 2100,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 160,
+      "heading": "第一百六十章 月底前，先把房租留出来",
+      "chars": 2048,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 161,
+      "heading": "第一百六十一章 唐梨的面试提前了",
+      "chars": 2162,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 162,
+      "heading": "第一百六十二章 她不问收入，只问路线",
+      "chars": 2117,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 163,
+      "heading": "第一百六十三章 考场外的咖啡店没有座",
+      "chars": 2206,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 164,
+      "heading": "第一百六十四章 把她送到站台，不进站",
+      "chars": 2137,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 165,
+      "heading": "第一百六十五章 回家那段路，风吹得伞反翻",
+      "chars": 2036,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 166,
+      "heading": "第一百六十六章 周航搬家，只搬自己的东西",
+      "chars": 2019,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 167,
+      "heading": "第一百六十七章 他的新公司，在另一个园区",
+      "chars": 2064,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 168,
+      "heading": "第一百六十八章 两个人各走各的通勤",
+      "chars": 2151,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 169,
+      "heading": "第一百六十九章 晚上开黑，语音里少了背景声",
+      "chars": 2187,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 170,
+      "heading": "第一百七十章 临岚回来，公交卡还在钱包",
+      "chars": 2137,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 171,
+      "heading": "第一百七十一章 周末去泊川，先看天气",
+      "chars": 2143,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 172,
+      "heading": "第一百七十二章 旧码头边，轮渡今天停一班",
+      "chars": 2170,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 173,
+      "heading": "第一百七十三章 民宿老板说，江风别硬扛",
+      "chars": 2199,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 174,
+      "heading": "第一百七十四章 第二天只走半程",
+      "chars": 2038,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 175,
+      "heading": "第一百七十五章 返程前，买了一袋热栗子",
+      "chars": 2039,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 176,
+      "heading": "第一百七十六章 公司体检，体重没变太多",
+      "chars": 2264,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 177,
+      "heading": "第一百七十七章 医生建议，脚底先休两天",
+      "chars": 2243,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 178,
+      "heading": "第一百七十八章 午休不出楼，去茶水间接水",
+      "chars": 2255,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 179,
+      "heading": "第一百七十九章 下班后去修鞋店",
+      "chars": 2239,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 180,
+      "heading": "第一百八十章 旧鞋补好，也不急着穿",
+      "chars": 2237,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 181,
+      "heading": "第一百八十一章 九月最后一周，会议多起来",
+      "chars": 2256,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 182,
+      "heading": "第一百八十二章 月底报销，票据别弄丢",
+      "chars": 2233,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 183,
+      "heading": "第一百八十三章 许哥请奶茶，沈川没抢着付",
+      "chars": 2267,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 184,
+      "heading": "第一百八十四章 晚上十点，南门侧门锁了",
+      "chars": 2278,
+      "status": "pass",
+      "deficit": 0
+    },
+    {
+      "number": 185,
+      "heading": "第一百八十五章 三公里路，留到明天早上",
+      "chars": 2120,
       "status": "pass",
       "deficit": 0
     }
