@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-09-06T03:33:03+00:00",
+  "last_sync_at": "2026-09-11T08:10:44+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -261,6 +261,78 @@
       "last_action": "create",
       "last_synced_at": "2026-09-04T04:07:42+00:00",
       "queue_operation_id": "rail-create-117-134-schedule-through-20260915"
+    },
+    "159": {
+      "local_sha256": "a2f04f1609d72ad473016a06699bf9c2b9283fc2c054cc6ca748991b244f294d",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "160": {
+      "local_sha256": "14d21c89db7ad6d94064cc549939e769762d257d25a0fb002157e531dfd72fb2",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "161": {
+      "local_sha256": "b080089407685f0e64936fd0743ff569608ddad970d23111632e6378fd5c31ab",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "162": {
+      "local_sha256": "1af79ffaf62b4514f83ae3c7f42e6fa49e9538c7e27d969de1eefb601c876ceb",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "163": {
+      "local_sha256": "69ba2b0a860bd2c5daf8cc94ef4d390a958507c529fe4e2d7ce50720a679f84b",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "164": {
+      "local_sha256": "142f322f5e05777b67a5f006ab6aa3b430029b9e878ae8640ced6915fbf032bf",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "165": {
+      "local_sha256": "ed0522e8ff904ca701771e9e09d608a6b1492974927207db4bf8064a3aa918fc",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "166": {
+      "local_sha256": "3423ab0de526db29024f2aa4581b801a4c09a19fbf37a424c3fa2bde5b4e9ad8",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "167": {
+      "local_sha256": "5f096b845e999ebf3e9780061615628c1c334bef3794ba7c54f8ba2916fe73f9",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "168": {
+      "local_sha256": "b74694e2903e4aa101754c56d6f4e7db1c64ed6015c113519d742c3a7f572700",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "169": {
+      "local_sha256": "ac02a4deb5f568c37458af71c85653ced66d8c5d14e8a760b01ef9f7a46f751f",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
+    },
+    "170": {
+      "local_sha256": "d574352204dfe8767785ae6a4099a082509cfceedf0cd9c7180abc89fd52c49f",
+      "last_action": "create",
+      "last_synced_at": "2026-09-11T08:10:44+00:00",
+      "queue_operation_id": "rail-create-159-170-three-per-day-20260911"
     }
   }
 }
