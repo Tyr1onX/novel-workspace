@@ -9,9 +9,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Audit Endless Rail chapter lengths
+      - name: Generate Endless Rail chapter length report
         run: |
           python novels/endless-rail/tools/audit_chapter_lengths.py \
             --start 109 \
             --hard-minimum 2000 \
-            --fail
+            > endless-rail-length-audit.json
+      - name: Upload length audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: endless-rail-length-audit
+          path: endless-rail-length-audit.json
+          if-no-files-found: error
+      - name: Enforce Endless Rail chapter length floor
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('endless-rail-length-audit.json').read_text(encoding='utf-8'))
+          hard = report.get('hard_chapters', [])
+          if hard:
+              details = ', '.join(
+                  f"{item['number']}={item['chars']}"
+                  for item in report.get('chapters', [])
+                  if item.get('status') == 'hard-short'
+              )
+              raise SystemExit(f"chapters below 2000 non-whitespace body chars: {details}")
+          print(f"PASS: {report.get('count', 0)} chapters checked; hard_count=0")
+          PY
