@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   audit:
     runs-on: ubuntu-latest
@@ -15,13 +18,20 @@ jobs:
             --start 109 \
             --hard-minimum 2000 \
             > endless-rail-length-audit.json
-      - name: Upload length audit report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: endless-rail-length-audit
-          path: endless-rail-length-audit.json
-          if-no-files-found: error
+      - name: Persist latest length audit snapshot
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p novels/endless-rail/docs
+          cp endless-rail-length-audit.json novels/endless-rail/docs/length-audit-latest.json
+          if git diff --quiet -- novels/endless-rail/docs/length-audit-latest.json; then
+            echo "Length audit snapshot unchanged."
+            exit 0
+          fi
+          git config user.name "rail-audit-bot"
+          git config user.email "rail-audit-bot@users.noreply.github.com"
+          git add novels/endless-rail/docs/length-audit-latest.json
+          git commit -m "chore(rail): refresh length audit snapshot [skip ci]"
+          git push origin HEAD:main
       - name: Enforce Endless Rail chapter length floor
         run: |
           python - <<'PY'
