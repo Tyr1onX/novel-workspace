@@ -15,31 +15,31 @@
   },
   "schedule": {
     "mode": "fixed_start",
-    "chapters_per_day": 5,
+    "chapters_per_day": 3,
     "slots": [
       "00:00"
     ],
     "start_date": null,
-    "group_size": 5,
+    "group_size": 3,
     "same_timestamp_within_group": true,
     "require_complete_groups": true,
     "daily_word_floor": {
       "enabled": true,
-      "minimum_chars_exclusive": 9999,
-      "normal_chapters": 5,
+      "minimum_chars_exclusive": 5999,
+      "normal_chapters": 3,
       "preserve_order": true,
       "same_timestamp": true,
-      "notes": "Every normal release day is exactly five consecutive chapters at 00:00 Asia/Shanghai and must contain at least 10000 non-whitespace正文 characters. Partial release days and auto-continue scheduling are forbidden."
+      "notes": "Every normal release day is exactly three consecutive chapters at 00:00 Asia/Shanghai and must contain at least 6000 non-whitespace正文 characters. Partial release days and auto-continue scheduling are forbidden."
     },
     "extra_release": {
       "unit": "chapter",
       "allow_partial_group": false,
       "preserve_daily_quota": true,
-      "daily_quota": 5,
+      "daily_quota": 3,
       "reflow": "compact_remaining_schedule_forward_in_chapter_order",
       "preserve_same_timestamp_within_group": true,
       "do_not_reduce_original_day_count": true
     }
   },
-  "notes": "Hard release invariant: each normal day publishes exactly five consecutive audited chapters at 00:00 Asia/Shanghai; every new or substantively updated chapter has at least 2000正文 characters and the day's total is at least 10000. There is no maximum chapter length. Future creates must use an explicit fixed start date. A fresh read-only reconcile is required before any strict reschedule so the expected pending chapter set is recorded and auditable."
+  "notes": "Author confirmed on 2026-09-11 that the future cadence is three chapters per day. From chapter 159 onward, each normal day publishes exactly three consecutive audited chapters at 00:00 Asia/Shanghai; every new or substantively updated chapter has at least 2000正文 characters and each three-chapter day totals at least 6000. Existing chapters 134-158 already scheduled for 2026-09-11 through 2026-09-15 are not rescheduled by this policy change. Future creates must use an explicit fixed start date. A fresh read-only reconcile is required before platform mutation."
 }
