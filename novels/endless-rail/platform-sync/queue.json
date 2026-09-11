@@ -22,15 +22,49 @@
         "title_mismatches": 0,
         "position_mismatches": 0,
         "schedule": {
-          "2026-08-30": [82, 83, 84],
-          "2026-08-31": [85, 86, 87],
-          "2026-09-01": [88, 89, 90],
-          "2026-09-02": [91, 92, 93],
-          "2026-09-03": [94, 95, 96],
-          "2026-09-04": [97, 98, 99],
-          "2026-09-05": [100, 101, 102],
-          "2026-09-06": [103, 104, 105],
-          "2026-09-07": [106]
+          "2026-08-30": [
+            82,
+            83,
+            84
+          ],
+          "2026-08-31": [
+            85,
+            86,
+            87
+          ],
+          "2026-09-01": [
+            88,
+            89,
+            90
+          ],
+          "2026-09-02": [
+            91,
+            92,
+            93
+          ],
+          "2026-09-03": [
+            94,
+            95,
+            96
+          ],
+          "2026-09-04": [
+            97,
+            98,
+            99
+          ],
+          "2026-09-05": [
+            100,
+            101,
+            102
+          ],
+          "2026-09-06": [
+            103,
+            104,
+            105
+          ],
+          "2026-09-07": [
+            106
+          ]
         }
       }
     },
@@ -184,7 +218,11 @@
         "source_run": 34008322569,
         "source_job": 101419606376,
         "inspection_anomaly": "bridge current-state inspection called extract_chapters_from_page at an invalid pagination state and received 0 chapter rows, so it planned 45 writes instead of the reconciled expected 18",
-        "confirmed_successful_groups": ["2026-09-07", "2026-09-08", "2026-09-09"],
+        "confirmed_successful_groups": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09"
+        ],
         "confirmed_successful_chapters": "114-129",
         "first_failed_chapter": 133,
         "failed_chapters": "130-133",
@@ -240,12 +278,13 @@
       "chapters": "159-170",
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-16",
-      "status": "awaiting_reconcile",
+      "status": "blocked_selfhosted_failure_needs_reconcile",
       "authorized": false,
       "audit": {
         "status": "passed",
         "commit": "d707e0b4cd4c7972cb019f00b483dc5bf56e91e5",
-        "basis": "The author explicitly confirmed a three-chapter daily cadence on 2026-09-11. Chapters 159-170 are covered by docs/audit-159-170.md with audited non-whitespace body counts 159=2842, 160=2838, 161=2925, 162=2859, 163=2847, 164=2801, 165=2807, 166=2826, 167=2821, 168=2820, 169=2849, 170=2877. The four complete three-chapter groups total 8605, 8507, 8454, and 8546 characters, each above the 6000-character daily floor. A fresh read-only Fanqie reconcile is required before this operation may be authorized."
+        "basis": "The author explicitly confirmed a three-chapter daily cadence on 2026-09-11. Chapters 159-170 are covered by docs/audit-159-170.md with audited non-whitespace body counts 159=2842, 160=2838, 161=2925, 162=2859, 163=2847, 164=2801, 165=2807, 166=2826, 167=2821, 168=2820, 169=2849, 170=2877. The four complete three-chapter groups total 8605, 8507, 8454, and 8546 characters, each above the 6000-character daily floor. A fresh read-only Fanqie reconcile is required before this operation may be authorized.",
+        "failure_guard": "Self-hosted stage did not complete verification; authorization revoked. Fresh read-only reconcile required before retry."
       },
       "reason": "Prepare the first four complete three-chapter groups for Sep 16-19 while preserving all existing published and scheduled chapters. No platform mutation is authorized until fresh remote reconciliation confirms chapters 159-170 are absent and the existing 134-158 schedule is intact."
     }
