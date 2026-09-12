@@ -72,14 +72,19 @@ def dec_to_cn(x: Decimal) -> str:
     return f"{int_to_cn(whole)}点{int_to_cn(frac)}"
 
 
-def extract_steps(text: str) -> int:
-    m = re.search(r"【今日有效步数：\s*(\d+)】", text)
-    if m:
-        return int(m.group(1))
-    m = re.search(r"有效步数\s*([零〇一二两三四五六七八九十百千万]+)", text)
+def extract_steps(text: str, chapter: int) -> int:
+    patterns = [
+        r"【今日有效步数[：:]\s*(\d+)】",
+        r"有效步数(?:为|是)?[：:\s]*([0-9]+)",
+    ]
+    for pattern in patterns:
+        m = re.search(pattern, text)
+        if m:
+            return int(m.group(1))
+    m = re.search(r"有效步数(?:为|是)?[：:\s]*([零〇一二两三四五六七八九十百千万]+)", text)
     if m:
         return cn_to_int(m.group(1))
-    raise RuntimeError("cannot find effective steps")
+    raise RuntimeError(f"chapter {chapter}: cannot find effective steps")
 
 
 filler_markers = (
@@ -116,21 +121,28 @@ for n in range(START, END + 1):
         kept.append(chunk.strip())
     text2 = "\n\n".join(c for c in kept if c) + "\n"
 
-    steps = extract_steps(text2)
+    steps = extract_steps(text2, n)
     cumulative += Decimal(steps) * Decimal("0.0008")
     shown = cumulative.quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
 
-    if re.search(r"【累计有效里程：\s*[0-9.]+\s*km】", text2):
+    if re.search(r"【累计有效里程[：:]\s*[0-9.]+\s*km】", text2):
         text2 = re.sub(
-            r"【累计有效里程：\s*[0-9.]+\s*km】",
+            r"【累计有效里程[：:]\s*[0-9.]+\s*km】",
             f"【累计有效里程：{shown}km】",
             text2,
             count=1,
         )
-    elif re.search(r"累计有效里程\s*[零〇一二两三四五六七八九十百千万点]+公里", text2):
+    elif re.search(r"累计有效里程(?:为|是)?[：:\s]*[零〇一二两三四五六七八九十百千万点]+公里", text2):
         text2 = re.sub(
-            r"累计有效里程\s*[零〇一二两三四五六七八九十百千万点]+公里",
+            r"累计有效里程(?:为|是)?[：:\s]*[零〇一二两三四五六七八九十百千万点]+公里",
             f"累计有效里程{dec_to_cn(shown)}公里",
+            text2,
+            count=1,
+        )
+    elif re.search(r"累计有效里程(?:为|是)?[：:\s]*[0-9.]+公里", text2):
+        text2 = re.sub(
+            r"累计有效里程(?:为|是)?[：:\s]*[0-9.]+公里",
+            f"累计有效里程{shown}公里",
             text2,
             count=1,
         )
