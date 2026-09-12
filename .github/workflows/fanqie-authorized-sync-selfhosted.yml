@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "novels/death-list/platform-sync/queue.json"
+      - ".github/workflows/fanqie-authorized-sync-selfhosted.yml"
   workflow_dispatch:
 
 concurrency:
@@ -28,6 +29,59 @@ jobs:
         run: |
           git fetch origin main
           git rebase origin/main
+      - name: Stage audited 65-69 queue operation
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $path = 'novels/death-list/platform-sync/queue.json'
+          $queue = Get-Content -Raw -Encoding UTF8 $path | ConvertFrom-Json
+          $id = 'death-list-create-065-069-20260912'
+          $existing = @($queue.operations | Where-Object { $_.id -eq $id })
+          if ($existing.Count -gt 1) { throw 'Duplicate 65-69 queue operation ids found.' }
+          if ($existing.Count -eq 0) {
+            $op = [pscustomobject]@{
+              id = $id
+              action = 'create'
+              chapters = '65-69'
+              status = 'pending'
+              authorized = $true
+              audit = [pscustomobject]@{
+                status = 'passed'
+                source = 'Death List Quality Selfhosted, manual scene/continuity review, and fresh self-hosted read-only Fanqie reconciliation'
+                source_run = '34695245649'
+                source_job = '103557497571'
+                source_commit = '175e6d87658b6ec84fb419f65b5d03352728f2d4'
+                reconcile_run = '34697416918'
+                reconcile_job = '103563175904'
+                remote_prefix = '1-64'
+                remote_status = '39 published; 25 scheduled'
+                remote_differences = 'local-only 65-69; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches'
+                chapter_body_characters = [pscustomobject]@{
+                  '65' = 2220
+                  '66' = 2421
+                  '67' = 2542
+                  '68' = 2030
+                  '69' = 2098
+                }
+                review_notes = 'The complete five-chapter group totals 11311 non-whitespace body characters. The self-hosted full novel gate passed with all automated hard findings zero, and chapters 65-69 were manually reviewed together in context. D-035 preserves the established result-field and causal-chain rules: an actual meal-plan change does not itself force disappearance; the location refreshes to the public lab after the replacement meal and planned eating location change; the uncertain meal is removed, Shen Fang restores his existing medically advised preparedness and enters the campus medical system for professional evaluation, then the record disappears at 12:24. No single factor is promoted to the unique root cause. Zhou Yu knowledge only advances to minimum event facts when he is directly involved; Shen Fang learns only facts tied to his own event and not the source or other cases. Fresh platform reconciliation confirmed exactly 64 numbered remote items, 39 published and 25 scheduled, with local-only 65-69 and no remote-only chapters, duplicates, title mismatches, or position mismatches. Preserve chapters 1-64 and all existing schedules; create only 65-69 together for 2026-09-18 00:00 Asia/Shanghai. Do not publish immediately.'
+                already_present_chapters = @()
+              }
+              schedule_mode = 'fixed_start'
+              start_date = '2026-09-18'
+            }
+            $queue.operations = @($queue.operations) + @($op)
+            $queue.updated_at = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ss+00:00')
+            $json = $queue | ConvertTo-Json -Depth 20
+            [System.IO.File]::WriteAllText((Join-Path (Get-Location) $path), $json + "`n", [System.Text.UTF8Encoding]::new($false))
+            Write-Host 'Staged audited queue operation for chapters 65-69.'
+          } else {
+            $op = $existing[0]
+            if ($op.chapters -ne '65-69' -or $op.start_date -ne '2026-09-18' -or -not $op.authorized -or $op.audit.status -ne 'passed') {
+              throw 'Existing 65-69 queue operation does not match the audited authorization.'
+            }
+            Write-Host "Queue operation already exists with status: $($op.status)"
+          }
       - name: Validate local Death List sync configuration
         shell: powershell
         env:
@@ -40,10 +94,10 @@ jobs:
           $queue = Get-Content -Raw -Encoding UTF8 novels/death-list/platform-sync/queue.json | ConvertFrom-Json
           $pending = @($queue.operations | Where-Object { $_.status -eq 'pending' -and $_.authorized -and $_.audit.status -eq 'passed' })
           if ($pending.Count -ne 1) { throw "Expected exactly one pending authorized operation; found $($pending.Count)." }
-          $op = @($pending | Where-Object { $_.id -eq 'death-list-create-060-064-20260911' })
-          if ($op.Count -ne 1) { throw 'Expected the pending operation to be death-list-create-060-064-20260911.' }
-          if ($op[0].chapters -ne '60-64') { throw 'Unexpected chapter selector for 60-64 operation.' }
-          if ($op[0].start_date -ne '2026-09-17') { throw 'Unexpected 60-64 schedule date.' }
+          $op = @($pending | Where-Object { $_.id -eq 'death-list-create-065-069-20260912' })
+          if ($op.Count -ne 1) { throw 'Expected the pending operation to be death-list-create-065-069-20260912.' }
+          if ($op[0].chapters -ne '65-69') { throw 'Unexpected chapter selector for 65-69 operation.' }
+          if ($op[0].start_date -ne '2026-09-18') { throw 'Unexpected 65-69 schedule date.' }
       - name: Resolve local Fanqie runtime
         id: runtime
         shell: powershell
@@ -62,26 +116,26 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $r = Get-Content -Raw -Encoding UTF8 $report | ConvertFrom-Json
           if ($r.book_id -ne '7682312977067822142') { throw 'Book ID mismatch.' }
-          if ($r.remote.numbered_item_count -ne 59 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 59) {
-            throw 'Remote prefix changed: expected exactly 1-59 before sync.'
+          if ($r.remote.numbered_item_count -ne 64 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 64) {
+            throw 'Remote prefix changed: expected exactly 1-64 before sync.'
           }
           if (@($r.differences.remote_only_chapters).Count -ne 0) { throw 'Remote-only chapters detected.' }
           if (@($r.differences.title_mismatches).Count -ne 0) { throw 'Title mismatch detected.' }
           if (@($r.differences.position_mismatches).Count -ne 0) { throw 'Position mismatch detected.' }
           if (@($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties).Count -ne 0) { throw 'Duplicate remote chapter numbers detected.' }
-          $expectedLocalOnly = @(60,61,62,63,64)
+          $expectedLocalOnly = @(65,66,67,68,69)
           $actualLocalOnly = @($r.differences.local_only_chapters)
           if (($actualLocalOnly -join ',') -ne ($expectedLocalOnly -join ',')) {
             throw "Unexpected local-only set: $($actualLocalOnly -join ',')"
           }
           $allowedStatuses = @('scheduled','reviewing')
-          foreach ($n in 55..59) {
+          foreach ($n in 60..64) {
             $item = @($r.remote_items | Where-Object { $_.chapter_number -eq $n })
-            if ($item.Count -ne 1) { throw "Chapter $n missing or duplicated before 60-64 sync." }
+            if ($item.Count -ne 1) { throw "Chapter $n missing or duplicated before 65-69 sync." }
             if ($allowedStatuses -notcontains $item[0].status) { throw "Chapter $n has unexpected preflight status: $($item[0].status)" }
-            if ($item[0].scheduled_at -ne '2026-09-16T00:00+08:00') { throw "Chapter $n has unexpected preflight schedule: $($item[0].scheduled_at)" }
+            if ($item[0].scheduled_at -ne '2026-09-17T00:00+08:00') { throw "Chapter $n has unexpected preflight schedule: $($item[0].scheduled_at)" }
           }
-          Write-Host 'Preflight reconciliation PASS: remote is exactly 1-59 and local-only is 60-64.'
+          Write-Host 'Preflight reconciliation PASS: remote is exactly 1-64 and local-only is 65-69.'
       - name: Execute authorized scheduled sync
         shell: powershell
         env:
@@ -89,7 +143,7 @@ jobs:
         run: |
           python shared/tools/fanqie_compat.py sync novels/death-list --runtime "${{ steps.runtime.outputs.path }}"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Verify remote 60-64 after sync
+      - name: Verify remote 65-69 after sync
         shell: powershell
         env:
           PYTHONUTF8: "1"
@@ -98,22 +152,22 @@ jobs:
           python shared/tools/fanqie_compat.py reconcile novels/death-list --runtime "${{ steps.runtime.outputs.path }}" --output $report
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $r = Get-Content -Raw -Encoding UTF8 $report | ConvertFrom-Json
-          if ($r.remote.numbered_item_count -ne 64 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 64) {
-            throw 'Post-sync remote prefix is not exactly 1-64.'
+          if ($r.remote.numbered_item_count -ne 69 -or $r.remote.min_chapter -ne 1 -or $r.remote.max_chapter -ne 69) {
+            throw 'Post-sync remote prefix is not exactly 1-69.'
           }
-          if (@($r.differences.local_only_chapters).Count -ne 0) { throw 'Local-only chapters remain after 60-64 sync.' }
+          if (@($r.differences.local_only_chapters).Count -ne 0) { throw 'Local-only chapters remain after 65-69 sync.' }
           if (@($r.differences.remote_only_chapters).Count -ne 0) { throw 'Remote-only chapters detected after sync.' }
           if (@($r.differences.title_mismatches).Count -ne 0) { throw 'Title mismatch detected after sync.' }
           if (@($r.differences.position_mismatches).Count -ne 0) { throw 'Position mismatch detected after sync.' }
           if (@($r.differences.duplicate_remote_chapter_numbers.PSObject.Properties).Count -ne 0) { throw 'Duplicate remote chapter numbers detected after sync.' }
           $allowedStatuses = @('scheduled','reviewing')
-          foreach ($n in 60..64) {
+          foreach ($n in 65..69) {
             $item = @($r.remote_items | Where-Object { $_.chapter_number -eq $n })
             if ($item.Count -ne 1) { throw "Chapter $n missing or duplicated after sync." }
             if ($allowedStatuses -notcontains $item[0].status) { throw "Chapter $n has unexpected post-sync status: $($item[0].status)" }
-            if ($item[0].scheduled_at -ne '2026-09-17T00:00+08:00') { throw "Chapter $n has unexpected schedule: $($item[0].scheduled_at)" }
+            if ($item[0].scheduled_at -ne '2026-09-18T00:00+08:00') { throw "Chapter $n has unexpected schedule: $($item[0].scheduled_at)" }
           }
-          Write-Host 'Post-sync verification PASS: chapters 60-64 exist once and retain 2026-09-17 00:00 +08:00.'
+          Write-Host 'Post-sync verification PASS: chapters 65-69 exist once and retain 2026-09-18 00:00 +08:00.'
       - name: Persist synchronization ledgers
         if: always()
         shell: powershell
