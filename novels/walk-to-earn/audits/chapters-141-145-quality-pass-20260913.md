@@ -76,3 +76,11 @@ Continuity / realism: PASS.
 `141–145`: **QUALITY APPROVED FOR ONE SINGLE EXACT-RANGE PUBLISH ATTEMPT.**
 
 This approval authorizes no mutation of chapters 1–140 or 146–185. Before any platform write, a fresh read-only reconciliation must prove that the remote numbered prefix is exactly 1–140, with no duplicate chapter numbers. The publish action may create only chapters 141–145 and must schedule all five for `2026-09-22 00:00 Asia/Shanghai`. After the attempt, a read-only reconciliation must prove the remote numbered prefix is exactly 1–145 with expected titles and schedule before the operation can be recorded complete. Any mismatch must fail closed with no blind replay.
+
+## Platform publication — PASS
+- workflow run: `34726406343`
+- operation: `walk-create-141-145-audited-20260913`
+- confirmed platform chapters: 141–145
+- scheduled together: 2026-09-22 00:00 Asia/Shanghai
+- postflight numbered prefix: 1–145
+- recorded at: 2026-09-12T23:52:41+00:00

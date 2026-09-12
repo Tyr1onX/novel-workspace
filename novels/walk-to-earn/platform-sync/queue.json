@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-12T23:35:55+00:00",
+  "updated_at": "2026-09-12T23:52:41+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -674,6 +674,33 @@
         "remote_max_chapter_after_attempt": 140,
         "workflow_run": "34725690792",
         "basis": "Direct publisher reported success=5 failed=0 and read-only postflight confirmed remote prefix 1-140 with the expected schedule."
+      }
+    },
+    {
+      "id": "walk-create-141-145-audited-20260913",
+      "action": "create",
+      "chapters": "141-145",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-22",
+      "authorized": false,
+      "status": "completed",
+      "method": "exact_direct_runtime_bridge_single_five_chapter_group",
+      "audit": {
+        "status": "passed",
+        "quality_run": 34726229897,
+        "file": "novels/walk-to-earn/audits/chapters-141-145-quality-pass-20260913.md",
+        "basis": "Exact automated gate and manual cold-read audit passed on current chapter bodies."
+      },
+      "reason": "Publish only the audited 2026-09-22 five-chapter group after platform prefix 1-140 is independently confirmed.",
+      "created_at": "2026-09-12T23:49:56+00:00",
+      "completed_at": "2026-09-12T23:52:41+00:00",
+      "result": {
+        "success": 5,
+        "failed": 0,
+        "confirmed_success_chapters": "141-145",
+        "remote_max_chapter_after_attempt": 145,
+        "workflow_run": "34726406343",
+        "basis": "Direct publisher reported success=5 failed=0 and read-only postflight confirmed remote prefix 1-145 with expected schedule."
       }
     }
   ]
