@@ -1,0 +1,138 @@
+name: Walk 136-140 Exact Quality Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/walk-136-140-exact-quality-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Protected continuity invariants
+        env:
+          PYTHONUTF8: "1"
+        run: python novels/walk-to-earn/tools/check_rebuild_invariants.py
+
+      - name: Exact-range mandatory fiction guards
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/novel_gate.py \
+            novels/walk-to-earn/chapters/chapter-136.md \
+            novels/walk-to-earn/chapters/chapter-137.md \
+            novels/walk-to-earn/chapters/chapter-138.md \
+            novels/walk-to-earn/chapters/chapter-139.md \
+            novels/walk-to-earn/chapters/chapter-140.md
+
+      - name: Exact-range chapter length floor
+        env:
+          PYTHONUTF8: "1"
+        run: python novels/walk-to-earn/tools/audit_chapter_lengths.py --start 136 --end 140 --minimum 2000 --fail
+
+      - name: Exact five-chapter release floor
+        env:
+          PYTHONUTF8: "1"
+        run: python novels/walk-to-earn/tools/check_release_floor.py --start 136 --end 140 --minimum 9999 --normal 5 --maximum 5 --require-all
+
+      - name: Reject template markers and repeated prose in exact range
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, difflib, sys
+
+          root = Path('novels/walk-to-earn/chapters')
+          target = list(range(136, 141))
+          context = list(range(131, 141))
+          texts = {}
+          paragraphs = {}
+          forbidden = [
+              '这条记录只落在',
+              '旁边写着“章节标题”',
+              '这一天这天剩下的零碎收回来',
+          ]
+          marker_re = re.compile(r'第[0-9一二三四五六七八九十百零]+章第[0-9一二三四五六七八九十百零]+段')
+
+          def norm(s: str) -> str:
+              return re.sub(r'\s+', '', s)
+
+          failures = []
+          for n in context:
+              p = root / f'chapter-{n:03d}.md'
+              raw = p.read_text(encoding='utf-8')
+              body = '\n'.join(raw.splitlines()[1:]).strip()
+              texts[n] = norm(body)
+              paragraphs[n] = [norm(x) for x in re.split(r'\n\s*\n', body) if len(norm(x)) >= 45 and not norm(x).startswith('【')]
+              if n in target:
+                  for token in forbidden:
+                      if token in raw:
+                          failures.append(f'ch{n}: forbidden template token {token!r}')
+                  if marker_re.search(raw):
+                      failures.append(f'ch{n}: chapter/paragraph template marker remains')
+
+          for a in target:
+              for b in context:
+                  if b >= a:
+                      continue
+                  ratio = difflib.SequenceMatcher(None, texts[a], texts[b], autojunk=False).ratio()
+                  if ratio >= 0.48:
+                      failures.append(f'ch{a} vs ch{b}: suspicious whole-chapter similarity {ratio:.3f}')
+                  for pa in paragraphs[a]:
+                      for pb in paragraphs[b]:
+                          if pa == pb:
+                              failures.append(f'ch{a} vs ch{b}: exact repeated paragraph ({len(pa)} chars)')
+                              break
+                          r = difflib.SequenceMatcher(None, pa, pb, autojunk=False).ratio()
+                          if r >= 0.90 and min(len(pa), len(pb)) >= 70:
+                              failures.append(f'ch{a} vs ch{b}: near-duplicate paragraph similarity {r:.3f}')
+                              break
+                      if failures and failures[-1].startswith(f'ch{a} vs ch{b}:'):
+                          break
+
+          if failures:
+              print('EXACT RANGE REPETITION/TEMPLATE AUDIT: FAIL')
+              print('\n'.join('- ' + x for x in failures))
+              sys.exit(2)
+          print('EXACT RANGE REPETITION/TEMPLATE AUDIT: PASS')
+          PY
+
+      - name: Verify exact-range system arithmetic and cumulative anchors
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+
+          root = Path('novels/walk-to-earn/chapters')
+          required = {
+              136: ['11997', '1439.64', '1764.3km', '0.12元/有效步'],
+              139: ['15680', '1881.60', '1776.8km', '0.12元/有效步'],
+              140: ['8460', '1015.20', '1783.6km', '0.12元/有效步'],
+          }
+          failures = []
+          for n, tokens in required.items():
+              text = (root / f'chapter-{n:03d}.md').read_text(encoding='utf-8')
+              for token in tokens:
+                  if token not in text:
+                      failures.append(f'ch{n}: missing {token}')
+          arithmetic = [(11997, 1439.64), (15680, 1881.60), (8460, 1015.20)]
+          for steps, earned in arithmetic:
+              if round(steps * 0.12, 2) != earned:
+                  failures.append(f'arithmetic mismatch: {steps} * 0.12 != {earned}')
+          if failures:
+              print('EXACT RANGE NUMERIC AUDIT: FAIL')
+              print('\n'.join('- ' + x for x in failures))
+              sys.exit(2)
+          print('EXACT RANGE NUMERIC AUDIT: PASS')
+          PY
