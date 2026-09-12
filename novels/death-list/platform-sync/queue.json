@@ -325,7 +325,38 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-17",
       "completed_at": "2026-09-11T00:26:58+00:00"
+    },
+    {
+      "id": "death-list-create-065-069-20260912",
+      "action": "create",
+      "chapters": "65-69",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted, manual scene/continuity review, and fresh self-hosted read-only Fanqie reconciliation",
+        "source_run": "34695245649",
+        "source_job": "103557497571",
+        "source_commit": "175e6d87658b6ec84fb419f65b5d03352728f2d4",
+        "reconcile_run": "34697416918",
+        "reconcile_job": "103563175904",
+        "remote_prefix": "1-64",
+        "remote_status": "39 published; 25 scheduled",
+        "remote_differences": "local-only 65-69; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "65": 2220,
+          "66": 2421,
+          "67": 2542,
+          "68": 2030,
+          "69": 2098
+        },
+        "review_notes": "The complete five-chapter group totals 11311 non-whitespace body characters. The self-hosted full novel gate passed with all automated hard findings zero, and chapters 65-69 were manually reviewed together in context. D-035 preserves the established result-field and causal-chain rules: an actual meal-plan change does not itself force disappearance; the location refreshes to the public lab after the replacement meal and planned eating location change; the uncertain meal is removed, Shen Fang restores his existing medically advised preparedness and enters the campus medical system for professional evaluation, then the record disappears at 12:24. No single factor is promoted to the unique root cause. Zhou Yu knowledge only advances to minimum event facts when he is directly involved; Shen Fang learns only facts tied to his own event and not the source or other cases. Fresh platform reconciliation confirmed exactly 64 numbered remote items, 39 published and 25 scheduled, with local-only 65-69 and no remote-only chapters, duplicates, title mismatches, or position mismatches. Preserve chapters 1-64 and all existing schedules; create only 65-69 together for 2026-09-18 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-18",
+      "completed_at": "2026-09-12T13:54:32+00:00"
     }
   ],
-  "updated_at": "2026-09-11T00:26:58+00:00"
+  "updated_at": "2026-09-12T13:54:32+00:00"
 }
