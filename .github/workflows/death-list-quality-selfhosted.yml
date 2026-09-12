@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/death-list-quality-selfhosted.yml"
-      - "novels/death-list/chapters/chapter-06[0-4].md"
+      - "novels/death-list/chapters/chapter-06[5-9].md"
       - "shared/tools/novel_gate.py"
       - "shared/tools/narrative_guard.py"
       - "shared/tools/dialogue_guard.py"
@@ -16,7 +16,7 @@ on:
       - main
     paths:
       - ".github/workflows/death-list-quality-selfhosted.yml"
-      - "novels/death-list/chapters/chapter-06[0-4].md"
+      - "novels/death-list/chapters/chapter-06[5-9].md"
       - "shared/tools/novel_gate.py"
       - "shared/tools/narrative_guard.py"
       - "shared/tools/dialogue_guard.py"
@@ -30,7 +30,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  audit-60-64:
+  audit-65-69:
     runs-on: [self-hosted, windows, fanqie]
     timeout-minutes: 30
     permissions:
@@ -47,7 +47,7 @@ jobs:
           from pathlib import Path
 
           total = 0
-          for n in range(60, 65):
+          for n in range(65, 70):
               path = Path(f"novels/death-list/chapters/chapter-{n:03d}.md")
               text = path.read_text(encoding="utf-8")
               lines = text.splitlines()
@@ -58,20 +58,20 @@ jobs:
               print(f"chapter {n}: {count}")
               if count < 2000:
                   raise SystemExit(f"chapter {n} below 2000-character floor: {count}")
-          print(f"batch 60-64 total: {total}")
+          print(f"batch 65-69 total: {total}")
           if total <= 9999:
-              raise SystemExit(f"batch 60-64 does not exceed 9999 characters: {total}")
+              raise SystemExit(f"batch 65-69 does not exceed 9999 characters: {total}")
           '@ | python -
-      - name: Run complete novel gate for chapters 60-64
+      - name: Run complete novel gate for chapters 65-69
         shell: powershell
         env:
           PYTHONUTF8: "1"
           PYTHONIOENCODING: "utf-8"
         run: |
           python shared/tools/novel_gate.py `
-            novels/death-list/chapters/chapter-060.md `
-            novels/death-list/chapters/chapter-061.md `
-            novels/death-list/chapters/chapter-062.md `
-            novels/death-list/chapters/chapter-063.md `
-            novels/death-list/chapters/chapter-064.md
+            novels/death-list/chapters/chapter-065.md `
+            novels/death-list/chapters/chapter-066.md `
+            novels/death-list/chapters/chapter-067.md `
+            novels/death-list/chapters/chapter-068.md `
+            novels/death-list/chapters/chapter-069.md
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
