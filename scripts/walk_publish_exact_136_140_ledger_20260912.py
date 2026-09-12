@@ -12,7 +12,7 @@ NOVEL = ROOT / "novels" / "walk-to-earn"
 QUEUE = NOVEL / "platform-sync" / "queue.json"
 AUDIT = NOVEL / "audits" / "chapters-136-140-quality-pass-20260912.md"
 BOOK_ID = "7677956141673892926"
-OP_ID = "walk-create-136-140-audited-20260912"
+OP_ID = "walk-create-136-140-audited-retry1-20260913"
 QUALITY_RUN = 34672766220
 CHAPTERS = "136-140"
 PRE_MAX = 135
@@ -57,6 +57,7 @@ def prepare() -> None:
         "Chapters 136–140 quality audit — PASS",
         f"GitHub Actions run: `{QUALITY_RUN}`",
         "QUALITY APPROVED FOR A SINGLE EXACT-RANGE PUBLISH ATTEMPT ONLY",
+        "Safe retry authorization basis",
     ]
     for token in required:
         if token not in audit_text:
@@ -64,7 +65,7 @@ def prepare() -> None:
 
     queue = load(QUEUE)
     if find_op(queue):
-        raise SystemExit(f"Exact operation already exists; refusing replay: {OP_ID}")
+        raise SystemExit(f"Exact retry operation already exists; refusing replay: {OP_ID}")
     active = [
         op for op in queue.get("operations", [])
         if op.get("authorized") is True and op.get("status", "pending") == "pending"
@@ -83,14 +84,14 @@ def prepare() -> None:
         "start_date": "2026-09-21",
         "authorized": True,
         "status": "pending",
-        "method": "exact_direct_runtime_bridge_single_five_chapter_group",
+        "method": "exact_direct_runtime_bridge_single_five_chapter_group_retry_after_ci_only_failure",
         "audit": {
             "status": "passed",
             "quality_run": QUALITY_RUN,
             "file": "novels/walk-to-earn/audits/chapters-136-140-quality-pass-20260912.md",
-            "basis": "Exact automated gate and manual cold-read audit passed after complete rewrite of chapters 136-140.",
+            "basis": "Exact automated gate and manual cold-read audit passed; previous exact workflow failed before runtime/preflight/upload and performed no platform mutation.",
         },
-        "reason": "Publish only the audited 2026-09-21 five-chapter group after platform prefix 1-135 is independently confirmed.",
+        "reason": "Publish only the audited 2026-09-21 five-chapter group after platform prefix 1-135 is independently confirmed; preserve the earlier CI-only failed operation as history.",
         "created_at": now(),
     })
     queue["updated_at"] = now()
@@ -169,7 +170,7 @@ def complete(report_path: Path, run_id: str) -> None:
     queue = load(QUEUE)
     op = find_op(queue)
     if not op or op.get("status") != "pending" or op.get("authorized") is not True:
-        raise SystemExit(f"Exact operation is not active pending: {OP_ID}")
+        raise SystemExit(f"Exact retry operation is not active pending: {OP_ID}")
 
     op["authorized"] = False
     op["status"] = "completed"
@@ -185,7 +186,7 @@ def complete(report_path: Path, run_id: str) -> None:
     queue["updated_at"] = now()
     dump(QUEUE, queue)
     append_audit([
-        "## Platform publication — PASS",
+        "## Platform publication retry — PASS",
         f"- workflow run: `{run_id}`",
         f"- operation: `{OP_ID}`",
         "- confirmed platform chapters: 136–140",
@@ -193,7 +194,7 @@ def complete(report_path: Path, run_id: str) -> None:
         "- postflight numbered prefix: 1–140",
         f"- recorded at: {now()}",
     ])
-    print(f"Completed exact operation: {OP_ID}")
+    print(f"Completed exact retry operation: {OP_ID}")
 
 
 def fail(report_path: Path | None, run_id: str, reason: str) -> None:
@@ -213,7 +214,7 @@ def fail(report_path: Path | None, run_id: str, reason: str) -> None:
     queue["updated_at"] = now()
     dump(QUEUE, queue)
     append_audit([
-        "## Platform publication — FAIL CLOSED",
+        "## Platform publication retry — FAIL CLOSED",
         f"- workflow run: `{run_id}`",
         f"- operation: `{OP_ID}`",
         f"- reason: {reason}",
@@ -221,7 +222,7 @@ def fail(report_path: Path | None, run_id: str, reason: str) -> None:
         "- authorization disabled; blind replay is forbidden.",
         f"- recorded at: {now()}",
     ])
-    print(f"Fail-closed exact operation: {OP_ID}; remote_max={remote_max}")
+    print(f"Fail-closed exact retry operation: {OP_ID}; remote_max={remote_max}")
 
 
 def main() -> int:
