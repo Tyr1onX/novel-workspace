@@ -46,6 +46,14 @@ jobs:
           python novels/walk-to-earn/tools/check_template_markers.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+      - name: Reject cross-chapter repeated prose
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/check_cross_chapter_similarity.py --start 1 --end 185
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Check protected Walk to Earn facts
         shell: powershell
         env:
