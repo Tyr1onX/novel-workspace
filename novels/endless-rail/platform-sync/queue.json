@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-12T04:08:23+00:00",
+  "updated_at": "2026-09-12T12:47:02+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -305,6 +305,22 @@
       },
       "reason": "Author confirmed three chapters per day. Create nine complete three-chapter groups for 2026-09-20 through 2026-09-28 after fresh preflight.",
       "completed_at": "2026-09-12T04:08:23+00:00"
+    },
+    {
+      "id": "rail-create-198-203-three-per-day-20260911",
+      "action": "create",
+      "chapters": "198-203",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-29",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "docs/audit-171-203.md plus current self-hosted hard length gate and fresh read-only reconciliation",
+        "reconcile": "remote exactly 1-197; local-only 198-203; zero duplicate/title/position mismatches"
+      },
+      "reason": "Author confirmed three chapters per day. Create the final two complete three-chapter groups for 2026-09-29 and 2026-09-30 after fresh preflight.",
+      "completed_at": "2026-09-12T12:47:02+00:00"
     }
   ]
 }

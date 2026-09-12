@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-09-12T04:08:23+00:00",
+  "last_sync_at": "2026-09-12T12:47:02+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -495,6 +495,42 @@
       "last_action": "create",
       "last_synced_at": "2026-09-12T04:08:23+00:00",
       "queue_operation_id": "rail-create-171-197-three-per-day-20260911"
+    },
+    "198": {
+      "local_sha256": "bab414a01c0b6e946fd6197a2ffdd25f53abeea1838ecd9dde381a91b2664033",
+      "last_action": "create",
+      "last_synced_at": "2026-09-12T12:47:02+00:00",
+      "queue_operation_id": "rail-create-198-203-three-per-day-20260911"
+    },
+    "199": {
+      "local_sha256": "7532f3c2b6d14b33ec6b91690815911db6cf1c774d46e0efcd187e27d0c0b80f",
+      "last_action": "create",
+      "last_synced_at": "2026-09-12T12:47:02+00:00",
+      "queue_operation_id": "rail-create-198-203-three-per-day-20260911"
+    },
+    "200": {
+      "local_sha256": "c496a1bc205e023f5b4ccd7d341df6a359c14a36f26959f56ed36e3d4d73baf9",
+      "last_action": "create",
+      "last_synced_at": "2026-09-12T12:47:02+00:00",
+      "queue_operation_id": "rail-create-198-203-three-per-day-20260911"
+    },
+    "201": {
+      "local_sha256": "a7eb4c2dd3a585fde97e7ae4347e68cc696a47b17db102a3015126f649e12c56",
+      "last_action": "create",
+      "last_synced_at": "2026-09-12T12:47:02+00:00",
+      "queue_operation_id": "rail-create-198-203-three-per-day-20260911"
+    },
+    "202": {
+      "local_sha256": "46e5ea203bbddfc22e5a908f99c6686180aa04e6f3c52d89e19a98767d33198e",
+      "last_action": "create",
+      "last_synced_at": "2026-09-12T12:47:02+00:00",
+      "queue_operation_id": "rail-create-198-203-three-per-day-20260911"
+    },
+    "203": {
+      "local_sha256": "d9f78dc69a735c4b047bb990b979ffe10bda74d66f98d9cee7a122d842668387",
+      "last_action": "create",
+      "last_synced_at": "2026-09-12T12:47:02+00:00",
+      "queue_operation_id": "rail-create-198-203-three-per-day-20260911"
     }
   }
 }
