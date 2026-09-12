@@ -1,0 +1,122 @@
+name: Walk 131-135 Exact Range Audit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/walk-range-131-135-audit-20260912.yml"
+      - "novels/walk-to-earn/chapters/chapter-131.md"
+      - "novels/walk-to-earn/chapters/chapter-132.md"
+      - "novels/walk-to-earn/chapters/chapter-133.md"
+      - "novels/walk-to-earn/chapters/chapter-134.md"
+      - "novels/walk-to-earn/chapters/chapter-135.md"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run exact-range automated gates
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+          PYTHONIOENCODING: "utf-8"
+        run: |
+          New-Item -ItemType Directory -Force .audit | Out-Null
+          $failed = $false
+          $chapters = @(131..135 | ForEach-Object { "novels/walk-to-earn/chapters/chapter-$_.md" })
+
+          "=== TEMPLATE MARKERS ===" | Tee-Object -FilePath .audit\range-131-135.log
+          $patterns = @("这条记录只落在", "旁边写着")
+          foreach ($p in $patterns) {
+            $hits = Select-String -Path $chapters -Pattern $p -SimpleMatch
+            if ($hits) {
+              $hits | Tee-Object -FilePath .audit\range-131-135.log -Append
+              $failed = $true
+            }
+          }
+          $segmentHits = Select-String -Path $chapters -Pattern "第\d+章第\d+段"
+          if ($segmentHits) {
+            $segmentHits | Tee-Object -FilePath .audit\range-131-135.log -Append
+            $failed = $true
+          }
+
+          "=== LENGTH FLOOR ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --start 131 --end 135 --minimum 2000 --fail 2>&1 | Tee-Object -FilePath .audit\range-131-135-lengths.json
+          if ($LASTEXITCODE -ne 0) { $failed = $true }
+          Get-Content .audit\range-131-135-lengths.json | Add-Content .audit\range-131-135.log
+
+          "=== FIVE-CHAPTER FLOOR ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          python novels/walk-to-earn/tools/check_release_floor.py --start 131 --end 135 --minimum 9999 --normal 5 --maximum 5 --require-all 2>&1 | Tee-Object -FilePath .audit\range-131-135-release-floor.json
+          if ($LASTEXITCODE -ne 0) { $failed = $true }
+          Get-Content .audit\range-131-135-release-floor.json | Add-Content .audit\range-131-135.log
+
+          "=== PROTECTED FACTS ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          python novels/walk-to-earn/tools/check_rebuild_invariants.py 2>&1 | Tee-Object -FilePath .audit\range-131-135-invariants.log
+          if ($LASTEXITCODE -ne 0) { $failed = $true }
+          Get-Content .audit\range-131-135-invariants.log | Add-Content .audit\range-131-135.log
+
+          "=== NOVEL GATE ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          python shared/tools/novel_gate.py @chapters 2>&1 | Tee-Object -FilePath .audit\range-131-135-novel-gate.log
+          if ($LASTEXITCODE -ne 0) { $failed = $true }
+          Get-Content .audit\range-131-135-novel-gate.log | Add-Content .audit\range-131-135.log
+
+          $scan = @'
+          from pathlib import Path
+          from difflib import SequenceMatcher
+          import re, sys
+
+          files = [Path(f"novels/walk-to-earn/chapters/chapter-{n}.md") for n in range(131, 136)]
+          paras = []
+          for path in files:
+              raw = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+              chunks = [p.strip() for p in re.split(r"\n\s*\n", raw) if p.strip()]
+              for idx, p in enumerate(chunks[1:], 1):
+                  norm = re.sub(r"\s+", "", p)
+                  if len(norm) >= 70:
+                      paras.append((path.name, idx, norm))
+
+          bad = []
+          for i in range(len(paras)):
+              a_file, a_idx, a = paras[i]
+              for j in range(i + 1, len(paras)):
+                  b_file, b_idx, b = paras[j]
+                  if a_file == b_file:
+                      continue
+                  ratio = SequenceMatcher(None, a, b).ratio()
+                  if a == b or ratio >= 0.80:
+                      bad.append((a_file, a_idx, b_file, b_idx, ratio, a[:80]))
+
+          if bad:
+              print("CROSS-CHAPTER NEAR-DUPLICATE PARAGRAPHS FOUND")
+              for item in bad:
+                  print(item)
+              sys.exit(2)
+          print("Cross-chapter paragraph similarity scan: PASS")
+          '@
+          Set-Content -Encoding UTF8 .audit\range_similarity_scan.py $scan
+          "=== CROSS-CHAPTER SIMILARITY ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          python .audit\range_similarity_scan.py 2>&1 | Tee-Object -FilePath .audit\range-131-135-similarity.log
+          if ($LASTEXITCODE -ne 0) { $failed = $true }
+          Get-Content .audit\range-131-135-similarity.log | Add-Content .audit\range-131-135.log
+
+          if ($failed) {
+            Write-Error "Exact-range automated audit failed. Publishing remains frozen."
+            exit 2
+          }
+          Write-Host "Exact-range automated audit passed. Manual cold-read approval is still required."
+
+      - name: Upload exact-range audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: walk-range-131-135-audit
+          path: .audit/
+          if-no-files-found: error
+          include-hidden-files: true
