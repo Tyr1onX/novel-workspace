@@ -98,3 +98,11 @@ A retry is permitted only under a new operation id. It must:
 - fail closed on any mismatch, with no blind replay.
 
 The original failed operation remains preserved as failed audit history and is not reauthorized.
+
+## Platform publication retry — PASS
+- workflow run: `34725690792`
+- operation: `walk-create-136-140-audited-retry1-20260913`
+- confirmed platform chapters: 136–140
+- scheduled together: 2026-09-21 00:00 Asia/Shanghai
+- postflight numbered prefix: 1–140
+- recorded at: 2026-09-12T23:35:55+00:00
