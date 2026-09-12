@@ -13,7 +13,7 @@ on:
       - "novels/walk-to-earn/chapters/chapter-135.md"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   audit:
@@ -21,6 +21,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Run exact-range automated gates
         shell: powershell
@@ -29,43 +31,46 @@ jobs:
           PYTHONIOENCODING: "utf-8"
         run: |
           New-Item -ItemType Directory -Force .audit | Out-Null
+          New-Item -ItemType Directory -Force novels/walk-to-earn/audits | Out-Null
           $failed = $false
           $chapters = @(131..135 | ForEach-Object { "novels/walk-to-earn/chapters/chapter-$_.md" })
+          $log = ".audit\range-131-135.log"
+          $result = "novels/walk-to-earn/audits/range-131-135-automated-20260912.md"
 
-          "=== TEMPLATE MARKERS ===" | Tee-Object -FilePath .audit\range-131-135.log
+          "=== TEMPLATE MARKERS ===" | Tee-Object -FilePath $log
           $patterns = @("这条记录只落在", "旁边写着")
           foreach ($p in $patterns) {
             $hits = Select-String -Path $chapters -Pattern $p -SimpleMatch
             if ($hits) {
-              $hits | Tee-Object -FilePath .audit\range-131-135.log -Append
+              $hits | Tee-Object -FilePath $log -Append
               $failed = $true
             }
           }
           $segmentHits = Select-String -Path $chapters -Pattern "第\d+章第\d+段"
           if ($segmentHits) {
-            $segmentHits | Tee-Object -FilePath .audit\range-131-135.log -Append
+            $segmentHits | Tee-Object -FilePath $log -Append
             $failed = $true
           }
 
-          "=== LENGTH FLOOR ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          "=== LENGTH FLOOR ===" | Tee-Object -FilePath $log -Append
           python novels/walk-to-earn/tools/audit_chapter_lengths.py --start 131 --end 135 --minimum 2000 --fail 2>&1 | Tee-Object -FilePath .audit\range-131-135-lengths.json
           if ($LASTEXITCODE -ne 0) { $failed = $true }
-          Get-Content .audit\range-131-135-lengths.json | Add-Content .audit\range-131-135.log
+          Get-Content .audit\range-131-135-lengths.json | Add-Content $log
 
-          "=== FIVE-CHAPTER FLOOR ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          "=== FIVE-CHAPTER FLOOR ===" | Tee-Object -FilePath $log -Append
           python novels/walk-to-earn/tools/check_release_floor.py --start 131 --end 135 --minimum 9999 --normal 5 --maximum 5 --require-all 2>&1 | Tee-Object -FilePath .audit\range-131-135-release-floor.json
           if ($LASTEXITCODE -ne 0) { $failed = $true }
-          Get-Content .audit\range-131-135-release-floor.json | Add-Content .audit\range-131-135.log
+          Get-Content .audit\range-131-135-release-floor.json | Add-Content $log
 
-          "=== PROTECTED FACTS ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          "=== PROTECTED FACTS ===" | Tee-Object -FilePath $log -Append
           python novels/walk-to-earn/tools/check_rebuild_invariants.py 2>&1 | Tee-Object -FilePath .audit\range-131-135-invariants.log
           if ($LASTEXITCODE -ne 0) { $failed = $true }
-          Get-Content .audit\range-131-135-invariants.log | Add-Content .audit\range-131-135.log
+          Get-Content .audit\range-131-135-invariants.log | Add-Content $log
 
-          "=== NOVEL GATE ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          "=== NOVEL GATE ===" | Tee-Object -FilePath $log -Append
           python shared/tools/novel_gate.py @chapters 2>&1 | Tee-Object -FilePath .audit\range-131-135-novel-gate.log
           if ($LASTEXITCODE -ne 0) { $failed = $true }
-          Get-Content .audit\range-131-135-novel-gate.log | Add-Content .audit\range-131-135.log
+          Get-Content .audit\range-131-135-novel-gate.log | Add-Content $log
 
           $scan = @'
           from pathlib import Path
@@ -101,12 +106,50 @@ jobs:
           print("Cross-chapter paragraph similarity scan: PASS")
           '@
           Set-Content -Encoding UTF8 .audit\range_similarity_scan.py $scan
-          "=== CROSS-CHAPTER SIMILARITY ===" | Tee-Object -FilePath .audit\range-131-135.log -Append
+          "=== CROSS-CHAPTER SIMILARITY ===" | Tee-Object -FilePath $log -Append
           python .audit\range_similarity_scan.py 2>&1 | Tee-Object -FilePath .audit\range-131-135-similarity.log
           if ($LASTEXITCODE -ne 0) { $failed = $true }
-          Get-Content .audit\range-131-135-similarity.log | Add-Content .audit\range-131-135.log
+          Get-Content .audit\range-131-135-similarity.log | Add-Content $log
 
-          if ($failed) {
+          $status = if ($failed) { "FAIL" } else { "PASS" }
+          $header = @(
+            "# Chapters 131-135 automated audit — 2026-09-12",
+            "",
+            "Status: **$status**",
+            "",
+            "> Automated checks only. Manual cold-read/continuity approval is still mandatory before publication.",
+            "",
+            "```text"
+          )
+          $footer = @("```", "")
+          Set-Content -Encoding UTF8 $result $header
+          Get-Content $log | Add-Content $result
+          Add-Content $result $footer
+
+      - name: Persist exact-range audit result
+        shell: powershell
+        run: |
+          $path = "novels/walk-to-earn/audits/range-131-135-automated-20260912.md"
+          git config user.name "walk-quality-bot"
+          git config user.email "walk-quality-bot@users.noreply.github.com"
+          git add -- $path
+          $changed = @(git diff --cached --name-only -- $path)
+          if ($changed.Count -eq 0) {
+            Write-Host "Audit result unchanged."
+            exit 0
+          }
+          git commit -m "chore(walk): persist 131-135 exact-range audit"
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Enforce audit result
+        shell: powershell
+        run: |
+          $path = "novels/walk-to-earn/audits/range-131-135-automated-20260912.md"
+          $text = Get-Content -Raw $path
+          if ($text -match "Status: \*\*FAIL\*\*") {
             Write-Error "Exact-range automated audit failed. Publishing remains frozen."
             exit 2
           }
