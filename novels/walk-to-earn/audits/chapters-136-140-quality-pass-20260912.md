@@ -75,3 +75,11 @@ Continuity/realism pass: PASS.
 `136–140`: **QUALITY APPROVED FOR A SINGLE EXACT-RANGE PUBLISH ATTEMPT ONLY.**
 
 This approval does not authorize any mutation of chapters 1–135 or 141–185. Before mutation, a read-only platform preflight must prove the remote numbered prefix is exactly 1–135 with no duplicate chapter numbers. The publish action must contain only chapters 136–140 and schedule the whole five-chapter group for `2026-09-21 00:00 Asia/Shanghai`. After the attempt, read-only reconciliation must prove the expected remote prefix is exactly 1–140 before the operation can be recorded complete. Any mismatch must fail closed with no blind retry.
+
+## Platform publication — FAIL CLOSED
+- workflow run: `34672959088`
+- operation: `walk-create-136-140-audited-20260912`
+- reason: direct publisher status=
+- remote max after attempt: None
+- authorization disabled; blind replay is forbidden.
+- recorded at: 2026-09-12T04:25:50+00:00
