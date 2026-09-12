@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-11T08:10:44+00:00",
+  "updated_at": "2026-09-12T04:08:23+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -289,6 +289,22 @@
       },
       "reason": "Prepare the first four complete three-chapter groups for Sep 16-19 while preserving all existing published and scheduled chapters. No platform mutation is authorized until fresh remote reconciliation confirms chapters 159-170 are absent and the existing 134-158 schedule is intact.",
       "completed_at": "2026-09-11T08:10:44+00:00"
+    },
+    {
+      "id": "rail-create-171-197-three-per-day-20260911",
+      "action": "create",
+      "chapters": "171-197",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-20",
+      "status": "completed",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "docs/audit-171-203.md plus current self-hosted hard length gate and fresh read-only reconciliation",
+        "reconcile": "remote exactly 1-170; local-only 171-203; zero duplicate/title/position mismatches"
+      },
+      "reason": "Author confirmed three chapters per day. Create nine complete three-chapter groups for 2026-09-20 through 2026-09-28 after fresh preflight.",
+      "completed_at": "2026-09-12T04:08:23+00:00"
     }
   ]
 }
