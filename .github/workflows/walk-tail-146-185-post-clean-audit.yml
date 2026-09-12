@@ -1,0 +1,87 @@
+name: Walk Tail 146-185 Post Clean Audit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/walk-tail-146-185-post-clean-audit.yml"
+      - "novels/walk-to-earn/chapters/chapter-14*.md"
+      - "novels/walk-to-earn/chapters/chapter-15*.md"
+      - "novels/walk-to-earn/chapters/chapter-16*.md"
+      - "novels/walk-to-earn/chapters/chapter-17*.md"
+      - "novels/walk-to-earn/chapters/chapter-18*.md"
+      - "novels/walk-to-earn/tools/audit_tail_146_185_post_cleanup.py"
+      - "novels/walk-to-earn/tools/check_rebuild_invariants.py"
+      - "shared/tools/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Protected continuity invariants
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/check_rebuild_invariants.py
+          "INVARIANT_STATUS=$LASTEXITCODE" >> $env:GITHUB_ENV
+          exit 0
+
+      - name: Mandatory fiction guards across 146-185
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $files = 146..185 | ForEach-Object { "novels/walk-to-earn/chapters/chapter-$($_.ToString('000')).md" }
+          python shared/tools/novel_gate.py @files
+          "NOVEL_GATE_STATUS=$LASTEXITCODE" >> $env:GITHUB_ENV
+          exit 0
+
+      - name: Per-chapter length floor across 146-185
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --start 146 --end 185 --minimum 2000 --fail
+          "LENGTH_STATUS=$LASTEXITCODE" >> $env:GITHUB_ENV
+          exit 0
+
+      - name: All eight five-chapter release floors
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/check_release_floor.py --start 146 --end 185 --minimum 9999 --normal 5 --maximum 5 --require-all
+          "GROUP_STATUS=$LASTEXITCODE" >> $env:GITHUB_ENV
+          exit 0
+
+      - name: Numeric settlement and cumulative-mileage chain
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/audit_tail_146_185_post_cleanup.py
+          "NUMERIC_STATUS=$LASTEXITCODE" >> $env:GITHUB_ENV
+          exit 0
+
+      - name: Final post-clean audit verdict
+        shell: powershell
+        run: |
+          Write-Host "INVARIANT_STATUS=$env:INVARIANT_STATUS"
+          Write-Host "NOVEL_GATE_STATUS=$env:NOVEL_GATE_STATUS"
+          Write-Host "LENGTH_STATUS=$env:LENGTH_STATUS"
+          Write-Host "GROUP_STATUS=$env:GROUP_STATUS"
+          Write-Host "NUMERIC_STATUS=$env:NUMERIC_STATUS"
+          $codes = @($env:INVARIANT_STATUS, $env:NOVEL_GATE_STATUS, $env:LENGTH_STATUS, $env:GROUP_STATUS, $env:NUMERIC_STATUS)
+          if ($codes -contains "" -or $codes | Where-Object { $_ -ne "0" }) {
+            throw "Walk tail 146-185 post-clean audit has unresolved findings."
+          }
+          Write-Host "WALK TAIL 146-185 POST-CLEAN AUDIT: PASS"
