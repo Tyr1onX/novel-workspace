@@ -54,8 +54,9 @@ jobs:
           python novels/walk-to-earn/tools/audit_release_range_136_140.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $audit = Get-Content "novels/walk-to-earn/audits/chapters-136-140-quality-pass-20260912.md" -Raw
-          if (-not $audit.Contains("GitHub Actions run: `34672766220`")) { throw "Exact approved quality-run token missing." }
+          if (-not $audit.Contains('GitHub Actions run: `34672766220`')) { throw "Exact approved quality-run token missing." }
           if (-not $audit.Contains("QUALITY APPROVED FOR A SINGLE EXACT-RANGE PUBLISH ATTEMPT ONLY")) { throw "Manual quality approval token missing." }
+          if (-not $audit.Contains("Safe retry authorization basis")) { throw "Safe retry authorization basis missing." }
           Write-Host "Exact 136-140 quality approval revalidated."
 
       - name: Resolve local Fanqie runtime
@@ -128,6 +129,12 @@ jobs:
           PYTHONUTF8: "1"
         run: |
           $report = "$env:RUNNER_TEMP\walk-136-140-postflight.json"
+          if (-not "${{ steps.runtime.outputs.path }}") {
+            "POST_STATUS=2" >> $env:GITHUB_ENV
+            "POST_REPORT=$report" >> $env:GITHUB_ENV
+            Write-Host "Runtime unavailable; postflight cannot run."
+            exit 0
+          }
           python shared/tools/fanqie_compat.py reconcile novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}" --output $report
           $code = $LASTEXITCODE
           "POST_STATUS=$code" >> $env:GITHUB_ENV
@@ -182,7 +189,7 @@ jobs:
           git config user.name "fanqie-sync-bot"
           git config user.email "fanqie-sync-bot@users.noreply.github.com"
           foreach ($path in $paths) { if (Test-Path $path) { git add -- $path } }
-          git commit -m "chore(walk): record exact 136-140 publish result [skip ci]"
+          git commit -m "chore(walk): record exact 136-140 retry result [skip ci]"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           git pull --rebase origin main
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
