@@ -1,3 +1,4 @@
 quality_gate_run=34671328817
 repair_commit=0dd37b45303d5cb96376e5bcf6e7de11fc194ef5
 source_repair_commit=4a399b2f52275631cbeae8d518f9d203d6ea1d8f
+retry_after_ascii_gate_fix=2026-09-12
