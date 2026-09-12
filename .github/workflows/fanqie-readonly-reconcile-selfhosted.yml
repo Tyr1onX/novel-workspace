@@ -1,6 +1,6 @@
 name: Fanqie Readonly Reconcile Selfhosted
 
-# Manual reconciliation trigger refreshed 2026-09-12 after Death List chapters 65-69 merge.
+# Manual reconciliation trigger refreshed 2026-09-13 after the 40-44 scheduled publish window.
 on:
   push:
     branches:
