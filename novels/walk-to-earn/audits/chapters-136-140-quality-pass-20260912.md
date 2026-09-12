@@ -79,7 +79,22 @@ This approval does not authorize any mutation of chapters 1–135 or 141–185. 
 ## Platform publication — FAIL CLOSED
 - workflow run: `34672959088`
 - operation: `walk-create-136-140-audited-20260912`
-- reason: direct publisher status=
-- remote max after attempt: None
-- authorization disabled; blind replay is forbidden.
+- reason: CI parser failure before runtime resolution, authorization preparation, read-only preflight, or upload; no platform mutation step executed
+- remote max after attempt: not queried because runtime step was skipped
+- authorization disabled; the failed operation itself must never be replayed
 - recorded at: 2026-09-12T04:25:50+00:00
+
+## Safe retry authorization basis
+
+The first exact-range workflow did **not** consume the single actual platform-mutation attempt: GitHub Actions job `103497678239` failed inside the pre-mutation quality-approval token check because PowerShell parsed the Markdown backticks in the run token as escape syntax. The subsequent runtime, ledger prepare, preflight and upload steps were all skipped. Therefore no chapter was created, updated or rescheduled by workflow run `34672959088`.
+
+A retry is permitted only under a new operation id. It must:
+
+- re-run all exact 136–140 quality gates against current `main`;
+- prove the remote numbered prefix is still exactly 1–135 before any write;
+- mutate only chapters 136–140;
+- schedule all five for `2026-09-21 00:00 Asia/Shanghai`;
+- postflight-confirm an exact remote prefix 1–140;
+- fail closed on any mismatch, with no blind replay.
+
+The original failed operation remains preserved as failed audit history and is not reauthorized.
