@@ -46,7 +46,7 @@ jobs:
           assert s['require_complete_groups'] is True
           assert s['daily_word_floor']['minimum_chars_exclusive'] == 5999
           audit = Path('novels/endless-rail/docs/audit-171-203.md').read_text(encoding='utf-8')
-          assert 'PASS。' in audit or 'PASS' in audit
+          assert 'PASS' in audit
           q = json.loads(Path('novels/endless-rail/platform-sync/queue.json').read_text(encoding='utf-8'))
           first = next(op for op in q['operations'] if op['id'] == 'rail-create-159-170-three-per-day-20260911')
           assert first['status'] == 'completed' and first['authorized'] is True
