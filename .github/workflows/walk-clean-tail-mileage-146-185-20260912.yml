@@ -24,6 +24,7 @@ jobs:
         env:
           PYTHONUTF8: "1"
           PYTHONIOENCODING: "utf-8"
+          WALK_CLEANUP_PARSER: "v2"
         run: |
           python novels/walk-to-earn/tools/cleanup_tail_mileage_146_185_20260912.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
