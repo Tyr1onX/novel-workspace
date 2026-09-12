@@ -382,27 +382,27 @@
     {
       "number": 136,
       "title": "白榆的票，提前一天买",
-      "chars": 2077
+      "chars": 2321
     },
     {
       "number": 137,
       "title": "直达车晚点二十分钟",
-      "chars": 2207
+      "chars": 2712
     },
     {
       "number": 138,
       "title": "老仓库那条路，栏杆换了新漆",
-      "chars": 2086
+      "chars": 2627
     },
     {
       "number": 139,
       "title": "住一晚，第二天少赶一趟车",
-      "chars": 2178
+      "chars": 2542
     },
     {
       "number": 140,
       "title": "回来以后，工牌还在外套口袋",
-      "chars": 2063
+      "chars": 2458
     },
     {
       "number": 141,
@@ -819,7 +819,7 @@
         139,
         140
       ],
-      "chars": 10611,
+      "chars": 12660,
       "status": "ready",
       "reason": "5-chapter group meets the daily floor"
     },
