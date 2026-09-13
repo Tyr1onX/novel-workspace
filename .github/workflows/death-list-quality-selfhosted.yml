@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/death-list-quality-selfhosted.yml"
-      - "novels/death-list/chapters/chapter-06[5-9].md"
+      - "novels/death-list/chapters/chapter-*.md"
       - "shared/tools/novel_gate.py"
       - "shared/tools/narrative_guard.py"
       - "shared/tools/dialogue_guard.py"
@@ -16,7 +16,7 @@ on:
       - main
     paths:
       - ".github/workflows/death-list-quality-selfhosted.yml"
-      - "novels/death-list/chapters/chapter-06[5-9].md"
+      - "novels/death-list/chapters/chapter-*.md"
       - "shared/tools/novel_gate.py"
       - "shared/tools/narrative_guard.py"
       - "shared/tools/dialogue_guard.py"
@@ -30,14 +30,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  audit-65-69:
+  audit-latest-five:
     runs-on: [self-hosted, windows, fanqie]
     timeout-minutes: 30
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - name: Count chapter body characters
+      - name: Select latest five chapters
+        shell: powershell
+        run: |
+          $files = Get-ChildItem "novels/death-list/chapters/chapter-*.md" | Sort-Object Name | Select-Object -Last 5
+          if ($files.Count -ne 5) { throw "Expected at least five Death List chapters" }
+          $files.FullName | Set-Content -Encoding utf8 "$env:RUNNER_TEMP/death-list-latest-five.txt"
+          Write-Host "Auditing latest five chapters:"
+          $files.Name | ForEach-Object { Write-Host $_ }
+      - name: Count latest five chapter body characters
         shell: powershell
         env:
           PYTHONUTF8: "1"
@@ -46,32 +54,32 @@ jobs:
           import re
           from pathlib import Path
 
+          files = sorted(Path("novels/death-list/chapters").glob("chapter-[0-9][0-9][0-9].md"))[-5:]
+          if len(files) != 5:
+              raise SystemExit(f"expected five chapters, got {len(files)}")
+
           total = 0
-          for n in range(65, 70):
-              path = Path(f"novels/death-list/chapters/chapter-{n:03d}.md")
-              text = path.read_text(encoding="utf-8")
+          for path in files:
+              text = path.read_text(encoding="utf-8-sig")
               lines = text.splitlines()
               if lines and lines[0].lstrip().startswith("#"):
                   text = "\n".join(lines[1:])
               count = len(re.sub(r"\s+", "", text))
               total += count
-              print(f"chapter {n}: {count}")
+              print(f"{path.stem}: {count}")
               if count < 2000:
-                  raise SystemExit(f"chapter {n} below 2000-character floor: {count}")
-          print(f"batch 65-69 total: {total}")
+                  raise SystemExit(f"{path.stem} below 2000-character floor: {count}")
+
+          print(f"latest-five total: {total}")
           if total <= 9999:
-              raise SystemExit(f"batch 65-69 does not exceed 9999 characters: {total}")
+              raise SystemExit(f"latest five do not exceed 9999 characters: {total}")
           '@ | python -
-      - name: Run complete novel gate for chapters 65-69
+      - name: Run complete novel gate for latest five chapters
         shell: powershell
         env:
           PYTHONUTF8: "1"
           PYTHONIOENCODING: "utf-8"
         run: |
-          python shared/tools/novel_gate.py `
-            novels/death-list/chapters/chapter-065.md `
-            novels/death-list/chapters/chapter-066.md `
-            novels/death-list/chapters/chapter-067.md `
-            novels/death-list/chapters/chapter-068.md `
-            novels/death-list/chapters/chapter-069.md
+          $files = Get-Content "$env:RUNNER_TEMP/death-list-latest-five.txt"
+          python shared/tools/novel_gate.py @files
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
