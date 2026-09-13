@@ -31,6 +31,14 @@ STAGES = {
         "start_date": "2026-09-23",
         "success": 15,
     },
+    "tail1retry2": {
+        "op_id": "walk-create-146-160-audited-retry2-20260914",
+        "chapters": "146-160",
+        "pre_max": 145,
+        "post_max": 160,
+        "start_date": "2026-09-23",
+        "success": 15,
+    },
     "tail2": {
         "op_id": "walk-create-161-185-audited-20260913",
         "chapters": "161-185",
