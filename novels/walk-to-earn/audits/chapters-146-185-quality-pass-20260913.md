@@ -87,3 +87,11 @@ The closing group moves from dense meetings to reimbursement, accepting a teamma
 ## Publication rule
 
 The quality approval is consumed only by exact staged workflows that re-run the gate, reconcile Fanqie immediately before mutation, prohibit already-created chapter numbers, publish each day as one five-chapter 00:00 group, and reconcile again afterward. A workflow step completing is not evidence of platform success; only the publisher summary plus exact postflight remote-prefix/schedule verification may mark an operation completed.
+
+## Platform publication tail1 — FAIL CLOSED
+- workflow run: `34763373673`
+- operation: `walk-create-146-160-audited-20260913`
+- reason: direct publisher status=
+- remote max after attempt: None
+- authorization disabled; blind replay is forbidden.
+- recorded at: 2026-09-13T14:45:21+00:00
