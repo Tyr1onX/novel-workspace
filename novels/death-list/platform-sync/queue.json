@@ -387,7 +387,37 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-19",
       "completed_at": "2026-09-13T00:15:20+00:00"
+    },
+    {
+      "id": "death-list-create-075-079-20260913",
+      "action": "create",
+      "chapters": "75-79",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted, manual scene/continuity review, and fresh self-hosted read-only Fanqie reconciliation",
+        "source_run": "34762934813",
+        "source_job": "103738810250",
+        "source_commit": "e6bb2cd3d059b21d9ee9677398ba2dc57f896008",
+        "reconcile_run": "34763129233",
+        "reconcile_job": "103739311340",
+        "remote_prefix": "1-74",
+        "remote_status": "44 published; 30 scheduled",
+        "remote_differences": "local-only 75-79; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "75": 2295,
+          "76": 2323,
+          "77": 2391,
+          "78": 2052,
+          "79": 2329
+        },
+        "review_notes": "The complete five-chapter group totals 11390 non-whitespace body characters. The self-hosted full novel gate passed after directly fixing the single real prose hard finding in chapter 79; all current automated hard findings are zero and the remaining advisory findings were cold-read in context. Chapters 75-79 complete D-036 without converting Han Zhiyuan's second appearance into punishment, pursuit, or permanent marking. His actual key handoff and withdrawal from moving equipment do not make the record disappear; after he over-adjusts around the original first-floor location and asks groupmates to bring the equipment to the third floor, the place field refreshes to the third-floor north corridor while the 16:48 time and heavy-object head-injury result remain unchanged. The temporary third-floor check is cancelled, normal teacher/laboratory authority takes over return and inspection, equipment movement stops, and the record disappears at 15:52. The cart wheel and folding-stand findings are retained only as ordinary lab records and are not promoted to a unique root cause. Lin Mo still completes the 14:30 competition presentation, Zhou Yu remains outside an unrelated case, and Su Wan explicitly prevents two ordinary groupmates from being pulled into the secret investigation merely for convenience. Fresh read-only reconciliation run 34763129233/job 103739311340 confirms exactly 74 numbered remote items, 44 published and 30 scheduled, with local-only 75-79 and no remote-only chapters, duplicate numbers, title mismatches, or position mismatches. Preserve chapters 1-74 and every existing schedule; create only 75-79 together for 2026-09-20 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-20"
     }
   ],
-  "updated_at": "2026-09-13T00:15:20+00:00"
+  "updated_at": "2026-09-13T14:38:00+00:00"
 }
