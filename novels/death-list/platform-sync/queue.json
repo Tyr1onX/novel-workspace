@@ -356,7 +356,37 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-18",
       "completed_at": "2026-09-12T13:54:32+00:00"
+    },
+    {
+      "id": "death-list-create-070-074-20260913",
+      "action": "create",
+      "chapters": "70-74",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted, manual scene/continuity review, and fresh self-hosted read-only Fanqie reconciliation",
+        "source_run": "34726931478",
+        "source_job": "103642582036",
+        "source_commit": "09621087c5e68a77455f2d16e924640cdea7497a",
+        "reconcile_run": "34727110476",
+        "reconcile_job": "103643069523",
+        "remote_prefix": "1-69",
+        "remote_status": "44 published; 25 scheduled",
+        "remote_differences": "local-only 70-74; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "70": 2547,
+          "71": 2904,
+          "72": 2821,
+          "73": 2805,
+          "74": 3102
+        },
+        "review_notes": "The complete five-chapter group totals 14179 non-whitespace body characters. The self-hosted full novel gate passed with all automated hard findings zero, and chapters 70-74 were manually cold-read together in context. Chapters 71-73 return space to the competition, coursework, school media, and independent character routines; chapter 74 starts D-036 with Han Zhiyuan entering the list a second time without turning the list into punishment or pursuit. The record remains 16:48 / traffic laboratory first-floor equipment passage / fatal head injury from a heavy-object strike at chapter end; changing the return assignee and planning to hand over the key are not treated as a proven root cause or completed rescue. Zhou Yu remains outside an unrelated case, Shen Fang returns to an ordinary teammate role, Su Wan retains her own interview work, and E-002 active testing remains paused. Fresh platform reconciliation confirmed exactly 69 numbered remote items, 44 published and 25 scheduled, with local-only 70-74 and no remote-only chapters, duplicates, title mismatches, or position mismatches. Preserve chapters 1-69 and all existing schedules; create only 70-74 together for 2026-09-19 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-19"
     }
   ],
-  "updated_at": "2026-09-12T13:54:32+00:00"
+  "updated_at": "2026-09-13T00:11:51+00:00"
 }
