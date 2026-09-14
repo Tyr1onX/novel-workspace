@@ -37,9 +37,15 @@ def run(label: str, args: list[str]) -> tuple[int, str]:
 
 
 def main() -> int:
-    counts: dict[int, int] = {}
-    for n in range(131, 141):
-        counts[n] = body_chars(CHAPTER_DIR / f"chapter-{n}.md")
+    all_counts = {n: body_chars(CHAPTER_DIR / f"chapter-{n:03d}.md") if (CHAPTER_DIR / f"chapter-{n:03d}.md").exists() else body_chars(CHAPTER_DIR / f"chapter-{n}.md") for n in range(1, 186)}
+    counts = {n: all_counts[n] for n in range(131, 141)}
+    short = [(n, all_counts[n], 2000 - all_counts[n]) for n in range(1, 186) if all_counts[n] < 2000]
+    failing_groups = []
+    for start in range(61, 186, 5):
+        end = min(start + 4, 185)
+        total = sum(all_counts[n] for n in range(start, end + 1))
+        if total <= 9999:
+            failing_groups.append((start, end, total, 10000 - total))
 
     chapters = [str(p) for p in sorted(CHAPTER_DIR.glob("chapter-*.md"), key=lambda p: int(p.stem.split("-")[-1]))]
     commands: list[tuple[str, list[str]]] = [
@@ -57,7 +63,17 @@ def main() -> int:
         results.append((label, code, out))
 
     prose_out = next((out for label, _, out in results if label == "prose_guard"), "")
-    prose_hard_lines = [line for line in prose_out.splitlines() if line.startswith("HARD") or line.lstrip().startswith("↳")]
+    prose_hard_lines: list[str] = []
+    keep_next = False
+    for line in prose_out.splitlines():
+        if line.startswith("HARD"):
+            prose_hard_lines.append(line)
+            keep_next = True
+        elif keep_next and line.lstrip().startswith("↳"):
+            prose_hard_lines.append(line)
+            keep_next = False
+        elif line.strip():
+            keep_next = False
 
     lines = [
         "# Walk to Earn quality diagnostic — chapters 131–140 — 2026-09-14",
@@ -76,6 +92,22 @@ def main() -> int:
         f"- 131–135 total: **{sum(counts[n] for n in range(131, 136))}** — {'PASS' if sum(counts[n] for n in range(131, 136)) > 9999 else 'FAIL'} (>9999 required)",
         f"- 136–140 total: **{sum(counts[n] for n in range(136, 141))}** — {'PASS' if sum(counts[n] for n in range(136, 141)) > 9999 else 'FAIL'} (>9999 required)",
         "",
+        "## All-book length failures",
+        "",
+    ])
+    if short:
+        for n, count, deficit in short:
+            lines.append(f"- chapter {n}: {count} chars, deficit {deficit}")
+    else:
+        lines.append("- none")
+    lines.extend(["", "## Five-chapter release-floor failures", ""])
+    if failing_groups:
+        for start, end, total, deficit in failing_groups:
+            lines.append(f"- chapters {start}–{end}: {total}, deficit to >9999 = {deficit}")
+    else:
+        lines.append("- none")
+    lines.extend([
+        "",
         "## Prose hard hits",
         "",
         "```text",
@@ -90,9 +122,9 @@ def main() -> int:
         lines.append("")
         lines.append("```text")
         trimmed = out.strip()
-        if len(trimmed) > 16000:
-            trimmed = trimmed[-16000:]
-            trimmed = "[output truncated to last 16000 chars]\n" + trimmed
+        if len(trimmed) > 12000:
+            trimmed = trimmed[-12000:]
+            trimmed = "[output truncated to last 12000 chars]\n" + trimmed
         lines.append(trimmed or "(no output)")
         lines.append("```")
         lines.append("")
