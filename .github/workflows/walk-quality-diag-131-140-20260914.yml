@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - ".github/workflows/walk-quality-diag-131-140-20260914.yml"
+      - "scripts/walk_quality_diag_131_140_20260914.py"
   workflow_dispatch:
 
 concurrency:
