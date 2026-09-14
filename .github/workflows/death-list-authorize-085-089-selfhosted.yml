@@ -1,0 +1,129 @@
+name: Death List Authorize 085-089 Selfhosted
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/death-list-authorize-085-089-selfhosted.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: death-list-authorize-085-089-selfhosted
+  cancel-in-progress: false
+
+jobs:
+  authorize:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Append audited authorization
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $code = @'
+          import datetime
+          import json
+          from pathlib import Path
+
+          path = Path("novels/death-list/platform-sync/queue.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          op_id = "death-list-create-085-089-20260915"
+
+          existing = [op for op in data.get("operations", []) if op.get("id") == op_id]
+          if existing:
+              print(f"{op_id} already exists; no duplicate authorization created.")
+          else:
+              pending = [
+                  op for op in data.get("operations", [])
+                  if op.get("status") == "pending"
+                  and op.get("authorized") is True
+                  and (op.get("audit") or {}).get("status") == "passed"
+              ]
+              if pending:
+                  raise SystemExit(f"Refusing to append while another authorized pending operation exists: {[op.get('id') for op in pending]}")
+
+              data["operations"].append({
+                  "id": op_id,
+                  "action": "create",
+                  "chapters": "85-89",
+                  "status": "pending",
+                  "authorized": True,
+                  "audit": {
+                      "status": "passed",
+                      "source": "Death List Quality Selfhosted on merged main, manual Cold Read/continuity review, and fresh self-hosted read-only Fanqie reconciliation",
+                      "source_run": "34909921046",
+                      "source_job": "104194968068",
+                      "source_commit": "d07cb02c9aa3231264436a54fa2e6409aa81a7b6",
+                      "reconcile_run": "34910067422",
+                      "reconcile_job": "104195362713",
+                      "remote_prefix": "1-84",
+                      "remote_status": "54 published; 30 scheduled",
+                      "remote_differences": "local-only 85-89; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+                      "chapter_body_characters": {
+                          "85": 2527,
+                          "86": 2339,
+                          "87": 2102,
+                          "88": 2348,
+                          "89": 2236
+                      },
+                      "review_notes": "The complete five-chapter group totals 11552 non-whitespace body characters. The merged-main self-hosted full novel gate passed with all automated hard findings zero, and chapters 85-89 were manually Cold Read and continuity-checked. D-037 is the first complete use of the normal school safety channel for an active list event: Lin Mo stays offsite while venue staff, property electricians, supplier technicians, and activity staff verify fixed and temporary electrical conditions and adjust equipment and personnel roles. A damaged extension cord is retained only as one ordinary hazard finding and is not promoted to a unique root cause. No new system, conspiracy, secret organization, source revelation, or E-002 restart is introduced. Fresh self-hosted read-only reconciliation run 34910067422/job 104195362713 confirmed exactly 84 numbered remote items, 54 published and 30 scheduled, with local-only 85-89 and no remote-only chapters, duplicate numbers, title mismatches, or position mismatches. Preserve chapters 1-84 and every existing schedule; create only 85-89 together for 2026-09-22 00:00 Asia/Shanghai. Do not publish immediately.",
+                      "already_present_chapters": []
+                  },
+                  "schedule_mode": "fixed_start",
+                  "start_date": "2026-09-22"
+              })
+              data["updated_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+              path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+              print(f"Appended {op_id}.")
+          '@
+          $code | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Validate authorization plan
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py validate novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $planText = python shared/tools/fanqie_compat.py plan novels/death-list --json | Out-String
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $plan = $planText | ConvertFrom-Json
+          if ([int]$plan.pending_count -ne 1) { throw "Expected exactly one pending operation; found $($plan.pending_count)." }
+          $pending = @($plan.pending_operations)[0]
+          if ($pending.id -ne 'death-list-create-085-089-20260915') { throw "Unexpected pending operation: $($pending.id)" }
+          if ($pending.chapter_spec -ne '85-89') { throw "Unexpected chapter spec: $($pending.chapter_spec)" }
+          Write-Host "Authorization plan PASS: $($pending.id), chapters $($pending.chapter_spec)."
+
+      - name: Commit authorization queue
+        shell: powershell
+        run: |
+          git diff --exit-code -- novels/death-list/platform-sync/queue.json
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host 'Queue already contains this authorization; nothing to commit.'
+            exit 0
+          }
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          git add -- novels/death-list/platform-sync/queue.json
+          git commit -m "chore(fanqie): authorize chapters 85-89"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
