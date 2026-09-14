@@ -103,3 +103,11 @@ The quality approval is consumed only by exact staged workflows that re-run the 
 - remote max after attempt: None
 - authorization disabled; blind replay is forbidden.
 - recorded at: 2026-09-13T23:50:18+00:00
+
+## Platform publication tail1retry2 — FAIL CLOSED
+- workflow run: `34791151810`
+- operation: `walk-create-146-160-audited-retry2-20260914`
+- reason: direct publisher status=
+- remote max after attempt: None
+- authorization disabled; blind replay is forbidden.
+- recorded at: 2026-09-14T00:00:43+00:00
