@@ -1,0 +1,231 @@
+name: Walk Publish Exact 146-160 Retry3 20260914
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/walk-publish-exact-146-160-retry3-20260914.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: walk-publish-exact-146-160-retry3-20260914
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Whole-book template and repetition gates
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/check_template_markers.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/walk-to-earn/tools/check_cross_chapter_similarity.py --start 1 --end 185
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Whole-book protected facts and fiction guards
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/check_rebuild_invariants.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $chapters = @(Get-ChildItem -Path "novels/walk-to-earn/chapters" -Filter "chapter-*.md" | Sort-Object Name | ForEach-Object { $_.FullName })
+          if ($chapters.Count -ne 185) { throw "Expected exactly 185 current chapters; found $($chapters.Count)." }
+          python shared/tools/novel_gate.py @chapters
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Whole-book length and five-chapter release floors
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 --fail
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/walk-to-earn/tools/check_release_floor.py --start 61 --minimum 9999 --normal 5 --maximum 5 --require-all
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Revalidate audited tail and manual cleanup approvals
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/audit_tail_146_185_post_cleanup.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+          $tailAudit = Get-Content "novels/walk-to-earn/audits/chapters-146-185-quality-pass-20260913.md" -Raw
+          if (-not $tailAudit.Contains('GitHub Actions run: `34763186055`')) { throw "Original tail quality-run token missing." }
+          if (-not $tailAudit.Contains("QUALITY APPROVED FOR STAGED EXACT-RANGE PUBLICATION ONLY")) { throw "Original staged approval token missing." }
+
+          $proseFixAudit = Get-Content "novels/walk-to-earn/audits/chapters-146-185-prose-hard-fix-reapproval-20260914.md" -Raw
+          $proseFixToken = "TARGETED PROSE FIXES MANUALLY REAPPROVED; PUBLICATION STILL REQUIRES A FRESH FULL 146–185 AUTOMATIC QUALITY PASS AND EXACT READ-ONLY PLATFORM PREFLIGHT."
+          if (-not $proseFixAudit.Contains($proseFixToken)) { throw "Targeted prose-fix reapproval token missing." }
+
+          $repeatAudit = Get-Content "novels/walk-to-earn/audits/chapters-114-130-repeated-tail-cleanup-20260914.md" -Raw
+          $repeatToken = "OBSOLETE REPEATED TAILS MANUALLY REMOVED; WHOLE-BOOK CROSS-CHAPTER SIMILARITY MUST PASS BEFORE ANY NEW PLATFORM CREATE."
+          if (-not $repeatAudit.Contains($repeatToken)) { throw "Repeated-tail cleanup approval token missing." }
+
+          Write-Host "Whole-book automatic gates and all required manual audit tokens are present."
+
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Resolved runtime: $runtime"
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+
+      - name: Prepare fresh exact retry3 authorization
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_publish_tail_exact_ledger_20260913.py tail1retry3 prepare
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Fresh read-only preflight must prove remote prefix 1-145
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\walk-tail1-retry3-preflight.json"
+          python shared/tools/fanqie_compat.py reconcile novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/walk_publish_tail_exact_ledger_20260913.py tail1retry3 assert-report pre $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "PRE_REPORT=$report" >> $env:GITHUB_ENV
+
+      - name: Fail closed if any approved input changed during preflight
+        shell: powershell
+        run: |
+          git fetch origin main
+          $critical = @(
+            "novels/walk-to-earn/chapters",
+            "novels/walk-to-earn/audits/chapters-146-185-quality-pass-20260913.md",
+            "novels/walk-to-earn/audits/chapters-146-185-prose-hard-fix-reapproval-20260914.md",
+            "novels/walk-to-earn/audits/chapters-114-130-repeated-tail-cleanup-20260914.md",
+            "novels/walk-to-earn/platform-sync/queue.json",
+            "novels/walk-to-earn/platform-sync/config.json",
+            "novels/walk-to-earn/platform-sync/policy.json",
+            "novels/walk-to-earn/tools",
+            "scripts/walk_upload_tail_exact_20260913.py",
+            "scripts/walk_publish_tail_exact_ledger_20260913.py",
+            "shared/tools"
+          )
+          git diff --quiet HEAD..origin/main -- $critical
+          if ($LASTEXITCODE -ne 0) { throw "Approved Walk inputs changed after preflight; refusing mutation." }
+          Write-Host "Approved inputs remained stable through preflight."
+
+      - name: Upload only chapters 146-160 in three five-chapter groups
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_upload_tail_exact_20260913.py tail1 --runtime "${{ steps.runtime.outputs.path }}"
+          $code = $LASTEXITCODE
+          "DIRECT_STATUS=$code" >> $env:GITHUB_ENV
+          Write-Host "DIRECT_STATUS=$code"
+          exit 0
+
+      - name: Read-only postflight reconciliation
+        if: always()
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\walk-tail1-retry3-postflight.json"
+          $runtime = "${{ steps.runtime.outputs.path }}"
+          if (-not $runtime) {
+            "POST_STATUS=2" >> $env:GITHUB_ENV
+            "POST_REPORT=$report" >> $env:GITHUB_ENV
+            exit 0
+          }
+          python shared/tools/fanqie_compat.py reconcile novels/walk-to-earn --runtime $runtime --output $report
+          $code = $LASTEXITCODE
+          "POST_STATUS=$code" >> $env:GITHUB_ENV
+          "POST_REPORT=$report" >> $env:GITHUB_ENV
+          Write-Host "POST_STATUS=$code"
+          exit 0
+
+      - name: Verify exact result or fail close
+        if: always()
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $final = 1
+          $reason = "publisher or postflight did not verify"
+          if ($env:DIRECT_STATUS -eq "0" -and $env:POST_STATUS -eq "0" -and (Test-Path $env:POST_REPORT)) {
+            python scripts/walk_publish_tail_exact_ledger_20260913.py tail1retry3 complete $env:POST_REPORT --run-id "${{ github.run_id }}"
+            if ($LASTEXITCODE -eq 0) {
+              $final = 0
+              $reason = "success"
+            } else {
+              $reason = "postflight assertion or completion ledger failed"
+            }
+          } elseif ($env:DIRECT_STATUS -ne "0") {
+            $reason = "direct publisher status=$env:DIRECT_STATUS"
+          } elseif ($env:POST_STATUS -ne "0") {
+            $reason = "postflight reconcile status=$env:POST_STATUS"
+          }
+
+          if ($final -ne 0) {
+            $args = @("scripts/walk_publish_tail_exact_ledger_20260913.py", "tail1retry3", "fail", "--run-id", "${{ github.run_id }}", "--reason", $reason)
+            if ($env:POST_REPORT -and (Test-Path $env:POST_REPORT)) { $args += @("--report", $env:POST_REPORT) }
+            python @args
+          }
+
+          Set-Content -Path "$env:RUNNER_TEMP\walk-tail1-retry3-final-status.txt" -Value $final -Encoding ascii
+          Write-Host "FINAL_STATUS=$final reason=$reason"
+          exit 0
+
+      - name: Persist queue and quality audit result
+        if: always()
+        shell: powershell
+        run: |
+          $paths = @(
+            "novels/walk-to-earn/platform-sync/queue.json",
+            "novels/walk-to-earn/audits/chapters-146-185-quality-pass-20260913.md"
+          )
+          $changed = @(git status --porcelain -- $paths)
+          if ($changed.Count -eq 0) {
+            Write-Host "No ledger changes to persist."
+            exit 0
+          }
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          foreach ($path in $paths) { if (Test-Path $path) { git add -- $path } }
+          git commit -m "chore(walk): record exact 146-160 retry3 result [skip ci]"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Mark workflow failed unless exact stage verified
+        if: always()
+        shell: powershell
+        run: |
+          $statusPath = "$env:RUNNER_TEMP\walk-tail1-retry3-final-status.txt"
+          if (-not (Test-Path $statusPath)) { throw "Final status file missing; treating exact publication as failed." }
+          $status = (Get-Content $statusPath -Raw).Trim()
+          if ($status -ne "0") { throw "Exact chapters 146-160 retry3 did not verify; authorization was fail-closed." }
+          Write-Host "Exact chapters 146-160 retry3 verified successfully."
