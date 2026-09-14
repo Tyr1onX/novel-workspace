@@ -1,0 +1,52 @@
+name: Walk Enrich Remaining
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/walk-enrich-remaining-20260914.yml"
+      - "scripts/walk_enrich_remaining_20260914.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: walk-quality-enrichment
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Rebase to latest main
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Apply hand-authored scene enrichments
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_enrich_remaining_20260914.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Commit chapter changes
+        shell: powershell
+        run: |
+          git config user.name "quality-audit-bot"
+          git config user.email "quality-audit-bot@users.noreply.github.com"
+          git add -- novels/walk-to-earn/chapters
+          git diff --cached --quiet
+          if ($LASTEXITCODE -eq 0) { Write-Host "No chapter changes needed."; exit 0 }
+          git commit -m "fix(walk): enrich remaining short chapters with distinct scenes [skip ci]"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
