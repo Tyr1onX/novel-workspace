@@ -418,7 +418,37 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-20",
       "completed_at": "2026-09-13T14:44:13+00:00"
+    },
+    {
+      "id": "death-list-create-080-084-20260914",
+      "action": "create",
+      "chapters": "80-84",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted on merged main, manual Cold Read/continuity review, and fresh self-hosted read-only Fanqie reconciliation",
+        "source_run": "34838539908",
+        "source_job": "103957979808",
+        "source_commit": "7ff3982ccfb16685ea62fb5e08bec7678a84e742",
+        "reconcile_run": "34840267574",
+        "reconcile_job": "103963401079",
+        "remote_prefix": "1-79",
+        "remote_status": "49 published; 30 scheduled",
+        "remote_differences": "local-only 80-84; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "80": 2019,
+          "81": 2421,
+          "82": 2377,
+          "83": 2090,
+          "84": 2743
+        },
+        "review_notes": "The complete five-chapter group totals 11650 non-whitespace body characters. The merged-main self-hosted full novel gate passed with all automated hard findings zero, and chapters 80-84 were manually Cold Read and continuity-checked. These chapters move the story into ordinary institutional consequences: the competition result lands, E-001 re-enters a restricted school-media archive through normal cleanup, school safety staff record Lin Mo's 15:40 pre-incident warning as an unverifiable-source report, and an existing stadium safety teacher naturally recognizes him across two prior events. No new system, conspiracy, anonymous threat, secret organization, or source revelation is introduced; E-002 active testing remains paused. Fresh self-hosted read-only reconciliation run 34840267574/job 103963401079 confirmed exactly 79 numbered remote items, 49 published and 30 scheduled, with local-only 80-84 and no remote-only chapters, duplicates, title mismatches, or position mismatches. Preserve chapters 1-79 and every existing schedule; create only 80-84 together for 2026-09-21 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-21"
     }
   ],
-  "updated_at": "2026-09-13T14:44:13+00:00"
+  "updated_at": "2026-09-14T11:56:05+00:00"
 }
