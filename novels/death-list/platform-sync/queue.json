@@ -449,7 +449,37 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-21",
       "completed_at": "2026-09-14T12:02:00+00:00"
+    },
+    {
+      "id": "death-list-create-085-089-20260915",
+      "action": "create",
+      "chapters": "85-89",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted on merged main, manual Cold Read/continuity review, and fresh self-hosted read-only Fanqie reconciliation",
+        "source_run": "34909921046",
+        "source_job": "104194968068",
+        "source_commit": "d07cb02c9aa3231264436a54fa2e6409aa81a7b6",
+        "reconcile_run": "34910067422",
+        "reconcile_job": "104195362713",
+        "remote_prefix": "1-84",
+        "remote_status": "54 published; 30 scheduled",
+        "remote_differences": "local-only 85-89; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "85": 2527,
+          "86": 2339,
+          "87": 2102,
+          "88": 2348,
+          "89": 2236
+        },
+        "review_notes": "The complete five-chapter group totals 11552 non-whitespace body characters. The merged-main self-hosted full novel gate passed with all automated hard findings zero, and chapters 85-89 were manually Cold Read and continuity-checked. D-037 is the first complete use of the normal school safety channel for an active list event: Lin Mo stays offsite while venue staff, property electricians, supplier technicians, and activity staff verify fixed and temporary electrical conditions and adjust equipment and personnel roles. A damaged extension cord is retained only as one ordinary hazard finding and is not promoted to a unique root cause. No new system, conspiracy, secret organization, source revelation, or E-002 restart is introduced. Fresh self-hosted read-only reconciliation run 34910067422/job 104195362713 confirmed exactly 84 numbered remote items, 54 published and 30 scheduled, with local-only 85-89 and no remote-only chapters, duplicate numbers, title mismatches, or position mismatches. Preserve chapters 1-84 and every existing schedule; create only 85-89 together for 2026-09-22 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-22"
     }
   ],
-  "updated_at": "2026-09-14T12:02:00+00:00"
+  "updated_at": "2026-09-14T23:45:56+00:00"
 }
