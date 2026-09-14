@@ -1,0 +1,55 @@
+name: Walk Quality Diagnostic 131-140
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/walk-quality-diag-131-140-20260914.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: walk-quality-diagnostic
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  diagnostic:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Run quality-only diagnostic
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_quality_diag_131_140_20260914.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Persist diagnostic audit
+        shell: powershell
+        run: |
+          $audit = "novels/walk-to-earn/audits/quality-diagnostic-131-140-20260914.md"
+          if (-not (Test-Path $audit)) { throw "Diagnostic audit missing." }
+          git config user.name "quality-audit-bot"
+          git config user.email "quality-audit-bot@users.noreply.github.com"
+          git add -- $audit
+          git commit -m "chore(walk): record 131-140 quality diagnostic [skip ci]"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
