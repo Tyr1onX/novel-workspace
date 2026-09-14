@@ -39,6 +39,14 @@ STAGES = {
         "start_date": "2026-09-23",
         "success": 15,
     },
+    "tail1retry3": {
+        "op_id": "walk-create-146-160-audited-retry3-20260914",
+        "chapters": "146-160",
+        "pre_max": 145,
+        "post_max": 160,
+        "start_date": "2026-09-23",
+        "success": 15,
+    },
     "tail2": {
         "op_id": "walk-create-161-185-audited-20260913",
         "chapters": "161-185",
@@ -97,6 +105,8 @@ def assert_approval() -> None:
 
 
 def prepare(stage: str) -> None:
+    if stage == "tail1retry2":
+        raise SystemExit("tail1retry2 is superseded before platform mutation; whole-book cross-chapter similarity must pass under tail1retry3")
     assert_approval()
     c = cfg(stage)
     queue = load(QUEUE)
