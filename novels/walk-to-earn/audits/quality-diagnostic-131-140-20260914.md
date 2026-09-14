@@ -20,177 +20,54 @@ This is a quality-only diagnostic. It does not resolve the Fanqie runtime and pe
 - 131–135 total: **10455** — PASS (>9999 required)
 - 136–140 total: **12660** — PASS (>9999 required)
 
+## All-book length failures
+
+- chapter 146: 1581 chars, deficit 419
+- chapter 147: 1572 chars, deficit 428
+- chapter 148: 1745 chars, deficit 255
+- chapter 149: 1762 chars, deficit 238
+- chapter 150: 1923 chars, deficit 77
+- chapter 151: 1542 chars, deficit 458
+- chapter 152: 1793 chars, deficit 207
+- chapter 153: 1639 chars, deficit 361
+- chapter 154: 1682 chars, deficit 318
+- chapter 155: 1855 chars, deficit 145
+- chapter 156: 1447 chars, deficit 553
+- chapter 157: 1619 chars, deficit 381
+- chapter 158: 1759 chars, deficit 241
+- chapter 159: 1619 chars, deficit 381
+- chapter 160: 1809 chars, deficit 191
+- chapter 161: 1440 chars, deficit 560
+- chapter 162: 1637 chars, deficit 363
+- chapter 163: 1484 chars, deficit 516
+- chapter 164: 1649 chars, deficit 351
+- chapter 165: 1796 chars, deficit 204
+- chapter 166: 1539 chars, deficit 461
+- chapter 167: 1583 chars, deficit 417
+- chapter 168: 1431 chars, deficit 569
+- chapter 169: 1465 chars, deficit 535
+- chapter 170: 1657 chars, deficit 343
+- chapter 171: 1416 chars, deficit 584
+- chapter 172: 1446 chars, deficit 554
+- chapter 173: 1479 chars, deficit 521
+- chapter 174: 1319 chars, deficit 681
+- chapter 175: 1558 chars, deficit 442
+- chapter 179: 1998 chars, deficit 2
+- chapter 180: 1995 chars, deficit 5
+
+## Five-chapter release-floor failures
+
+- chapters 146–150: 8583, deficit to >9999 = 1417
+- chapters 151–155: 8511, deficit to >9999 = 1489
+- chapters 156–160: 8253, deficit to >9999 = 1747
+- chapters 161–165: 8006, deficit to >9999 = 1994
+- chapters 166–170: 7675, deficit to >9999 = 2325
+- chapters 171–175: 7218, deficit to >9999 = 2782
+
 ## Prose hard hits
 
 ```text
-      ↳ 第一次
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 那一刻
-      ↳ 终于
-      ↳ 第一次
-      ↳ 终于
-      ↳ 第一次
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 终于
-      ↳ ——
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 第一次
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 这一刻
-      ↳ 意味着
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 终于
-      ↳ 意识到
-      ↳ 终于
-      ↳ 终于
-      ↳ 意识到
-      ↳ 终于
-      ↳ 那一刻
-      ↳ 终于
-      ↳ 意识到
-      ↳ 终于
-      ↳ 终于
-      ↳ 仿佛
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 那一刻
-      ↳ 意识到
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 仿佛
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 意识到
-      ↳ 终于
-      ↳ 终于
-      ↳ 那一刻
-      ↳ 那一刻
-      ↳ 第一次
-      ↳ 终于
-      ↳ 终于
-      ↳ 那一刻
-      ↳ ——
-      ↳ 终于
-      ↳ 终于
-      ↳ ——
-      ↳ 第一次
-      ↳ 意味着
-      ↳ 意味着
-      ↳ 意味着
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 那一刻
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 终于
-      ↳ 终于
-      ↳ 意识到
-      ↳ 终于
-      ↳ 终于
-      ↳ 意识到
-      ↳ 这一刻
-      ↳ 终于
-      ↳ 第一次
-      ↳ 意识到
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 那一刻
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 仿佛
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 意识到
-      ↳ 第一次
-      ↳ 仿佛
-      ↳ 第一次
-      ↳ 意识到
-      ↳ 终于
-      ↳ 终于
-      ↳ 第一次
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
-      ↳ 终于
+(none)
 ```
 
 ## Gate results
@@ -214,35 +91,8 @@ WALK CONTINUITY INVARIANTS: PASS
 ### novel_gate: PASS (exit 0)
 
 ```text
-[output truncated to last 16000 chars]
-\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-085.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-086.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-087.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-088.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-089.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-090.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-091.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-092.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-093.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-094.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-095.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-096.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-097.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-098.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-099.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-100.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-101.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-102.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-103.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-104.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-105.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-106.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-107.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-108.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-109.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-110.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-111.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-112.md: hard=0 warn=0
+[output truncated to last 12000 chars]
+novels\walk-to-earn\chapters\chapter-112.md: hard=0 warn=0
 SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-113.md: hard=0 warn=0
 SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-114.md: hard=0 warn=0
 SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-115.md: hard=0 warn=0
@@ -347,48 +197,8 @@ Automated success is not final approval. Manual Architecture Lite / QUD, Dialogu
 ### prose_guard: PASS (exit 0)
 
 ```text
-[output truncated to last 16000 chars]
-warn=0
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-146.md:23 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断 [对白内：只检查是否符合人物与语境]
-      ↳ 终于
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-146.md:37 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-146.md: hard=0 warn=2
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-147.md:49 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-147.md: hard=0 warn=1
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-148.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-149.md: hard=0 warn=0
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-150.md:21 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 第一次
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-150.md:37 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 那一刻
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-150.md:47 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-150.md: hard=0 warn=3
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-151.md:49 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-151.md: hard=0 warn=1
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md:47 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md:47 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md:61 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md:67 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md: hard=0 warn=4
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-153.md:31 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-153.md: hard=0 warn=1
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-154.md:11 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 终于
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-154.md:11 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
-      ↳ 第一次
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-154.md:19 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断 [对白内：只检查是否符合人物与语境]
-      ↳ 终于
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-154.md: hard=0 warn=3
-WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-155.md:39 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+[output truncated to last 12000 chars]
+workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-155.md:39 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
       ↳ 终于
 SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-155.md: hard=0 warn=1
 WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-156.md:9 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
@@ -512,212 +322,8 @@ Gate: no hard-review pattern found. Warnings still require human judgment.
 ### chapter_length_gate: FAIL (exit 2)
 
 ```text
-[output truncated to last 16000 chars]
-第七十章 少一根线，四个人又走了一圈",
-      "chars": 2007,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 71,
-      "heading": "第七十一章 周六回家，包里只多了一张旧证明",
-      "chars": 2007,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 72,
-      "heading": "第七十二章 父亲要去的地方，公交只到路口",
-      "chars": 2012,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 73,
-      "heading": "第七十三章 那张旧证明，只看了三分钟",
-      "chars": 2010,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 74,
-      "heading": "第七十四章 十八公斤的箱子，先坐校车",
-      "chars": 2011,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 75,
-      "heading": "第七十五章 晚上九点，那条干扰还在",
-      "chars": 2002,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 76,
-      "heading": "第七十六章 唐梨说请饭，先陪她取一块牌子",
-      "chars": 2085,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 77,
-      "heading": "第七十七章 早上七点十二，先试一次砚海通勤",
-      "chars": 2050,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 78,
-      "heading": "第七十八章 下过雨以后，旧鞋先打了一下滑",
-      "chars": 2011,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 79,
-      "heading": "第七十九章 毕业照还没拍，班里先自己拍了一轮",
-      "chars": 2545,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 80,
-      "heading": "第八十章 周航看房，第一套离地铁不是五分钟",
-      "chars": 2300,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 81,
-      "heading": "第八十一章 一周没出校门，里程也没停",
-      "chars": 2275,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 82,
-      "heading": "第八十二章 四个馆，先去最里面那个",
-      "chars": 2183,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 83,
-      "heading": "第八十三章 地图上有站，街口已经没有站牌",
-      "chars": 2079,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 84,
-      "heading": "第八十四章 降到三度以后，早课那段路改骑车",
-      "chars": 2015,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 85,
-      "heading": "第八十五章 显示器不走地铁，直接叫车",
-      "chars": 2017,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 86,
-      "heading": "第八十六章 第一场雪，只走到食堂",
-      "chars": 2023,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 87,
-      "heading": "第八十七章 走到桥下，还差一点到四位数",
-      "chars": 2018,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 88,
-      "heading": "第八十八章 一千公里，没有新的提示音",
-      "chars": 2006,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 89,
-      "heading": "第八十九章 两栋楼之间，材料少了一页",
-      "chars": 2208,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 90,
-      "heading": "第九十章 七公斤的箱子，先坐校车",
-      "chars": 2282,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 91,
-      "heading": "第九十一章 八块牌子，最后一块插在北门",
-      "chars": 2491,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 92,
-      "heading": "第九十二章 唐梨来临岚，只带了一个帆布袋",
-      "chars": 2293,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 93,
-      "heading": "第九十三章 周航卖掉的先是一把椅子",
-      "chars": 2194,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 94,
-      "heading": "第九十四章 一箱毕业照，先送到正确的楼",
-      "chars": 2129,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 95,
-      "heading": "第九十五章 回家第一件事，是把羽绒服拉链换掉",
-      "chars": 2110,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 96,
-      "heading": "第九十六章 妈妈买年货，不按地图最短路线",
-      "chars": 2175,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 97,
-      "heading": "第九十七章 父亲说走半小时，就只走半小时",
-      "chars": 2109,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 98,
-      "heading": "第九十八章 年初三，车停在两公里外",
-      "chars": 2024,
-      "status": "pass",
-      "deficit": 0
-    },
-    {
-      "number": 99,
-      "heading": "第九十九章 返校那天，行李箱只走到地铁口",
-      "chars": 2013,
+[output truncated to last 12000 chars]
+  "chars": 2013,
       "status": "pass",
       "deficit": 0
     },
@@ -1330,179 +936,8 @@ Gate: no hard-review pattern found. Warnings still require human judgment.
 ### five_chapter_release_floor: FAIL (exit 2)
 
 ```text
-{
-  "minimum_chars_exclusive": 9999,
-  "comparison": ">",
-  "normal_chapters": 5,
-  "max_chapters": 5,
-  "inventory": [
-    {
-      "number": 61,
-      "title": "山脚机房，最后一段路不铺水泥",
-      "chars": 2040
-    },
-    {
-      "number": 62,
-      "title": "四小时的车票，先买周六早上",
-      "chars": 2187
-    },
-    {
-      "number": 63,
-      "title": "四小时以后，先走到江边",
-      "chars": 2510
-    },
-    {
-      "number": 64,
-      "title": "雨下到十点，早市还没散",
-      "chars": 2154
-    },
-    {
-      "number": 65,
-      "title": "回到学校，周一只走七千步",
-      "chars": 2031
-    },
-    {
-      "number": 66,
-      "title": "工资没变，决定还是变了",
-      "chars": 2029
-    },
-    {
-      "number": 67,
-      "title": "二十四个点，先别按直线走",
-      "chars": 2052
-    },
-    {
-      "number": 68,
-      "title": "三个异常点，再走一遍",
-      "chars": 2003
-    },
-    {
-      "number": 69,
-      "title": "周航也有自己的去处",
-      "chars": 2010
-    },
-    {
-      "number": 70,
-      "title": "少一根线，四个人又走了一圈",
-      "chars": 2007
-    },
-    {
-      "number": 71,
-      "title": "周六回家，包里只多了一张旧证明",
-      "chars": 2007
-    },
-    {
-      "number": 72,
-      "title": "父亲要去的地方，公交只到路口",
-      "chars": 2012
-    },
-    {
-      "number": 73,
-      "title": "那张旧证明，只看了三分钟",
-      "chars": 2010
-    },
-    {
-      "number": 74,
-      "title": "十八公斤的箱子，先坐校车",
-      "chars": 2011
-    },
-    {
-      "number": 75,
-      "title": "晚上九点，那条干扰还在",
-      "chars": 2002
-    },
-    {
-      "number": 76,
-      "title": "唐梨说请饭，先陪她取一块牌子",
-      "chars": 2085
-    },
-    {
-      "number": 77,
-      "title": "早上七点十二，先试一次砚海通勤",
-      "chars": 2050
-    },
-    {
-      "number": 78,
-      "title": "下过雨以后，旧鞋先打了一下滑",
-      "chars": 2011
-    },
-    {
-      "number": 79,
-      "title": "毕业照还没拍，班里先自己拍了一轮",
-      "chars": 2545
-    },
-    {
-      "number": 80,
-      "title": "周航看房，第一套离地铁不是五分钟",
-      "chars": 2300
-    },
-    {
-      "number": 81,
-      "title": "一周没出校门，里程也没停",
-      "chars": 2275
-    },
-    {
-      "number": 82,
-      "title": "四个馆，先去最里面那个",
-      "chars": 2183
-    },
-    {
-      "number": 83,
-      "title": "地图上有站，街口已经没有站牌",
-      "chars": 2079
-    },
-    {
-      "number": 84,
-      "title": "降到三度以后，早课那段路改骑车",
-      "chars": 2015
-    },
-    {
-      "number": 85,
-      "title": "显示器不走地铁，直接叫车",
-      "chars": 2017
-    },
-    {
-      "number": 86,
-      "title": "第一场雪，只走到食堂",
-      "chars": 2023
-    },
-    {
-      "number": 87,
-      "title": "走到桥下，还差一点到四位数",
-      "chars": 2018
-    },
-    {
-      "number": 88,
-      "title": "一千公里，没有新的提示音",
-      "chars": 2006
-    },
-    {
-      "number": 89,
-      "title": "两栋楼之间，材料少了一页",
-      "chars": 2208
-    },
-    {
-      "number": 90,
-      "title": "七公斤的箱子，先坐校车",
-      "chars": 2282
-    },
-    {
-      "number": 91,
-      "title": "八块牌子，最后一块插在北门",
-      "chars": 2491
-    },
-    {
-      "number": 92,
-      "title": "唐梨来临岚，只带了一个帆布袋",
-      "chars": 2293
-    },
-    {
-      "number": 93,
-      "title": "周航卖掉的先是一把椅子",
-      "chars": 2194
-    },
-    {
-      "number": 94,
+[output truncated to last 12000 chars]
+4,
       "title": "一箱毕业照，先送到正确的楼",
       "chars": 2129
     },
