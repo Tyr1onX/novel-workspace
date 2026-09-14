@@ -1,6 +1,6 @@
 name: Fanqie Authorized Sync Selfhosted
 
-# Manual trigger refresh for audited chapters 80-84 authorization on 2026-09-14.
+# Manual trigger refresh for audited chapters 85-89 authorization on 2026-09-15.
 on:
   push:
     branches:
