@@ -1,0 +1,160 @@
+name: Walk Probe Chapter 136
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/walk-probe-136-20260914.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: walk-september-authorized-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Re-run complete Walk quality gate
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python novels/walk-to-earn/tools/check_template_markers.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/walk-to-earn/tools/check_rebuild_invariants.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $chapters = @(Get-ChildItem -Path "novels/walk-to-earn/chapters" -Filter "chapter-*.md" | Sort-Object Name | ForEach-Object { $_.FullName })
+          if ($chapters.Count -ne 185) { throw "Expected exactly 185 Walk chapters; got $($chapters.Count)." }
+          python shared/tools/novel_gate.py @chapters
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/walk-to-earn/tools/audit_chapter_lengths.py --minimum 2000 --fail
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python novels/walk-to-earn/tools/check_release_floor.py --start 61 --minimum 9999 --normal 5 --maximum 5 --require-all
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host "Complete Walk quality gate PASS."
+
+      - name: Resolve local Fanqie runtime
+        id: runtime
+        shell: powershell
+        run: |
+          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "path=$runtime" >> $env:GITHUB_OUTPUT
+
+      - name: Fresh read-only preflight
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\walk-probe136-pre.json"
+          python shared/tools/fanqie_compat.py reconcile novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/walk_probe_136_20260914.py assert-report $report --expected-max 135
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Fail closed if critical inputs changed
+        shell: powershell
+        run: |
+          git fetch origin main
+          $critical = @(
+            "novels/walk-to-earn/chapters",
+            "novels/walk-to-earn/platform-sync/config.json",
+            "novels/walk-to-earn/platform-sync/policy.json",
+            "novels/walk-to-earn/tools",
+            "shared/tools",
+            "shared/RULES.md",
+            "shared/DIALOGUE_RULES.md",
+            "shared/HUMANIZER_RULES.md",
+            "shared/HUMANIZER_EVOLUTION.md",
+            "shared/PROSE_RULES.md",
+            "shared/META_NARRATIVE_RULES.md",
+            "scripts/walk_probe_136_20260914.py"
+          )
+          git diff --quiet HEAD..origin/main -- $critical
+          if ($LASTEXITCODE -ne 0) { throw "Critical Walk inputs changed after preflight; refusing chapter 136 mutation." }
+
+      - name: Publish only chapter 136 and capture raw result
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python scripts/walk_probe_136_20260914.py publish --runtime "${{ steps.runtime.outputs.path }}"
+          $code = $LASTEXITCODE
+          "PUBLISH_STATUS=$code" >> $env:GITHUB_ENV
+          Write-Host "PUBLISH_STATUS=$code"
+          exit 0
+
+      - name: Read-only postflight
+        if: always()
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $report = "$env:RUNNER_TEMP\walk-probe136-post.json"
+          python shared/tools/fanqie_compat.py reconcile novels/walk-to-earn --runtime "${{ steps.runtime.outputs.path }}" --output $report
+          $code = $LASTEXITCODE
+          "POST_STATUS=$code" >> $env:GITHUB_ENV
+          "POST_REPORT=$report" >> $env:GITHUB_ENV
+          Write-Host "POST_STATUS=$code"
+          exit 0
+
+      - name: Verify remote state and append audit
+        if: always()
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $final = 2
+          if ($env:POST_STATUS -eq "0" -and (Test-Path $env:POST_REPORT)) {
+            python scripts/walk_probe_136_20260914.py postflight $env:POST_REPORT --publish-status ([int]$env:PUBLISH_STATUS)
+            $final = $LASTEXITCODE
+          }
+          Set-Content -Path "$env:RUNNER_TEMP\walk-probe136-final.txt" -Value $final -Encoding ascii
+          Write-Host "PROBE_FINAL_STATUS=$final"
+          exit 0
+
+      - name: Persist diagnostic audit
+        if: always()
+        shell: powershell
+        run: |
+          $audit = "novels/walk-to-earn/audits/publisher-probe-136-20260914.md"
+          if (-not (Test-Path $audit)) {
+            Write-Host "No diagnostic audit file was produced."
+            exit 0
+          }
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          git add -- $audit
+          git commit -m "chore(walk): record chapter 136 platform probe [skip ci]"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Fail if chapter 136 is not remotely verified
+        if: always()
+        shell: powershell
+        run: |
+          $path = "$env:RUNNER_TEMP\walk-probe136-final.txt"
+          if (-not (Test-Path $path)) { throw "Probe final status missing." }
+          $status = (Get-Content $path -Raw).Trim()
+          if ($status -ne "0") { throw "Chapter 136 was not remotely verified; see persisted diagnostic audit." }
+          Write-Host "Chapter 136 remotely verified."
