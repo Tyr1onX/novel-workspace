@@ -20,6 +20,181 @@ This is a quality-only diagnostic. It does not resolve the Fanqie runtime and pe
 - 131–135 total: **9960** — FAIL (>9999 required)
 - 136–140 total: **12660** — PASS (>9999 required)
 
+## Prose hard hits
+
+```text
+      ↳ 第一次
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 那一刻
+      ↳ 终于
+      ↳ 第一次
+      ↳ 终于
+      ↳ 第一次
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 终于
+      ↳ ——
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 第一次
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 这一刻
+      ↳ 意味着
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 终于
+HARD D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-117.md:63 FLIP_NOT_BUT: 否定—修正/翻案腔：先否定 A 再抬高 B
+      ↳ 不是系统里的线，而是
+      ↳ 意识到
+      ↳ 终于
+      ↳ 终于
+      ↳ 意识到
+      ↳ 终于
+      ↳ 那一刻
+      ↳ 终于
+      ↳ 意识到
+      ↳ 终于
+      ↳ 终于
+      ↳ 仿佛
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 那一刻
+      ↳ 意识到
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 仿佛
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 意识到
+      ↳ 终于
+      ↳ 终于
+      ↳ 那一刻
+      ↳ 那一刻
+      ↳ 第一次
+      ↳ 终于
+      ↳ 终于
+      ↳ 那一刻
+      ↳ ——
+      ↳ 终于
+      ↳ 终于
+      ↳ ——
+      ↳ 第一次
+      ↳ 意味着
+      ↳ 意味着
+      ↳ 意味着
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 那一刻
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 终于
+      ↳ 终于
+      ↳ 意识到
+      ↳ 终于
+      ↳ 终于
+      ↳ 意识到
+      ↳ 这一刻
+      ↳ 终于
+      ↳ 第一次
+      ↳ 意识到
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 那一刻
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 仿佛
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 意识到
+      ↳ 第一次
+      ↳ 仿佛
+      ↳ 第一次
+      ↳ 意识到
+      ↳ 终于
+      ↳ 终于
+      ↳ 第一次
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+      ↳ 终于
+```
+
 ## Gate results
 
 ### template_markers: PASS (exit 0)
@@ -171,6 +346,171 @@ RUN meta_narrative_guard.py
 NOVEL GATE: REVIEW REQUIRED
 - prose_guard.py: exit 2
 A non-zero guard result does not mean auto-rewrite. Review every hit against the relevant rule files, preserve continuity/numbers, then rerun.
+```
+
+### prose_guard: FAIL (exit 2)
+
+```text
+[output truncated to last 16000 chars]
+warn=0
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-146.md:23 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断 [对白内：只检查是否符合人物与语境]
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-146.md:37 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-146.md: hard=0 warn=2
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-147.md:49 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-147.md: hard=0 warn=1
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-148.md: hard=0 warn=0
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-149.md: hard=0 warn=0
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-150.md:21 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 第一次
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-150.md:37 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 那一刻
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-150.md:47 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-150.md: hard=0 warn=3
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-151.md:49 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-151.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md:47 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md:47 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md:61 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md:67 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-152.md: hard=0 warn=4
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-153.md:31 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-153.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-154.md:11 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-154.md:11 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 第一次
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-154.md:19 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断 [对白内：只检查是否符合人物与语境]
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-154.md: hard=0 warn=3
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-155.md:39 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-155.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-156.md:9 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 意识到
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-156.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-157.md:9 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-157.md:39 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-157.md: hard=0 warn=2
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-158.md: hard=0 warn=0
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-159.md:23 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 意识到
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-159.md:41 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 这一刻
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-159.md:45 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-159.md: hard=0 warn=3
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-160.md: hard=0 warn=0
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-161.md:7 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 第一次
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-161.md:21 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 意识到
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-161.md: hard=0 warn=2
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-162.md:35 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-162.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-163.md:15 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-163.md:35 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 第一次
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-163.md: hard=0 warn=2
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-164.md: hard=0 warn=0
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-165.md:47 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 那一刻
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-165.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-166.md:57 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-166.md: hard=0 warn=1
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-167.md: hard=0 warn=0
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-168.md:43 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-168.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-169.md:17 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-169.md:23 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-169.md:31 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-169.md:59 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-169.md:63 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-169.md:63 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-169.md: hard=0 warn=6
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-170.md:5 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-170.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-171.md:45 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-171.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-172.md:39 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-172.md: hard=0 warn=1
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-173.md: hard=0 warn=0
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-174.md:3 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-174.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-175.md:17 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-175.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-176.md:5 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 仿佛
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-176.md:9 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-176.md: hard=0 warn=2
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-177.md:11 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断 [对白内：只检查是否符合人物与语境]
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-177.md:23 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-177.md:23 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 意识到
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-177.md:29 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 第一次
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-177.md: hard=0 warn=4
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-178.md:9 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 仿佛
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-178.md:23 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 第一次
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-178.md: hard=0 warn=2
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-179.md:19 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 意识到
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-179.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-180.md:27 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-180.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-181.md:31 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-181.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-182.md:15 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 第一次
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-182.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-183.md:7 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断 [对白内：只检查是否符合人物与语境]
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-183.md:21 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-183.md: hard=0 warn=2
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-184.md:31 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-184.md: hard=0 warn=1
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-185.md:7 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-185.md:17 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
+      ↳ 终于
+SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-185.md: hard=0 warn=2
+TOTAL hard=1 warn=183
+Gate: manual review required before the chapter is considered prose-clean.
 ```
 
 ### chapter_length_gate: FAIL (exit 2)
