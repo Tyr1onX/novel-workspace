@@ -6,10 +6,10 @@ This is a quality-only diagnostic. It does not resolve the Fanqie runtime and pe
 
 | Chapter | Count | >=2000 |
 | ---: | ---: | :---: |
-| 131 | 1941 | FAIL |
-| 132 | 1982 | FAIL |
-| 133 | 1896 | FAIL |
-| 134 | 1953 | FAIL |
+| 131 | 2043 | PASS |
+| 132 | 2108 | PASS |
+| 133 | 2037 | PASS |
+| 134 | 2079 | PASS |
 | 135 | 2188 | PASS |
 | 136 | 2321 | PASS |
 | 137 | 2712 | PASS |
@@ -17,7 +17,7 @@ This is a quality-only diagnostic. It does not resolve the Fanqie runtime and pe
 | 139 | 2542 | PASS |
 | 140 | 2458 | PASS |
 
-- 131–135 total: **9960** — FAIL (>9999 required)
+- 131–135 total: **10455** — PASS (>9999 required)
 - 136–140 total: **12660** — PASS (>9999 required)
 
 ## Prose hard hits
@@ -85,8 +85,6 @@ This is a quality-only diagnostic. It does not resolve the Fanqie runtime and pe
       ↳ 终于
       ↳ 第一次
       ↳ 终于
-HARD D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-117.md:63 FLIP_NOT_BUT: 否定—修正/翻案腔：先否定 A 再抬高 B
-      ↳ 不是系统里的线，而是
       ↳ 意识到
       ↳ 终于
       ↳ 终于
@@ -213,12 +211,11 @@ WALK CONTINUITY INVARIANTS: PASS
 - audited continuation at chapter 041+ is allowed
 ```
 
-### novel_gate: FAIL (exit 2)
+### novel_gate: PASS (exit 0)
 
 ```text
 [output truncated to last 16000 chars]
--earn\chapters\chapter-084.md: hard=0 warn=0
-SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-085.md: hard=0 warn=0
+\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-085.md: hard=0 warn=0
 SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-086.md: hard=0 warn=0
 SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-087.md: hard=0 warn=0
 SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-088.md: hard=0 warn=0
@@ -343,12 +340,11 @@ RUN meta_narrative_guard.py
 ========================================================================
 
 ========================================================================
-NOVEL GATE: REVIEW REQUIRED
-- prose_guard.py: exit 2
-A non-zero guard result does not mean auto-rewrite. Review every hit against the relevant rule files, preserve continuity/numbers, then rerun.
+NOVEL GATE: AUTOMATED GUARDS COMPLETED
+Automated success is not final approval. Manual Architecture Lite / QUD, Dialogue/Humanizer/Prose review, voice-sample comparison, continuity, number checks, and final read are still required. narrative_guard.py is advisory in V1.
 ```
 
-### prose_guard: FAIL (exit 2)
+### prose_guard: PASS (exit 0)
 
 ```text
 [output truncated to last 16000 chars]
@@ -509,15 +505,15 @@ WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-worksp
 WARN D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-185.md:17 MODEL_TIC: 高频生成式口头禅，需结合章节密度判断
       ↳ 终于
 SUMMARY D:\Workspace\Projects\fanqie-sync\runner\_work\novel-workspace\novel-workspace\novels\walk-to-earn\chapters\chapter-185.md: hard=0 warn=2
-TOTAL hard=1 warn=183
-Gate: manual review required before the chapter is considered prose-clean.
+TOTAL hard=0 warn=183
+Gate: no hard-review pattern found. Warnings still require human judgment.
 ```
 
 ### chapter_length_gate: FAIL (exit 2)
 
 ```text
 [output truncated to last 16000 chars]
-，四个人又走了一圈",
+第七十章 少一根线，四个人又走了一圈",
       "chars": 2007,
       "status": "pass",
       "deficit": 0
@@ -847,7 +843,7 @@ Gate: manual review required before the chapter is considered prose-clean.
     {
       "number": 117,
       "heading": "第一百十七章 雨停以后，绕到菜店",
-      "chars": 2016,
+      "chars": 2013,
       "status": "pass",
       "deficit": 0
     },
@@ -945,30 +941,30 @@ Gate: manual review required before the chapter is considered prose-clean.
     {
       "number": 131,
       "heading": "第一百三十一章 例会改到九点半",
-      "chars": 1941,
-      "status": "short",
-      "deficit": 59
+      "chars": 2043,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 132,
       "heading": "第一百三十二章 公司楼下的早餐摊换了位置",
-      "chars": 1982,
-      "status": "short",
-      "deficit": 18
+      "chars": 2108,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 133,
       "heading": "第一百三十三章 一条工牌挂绳，走了两条街",
-      "chars": 1896,
-      "status": "short",
-      "deficit": 104
+      "chars": 2037,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 134,
       "heading": "第一百三十四章 晚高峰地铁，先让同事上车",
-      "chars": 1953,
-      "status": "short",
-      "deficit": 47
+      "chars": 2079,
+      "status": "pass",
+      "deficit": 0
     },
     {
       "number": 135,
@@ -1623,7 +1619,7 @@ Gate: manual review required before the chapter is considered prose-clean.
     {
       "number": 117,
       "title": "雨停以后，绕到菜店",
-      "chars": 2016
+      "chars": 2013
     },
     {
       "number": 118,
@@ -1693,22 +1689,22 @@ Gate: manual review required before the chapter is considered prose-clean.
     {
       "number": 131,
       "title": "例会改到九点半",
-      "chars": 1941
+      "chars": 2043
     },
     {
       "number": 132,
       "title": "公司楼下的早餐摊换了位置",
-      "chars": 1982
+      "chars": 2108
     },
     {
       "number": 133,
       "title": "一条工牌挂绳，走了两条街",
-      "chars": 1896
+      "chars": 2037
     },
     {
       "number": 134,
       "title": "晚高峰地铁，先让同事上车",
-      "chars": 1953
+      "chars": 2079
     },
     {
       "number": 135,
@@ -2107,7 +2103,7 @@ Gate: manual review required before the chapter is considered prose-clean.
         119,
         120
       ],
-      "chars": 10391,
+      "chars": 10388,
       "status": "ready",
       "reason": "5-chapter group meets the daily floor"
     },
@@ -2141,17 +2137,38 @@ Gate: manual review required before the chapter is considered prose-clean.
         132,
         133,
         134,
-        135,
+        135
+      ],
+      "chars": 10455,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
         136,
         137,
         138,
         139,
-        140,
+        140
+      ],
+      "chars": 12660,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
         141,
         142,
         143,
         144,
-        145,
+        145
+      ],
+      "chars": 11139,
+      "status": "ready",
+      "reason": "5-chapter group meets the daily floor"
+    },
+    {
+      "chapters": [
         146,
         147,
         148,
@@ -2193,7 +2210,7 @@ Gate: manual review required before the chapter is considered prose-clean.
         184,
         185
       ],
-      "chars": 102205,
+      "chars": 68446,
       "status": "hold",
       "reason": "normal group does not meet the daily floor and no supported larger group is available"
     }
@@ -2205,5 +2222,5 @@ Gate: manual review required before the chapter is considered prose-clean.
 ## Diagnostic verdict
 
 - automated gates: **FAIL**
-- 131–140 local length checks: **FAIL**
+- 131–140 local length checks: **PASS**
 - This diagnostic alone is not publishing approval; cold-read review remains required.
