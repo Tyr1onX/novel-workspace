@@ -41,19 +41,23 @@ def main() -> int:
     for n in range(131, 141):
         counts[n] = body_chars(CHAPTER_DIR / f"chapter-{n}.md")
 
+    chapters = [str(p) for p in sorted(CHAPTER_DIR.glob("chapter-*.md"), key=lambda p: int(p.stem.split("-")[-1]))]
     commands: list[tuple[str, list[str]]] = [
         ("template_markers", [sys.executable, "novels/walk-to-earn/tools/check_template_markers.py"]),
         ("protected_invariants", [sys.executable, "novels/walk-to-earn/tools/check_rebuild_invariants.py"]),
+        ("novel_gate", [sys.executable, "shared/tools/novel_gate.py", *chapters]),
+        ("prose_guard", [sys.executable, "shared/tools/prose_guard.py", *chapters]),
+        ("chapter_length_gate", [sys.executable, "novels/walk-to-earn/tools/audit_chapter_lengths.py", "--minimum", "2000", "--fail"]),
+        ("five_chapter_release_floor", [sys.executable, "novels/walk-to-earn/tools/check_release_floor.py", "--start", "61", "--minimum", "9999", "--normal", "5", "--maximum", "5", "--require-all"]),
     ]
-    chapters = [str(p) for p in sorted(CHAPTER_DIR.glob("chapter-*.md"), key=lambda p: int(p.stem.split("-")[-1]))]
-    commands.append(("novel_gate", [sys.executable, "shared/tools/novel_gate.py", *chapters]))
-    commands.append(("chapter_length_gate", [sys.executable, "novels/walk-to-earn/tools/audit_chapter_lengths.py", "--minimum", "2000", "--fail"]))
-    commands.append(("five_chapter_release_floor", [sys.executable, "novels/walk-to-earn/tools/check_release_floor.py", "--start", "61", "--minimum", "9999", "--normal", "5", "--maximum", "5", "--require-all"]))
 
     results: list[tuple[str, int, str]] = []
     for label, args in commands:
         code, out = run(label, args)
         results.append((label, code, out))
+
+    prose_out = next((out for label, _, out in results if label == "prose_guard"), "")
+    prose_hard_lines = [line for line in prose_out.splitlines() if line.startswith("HARD") or line.lstrip().startswith("↳")]
 
     lines = [
         "# Walk to Earn quality diagnostic — chapters 131–140 — 2026-09-14",
@@ -72,6 +76,12 @@ def main() -> int:
         f"- 131–135 total: **{sum(counts[n] for n in range(131, 136))}** — {'PASS' if sum(counts[n] for n in range(131, 136)) > 9999 else 'FAIL'} (>9999 required)",
         f"- 136–140 total: **{sum(counts[n] for n in range(136, 141))}** — {'PASS' if sum(counts[n] for n in range(136, 141)) > 9999 else 'FAIL'} (>9999 required)",
         "",
+        "## Prose hard hits",
+        "",
+        "```text",
+        "\n".join(prose_hard_lines) if prose_hard_lines else "(none)",
+        "```",
+        "",
         "## Gate results",
         "",
     ])
@@ -87,7 +97,8 @@ def main() -> int:
         lines.append("```")
         lines.append("")
 
-    all_ok = all(code == 0 for _, code, _ in results)
+    required_labels = {"template_markers", "protected_invariants", "novel_gate", "chapter_length_gate", "five_chapter_release_floor"}
+    all_ok = all(code == 0 for label, code, _ in results if label in required_labels)
     local_ok = all(counts[n] >= 2000 for n in range(131, 141)) and sum(counts[n] for n in range(131,136)) > 9999 and sum(counts[n] for n in range(136,141)) > 9999
     lines.extend([
         "## Diagnostic verdict",
