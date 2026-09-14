@@ -1,6 +1,6 @@
 name: Fanqie Readonly Reconcile Selfhosted
 
-# Manual reconciliation trigger refreshed 2026-09-13 after chapters 75-79 merged.
+# Manual reconciliation trigger refreshed 2026-09-14 after chapters 80-84 merged.
 on:
   push:
     branches:
