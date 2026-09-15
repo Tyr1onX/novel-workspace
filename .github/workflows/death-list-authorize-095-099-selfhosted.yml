@@ -1,0 +1,129 @@
+name: Death List Authorize 095-099 Selfhosted
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/death-list-authorize-095-099-selfhosted.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: death-list-authorize-095-099-selfhosted
+  cancel-in-progress: false
+
+jobs:
+  authorize:
+    runs-on: [self-hosted, windows, fanqie]
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebase to latest main
+        shell: powershell
+        run: |
+          git fetch origin main
+          git rebase origin/main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Append audited authorization
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          $code = @'
+          import datetime
+          import json
+          from pathlib import Path
+
+          path = Path("novels/death-list/platform-sync/queue.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          op_id = "death-list-create-095-099-20260916"
+
+          existing = [op for op in data.get("operations", []) if op.get("id") == op_id]
+          if existing:
+              print(f"{op_id} already exists; no duplicate authorization created.")
+          else:
+              pending = [
+                  op for op in data.get("operations", [])
+                  if op.get("status") == "pending"
+                  and op.get("authorized") is True
+                  and (op.get("audit") or {}).get("status") == "passed"
+              ]
+              if pending:
+                  raise SystemExit(f"Refusing to append while another authorized pending operation exists: {[op.get('id') for op in pending]}")
+
+              data["operations"].append({
+                  "id": op_id,
+                  "action": "create",
+                  "chapters": "95-99",
+                  "status": "pending",
+                  "authorized": True,
+                  "audit": {
+                      "status": "passed",
+                      "source": "Death List Quality Selfhosted on merged main, manual Cold Read/continuity/full narrative review, and fresh self-hosted read-only Fanqie reconciliation",
+                      "source_run": "35034077416",
+                      "source_job": "104599035736",
+                      "source_commit": "e0a5df649daa42dff76166c3b4c0a71d5fdeca16",
+                      "reconcile_run": "35034223280",
+                      "reconcile_job": "104599483688",
+                      "remote_prefix": "1-94",
+                      "remote_status": "59 published; 35 scheduled",
+                      "remote_differences": "local-only 95-99; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+                      "chapter_body_characters": {
+                          "95": 2117,
+                          "96": 2072,
+                          "97": 2196,
+                          "98": 2136,
+                          "99": 2047
+                      },
+                      "review_notes": "The complete five-chapter group totals 10568 non-whitespace body characters. The merged-main self-hosted full novel gate passed with Narrative V1 below review thresholds and Humanizer/Prose/Meta hard findings at zero; Dialogue/Humanizer warnings were manually Cold Read rather than mechanically cleared. The chapter 90-99 Full Narrative Review is complete. Chapters 95-99 finish D-038 without granting Lin Mo logistics or engineering expertise: he voluntarily limits cross-institution verification to ordinary prior-report facts, stays out of B1, and lets Youth Innovation Center decide its own professional measures. The venue independently changes personnel/vehicle routing, handoff and confirmation duties, Xu Zhewen's B1 access, and the stale external contact path; the record disappears at 17:49:12 and 17:50 passes safely. The final stale dispatch sheet is not treated as a unique root cause because multiple real changes landed together. E-007 remains two separate ordinary institutional records, with no secret sharing, special credit level, source revelation, conspiracy, new system feature, or E-002 restart. Fresh self-hosted read-only reconciliation run 35034223280/job 104599483688 confirmed exactly 94 numbered remote items, 59 published and 35 scheduled, with local-only 95-99 and no remote-only chapters, duplicate numbers, title mismatches, or position mismatches. Preserve chapters 1-94 and every existing schedule; create only 95-99 together for 2026-09-24 00:00 Asia/Shanghai. Do not publish immediately.",
+                      "already_present_chapters": []
+                  },
+                  "schedule_mode": "fixed_start",
+                  "start_date": "2026-09-24"
+              })
+              data["updated_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+              path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+              print(f"Appended {op_id}.")
+          '@
+          $code | python -
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Validate authorization plan
+        shell: powershell
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python shared/tools/fanqie_compat.py validate novels/death-list
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $planText = python shared/tools/fanqie_compat.py plan novels/death-list --json | Out-String
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $plan = $planText | ConvertFrom-Json
+          if ([int]$plan.pending_count -ne 1) { throw "Expected exactly one pending operation; found $($plan.pending_count)." }
+          $pending = @($plan.pending_operations)[0]
+          if ($pending.id -ne 'death-list-create-095-099-20260916') { throw "Unexpected pending operation: $($pending.id)" }
+          if ($pending.chapter_spec -ne '95-99') { throw "Unexpected chapter spec: $($pending.chapter_spec)" }
+          Write-Host "Authorization plan PASS: $($pending.id), chapters $($pending.chapter_spec)."
+
+      - name: Commit authorization queue
+        shell: powershell
+        run: |
+          git diff --exit-code -- novels/death-list/platform-sync/queue.json
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host 'Queue already contains this authorization; nothing to commit.'
+            exit 0
+          }
+          git config user.name "fanqie-sync-bot"
+          git config user.email "fanqie-sync-bot@users.noreply.github.com"
+          git add -- novels/death-list/platform-sync/queue.json
+          git commit -m "chore(fanqie): authorize chapters 95-99"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git pull --rebase origin main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
