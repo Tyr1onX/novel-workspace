@@ -480,7 +480,37 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-22",
       "completed_at": "2026-09-14T23:50:20+00:00"
+    },
+    {
+      "id": "death-list-create-090-094-20260915",
+      "action": "create",
+      "chapters": "90-94",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted on merged main, manual Cold Read/continuity/architecture review, and fresh self-hosted read-only Fanqie reconciliation",
+        "source_run": "34932923204",
+        "source_job": "104264731928",
+        "source_commit": "0ccb854610fabcdb4bc2e30fd3825953122c083a",
+        "reconcile_run": "34933108503",
+        "reconcile_job": "104265272864",
+        "remote_prefix": "1-89",
+        "remote_status": "54 published; 35 scheduled",
+        "remote_differences": "local-only 90-94; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "90": 2437,
+          "91": 2041,
+          "92": 2145,
+          "93": 2076,
+          "94": 2514
+        },
+        "review_notes": "The complete five-chapter group totals 11213 non-whitespace body characters. The merged-main self-hosted full novel gate passed after final prose and documentation updates, with Narrative V1 below review thresholds and Humanizer/Prose/Meta hard findings at zero; Dialogue/Humanizer warnings were manually Cold Read rather than mechanically cleared. Chapter 90 closes the 71-90 institutional-awareness window without forcing a new list event; chapters 91-93 independently advance the competition line and establish Xu Zhewen as a normal venue worker before D-038 appears in chapter 94. D-038 begins the first off-campus use of the formal-risk method: Lin Mo remains a nonexpert, stays out of B1, and routes precise time/place/risk information to venue staff instead of touching forklifts or directing logistics. Cross-institution verification has not yet occurred and is reserved as a voluntary, narrow ordinary-record choice; no new system, conspiracy, secret organization, source revelation, or E-002 restart is introduced. Fresh self-hosted read-only reconciliation run 34933108503/job 104265272864 confirmed exactly 89 numbered remote items, 54 published and 35 scheduled, with local-only 90-94 and no remote-only chapters, duplicate numbers, title mismatches, or position mismatches. Preserve chapters 1-89 and every existing schedule; create only 90-94 together for 2026-09-23 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-23"
     }
   ],
-  "updated_at": "2026-09-14T23:50:20+00:00"
+  "updated_at": "2026-09-15T13:37:28+00:00"
 }
