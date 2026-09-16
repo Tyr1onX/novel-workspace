@@ -1,5 +1,5 @@
 name: Walk to Earn Quality Gate
-# current-main verification trigger: 2026-09-12 after repeated-tail cleanup
+# current-main verification trigger: 2026-09-16 after distinct-scene enrichment
 
 on:
   workflow_dispatch:
