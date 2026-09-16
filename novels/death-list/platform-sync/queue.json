@@ -542,7 +542,37 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-24",
       "completed_at": "2026-09-15T23:14:50+00:00"
+    },
+    {
+      "id": "death-list-create-100-104-20260916",
+      "action": "create",
+      "chapters": "100-104",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "Death List Quality Selfhosted on merged main, manual Cold Read/continuity review, and fresh self-hosted read-only Fanqie reconciliation",
+        "source_run": "35059925988",
+        "source_job": "104677886516",
+        "source_commit": "5498d84d8eb4ce19a3a6ea36e223ed3a33afbf3c",
+        "reconcile_run": "35060070159",
+        "reconcile_job": "104678319619",
+        "remote_prefix": "1-99",
+        "remote_status": "59 published; 40 scheduled",
+        "remote_differences": "local-only 100-104; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches",
+        "chapter_body_characters": {
+          "100": 2348,
+          "101": 2125,
+          "102": 2033,
+          "103": 2187,
+          "104": 2109
+        },
+        "review_notes": "The complete five-chapter group totals 10802 non-whitespace body characters. The merged-main self-hosted latest-five quality gate passed with complete novel_gate.py; Narrative V1 stayed below review thresholds and Humanizer/Prose/Meta hard findings were zero, while Dialogue/Humanizer warnings were manually Cold Read rather than mechanically cleared. Chapters 100-103 deliberately return to ordinary competition, campus maintenance, and school-media life after D-038: the team result is independent of the safety event, the judged version is archived normally, and a loose stair handrail already in the property repair workflow is specifically not escalated through the safety-duty line. Chapter 104 opens D-039-D-042 as four separate midnight records across different city locations and time windows; the text does not infer a common root or add any new list function. E-001 remains restricted, E-002 active testing remains paused, Xu Zhewen returns to ordinary venue work, and Zhou Yu remains only partially informed. Fresh self-hosted read-only reconciliation run 35060070159/job 104678319619 confirmed exactly 99 numbered remote items, 59 published and 40 scheduled, with local-only 100-104 and no remote-only chapters, duplicate numbers, title mismatches, or position mismatches. Preserve chapters 1-99 and every existing schedule; create only 100-104 together for 2026-09-25 00:00 Asia/Shanghai. Do not publish immediately.",
+        "already_present_chapters": []
+      },
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-09-25"
     }
   ],
-  "updated_at": "2026-09-15T23:14:50+00:00"
+  "updated_at": "2026-09-16T08:35:29+00:00"
 }
