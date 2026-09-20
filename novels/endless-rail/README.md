@@ -16,8 +16,10 @@
 - 第159～170章：东南旧线事故、MED-07、D-11和F-02三核心分责入场；详见 `docs/audit-159-170.md`
 - 第171～195章：第四卷《移动核心》完成路线定价、两种服务模式、多核心联合工程，并以“区域移动服务核心候选”收束；详见 `docs/audit-171-203.md`
 - 第196～203章：第五卷《百站共约》开场，进入北部枢纽邀请、中心调度、公共任务与第一笔中心资源交换；详见 `docs/audit-171-203.md`
-- 最新仓库正文：第203章《第一笔中心资源交换》
-- 下一章：第204章
+- 第204～206章：公共任务002与青砾Q-07冲突，通过石仓+C-6分段承运同时完成鹿井公共任务与青砾原固定预留；详见 `docs/audit-204-206.md`
+- 最新仓库正文：第206章《中心资源不能当道歉》
+- 下一章：第207章《第一份覆盖替代规则》（工作题名）
+- 全书硬终点：第510章；按当前3章/日公开排期预计2027-01-11完结，仓库正文预计2026-12-31完稿；详见 `docs/completion-plan-2027-01.md`
 - 第一卷《初生移动站》：第1～35章，已完成
 - 第二卷《北境七站》：第36～94章，已完成
 - 第三卷《联轨商路》：第95～145章，已完成
@@ -36,6 +38,8 @@
 
 第196～203章进入第五卷：北部枢纽邀请归途站进入中心调度候选，提出公共任务、实时位置、七日窗口和资源池要求。归途站只开放脱敏窗口统计与经核定可调度窗口，不交客户级路线日志。第203章完成第一笔中心资源交换，边界页进入候选材料箱。
 
+第204～206章继续验证公共任务边界：鹿井普通安置物资与青砾固定预留Q-07发生冲突，归途站拒绝“资源补偿代替路线承诺”。最终通过石仓中转+C-6后段承运完成鹿井公共任务，归途站17:21按原窗口完成青砾Q-07，并把替代窗口、替代承运失败截止和责任方推到下一章的规则收束入口。
+
 ## 路线硬状态
 
 - 炉坪—旧港维护廊：双方确认 / 轻型人工通行；白03每次实际任务仍需炉坪登记。
@@ -48,29 +52,31 @@
 
 ## 续写前必读
 
-1. `chapters/volume-05/chapter-199.md`
-2. `chapters/volume-05/chapter-200.md`
-3. `chapters/volume-05/chapter-201.md`
-4. `chapters/volume-05/chapter-202.md`
-5. `chapters/volume-05/chapter-203.md`
+1. `chapters/volume-05/chapter-202.md`
+2. `chapters/volume-05/chapter-203.md`
+3. `chapters/volume-05/chapter-204.md`
+4. `chapters/volume-05/chapter-205.md`
+5. `chapters/volume-05/chapter-206.md`
 6. `docs/next-window-handoff.md`
 7. `docs/audit-159-170.md`
 8. `docs/audit-171-203.md`
-9. `docs/release-plan-2026-09.md`
-10. `docs/continuity-update-117-134.md`
-11. `docs/development-blueprint-107-510.md`
-12. `docs/writing-rules.md`
-13. `docs/reading-payoff-rules.md`
-14. `docs/capability-growth-ledger.md`
-15. `docs/long-term-outline.md`
-16. `docs/master-outline.md`
-17. `style/HUMANIZER_FEEDBACK.md`
-18. `shared/NARRATIVE_PASS_RULES.md`
-19. `shared/RULES.md`
-20. `shared/DIALOGUE_RULES.md`
-21. `shared/HUMANIZER_RULES.md`
-22. `shared/PROSE_RULES.md`
-23. `shared/META_NARRATIVE_RULES.md`
+9. `docs/audit-204-206.md`
+10. `docs/completion-plan-2027-01.md`
+11. `docs/release-plan-2026-10.md`
+12. `docs/continuity-update-117-134.md`
+13. `docs/development-blueprint-107-510.md`
+14. `docs/writing-rules.md`
+15. `docs/reading-payoff-rules.md`
+16. `docs/capability-growth-ledger.md`
+17. `docs/long-term-outline.md`
+18. `docs/master-outline.md`
+19. `style/HUMANIZER_FEEDBACK.md`
+20. `shared/NARRATIVE_PASS_RULES.md`
+21. `shared/RULES.md`
+22. `shared/DIALOGUE_RULES.md`
+23. `shared/HUMANIZER_RULES.md`
+24. `shared/PROSE_RULES.md`
+25. `shared/META_NARRATIVE_RULES.md`
 
 后续任何新章、重写或平台同步前，除事实连续性审计外，必须执行完整语言门禁：
 
