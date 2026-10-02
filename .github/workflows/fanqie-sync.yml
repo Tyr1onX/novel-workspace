@@ -1,3 +1,4 @@
+# remote schedule check [fanqie-reconcile]
 name: Fanqie Sync
 
 on:
