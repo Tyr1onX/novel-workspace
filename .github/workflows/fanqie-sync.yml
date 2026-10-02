@@ -9,6 +9,7 @@ on:
       - "novels/**/platform-sync/policy.json"
       - "novels/**/platform-sync/queue.json"
       - "novels/**/platform-sync/one-shot.json"
+      - "shared/tools/bootstrap_fanqie_sync_macos.sh"
       - "shared/tools/fanqie_sync.py"
       - "shared/tools/test_fanqie_sync.py"
       - "shared/tools/fanqie_probe.py"
@@ -28,6 +29,7 @@ on:
       - "novels/**/platform-sync/policy.json"
       - "novels/**/platform-sync/queue.json"
       - "novels/**/platform-sync/one-shot.json"
+      - "shared/tools/bootstrap_fanqie_sync_macos.sh"
       - "shared/tools/fanqie_sync.py"
       - "shared/tools/test_fanqie_sync.py"
       - "shared/tools/fanqie_probe.py"
@@ -82,73 +84,96 @@ jobs:
   probe:
     needs: validate
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.validate.outputs.any_sync_enabled == 'true' || contains(github.event.head_commit.message, '[fanqie-probe]'))
-    runs-on: [self-hosted, windows, fanqie]
+    runs-on: [self-hosted, macOS, fanqie]
     timeout-minutes: 15
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: Use local Fanqie Python
+        shell: bash
+        run: |
+          set -euo pipefail
+          venv_bin="$HOME/.novel-workspace/fanqie-venv/bin"
+          if [[ ! -x "$venv_bin/python" ]]; then
+            echo "Missing Fanqie Python environment: $venv_bin/python"
+            echo "Run: bash shared/tools/bootstrap_fanqie_sync_macos.sh"
+            exit 1
+          fi
+          echo "$venv_bin" >> "$GITHUB_PATH"
+          "$venv_bin/python" --version
       - name: Resolve local Fanqie runtime
         id: runtime
-        shell: powershell
+        shell: bash
         run: |
-          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          Write-Host "Resolved runtime: $runtime"
-          "path=$runtime" >> $env:GITHUB_OUTPUT
+          set -euo pipefail
+          runtime="$(python shared/tools/fanqie_probe.py resolve-runtime)"
+          echo "Resolved runtime: $runtime"
+          echo "path=$runtime" >> "$GITHUB_OUTPUT"
       - name: Probe configured books
-        shell: powershell
+        shell: bash
         env:
           PYTHONUTF8: "1"
           PROBE_ALL: ${{ contains(github.event.head_commit.message, '[fanqie-probe]') }}
         run: |
-          if ($env:PROBE_ALL -eq "true") {
-            $projects = @(python shared/tools/fanqie_projects.py list)
-          } else {
-            $projects = @(python shared/tools/fanqie_projects.py enabled)
-          }
-          foreach ($project in $projects) {
-            if (-not $project) { continue }
-            Write-Host "=== probe: $project ==="
-            python shared/tools/fanqie_probe.py probe $project --runtime "${{ steps.runtime.outputs.path }}"
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          }
+          set -euo pipefail
+          if [[ "$PROBE_ALL" == "true" ]]; then
+            mode="list"
+          else
+            mode="enabled"
+          fi
+          while IFS= read -r project; do
+            [[ -n "$project" ]] || continue
+            echo "=== probe: $project ==="
+            python shared/tools/fanqie_probe.py probe "$project" --runtime "${{ steps.runtime.outputs.path }}"
+          done < <(python shared/tools/fanqie_projects.py "$mode")
 
   reconcile:
     needs: validate
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[fanqie-reconcile]')
-    runs-on: [self-hosted, windows, fanqie]
+    runs-on: [self-hosted, macOS, fanqie]
     timeout-minutes: 30
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: Use local Fanqie Python
+        shell: bash
+        run: |
+          set -euo pipefail
+          venv_bin="$HOME/.novel-workspace/fanqie-venv/bin"
+          if [[ ! -x "$venv_bin/python" ]]; then
+            echo "Missing Fanqie Python environment: $venv_bin/python"
+            echo "Run: bash shared/tools/bootstrap_fanqie_sync_macos.sh"
+            exit 1
+          fi
+          echo "$venv_bin" >> "$GITHUB_PATH"
+          "$venv_bin/python" --version
       - name: Resolve local Fanqie runtime
         id: runtime
-        shell: powershell
+        shell: bash
         run: |
-          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          Write-Host "Resolved runtime: $runtime"
-          "path=$runtime" >> $env:GITHUB_OUTPUT
+          set -euo pipefail
+          runtime="$(python shared/tools/fanqie_probe.py resolve-runtime)"
+          echo "Resolved runtime: $runtime"
+          echo "path=$runtime" >> "$GITHUB_OUTPUT"
       - name: Reconcile every configured Fanqie novel
-        shell: powershell
+        shell: bash
         env:
           PYTHONUTF8: "1"
         run: |
-          $projects = @(python shared/tools/fanqie_projects.py list)
-          foreach ($project in $projects) {
-            if (-not $project) { continue }
-            $slug = Split-Path $project -Leaf
-            Write-Host "=== reconcile: $project ==="
-            python shared/tools/fanqie_compat.py reconcile $project --runtime "${{ steps.runtime.outputs.path }}" --output "$env:RUNNER_TEMP\fanqie-reconcile-$slug.json"
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          }
+          set -euo pipefail
+          while IFS= read -r project; do
+            [[ -n "$project" ]] || continue
+            slug="${project##*/}"
+            echo "=== reconcile: $project ==="
+            python shared/tools/fanqie_compat.py reconcile "$project"               --runtime "${{ steps.runtime.outputs.path }}"               --output "$RUNNER_TEMP/fanqie-reconcile-$slug.json"
+          done < <(python shared/tools/fanqie_projects.py list)
 
   publish_now:
     needs: validate
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[fanqie-publish-now]')
-    runs-on: [self-hosted, windows, fanqie]
+    runs-on: [self-hosted, macOS, fanqie]
     timeout-minutes: 30
     permissions:
       contents: write
@@ -156,50 +181,65 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Rebase to latest main before platform mutation
-        shell: powershell
+      - name: Use local Fanqie Python
+        shell: bash
         run: |
+          set -euo pipefail
+          venv_bin="$HOME/.novel-workspace/fanqie-venv/bin"
+          if [[ ! -x "$venv_bin/python" ]]; then
+            echo "Missing Fanqie Python environment: $venv_bin/python"
+            echo "Run: bash shared/tools/bootstrap_fanqie_sync_macos.sh"
+            exit 1
+          fi
+          echo "$venv_bin" >> "$GITHUB_PATH"
+          "$venv_bin/python" --version
+      - name: Rebase to latest main before platform mutation
+        shell: bash
+        run: |
+          set -euo pipefail
           git fetch origin main
           git rebase origin/main
       - name: Resolve local Fanqie runtime
         id: runtime
-        shell: powershell
+        shell: bash
         run: |
-          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          Write-Host "Resolved runtime: $runtime"
-          "path=$runtime" >> $env:GITHUB_OUTPUT
+          set -euo pipefail
+          runtime="$(python shared/tools/fanqie_probe.py resolve-runtime)"
+          echo "Resolved runtime: $runtime"
+          echo "path=$runtime" >> "$GITHUB_OUTPUT"
       - name: Execute pending authorized publish-now requests
-        shell: powershell
+        shell: bash
         env:
           PYTHONUTF8: "1"
         run: |
-          $requests = @(python shared/tools/fanqie_projects.py pending-one-shots)
-          if ($requests.Count -eq 0) {
-            Write-Host "No pending authorized publish-now requests."
-            exit 0
-          }
-          foreach ($entry in $requests) {
-            if (-not $entry) { continue }
-            $parts = $entry -split '\|', 2
-            $project = $parts[0]
-            $request = $parts[1]
-            Write-Host "=== publish now: $project ==="
-            python shared/tools/fanqie_compat.py publish-now $project --runtime "${{ steps.runtime.outputs.path }}" --request $request
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          }
+          set -euo pipefail
+          found=false
+          while IFS= read -r entry; do
+            [[ -n "$entry" ]] || continue
+            found=true
+            IFS='|' read -r project request <<< "$entry"
+            echo "=== publish now: $project ==="
+            python shared/tools/fanqie_compat.py publish-now "$project"               --runtime "${{ steps.runtime.outputs.path }}"               --request "$request"
+          done < <(python shared/tools/fanqie_projects.py pending-one-shots)
+          if [[ "$found" == "false" ]]; then
+            echo "No pending authorized publish-now requests."
+          fi
       - name: Persist one-shot results
         if: always()
-        shell: powershell
+        shell: bash
         run: |
-          $paths = @(git diff --name-only | Where-Object { $_ -match '^novels/[^/]+/platform-sync/one-shot\.json$' })
-          if ($paths.Count -eq 0) {
-            Write-Host "No one-shot state changes to commit."
+          set -euo pipefail
+          paths=()
+          while IFS= read -r path; do
+            [[ -n "$path" ]] && paths+=("$path")
+          done < <(git diff --name-only | grep -E '^novels/[^/]+/platform-sync/one-shot\.json$' || true)
+          if (( ${#paths[@]} == 0 )); then
+            echo "No one-shot state changes to commit."
             exit 0
-          }
+          fi
           git config user.name "fanqie-sync-bot"
           git config user.email "fanqie-sync-bot@users.noreply.github.com"
-          foreach ($path in $paths) { git add -- $path }
+          git add -- "${paths[@]}"
           git commit -m "chore(fanqie): record publish-now result"
           git pull --rebase origin main
           git push origin HEAD:main
@@ -207,7 +247,7 @@ jobs:
   publish:
     needs: [validate, probe]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.validate.outputs.any_sync_enabled == 'true' && needs.probe.result == 'success'
-    runs-on: [self-hosted, windows, fanqie]
+    runs-on: [self-hosted, macOS, fanqie]
     timeout-minutes: 60
     permissions:
       contents: write
@@ -215,42 +255,58 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Rebase to latest main before platform mutation
-        shell: powershell
+      - name: Use local Fanqie Python
+        shell: bash
         run: |
+          set -euo pipefail
+          venv_bin="$HOME/.novel-workspace/fanqie-venv/bin"
+          if [[ ! -x "$venv_bin/python" ]]; then
+            echo "Missing Fanqie Python environment: $venv_bin/python"
+            echo "Run: bash shared/tools/bootstrap_fanqie_sync_macos.sh"
+            exit 1
+          fi
+          echo "$venv_bin" >> "$GITHUB_PATH"
+          "$venv_bin/python" --version
+      - name: Rebase to latest main before platform mutation
+        shell: bash
+        run: |
+          set -euo pipefail
           git fetch origin main
           git rebase origin/main
       - name: Resolve local Fanqie runtime
         id: runtime
-        shell: powershell
+        shell: bash
         run: |
-          $runtime = python shared/tools/fanqie_probe.py resolve-runtime
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          Write-Host "Resolved runtime: $runtime"
-          "path=$runtime" >> $env:GITHUB_OUTPUT
+          set -euo pipefail
+          runtime="$(python shared/tools/fanqie_probe.py resolve-runtime)"
+          echo "Resolved runtime: $runtime"
+          echo "path=$runtime" >> "$GITHUB_OUTPUT"
       - name: Execute authorized operations for enabled novels
-        shell: powershell
+        shell: bash
         env:
           PYTHONUTF8: "1"
         run: |
-          $projects = @(python shared/tools/fanqie_projects.py enabled)
-          foreach ($project in $projects) {
-            if (-not $project) { continue }
-            Write-Host "=== sync: $project ==="
-            python shared/tools/fanqie_compat.py sync $project --runtime "${{ steps.runtime.outputs.path }}"
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          }
+          set -euo pipefail
+          while IFS= read -r project; do
+            [[ -n "$project" ]] || continue
+            echo "=== sync: $project ==="
+            python shared/tools/fanqie_compat.py sync "$project" --runtime "${{ steps.runtime.outputs.path }}"
+          done < <(python shared/tools/fanqie_projects.py enabled)
       - name: Persist synchronization ledgers
-        shell: powershell
+        shell: bash
         run: |
-          $paths = @(git diff --name-only | Where-Object { $_ -match '^novels/[^/]+/platform-sync/(queue|sync-state)\.json$' })
-          if ($paths.Count -eq 0) {
-            Write-Host "No sync-state changes to commit."
+          set -euo pipefail
+          paths=()
+          while IFS= read -r path; do
+            [[ -n "$path" ]] && paths+=("$path")
+          done < <(git diff --name-only | grep -E '^novels/[^/]+/platform-sync/(queue|sync-state)\.json$' || true)
+          if (( ${#paths[@]} == 0 )); then
+            echo "No sync-state changes to commit."
             exit 0
-          }
+          fi
           git config user.name "fanqie-sync-bot"
           git config user.email "fanqie-sync-bot@users.noreply.github.com"
-          foreach ($path in $paths) { git add -- $path }
+          git add -- "${paths[@]}"
           git commit -m "chore(fanqie): record completed sync operations"
           git pull --rebase origin main
           git push origin HEAD:main

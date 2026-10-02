@@ -415,7 +415,7 @@ def runtime_command(runtime: Path, args: list[str]) -> list[str]:
     script = runtime / "fanqie_upload.py"
     if not script.exists():
         raise SyncError(
-            f"Fanqie runtime is not installed at {runtime}. Run setup_fanqie_runtime.ps1 once."
+            f"Fanqie runtime is not installed at {runtime}. Run bootstrap_fanqie_sync_macos.sh once."
         )
     return [sys.executable, str(script), *args]
 
