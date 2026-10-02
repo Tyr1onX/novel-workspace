@@ -1,3 +1,4 @@
+# macOS runner readiness verified by [fanqie-probe]
 name: Fanqie Sync
 
 on:
