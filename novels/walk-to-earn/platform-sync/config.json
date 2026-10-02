@@ -4,7 +4,7 @@
   "book_id": "7677956141673892926",
   "novel_slug": "walk-to-earn",
   "chapter_glob": "chapters/chapter-*.md",
-  "sync_enabled": true,
+  "sync_enabled": false,
   "browser": {
     "headless": true
   },
