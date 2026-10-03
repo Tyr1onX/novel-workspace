@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-09-12T12:47:02+00:00",
+  "updated_at": "2026-10-03T00:58:32+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -321,6 +321,27 @@
       },
       "reason": "Author confirmed three chapters per day. Create the final two complete three-chapter groups for 2026-09-29 and 2026-09-30 after fresh preflight.",
       "completed_at": "2026-09-12T12:47:02+00:00"
+    },
+    {
+      "id": "rail-create-204-206-three-per-day-20261003",
+      "action": "create",
+      "chapters": "204-206",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-10-04",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "source": "author explicit authorization on 2026-10-03 plus current chapter-length checks and fresh self-hosted read-only reconciliation",
+        "body_non_whitespace_chars": {
+          "204": 2801,
+          "205": 2810,
+          "206": 2803,
+          "group_total": 8414
+        },
+        "reconcile": "2026-10-03 08:58 Asia/Shanghai: remote exactly 1-203, all published; local-only 204-207; zero remote-only chapters, duplicate remote numbers, title mismatches, or position mismatches; scheduled chapters 0"
+      },
+      "reason": "Author requested publishing every available complete three-chapter group. Schedule chapters 204-206 together for 2026-10-04 00:00 Asia/Shanghai. Chapter 207 remains local until chapters 208-209 exist so the strict three-chapter daily group is preserved."
     }
   ]
 }
