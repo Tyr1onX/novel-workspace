@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-03T02:40:28+00:00",
+  "updated_at": "2026-10-03T02:55:14+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -384,7 +384,7 @@
       "chapters": "237-266",
       "schedule_mode": "fixed_start",
       "start_date": "2026-10-15",
-      "status": "pending",
+      "status": "completed",
       "authorized": true,
       "audit": {
         "status": "passed",
@@ -392,7 +392,8 @@
         "source": "Restored October inventory passed current length audit and new-inventory hard prose/meta review. Previous batch 207-236 completed 30/30 with ledger persistence; generic sync performs fresh remote inspection before mutation.",
         "reconcile": "Pre-batch baseline established by run 37089763304; batch 207-236 then completed successfully at 2026-10-03T02:40:28Z with 30 writes and 0 failures."
       },
-      "reason": "Second safe 30-chapter batch. Append 237-266 as ten complete three-chapter groups from 2026-10-15 through 2026-10-24 at 00:00 Asia/Shanghai."
+      "reason": "Second safe 30-chapter batch. Append 237-266 as ten complete three-chapter groups from 2026-10-15 through 2026-10-24 at 00:00 Asia/Shanghai.",
+      "completed_at": "2026-10-03T02:55:14+00:00"
     }
   ]
 }
