@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-10-03T02:55:14+00:00",
+  "last_sync_at": "2026-10-03T12:58:42+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -909,6 +909,84 @@
       "last_action": "create",
       "last_synced_at": "2026-10-03T02:55:14+00:00",
       "queue_operation_id": "rail-create-237-266-three-per-day-20261003"
+    },
+    "284": {
+      "local_sha256": "4fb55cb932ee59fa0862a3025488eed9067bcb0dcc92eba6180f452c69e8aaa2",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "285": {
+      "local_sha256": "1ad8e28c9b3b6cf0acc1cc514669e5d443909dafbae0e57b0225c1e88d489dbb",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "286": {
+      "local_sha256": "47c769f482c3d7bd29ef05efee440105567f40f7802a6a1016fe607b84f14224",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "287": {
+      "local_sha256": "d5db166d75ec21ef1c3540d80b22e2d9c90f9eebe54812499b9b580a548e18a7",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "288": {
+      "local_sha256": "745e3b3aa54f20c68cc6850cfa1e87b3eda3e65b9def201e84d7d51db93662a1",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "289": {
+      "local_sha256": "0f9632769f09a94f635bb2a2ce5244d5bcb1e422b619918d286b4c1cff6000ae",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "290": {
+      "local_sha256": "e82c1b8ab3679119b5fc706f4273927e41b38bf3dd8c153872a60409db1f27d3",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "291": {
+      "local_sha256": "00804ec2e7fe61f458587d74723343b1f5fd12a551ba2c3c6bb69333883f0860",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "292": {
+      "local_sha256": "1da88c09f5e74ac1aeabe1ee906cbd9481520ffb9253c99f6f2a145254259410",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "293": {
+      "local_sha256": "670c70c8739e2b9fde84778e9d5c150ce31a9b1bebd07f62b63e670358e68f0a",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "294": {
+      "local_sha256": "c17a837234fa4b7e0d4489500e94eb828e69f193e0c27c2f0380cb23437352f1",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "295": {
+      "local_sha256": "6aa942ef48338009d17868e1242bd5bcb824a07482f93a92ee85a94a8ff8c767",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "296": {
+      "local_sha256": "58ee5fbb73ef21366d9d82adb0757c5b2df5fb55765972c26973eb006a36265f",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T12:58:42+00:00",
+      "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
     }
   }
 }
