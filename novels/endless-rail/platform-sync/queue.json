@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-03T06:05:00+00:00",
+  "updated_at": "2026-10-03T06:22:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -399,8 +399,8 @@
       "id": "rail-reschedule-207-266-after-early-release-20261003",
       "action": "reschedule_all",
       "start_date": "2026-10-04",
-      "status": "pending",
-      "authorized": true,
+      "status": "blocked_unpersisted_success_needs_reconcile",
+      "authorized": false,
       "audit": {
         "status": "passed",
         "expected_pending_chapters": "207-266",
@@ -409,7 +409,16 @@
         "reconcile": "2026-10-03 fresh read-only reconcile: local exactly 1-296; remote exactly 1-266; published exactly 1-206; scheduled exactly 207-266 (60 chapters) from 2026-10-05 through 2026-10-24 at 00:00 Asia/Shanghai; local-only exactly 267-296; no remote-only chapters, duplicate numbers, title mismatches, or position mismatches.",
         "basis": "Chapters 204-206 were explicitly released early on 2026-10-03. The active policy requires an early extra release not to reduce the normal future quota, so the remaining scheduled inventory must compact forward by one day while preserving exact three-chapter groups and order."
       },
-      "reason": "Fill the 2026-10-04 gap created by releasing 204-206 today: move pending chapters 207-266 forward to three chapters per day at 00:00 Asia/Shanghai, with 207-209 on Oct 4 and 264-266 on Oct 23."
+      "reason": "Fill the 2026-10-04 gap created by releasing 204-206 today: move pending chapters 207-266 forward to three chapters per day at 00:00 Asia/Shanghai, with 207-209 on Oct 4 and 264-266 on Oct 23.",
+      "result": {
+        "source_run": 37101853387,
+        "source_job": 111142897856,
+        "confirmed_success": 60,
+        "failed": 0,
+        "target_schedule": "207-266 => 2026-10-04 through 2026-10-23, three chapters/day at 00:00 Asia/Shanghai",
+        "ledger_persisted": false,
+        "needs_fresh_read_only_reconcile": true
+      }
     },
     {
       "id": "rail-create-267-296-three-per-day-20261003",
@@ -417,8 +426,8 @@
       "chapters": "267-296",
       "schedule_mode": "fixed_start",
       "start_date": "2026-10-24",
-      "status": "pending",
-      "authorized": true,
+      "status": "blocked_partial_create_failure",
+      "authorized": false,
       "audit": {
         "status": "passed",
         "commit": "377ab5091fd4bc2e7314de38c40c22a9cad9e57a",
@@ -427,7 +436,18 @@
         "source": "Restored October inventory passed the current Endless Rail hard length audit and prior hard prose/meta review; fresh read-only reconcile confirms chapters 267-296 are the exact local-only tail.",
         "reconcile": "Remote exactly 1-266 with 1-206 published and 207-266 scheduled; local-only exactly 267-296; zero remote-only chapters, duplicates, title mismatches, or position mismatches."
       },
-      "reason": "Upload all remaining already-written inventory. Schedule chapters 267-296 as ten complete three-chapter groups from 2026-10-24 through 2026-11-02 at 00:00 Asia/Shanghai, immediately after the compacted 207-266 schedule."
+      "reason": "Upload all remaining already-written inventory. Schedule chapters 267-296 as ten complete three-chapter groups from 2026-10-24 through 2026-11-02 at 00:00 Asia/Shanghai, immediately after the compacted 207-266 schedule.",
+      "result": {
+        "source_run": 37101853387,
+        "source_job": 111142897856,
+        "confirmed_platform_writes": 16,
+        "confirmed_created_chapters": "267-282",
+        "first_failed_chapter": 283,
+        "failure": "Fanqie rejected chapter 283: 文章内容有大段落重复，请修改后提交",
+        "unprocessed_chapters": "284-296",
+        "ledger_persisted": false,
+        "needs_fresh_read_only_reconcile": true
+      }
     }
   ]
 }
