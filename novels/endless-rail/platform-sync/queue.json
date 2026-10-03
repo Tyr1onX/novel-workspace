@@ -377,6 +377,22 @@
       },
       "reason": "First safe 30-chapter batch of the author-authorized complete inventory. Schedule 207-236 as ten complete three-chapter groups from 2026-10-05 through 2026-10-14 at 00:00 Asia/Shanghai.",
       "completed_at": "2026-10-03T02:40:28+00:00"
+    },
+    {
+      "id": "rail-create-237-266-three-per-day-20261003",
+      "action": "create",
+      "chapters": "237-266",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-10-15",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "commit": "377ab5091fd4bc2e7314de38c40c22a9cad9e57a",
+        "source": "Restored October inventory passed current length audit and new-inventory hard prose/meta review. Previous batch 207-236 completed 30/30 with ledger persistence; generic sync performs fresh remote inspection before mutation.",
+        "reconcile": "Pre-batch baseline established by run 37089763304; batch 207-236 then completed successfully at 2026-10-03T02:40:28Z with 30 writes and 0 failures."
+      },
+      "reason": "Second safe 30-chapter batch. Append 237-266 as ten complete three-chapter groups from 2026-10-15 through 2026-10-24 at 00:00 Asia/Shanghai."
     }
   ]
 }
