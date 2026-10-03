@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-03T02:27:44+00:00",
+  "updated_at": "2026-10-03T02:40:28+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -367,7 +367,7 @@
       "chapters": "207-236",
       "schedule_mode": "fixed_start",
       "start_date": "2026-10-05",
-      "status": "pending",
+      "status": "completed",
       "authorized": true,
       "audit": {
         "status": "passed",
@@ -375,7 +375,8 @@
         "source": "PR #99 restored inventory; current length audit passed; fresh reconcile run 37089763304 / job 111107447775; previous 90-chapter attempt failed closed before any platform mutation due max_mutations_per_run=30",
         "reconcile": "remote exactly 1-206 with 203 published and 204-206 scheduled for 2026-10-04; local-only exactly 207-296; zero duplicates/title/position mismatches"
       },
-      "reason": "First safe 30-chapter batch of the author-authorized complete inventory. Schedule 207-236 as ten complete three-chapter groups from 2026-10-05 through 2026-10-14 at 00:00 Asia/Shanghai."
+      "reason": "First safe 30-chapter batch of the author-authorized complete inventory. Schedule 207-236 as ten complete three-chapter groups from 2026-10-05 through 2026-10-14 at 00:00 Asia/Shanghai.",
+      "completed_at": "2026-10-03T02:40:28+00:00"
     }
   ]
 }
