@@ -45,5 +45,9 @@
     "reflow": {
       "performed": false
     }
+  },
+  "last_read_only_reconcile_request": {
+    "requested_at": "2026-10-03T14:05:00+08:00",
+    "reason": "Verify the exact Fanqie state after immediately publishing chapters 204-206, before compacting all remaining scheduled inventory and uploading the final written chapters."
   }
 }
