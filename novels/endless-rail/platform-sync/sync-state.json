@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-09-12T12:47:02+00:00",
+  "last_sync_at": "2026-10-03T01:02:39+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -531,6 +531,24 @@
       "last_action": "create",
       "last_synced_at": "2026-09-12T12:47:02+00:00",
       "queue_operation_id": "rail-create-198-203-three-per-day-20260911"
+    },
+    "204": {
+      "local_sha256": "afe56d75172b9097a7766ebc42df6af08f905f9788032822bd658a0dfa61dd22",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T01:02:39+00:00",
+      "queue_operation_id": "rail-create-204-206-three-per-day-20261003"
+    },
+    "205": {
+      "local_sha256": "3de2bd23d34180943f759a5d9ed6be5577d55b3287223540a9e9bd03df9432b5",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T01:02:39+00:00",
+      "queue_operation_id": "rail-create-204-206-three-per-day-20261003"
+    },
+    "206": {
+      "local_sha256": "5912226d0ed116fc45d8f13a4d0fda11bc339f06bde756a069c0ab3335d68a6c",
+      "last_action": "create",
+      "last_synced_at": "2026-10-03T01:02:39+00:00",
+      "queue_operation_id": "rail-create-204-206-three-per-day-20261003"
     }
   }
 }
