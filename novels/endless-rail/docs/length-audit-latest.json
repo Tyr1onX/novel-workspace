@@ -2,8 +2,10 @@
   "hard_minimum": 2000,
   "hard_maximum": null,
   "count": 188,
-  "hard_count": 0,
-  "hard_chapters": [],
+  "hard_count": 1,
+  "hard_chapters": [
+    283
+  ],
   "chapters": [
     {
       "number": 109,
@@ -1226,9 +1228,9 @@
     {
       "number": 283,
       "heading": "第283章 D-11守的是环境窗口",
-      "chars": 2158,
+      "chars": 1950,
       "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-283.md",
-      "status": "ok"
+      "status": "hard-short"
     },
     {
       "number": 284,
