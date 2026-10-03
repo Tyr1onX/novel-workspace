@@ -1,7 +1,7 @@
 {
   "hard_minimum": 2000,
   "hard_maximum": null,
-  "count": 99,
+  "count": 188,
   "hard_count": 0,
   "hard_chapters": [],
   "chapters": [
@@ -696,6 +696,629 @@
       "heading": "第207章 第一份覆盖替代规则",
       "chars": 2801,
       "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-207.md",
+      "status": "ok"
+    },
+    {
+      "number": 208,
+      "heading": "第208章 北部枢纽接受一半",
+      "chars": 2482,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-208.md",
+      "status": "ok"
+    },
+    {
+      "number": 209,
+      "heading": "第209章 一天来了七张公共单",
+      "chars": 2507,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-209.md",
+      "status": "ok"
+    },
+    {
+      "number": 210,
+      "heading": "第210章 电量不是公共仓库",
+      "chars": 2151,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-210.md",
+      "status": "ok"
+    },
+    {
+      "number": 211,
+      "heading": "第211章 温室不进临时借用",
+      "chars": 2007,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-211.md",
+      "status": "ok"
+    },
+    {
+      "number": 212,
+      "heading": "第212章 晚饭时间不往后挪",
+      "chars": 2224,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-212.md",
+      "status": "ok"
+    },
+    {
+      "number": 213,
+      "heading": "第213章 公共任务预算第一页",
+      "chars": 2224,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-213.md",
+      "status": "ok"
+    },
+    {
+      "number": 214,
+      "heading": "第214章 预算用完以后",
+      "chars": 2168,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-214.md",
+      "status": "ok"
+    },
+    {
+      "number": 215,
+      "heading": "第215章 合作站点第一次补公共账",
+      "chars": 2096,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-215.md",
+      "status": "ok"
+    },
+    {
+      "number": 216,
+      "heading": "第216章 不是所有公共任务都归一辆车",
+      "chars": 2085,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-216.md",
+      "status": "ok"
+    },
+    {
+      "number": 217,
+      "heading": "第217章 资源补得到，时间补不回来",
+      "chars": 2298,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-217.md",
+      "status": "ok"
+    },
+    {
+      "number": 218,
+      "heading": "第218章 真正的急单来了",
+      "chars": 2345,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-218.md",
+      "status": "ok"
+    },
+    {
+      "number": 219,
+      "heading": "第219章 三个站一起出一趟车",
+      "chars": 2000,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-219.md",
+      "status": "ok"
+    },
+    {
+      "number": 220,
+      "heading": "第220章 吃完饭再开下一张单",
+      "chars": 2114,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-220.md",
+      "status": "ok"
+    },
+    {
+      "number": 221,
+      "heading": "第221章 要不要长期住在车上",
+      "chars": 2423,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-221.md",
+      "status": "ok"
+    },
+    {
+      "number": 222,
+      "heading": "第222章 床铺不能只加帘子",
+      "chars": 2409,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-222.md",
+      "status": "ok"
+    },
+    {
+      "number": 223,
+      "heading": "第223章 第一间四人房有人关门",
+      "chars": 2048,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-223.md",
+      "status": "ok"
+    },
+    {
+      "number": 224,
+      "heading": "第224章 食堂终于不是临时锅",
+      "chars": 2196,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-224.md",
+      "status": "ok"
+    },
+    {
+      "number": 225,
+      "heading": "第225章 热水排到晚上十点",
+      "chars": 2153,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-225.md",
+      "status": "ok"
+    },
+    {
+      "number": 226,
+      "heading": "第226章 白栎只派技术员，不送一座医院",
+      "chars": 2286,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-226.md",
+      "status": "ok"
+    },
+    {
+      "number": 227,
+      "heading": "第227章 一块黑板和十二张桌子",
+      "chars": 2423,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-227.md",
+      "status": "ok"
+    },
+    {
+      "number": 228,
+      "heading": "第228章 许成不再自己拧每一颗螺丝",
+      "chars": 2379,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-228.md",
+      "status": "ok"
+    },
+    {
+      "number": 229,
+      "heading": "第229章 车里出现第一家修补摊",
+      "chars": 2184,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-229.md",
+      "status": "ok"
+    },
+    {
+      "number": 230,
+      "heading": "第230章 四种身份卡",
+      "chars": 2638,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-230.md",
+      "status": "ok"
+    },
+    {
+      "number": 231,
+      "heading": "第231章 九十二个人的早餐",
+      "chars": 2203,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-231.md",
+      "status": "ok"
+    },
+    {
+      "number": 232,
+      "heading": "第232章 洗澡以后还要排队洗衣服",
+      "chars": 2085,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-232.md",
+      "status": "ok"
+    },
+    {
+      "number": 233,
+      "heading": "第233章 夜里有人嫌隔壁太吵",
+      "chars": 3516,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-233.md",
+      "status": "ok"
+    },
+    {
+      "number": 234,
+      "heading": "第234章 移动城镇核心",
+      "chars": 4197,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-234.md",
+      "status": "ok"
+    },
+    {
+      "number": 235,
+      "heading": "第235章 灯亮着的时候归途站发车",
+      "chars": 3946,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-235.md",
+      "status": "ok"
+    },
+    {
+      "number": 236,
+      "heading": "第236章 北部枢纽发来保全表",
+      "chars": 2265,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-236.md",
+      "status": "ok"
+    },
+    {
+      "number": 237,
+      "heading": "第237章 松脊选择搬进去",
+      "chars": 2376,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-237.md",
+      "status": "ok"
+    },
+    {
+      "number": 238,
+      "heading": "第238章 河背不想搬",
+      "chars": 2387,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-238.md",
+      "status": "ok"
+    },
+    {
+      "number": 239,
+      "heading": "第239章 灰塘只要四十八小时",
+      "chars": 2274,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-239.md",
+      "status": "ok"
+    },
+    {
+      "number": 240,
+      "heading": "第240章 归途站的第三条账",
+      "chars": 2299,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-240.md",
+      "status": "ok"
+    },
+    {
+      "number": 241,
+      "heading": "第241章 麦丘先出粮，沉泉出水",
+      "chars": 2408,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-241.md",
+      "status": "ok"
+    },
+    {
+      "number": 242,
+      "heading": "第242章 炉坪和旧港拆出两段路",
+      "chars": 2305,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-242.md",
+      "status": "ok"
+    },
+    {
+      "number": 243,
+      "heading": "第243章 中心没有替他们买单",
+      "chars": 2458,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-243.md",
+      "status": "ok"
+    },
+    {
+      "number": 244,
+      "heading": "第244章 第一趟接力少了一辆车",
+      "chars": 2014,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-244.md",
+      "status": "ok"
+    },
+    {
+      "number": 245,
+      "heading": "第245章 河背的灯没有全灭",
+      "chars": 2002,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-245.md",
+      "status": "ok"
+    },
+    {
+      "number": 246,
+      "heading": "第246章 保全表上留下三种选择",
+      "chars": 2430,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-246.md",
+      "status": "ok"
+    },
+    {
+      "number": 247,
+      "heading": "第247章 谁来付这一趟公共账",
+      "chars": 2006,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-247.md",
+      "status": "ok"
+    },
+    {
+      "number": 248,
+      "heading": "第248章 生命线不能签永久独家",
+      "chars": 2290,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-248.md",
+      "status": "ok"
+    },
+    {
+      "number": 249,
+      "heading": "第249章 有人签，有人只观察",
+      "chars": 2250,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-249.md",
+      "status": "ok"
+    },
+    {
+      "number": 250,
+      "heading": "第250章 百站共约",
+      "chars": 2180,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-05/chapter-250.md",
+      "status": "ok"
+    },
+    {
+      "number": 251,
+      "heading": "第251章 路比昨天长了二十七分钟",
+      "chars": 2140,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-251.md",
+      "status": "ok"
+    },
+    {
+      "number": 252,
+      "heading": "第252章 里程没变，站台没到",
+      "chars": 2155,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-252.md",
+      "status": "ok"
+    },
+    {
+      "number": 253,
+      "heading": "第253章 两个站出现在同一坐标",
+      "chars": 2076,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-253.md",
+      "status": "ok"
+    },
+    {
+      "number": 254,
+      "heading": "第254章 向前二十公里，回到自己后面",
+      "chars": 2298,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-254.md",
+      "status": "ok"
+    },
+    {
+      "number": 255,
+      "heading": "第255章 周建国修不了这条轨",
+      "chars": 2147,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-255.md",
+      "status": "ok"
+    },
+    {
+      "number": 256,
+      "heading": "第256章 D-11只能保撤退窗口",
+      "chars": 2200,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-256.md",
+      "status": "ok"
+    },
+    {
+      "number": 257,
+      "heading": "第257章 F-02送来的标准件一件没用",
+      "chars": 2223,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-257.md",
+      "status": "ok"
+    },
+    {
+      "number": 258,
+      "heading": "第258章 黑雾里的信号开始漂",
+      "chars": 2108,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-258.md",
+      "status": "ok"
+    },
+    {
+      "number": 259,
+      "heading": "第259章 一辆货车晚了六小时自己回来",
+      "chars": 2116,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-259.md",
+      "status": "ok"
+    },
+    {
+      "number": 260,
+      "heading": "第260章 归途站封掉一段稳定线路",
+      "chars": 2017,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-260.md",
+      "status": "ok"
+    },
+    {
+      "number": 261,
+      "heading": "第261章 一百站的货开始改道",
+      "chars": 2049,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-261.md",
+      "status": "ok"
+    },
+    {
+      "number": 262,
+      "heading": "第262章 那一段轨道消失了十一分钟",
+      "chars": 2021,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-262.md",
+      "status": "ok"
+    },
+    {
+      "number": 263,
+      "heading": "第263章 远征名单只有八个人",
+      "chars": 2194,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-263.md",
+      "status": "ok"
+    },
+    {
+      "number": 264,
+      "heading": "第264章 乔原又看见五号避难点的标记",
+      "chars": 2051,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-264.md",
+      "status": "ok"
+    },
+    {
+      "number": 265,
+      "heading": "第265章 陈维把右侧遮光板拉下",
+      "chars": 2320,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-265.md",
+      "status": "ok"
+    },
+    {
+      "number": 266,
+      "heading": "第266章 第一夜不继续走",
+      "chars": 2009,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-266.md",
+      "status": "ok"
+    },
+    {
+      "number": 267,
+      "heading": "第267章 补给车不能跟进第二段",
+      "chars": 2149,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-267.md",
+      "status": "ok"
+    },
+    {
+      "number": 268,
+      "heading": "第268章 通信线在地图上折成两层",
+      "chars": 2142,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-268.md",
+      "status": "ok"
+    },
+    {
+      "number": 269,
+      "heading": "第269章 许成摸到一根图上没有的扶手",
+      "chars": 2086,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-269.md",
+      "status": "ok"
+    },
+    {
+      "number": 270,
+      "heading": "第270章 车窗外有另一座城市",
+      "chars": 2167,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-270.md",
+      "status": "ok"
+    },
+    {
+      "number": 271,
+      "heading": "第271章 医疗组让一个人先回去",
+      "chars": 2231,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-271.md",
+      "status": "ok"
+    },
+    {
+      "number": 272,
+      "heading": "第272章 乔原认出一块不属于北境的站牌",
+      "chars": 2363,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-272.md",
+      "status": "ok"
+    },
+    {
+      "number": 273,
+      "heading": "第273章 两条轨道占着同一排轨枕",
+      "chars": 2174,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-273.md",
+      "status": "ok"
+    },
+    {
+      "number": 274,
+      "heading": "第274章 相位锚只能告诉你“这里”",
+      "chars": 2059,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-274.md",
+      "status": "ok"
+    },
+    {
+      "number": 275,
+      "heading": "第275章 撤退路线少了一个节点",
+      "chars": 2207,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-275.md",
+      "status": "ok"
+    },
+    {
+      "number": 276,
+      "heading": "第276章 归途站倒着走出断层",
+      "chars": 2321,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-276.md",
+      "status": "ok"
+    },
+    {
+      "number": 277,
+      "heading": "第277章 带回来的不是地图",
+      "chars": 2265,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-277.md",
+      "status": "ok"
+    },
+    {
+      "number": 278,
+      "heading": "第278章 旧日志的第一行写着维护层",
+      "chars": 2012,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-278.md",
+      "status": "ok"
+    },
+    {
+      "number": 279,
+      "heading": "第279章 初始列车不是避难列车",
+      "chars": 2158,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-279.md",
+      "status": "ok"
+    },
+    {
+      "number": 280,
+      "heading": "第280章 万物融合的旧名字",
+      "chars": 2166,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-280.md",
+      "status": "ok"
+    },
+    {
+      "number": 281,
+      "heading": "第281章 F-02的职责写在制造栏",
+      "chars": 2185,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-281.md",
+      "status": "ok"
+    },
+    {
+      "number": 282,
+      "heading": "第282章 MED维护的是人",
+      "chars": 2042,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-282.md",
+      "status": "ok"
+    },
+    {
+      "number": 283,
+      "heading": "第283章 D-11守的是环境窗口",
+      "chars": 2158,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-283.md",
+      "status": "ok"
+    },
+    {
+      "number": 284,
+      "heading": "第284章 归途站缺的那一栏",
+      "chars": 2289,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-284.md",
+      "status": "ok"
+    },
+    {
+      "number": 285,
+      "heading": "第285章 系统为什么总让他融合",
+      "chars": 2254,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-285.md",
+      "status": "ok"
+    },
+    {
+      "number": 286,
+      "heading": "第286章 维护层没有居民管理权限",
+      "chars": 2279,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-286.md",
+      "status": "ok"
+    },
+    {
+      "number": 287,
+      "heading": "第287章 第一批断线记录",
+      "chars": 2283,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-287.md",
+      "status": "ok"
+    },
+    {
+      "number": 288,
+      "heading": "第288章 中央保护程序接管以后",
+      "chars": 2328,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-288.md",
+      "status": "ok"
+    },
+    {
+      "number": 289,
+      "heading": "第289章 小站被写成低优先坐标",
+      "chars": 2133,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-289.md",
+      "status": "ok"
+    },
+    {
+      "number": 290,
+      "heading": "第290章 一条被人工切断的支线",
+      "chars": 2162,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-290.md",
+      "status": "ok"
+    },
+    {
+      "number": 291,
+      "heading": "第291章 黑雾里还有一座控制站",
+      "chars": 2006,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-291.md",
+      "status": "ok"
+    },
+    {
+      "number": 292,
+      "heading": "第292章 门只认维护权限",
+      "chars": 2024,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-292.md",
+      "status": "ok"
+    },
+    {
+      "number": 293,
+      "heading": "第293章 中央程序给出最快方案",
+      "chars": 2043,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-293.md",
+      "status": "ok"
+    },
+    {
+      "number": 294,
+      "heading": "第294章 清单里有白栎",
+      "chars": 2221,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-294.md",
+      "status": "ok"
+    },
+    {
+      "number": 295,
+      "heading": "第295章 它算出来的成功率更高",
+      "chars": 2031,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-295.md",
+      "status": "ok"
+    },
+    {
+      "number": 296,
+      "heading": "第296章 周野没有按确认",
+      "chars": 2337,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-06/chapter-296.md",
       "status": "ok"
     }
   ]
