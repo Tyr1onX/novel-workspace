@@ -8,12 +8,42 @@
     205,
     206
   ],
-  "status": "pending",
+  "status": "completed",
   "authorized": true,
   "triggered_at": "2026-10-03T13:50:00+08:00",
   "audit": {
     "status": "passed",
     "basis": "Author explicitly requested publishing today's three chapters on 2026-10-03. The current repository ledger records chapters 204-206 as already uploaded to Fanqie and scheduled for 2026-10-04 00:00 Asia/Shanghai. The publish-now executor must re-read Fanqie immediately before mutation, accept already-published targets idempotently, refuse unless remaining targets are exactly the first pending chapters, and must not edit title/body text."
   },
-  "reason": "Release chapters 204-206 immediately on 2026-10-03 instead of waiting for their existing 2026-10-04 00:00 schedule. No schedule reflow is authorized by this one-shot."
+  "reason": "Release chapters 204-206 immediately on 2026-10-03 instead of waiting for their existing 2026-10-04 00:00 schedule. No schedule reflow is authorized by this one-shot.",
+  "completed_at": "2026-10-03T05:58:41+00:00",
+  "result": {
+    "platform_status": "success",
+    "chapters": [
+      {
+        "chapter": 204,
+        "platform_status": "published",
+        "title": "第204章 第二张公共任务单没有床位",
+        "scheduled_date_before": "2026-10-04",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 205,
+        "platform_status": "published",
+        "title": "第205章 被挤掉的小站先回了消息",
+        "scheduled_date_before": "2026-10-04",
+        "scheduled_time_before": "00:00"
+      },
+      {
+        "chapter": 206,
+        "platform_status": "published",
+        "title": "第206章 中心资源不能当道歉",
+        "scheduled_date_before": "2026-10-04",
+        "scheduled_time_before": "00:00"
+      }
+    ],
+    "reflow": {
+      "performed": false
+    }
+  }
 }
