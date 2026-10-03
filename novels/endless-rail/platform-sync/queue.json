@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-03T06:23:00+00:00",
+  "updated_at": "2026-10-03T06:25:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -451,6 +451,6 @@
     }
   ],
   "last_reconcile_request": {
-    "reason": "Verify remote state after the successful schedule shift and the partial final chapter upload before recovery."
+    "reason": "Fresh remote verification after quarantining the partial run and repairing chapter 283 above the hard length floor."
   }
 }
