@@ -1,4 +1,4 @@
-# prepublish reconcile [fanqie-reconcile]
+# postpublish reconcile [fanqie-reconcile]
 name: Fanqie Sync
 
 on:
