@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-03T02:26:35+00:00",
+  "updated_at": "2026-10-03T02:27:44+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -350,15 +350,32 @@
       "chapters": "207-296",
       "schedule_mode": "fixed_start",
       "start_date": "2026-10-05",
+      "status": "superseded_by_30_chapter_batches",
+      "authorized": false,
+      "audit": {
+        "status": "passed",
+        "commit": "377ab5091fd4bc2e7314de38c40c22a9cad9e57a",
+        "source": "PR #99 restored the archived October inventory; Endless Rail length audit passed; new inventory hard Meta/prose hits were repaired in chapters 209, 251, 254, and 260; fresh macOS self-hosted read-only reconciliation run 37089763304 / job 111107447775",
+        "reconcile": "2026-10-03: local exactly 1-296; remote exactly 1-206; remote status 203 published + 3 scheduled; scheduled chapters exactly 204-206 at 2026-10-04 00:00 Asia/Shanghai; local-only exactly 207-296; no remote-only chapters, duplicates, title mismatches, or position mismatches",
+        "failure_guard": "No platform writes occurred: sync aborted before mutation because 90 authorized mutations exceeded max_mutations_per_run=30."
+      },
+      "reason": "Author requested all already-written inventory be uploaded at three chapters per day. Append chapters 207-296 as 30 complete three-chapter groups from 2026-10-05 through 2026-11-03 at 00:00 Asia/Shanghai, preserving chapters 204-206 already scheduled for 2026-10-04."
+    },
+    {
+      "id": "rail-create-207-236-three-per-day-20261003",
+      "action": "create",
+      "chapters": "207-236",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-10-05",
       "status": "pending",
       "authorized": true,
       "audit": {
         "status": "passed",
         "commit": "377ab5091fd4bc2e7314de38c40c22a9cad9e57a",
-        "source": "PR #99 restored the archived October inventory; Endless Rail length audit passed; new inventory hard Meta/prose hits were repaired in chapters 209, 251, 254, and 260; fresh macOS self-hosted read-only reconciliation run 37089763304 / job 111107447775",
-        "reconcile": "2026-10-03: local exactly 1-296; remote exactly 1-206; remote status 203 published + 3 scheduled; scheduled chapters exactly 204-206 at 2026-10-04 00:00 Asia/Shanghai; local-only exactly 207-296; no remote-only chapters, duplicates, title mismatches, or position mismatches"
+        "source": "PR #99 restored inventory; current length audit passed; fresh reconcile run 37089763304 / job 111107447775; previous 90-chapter attempt failed closed before any platform mutation due max_mutations_per_run=30",
+        "reconcile": "remote exactly 1-206 with 203 published and 204-206 scheduled for 2026-10-04; local-only exactly 207-296; zero duplicates/title/position mismatches"
       },
-      "reason": "Author requested all already-written inventory be uploaded at three chapters per day. Append chapters 207-296 as 30 complete three-chapter groups from 2026-10-05 through 2026-11-03 at 00:00 Asia/Shanghai, preserving chapters 204-206 already scheduled for 2026-10-04."
+      "reason": "First safe 30-chapter batch of the author-authorized complete inventory. Schedule 207-236 as ten complete three-chapter groups from 2026-10-05 through 2026-10-14 at 00:00 Asia/Shanghai."
     }
   ]
 }
