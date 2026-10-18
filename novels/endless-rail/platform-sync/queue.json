@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-18T04:20:21+00:00",
+  "updated_at": "2026-10-18T05:44:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -555,13 +555,14 @@
       "chapters": "363-380",
       "schedule_mode": "fixed_start",
       "start_date": "2026-11-25",
-      "status": "blocked_pending_read_only_reconcile",
-      "authorized": false,
+      "status": "pending",
+      "authorized": true,
       "audit": {
-        "status": "pending",
-        "basis": "2026-10-18 READ-ONLY reconciliation workflow 39090358486 job 117565619768: book 7670480372831882302 remote chapters exactly 1-301, 251 published + 50 scheduled, 297-299 on Nov 3 00:00, 300-301 on Nov 4 00:00, no duplicate numbers, title or position mismatches. Full 300-302 group audit satisfies >=2000/chapter and >6000/group with actual remote first two already present. Wait until immediately preceding upload verified read-only before authorizing; create only confirmed missing consecutive chapters. All groups exactly 3 per day at 00:00 Asia/Shanghai."
+        "status": "passed",
+        "commit": "53abdc608109f839a042ff1534328ba4e9144218",
+        "basis": "Fresh 2026-10-18 read-only Fanqie reconciliation workflow 39101465209 job 117598453254 confirmed remote chapters exactly 1-362 (251 published, 111 scheduled), local-only exactly 363-380, no duplicate remote chapter numbers, title mismatches, or position mismatches. The existing November 1-24 schedule is verified: three chapters per day, 00:00 Asia/Shanghai, 360-362 on November 24. Chapter inventory 363-380 was part of audited PR #101, and most recent length audit passed. User explicitly authorized publishing on 2026-10-18. Create only chapters 363-380 from November 25, three per day at 00:00; do not edit, duplicate, or reschedule any existing 1-362 chapters. Stop on platform rejection and reconcile after upload."
       },
-      "reason": "After completed 333-362 batch, request fresh read-only verification of the exact 1-362 remote chapter set and November daily schedule before authorizing the remaining 363-380 (Nov 25-30). Do not upload until verified."
+      "reason": "Complete November 25-30 with only the confirmed-missing 363-380 chapters, preserving existing Fanqie dates and chapter IDs."
     },
     {
       "id": "rail-nov-fix-9-offset-dates-20261018",
