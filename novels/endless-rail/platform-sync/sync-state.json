@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-10-03T13:06:09+00:00",
+  "last_sync_at": "2026-10-18T02:39:34+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -987,6 +987,12 @@
       "last_action": "create",
       "last_synced_at": "2026-10-03T12:58:42+00:00",
       "queue_operation_id": "rail-recover-create-282-296-three-per-day-20261003"
+    },
+    "302": {
+      "local_sha256": "ca62de5a94b2a520759a2e00e53b14bb524afbed4c6450b06e2399066f7e66e0",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T02:39:34+00:00",
+      "queue_operation_id": "rail-nov-recover-300-302-20261018"
     }
   }
 }
