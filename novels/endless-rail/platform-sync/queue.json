@@ -592,7 +592,7 @@
         "commit": "41cb98233210798d3880ca669722c9ad4088c21c",
         "basis": "2026-10-18 PR #102 imported prewritten chapters 381-392 and corrected December release plan. PR checks: Endless Rail Length Audit success (39104164093), Fanqie Sync validate success (39104163968), new 381-392 chapter Meta and Novel Gate individually hard=0 warn=0 (historical unrelated hard=10). All chapters at least 2000 non-whitespace body characters; four consecutive 3-chapter groups each total >6000. Fresh read-only Fanqie reconcile run 39104238132 job 117606631933 confirms remote exactly 1-380, local-only exactly 381-392; remote duplicates/title/position mismatches=0 and Nov 30 378-380 at 00:00 Asia/Shanghai. The user explicitly requested December publishing. Upload ONLY 381-392 Dec 1-4 at 00:00 Asia/Shanghai; do not edit/reschedule any existing chapter. Stop on failure and verify platform independently."
       },
-      "reason": "Publish the four available and audited December 1-4 release groups; the unwritten chapters 393-473 are not authorized and not scheduled.",
+      "reason": "Publish the four available and audited December 1-4 release groups; the unwritten chapters 393-473 are not authorized and not scheduled. Upload confirmed 12/12 success (run 39104454330 job 117607327846). Read-only post-upload verification requested; no further mutation authorized.",
       "completed_at": "2026-10-18T06:38:25+00:00"
     }
   ],
