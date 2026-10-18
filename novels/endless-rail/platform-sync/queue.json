@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-18T03:56:47.639Z",
+  "updated_at": "2026-10-18T04:00:49.253Z",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -561,6 +561,19 @@
         "basis": "2026-10-18 READ-ONLY reconciliation workflow 39090358486 job 117565619768: book 7670480372831882302 remote chapters exactly 1-301, 251 published + 50 scheduled, 297-299 on Nov 3 00:00, 300-301 on Nov 4 00:00, no duplicate numbers, title or position mismatches. Full 300-302 group audit satisfies >=2000/chapter and >6000/group with actual remote first two already present. Wait until immediately preceding upload verified read-only before authorizing; create only confirmed missing consecutive chapters. All groups exactly 3 per day at 00:00 Asia/Shanghai."
       },
       "reason": "Continue November at 3 chapters/day from 2026-11-25 with no edits/reschedules to existing remote chapters."
+    },
+    {
+      "id": "rail-nov-fix-9-offset-dates-20261018",
+      "action": "reschedule_all",
+      "start_date": "2026-10-19",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "expected_pending_chapters": "252-332",
+        "basis": "Fresh read-only Fanqie reconciliation 2026-10-18 run 39095389229 job 117580663197: remote exactly 1-332, 251 published, scheduled exactly 252-332 (81 chapters, 27 three-chapter days), zero duplicates, title mismatches, position mismatches. Existing dates match intended daily 00:00 for all except chapters 306,309,312,315,318,321,324,327,330, each one day too early due to skipping remote-existing 303 when scheduling 304-332. 11/05 has 4 and 11/14 has 2. Requested safe reschedule_all from 252 on 2026-10-19 (3 per day) restores precisely those 9 dates with all other dates unchanged; repository runtime bridge skips unchanged rows and drains blocking dates safely. No text updates, no published chapter edits."
+      },
+      "reason": "Correct exactly nine November release timestamps that drifted after a partial group resume, preserving all other pending dates and chapters."
     }
   ],
   "last_reconcile_request": {
