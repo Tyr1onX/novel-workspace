@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-10-18T04:20:20+00:00",
+  "last_sync_at": "2026-10-18T05:54:14+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -1347,6 +1347,114 @@
       "last_action": "create",
       "last_synced_at": "2026-10-18T04:20:20+00:00",
       "queue_operation_id": "rail-nov-recover-333-362-20261018"
+    },
+    "363": {
+      "local_sha256": "242f48a384772388a0d69fc41eaf87887804e0c08de8b4e2147817d0536e5fd0",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "364": {
+      "local_sha256": "3044e0bf369a89b9a72a011f9e0454bd5ed46c776a1a3e2379ebc725c295a55b",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "365": {
+      "local_sha256": "198f9e3c8bccc77737e9b71663b2a5d07a529c966efc103cb2baa56607514ee7",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "366": {
+      "local_sha256": "c157441878c743f86fb07b89f0879ef651e749fd2e54b6d0dda3ab403450e548",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "367": {
+      "local_sha256": "d5c4dbae75415fcfb708e7acaeda6d2de59c8d113e78d18e78bf563b71df9a47",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "368": {
+      "local_sha256": "fe20a2c7f11b34520beaa262e32286ca4beaa2cf89dd741f3f1f1d7df612a00a",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "369": {
+      "local_sha256": "ddab4fcf5971775ac0e99325ea4cc6849b6b6bf91d6823e483014172782be3f3",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "370": {
+      "local_sha256": "28ade56af509c229850c6d161d5fd2c987efdef57d6b36eb204c68cf32a78420",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "371": {
+      "local_sha256": "8ab0c1961ff106176debece25fecbf4a5366677c9c7054c5532839836e6fe1ef",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "372": {
+      "local_sha256": "1c5920f89b59ef426d362ae13ac65f462a747dc1d52cfbdfa5670e7bf6f39675",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "373": {
+      "local_sha256": "5973da4a44923e89b145bb77292d078ccc409c372746a78bd56cd4bf1768fbb1",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "374": {
+      "local_sha256": "65a9edd95635f731e282c371d37f90f5dd0741ce501a94347be7063ee2f565e2",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "375": {
+      "local_sha256": "5c86e44a218455b20ead13cad9d075ef134c437251cc08f5d8c71030d2c83859",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "376": {
+      "local_sha256": "f09168db2e47a276e494d8eed4649c1ca6f1f903e6e58b1185d526e0f8f5b5bc",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "377": {
+      "local_sha256": "f0cb47d2028782b0e369d78580dde894a9025ba062adef7cf75c169e8e0e6ea9",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "378": {
+      "local_sha256": "ddc71b44c98cacc9a76881ccfdc003f4fac655455431cd0f64c4b915ac1f11a1",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "379": {
+      "local_sha256": "34f6bbf277112269bf6ff42b919e2808964801f4e117ac98ff0a77448cf2f1ed",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
+    },
+    "380": {
+      "local_sha256": "117e8c4c727ee8ca04ad0902cb7bbc4530ba9b2000520f6a3406c6e25b8a2ace",
+      "last_action": "create",
+      "last_synced_at": "2026-10-18T05:54:14+00:00",
+      "queue_operation_id": "rail-nov-recover-363-380-20261018"
     }
   }
 }
