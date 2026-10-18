@@ -1,7 +1,7 @@
 {
   "hard_minimum": 2000,
   "hard_maximum": null,
-  "count": 272,
+  "count": 284,
   "hard_count": 0,
   "hard_chapters": [],
   "chapters": [
@@ -1907,6 +1907,90 @@
       "heading": "第380章 第一届学徒没有毕业典礼",
       "chars": 2504,
       "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-380.md",
+      "status": "ok"
+    },
+    {
+      "number": 381,
+      "heading": "第381章 第一张学徒主责的外部工单",
+      "chars": 2400,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-381.md",
+      "status": "ok"
+    },
+    {
+      "number": 382,
+      "heading": "第382章 退回来的样件",
+      "chars": 2112,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-382.md",
+      "status": "ok"
+    },
+    {
+      "number": 383,
+      "heading": "第383章 第二批学员改了教材",
+      "chars": 2031,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-383.md",
+      "status": "ok"
+    },
+    {
+      "number": 384,
+      "heading": "第384章 周建国不在车上的那天",
+      "chars": 2027,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-384.md",
+      "status": "ok"
+    },
+    {
+      "number": 385,
+      "heading": "第385章 三组人交一张单",
+      "chars": 2024,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-385.md",
+      "status": "ok"
+    },
+    {
+      "number": 386,
+      "heading": "第386章 老师名单开始往后排",
+      "chars": 2270,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-386.md",
+      "status": "ok"
+    },
+    {
+      "number": 387,
+      "heading": "第387章 接驳-02照常发车",
+      "chars": 2090,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-387.md",
+      "status": "ok"
+    },
+    {
+      "number": 388,
+      "heading": "第388章 汀湾的泵归谁管",
+      "chars": 2210,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-388.md",
+      "status": "ok"
+    },
+    {
+      "number": 389,
+      "heading": "第389章 两辆接驳都没回来的夜晚",
+      "chars": 2027,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-389.md",
+      "status": "ok"
+    },
+    {
+      "number": 390,
+      "heading": "第390章 谁来替汀湾签字",
+      "chars": 2108,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-390.md",
+      "status": "ok"
+    },
+    {
+      "number": 391,
+      "heading": "第391章 三十天的服务单",
+      "chars": 2050,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-391.md",
+      "status": "ok"
+    },
+    {
+      "number": 392,
+      "heading": "第392章 工程附车先修了旁边那条路",
+      "chars": 2343,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-392.md",
       "status": "ok"
     }
   ]
