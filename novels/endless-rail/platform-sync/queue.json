@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-03T13:06:09+00:00",
+  "updated_at": "2026-10-18T01:53:24+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -485,6 +485,48 @@
       },
       "reason": "Compact every pending Endless Rail chapter after today's early release: 207-209 on 2026-10-04, then exactly three chapters per day at 00:00 Asia/Shanghai through 294-296 on 2026-11-02.",
       "completed_at": "2026-10-03T13:06:09+00:00"
+    },
+    {
+      "id": "rail-november-create-297-326-20261018",
+      "action": "create",
+      "chapters": "297-326",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-03",
+      "status": "blocked_pending_read_only_reconcile",
+      "authorized": false,
+      "audit": {
+        "status": "pending",
+        "basis": "Chapters are present and audited in draft PR #101, but a fresh read-only Fanqie reconciliation has not succeeded. 2026-10-18 Fanqie Sync validate never started (runner_id=0, steps=[]); repeat was also unsuccessful. Do not authorize until remote chapters and existing 291-296 schedules are verified, new batch review is accepted, and all current publishing gates pass."
+      },
+      "reason": "Stage only the 297-326 November chapters at three chapters per day, 00:00 Asia/Shanghai, beginning 2026-11-03; existing remote chapters and schedules must remain unchanged."
+    },
+    {
+      "id": "rail-november-create-327-356-20261018",
+      "action": "create",
+      "chapters": "327-356",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-13",
+      "status": "blocked_pending_read_only_reconcile",
+      "authorized": false,
+      "audit": {
+        "status": "pending",
+        "basis": "Chapters are present and audited in draft PR #101, but a fresh read-only Fanqie reconciliation has not succeeded. 2026-10-18 Fanqie Sync validate never started (runner_id=0, steps=[]); repeat was also unsuccessful. Do not authorize until remote chapters and existing 291-296 schedules are verified, new batch review is accepted, and all current publishing gates pass."
+      },
+      "reason": "Stage only the 327-356 November chapters at three chapters per day, 00:00 Asia/Shanghai, beginning 2026-11-13; existing remote chapters and schedules must remain unchanged."
+    },
+    {
+      "id": "rail-november-create-357-380-20261018",
+      "action": "create",
+      "chapters": "357-380",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-23",
+      "status": "blocked_pending_read_only_reconcile",
+      "authorized": false,
+      "audit": {
+        "status": "pending",
+        "basis": "Chapters are present and audited in draft PR #101, but a fresh read-only Fanqie reconciliation has not succeeded. 2026-10-18 Fanqie Sync validate never started (runner_id=0, steps=[]); repeat was also unsuccessful. Do not authorize until remote chapters and existing 291-296 schedules are verified, new batch review is accepted, and all current publishing gates pass."
+      },
+      "reason": "Stage only the 357-380 November chapters at three chapters per day, 00:00 Asia/Shanghai, beginning 2026-11-23; existing remote chapters and schedules must remain unchanged."
     }
   ],
   "last_reconcile_request": {
