@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-18T02:25:00+00:00",
+  "updated_at": "2026-10-18T02:34:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -501,6 +501,63 @@
         "blocker": "2026-10-18 publishing run 39088881964 (job 117562887694) failed on chapter 297: platform replied 本书中存在重复标题和段落，请修改后再发布. Entire batch 0 successful; 298-326 unattempted. Require fresh read-only remote reconciliation BEFORE any retry or content changes, to distinguish a partially submitted duplicate from duplicate text in the chapter."
       },
       "reason": "Schedule audited first November block without modifying existing remote chapter IDs or schedules."
+    },
+    {
+      "id": "rail-nov-recover-300-302-20261018",
+      "action": "create",
+      "chapters": "300-302",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-04",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "already_present_chapters": "300-301",
+        "basis": "2026-10-18 READ-ONLY reconciliation workflow 39090358486 job 117565619768: book 7670480372831882302 remote chapters exactly 1-301, 251 published + 50 scheduled, 297-299 on Nov 3 00:00, 300-301 on Nov 4 00:00, no duplicate numbers, title or position mismatches. Full 300-302 group audit satisfies >=2000/chapter and >6000/group with actual remote first two already present. Only create 302 at Nov 4 00:00, NEVER edit/recreate/reschedule 300-301. All groups exactly 3 per day at 00:00 Asia/Shanghai."
+      },
+      "reason": "Resume November 4 incomplete triple by creating exactly chapter 302, preserving existing 300-301 and their timestamp."
+    },
+    {
+      "id": "rail-nov-recover-303-332-20261018",
+      "action": "create",
+      "chapters": "303-332",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-05",
+      "status": "blocked_wait_previous_batch",
+      "authorized": false,
+      "audit": {
+        "status": "pending",
+        "basis": "2026-10-18 READ-ONLY reconciliation workflow 39090358486 job 117565619768: book 7670480372831882302 remote chapters exactly 1-301, 251 published + 50 scheduled, 297-299 on Nov 3 00:00, 300-301 on Nov 4 00:00, no duplicate numbers, title or position mismatches. Full 300-302 group audit satisfies >=2000/chapter and >6000/group with actual remote first two already present. Wait until immediately preceding upload verified read-only before authorizing; create only confirmed missing consecutive chapters. All groups exactly 3 per day at 00:00 Asia/Shanghai."
+      },
+      "reason": "Continue November at 3 chapters/day from 2026-11-05 with no edits/reschedules to existing remote chapters."
+    },
+    {
+      "id": "rail-nov-recover-333-362-20261018",
+      "action": "create",
+      "chapters": "333-362",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-15",
+      "status": "blocked_wait_previous_batch",
+      "authorized": false,
+      "audit": {
+        "status": "pending",
+        "basis": "2026-10-18 READ-ONLY reconciliation workflow 39090358486 job 117565619768: book 7670480372831882302 remote chapters exactly 1-301, 251 published + 50 scheduled, 297-299 on Nov 3 00:00, 300-301 on Nov 4 00:00, no duplicate numbers, title or position mismatches. Full 300-302 group audit satisfies >=2000/chapter and >6000/group with actual remote first two already present. Wait until immediately preceding upload verified read-only before authorizing; create only confirmed missing consecutive chapters. All groups exactly 3 per day at 00:00 Asia/Shanghai."
+      },
+      "reason": "Continue November at 3 chapters/day from 2026-11-15 with no edits/reschedules to existing remote chapters."
+    },
+    {
+      "id": "rail-nov-recover-363-380-20261018",
+      "action": "create",
+      "chapters": "363-380",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-25",
+      "status": "blocked_wait_previous_batch",
+      "authorized": false,
+      "audit": {
+        "status": "pending",
+        "basis": "2026-10-18 READ-ONLY reconciliation workflow 39090358486 job 117565619768: book 7670480372831882302 remote chapters exactly 1-301, 251 published + 50 scheduled, 297-299 on Nov 3 00:00, 300-301 on Nov 4 00:00, no duplicate numbers, title or position mismatches. Full 300-302 group audit satisfies >=2000/chapter and >6000/group with actual remote first two already present. Wait until immediately preceding upload verified read-only before authorizing; create only confirmed missing consecutive chapters. All groups exactly 3 per day at 00:00 Asia/Shanghai."
+      },
+      "reason": "Continue November at 3 chapters/day from 2026-11-25 with no edits/reschedules to existing remote chapters."
     }
   ],
   "last_reconcile_request": {
