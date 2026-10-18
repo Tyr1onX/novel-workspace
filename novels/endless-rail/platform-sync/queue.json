@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-18T04:06:02+00:00",
+  "updated_at": "2026-10-18T04:07:03.190Z",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -544,7 +544,7 @@
       "authorized": false,
       "audit": {
         "status": "pending",
-        "basis": "2026-10-18 READ-ONLY reconciliation workflow 39090358486 job 117565619768: book 7670480372831882302 remote chapters exactly 1-301, 251 published + 50 scheduled, 297-299 on Nov 3 00:00, 300-301 on Nov 4 00:00, no duplicate numbers, title or position mismatches. Full 300-302 group audit satisfies >=2000/chapter and >6000/group with actual remote first two already present. Wait until immediately preceding upload verified read-only before authorizing; create only confirmed missing consecutive chapters. All groups exactly 3 per day at 00:00 Asia/Shanghai.\n2026-10-18 published batch 304-332 succeeded 29/29 in workflow 39094713851 job 117578753203; chapter 303 was already present. Publisher verified all 29 remotely and queue state was persisted at main 592b7fc6. Require a separate read-only reconcile of 1-332 and exact Nov 14 tail before authorizing 333-362."
+        "basis": "2026-10-18 READ-ONLY reconciliation workflow 39090358486 job 117565619768: book 7670480372831882302 remote chapters exactly 1-301, 251 published + 50 scheduled, 297-299 on Nov 3 00:00, 300-301 on Nov 4 00:00, no duplicate numbers, title or position mismatches. Full 300-302 group audit satisfies >=2000/chapter and >6000/group with actual remote first two already present. Wait until immediately preceding upload verified read-only before authorizing; create only confirmed missing consecutive chapters. All groups exactly 3 per day at 00:00 Asia/Shanghai.\n2026-10-18 published batch 304-332 succeeded 29/29 in workflow 39094713851 job 117578753203; chapter 303 was already present. Publisher verified all 29 remotely and queue state was persisted at main 592b7fc6. Require a separate read-only reconcile of 1-332 and exact Nov 14 tail before authorizing 333-362.\nCorrection of nine Nov dates completed 2026-10-18 workflow 39095616289, job 117581451667, 9 successes and 0 failures. Next require read-only reconciliation confirming remote exactly 1-332 and 252-332 all at the intended three/day from Oct19 to Nov14 before authorizing next batch."
       },
       "reason": "Continue November at 3 chapters/day from 2026-11-15 with no edits/reschedules to existing remote chapters."
     },
