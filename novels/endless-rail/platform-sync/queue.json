@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-10-18T02:04:00+00:00",
+  "updated_at": "2026-10-18T02:25:00+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -492,12 +492,13 @@
       "chapters": "297-326",
       "schedule_mode": "fixed_start",
       "start_date": "2026-11-03",
-      "status": "pending",
-      "authorized": true,
+      "status": "blocked_platform_duplicate_content_requires_reconcile",
+      "authorized": false,
       "audit": {
-        "status": "passed",
+        "status": "pending",
         "commit": "8d5f94da8a6aee5a797af3f87e7dd2ee4431d221",
-        "basis": "2026-10-18 read-only Fanqie reconciliation job 117560222114 successfully confirmed remote chapters exactly 1-296, published 251, scheduled 252-296, chapter 291-293 for 2026-11-01 00:00 and 294-296 for 2026-11-02 00:00 Asia/Shanghai, zero duplicates/title/position mismatches. Chapters 297-380 are on main from 8d5f94da, and Endless Rail length audit workflow 39088730084 succeeded. The new 297-380 batch is reported hard=0 by prior new-batch Meta guard; historic unrelated guard findings remain recorded. Operation is create-only: never edit/reschedule 1-296; exact fixed three chapters/day 00:00 Asia/Shanghai for Nov 3-12. Author explicitly requested completion of November scheduling and confirmed go-ahead on Oct 18."
+        "basis": "2026-10-18 read-only Fanqie reconciliation job 117560222114 successfully confirmed remote chapters exactly 1-296, published 251, scheduled 252-296, chapter 291-293 for 2026-11-01 00:00 and 294-296 for 2026-11-02 00:00 Asia/Shanghai, zero duplicates/title/position mismatches. Chapters 297-380 are on main from 8d5f94da, and Endless Rail length audit workflow 39088730084 succeeded. The new 297-380 batch is reported hard=0 by prior new-batch Meta guard; historic unrelated guard findings remain recorded. Operation is create-only: never edit/reschedule 1-296; exact fixed three chapters/day 00:00 Asia/Shanghai for Nov 3-12. Author explicitly requested completion of November scheduling and confirmed go-ahead on Oct 18.",
+        "blocker": "2026-10-18 publishing run 39088881964 (job 117562887694) failed on chapter 297: platform replied 本书中存在重复标题和段落，请修改后再发布. Entire batch 0 successful; 298-326 unattempted. Require fresh read-only remote reconciliation BEFORE any retry or content changes, to distinguish a partially submitted duplicate from duplicate text in the chapter."
       },
       "reason": "Schedule audited first November block without modifying existing remote chapter IDs or schedules."
     }
