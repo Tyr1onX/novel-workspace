@@ -9,6 +9,7 @@ on:
       - ".github/workflows/fanqie-data-probe.yml"
   workflow_dispatch:
 
+# A tagged push can refresh authenticated analytics when manual dispatch is unavailable.
 concurrency:
   group: fanqie-data-probe
   cancel-in-progress: false
