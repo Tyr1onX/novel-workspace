@@ -5,22 +5,23 @@
 ## 当前状态（2026-10-27，续写分支）
 
 - 番茄书籍 ID：`7670480372831882302`。
-- 正文：第1～395章；**本分支新写第393～395章，未合并、未上传、未排期**。第396章为下一章。
+- 正文：第1～398章；**本分支新写第393～398章，未合并、未上传、未排期**。第399章为下一章。
 - 第361～410章：第八卷《轨道城市》；第387～398章卫星列车与自治；第399～410章城市级考验。
 - 第381～392章：根据2026-10-18仓库核对记录，番茄后台已创建且排期2026-12-01～04。**排期不是已经公开发布**。
 - 第393～395章：以归途站南侧普通乘客缺少等车空间为入口；旧城出售退役候车附厢组件，周野购买经产权确认的部分，经过专业复核后在归途站公共服务位重构成候车室。
+- 第396～398章：新候车室旁的面包摊占道问题通过改位置与小雨棚解决；普通父女经H12和归途站转车抵达旧城；周野离开主体3日，城内正常生活与交通继续运行，第398章末H12东向普通货运窗口出现暂停确认的前兆。
 - 旧城已售组件不包括固定站台资产、旧线路/电源、报废承载顶板或原客运行走部；新空间的常规使用、清洁、照明和后续成本仍需负担。
 - 第510章：维持原定“分布式无尽轨道重启”大高潮与普通人跨站旅行的兑现，作为第一大阶段收束；**不再自动认定同书必须在此结束**。后续第511章起的远域续写只做剧情储备，平台排期和继续商业连载仍依据真实数据确认。
 - 第一大阶段各卷的基本分段及答案继续以 `docs/master-outline.md` 为准；最新滚动续写策略见 `docs/ongoing-serial-plan-393-onward.md`。
 
 ## 当前续写入口
 
-1. `chapters/volume-08/chapter-393.md`
-2. `chapters/volume-08/chapter-394.md`
-3. `chapters/volume-08/chapter-395.md`
+1. `chapters/volume-08/chapter-396.md`
+2. `chapters/volume-08/chapter-397.md`
+3. `chapters/volume-08/chapter-398.md`
 4. `docs/next-window-handoff.md`
 5. `docs/ongoing-serial-plan-393-onward.md`
-6. `docs/audit-387-392.md`
+6. `docs/audit-393-395.md` 与 `docs/audit-396-398.md`
 7. `docs/capability-growth-ledger.md`
 8. `docs/master-outline.md` 与 `docs/development-blueprint-107-510.md`
 9. `docs/writing-rules.md`、`docs/reading-payoff-rules.md`
