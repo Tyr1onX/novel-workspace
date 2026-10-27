@@ -1,7 +1,7 @@
 {
   "hard_minimum": 2000,
   "hard_maximum": null,
-  "count": 302,
+  "count": 305,
   "hard_count": 0,
   "hard_chapters": [],
   "chapters": [
@@ -2117,6 +2117,27 @@
       "heading": "第410章 归途站开了今天的晚饭",
       "chars": 2311,
       "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-08/chapter-410.md",
+      "status": "ok"
+    },
+    {
+      "number": 411,
+      "heading": "第411章 湖上的三盏旧灯",
+      "chars": 2306,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-09/chapter-411.md",
+      "status": "ok"
+    },
+    {
+      "number": 412,
+      "heading": "第412章 水位没有动，桥少了一截",
+      "chars": 2519,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-09/chapter-412.md",
+      "status": "ok"
+    },
+    {
+      "number": 413,
+      "heading": "第413章 末班车停在堤坡下",
+      "chars": 2569,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-09/chapter-413.md",
       "status": "ok"
     }
   ]
