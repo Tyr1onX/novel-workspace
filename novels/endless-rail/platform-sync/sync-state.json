@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "last_sync_at": "2026-11-11T11:13:25+00:00",
+  "last_sync_at": "2026-11-11T11:19:57+00:00",
   "remote_snapshot_at": null,
   "chapters": {
     "88": {
@@ -2127,6 +2127,12 @@
       "last_action": "create",
       "last_synced_at": "2026-11-11T11:13:25+00:00",
       "queue_operation_id": "rail-create-january-504-509-20261111"
+    },
+    "510": {
+      "local_sha256": "41b4a3a42931850a4bab0f9a502e9d04cb6a675957976e84bb954fb9f971967f",
+      "last_action": "create",
+      "last_synced_at": "2026-11-11T11:19:57+00:00",
+      "queue_operation_id": "rail-create-finale-510-20261111"
     }
   }
 }
