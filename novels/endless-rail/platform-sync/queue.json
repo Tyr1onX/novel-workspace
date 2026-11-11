@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-11-11T10:40:17.101Z",
+  "updated_at": "2026-11-11T10:45:46.903Z",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -650,12 +650,13 @@
       "schedule_mode": "fixed_start",
       "start_date": "2027-01-01",
       "status": "pending",
-      "authorized": false,
+      "authorized": true,
       "audit": {
         "status": "passed",
         "commit": "dae4aba90202586be588bce75a56ec175e2bb0a2",
         "basis": "User explicitly authorized continuing the audited novel release workflow on 2026-11-11. Fresh authenticated read-only Fanqie reconciliation on 2026-11-11 after December upload verified chapters 1-473 consecutive (323 published, 150 scheduled), chapters 471-473 on December 31 at 00:00 Asia/Shanghai, zero duplicate chapters, title mismatches, position mismatches; January chapters 474-510 local only. December 444-473 uploaded successfully 30/30 and its exact original queue/sync-state record was recovered into main in commit 7fd829a after a transient GitHub SSL push failure; no overwrite. Chapters 474-503 form 30 consecutive manuscripts, 10 complete three-chapter release days from Jan 1 through Jan 10, 2027, all >=2000 non-whitespace body characters and daily totals >6000 (minimum daily group 501-503=6228); five-stage novel_gate passed HARD=0; duplicate paragraphs 60+ chars absent; prior audits docs/audit-474-510.md and corrected chapter 500 chronology reviewed. Create exactly 474-503 at 00:00 Asia/Shanghai, no updates to any remote chapter <=473. Fail closed on any platform discrepancy; independently reconcile after upload.",
-        "recovery_hold": "2026-11-11: first execution uploaded 13/30 (474-486), then Fanqie browser network reset at 487. Freeze until independent authenticated read-only reconciliation verifies remote prefix and exact scheduled dates. Do NOT retry full 474-503 without audited resume."
+        "already_present_chapters": "474-486",
+        "recovery_review": "Independent authenticated READ-ONLY Fanqie reconciliation on 2026-11-11 10:41Z confirmed remote 1-486 exactly, published=323 scheduled=163, chapter table schedules 474-485 Jan1-Jan4 (3/day) and 486 Jan5 00:00, title/position/duplicate anomalies 0; local-only 487-510. Resume only 487-503 (17 chapter suffix) using the 13-chapter original-release offset; dates: 487-488 Jan5 00:00, 489-491 Jan6 00:00, ... 501-503 Jan10 00:00 Asia/Shanghai. No writes to <=486; stop and reconcile on any anomaly. Code 696dff72 implements verified prefix offset and 24 unit tests pass."
       },
       "reason": "Continue the independently audited sequential three-chapter midnight release schedule into January 2027; append after the fully reconciled Dec31 chapter 473."
     }
