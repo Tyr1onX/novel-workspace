@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-11-11T11:13:25+00:00",
+  "updated_at": "2026-11-11T11:15:34.698Z",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -676,6 +676,22 @@
       },
       "reason": "Complete two normal three-chapter January days immediately after verified January 10 chapter 503, with no modification to existing chapters.",
       "completed_at": "2026-11-11T11:13:25+00:00"
+    },
+    {
+      "id": "rail-create-finale-510-20261111",
+      "action": "create",
+      "chapters": "510",
+      "schedule_mode": "fixed_start",
+      "start_date": "2027-01-13",
+      "finale_single_chapter": true,
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "commit": "aa4e84cc6bf236b178a65c5391ea875b8de46c18",
+        "basis": "User explicitly authorized completing the serialized novel release. Latest authenticated independent READ-ONLY Fanqie reconciliation 2026-11-11 after Jan11-12 batch confirmed remote chapters 1-509, published=323 scheduled=186, no duplicates/title/position anomalies; final 507-509 all scheduled 2027-01-12 00:00 Asia/Shanghai. Chapter 510 is current inventory's true final chapter, body=2112 non-whitespace characters, full gate HARD=0, no internal 50-character duplicates, and earlier novel arc/closing continuity reviewed. Explicit single-chapter-finale exception in shared/tools/fanqie_sync.py (commit dae4aba) permits ONLY a single current last chapter; unit tests verified exact_group_schedule(1,2027-01-13,00:00,3). Create exactly chapter 510 only for 2027-01-13 00:00 Asia/Shanghai, never edit or reschedule 1-509. After sync, independent real remote reconcile must verify 510."
+      },
+      "reason": "Finalize first 510-chapter story arc on the day immediately following the verified Jan12 release group, without filler chapters or altering the standard three-chapter publishing cadence."
     }
   ],
   "last_reconcile_request": {
