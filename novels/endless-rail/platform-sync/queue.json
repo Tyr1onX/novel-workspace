@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-11-11T07:21:50+00:00",
+  "updated_at": "2026-11-11T09:34:37.683Z",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -610,6 +610,21 @@
       },
       "reason": "Append next seven previously authored and audited December 5-11 release groups after verified December 4 chapter 392; user requested completing the release workflow. No existing chapter may be overwritten or rescheduled.",
       "completed_at": "2026-11-11T07:21:50+00:00"
+    },
+    {
+      "id": "rail-create-december-414-443-20261111",
+      "action": "create",
+      "chapters": "414-443",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-12-12",
+      "status": "pending",
+      "authorized": true,
+      "audit": {
+        "status": "passed",
+        "commit": "aa4e84cc6bf236b178a65c5391ea875b8de46c18",
+        "basis": "Author authorized continuation. Fresh real authenticated read-only Fanqie reconciliation on 2026-11-11 confirmed remote 1-413, 323 published, 90 scheduled, and the final remote group 411-413 all on 2026-12-11 00:00 Asia/Shanghai; local-only 414-510, zero duplicates and title/position mismatches. PR #105 was reviewed and squash-merged as aa4e84c. Chapter 414-443: 30 consecutive chapters, 10 complete groups, each body >=2000 non-whitespace Chinese characters, daily group totals 7236,7071,6208,6515,6173,6182,6113,6338,6044,6103 (>5999); native full novel_gate exit=0,HARD=0, no cross-chapter exact repeated paragraphs 60+ characters. The selective scene/continuity review and prior documented 414-419 and 420-473 audits were checked; contextual warnings do not constitute hard defects. Append precisely 414-443 for Dec 12-21, 3 chapters daily at 00:00; no writes to remote chapters <=413. Stop and require a new read-only reconcile on error."
+      },
+      "reason": "Append only ten audited December 12-21 release days after confirmed December 11 chapter 413. Never edit or reschedule already existing chapters."
     }
   ],
   "last_reconcile_request": {
