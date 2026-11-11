@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-11-11T07:05:29.681Z",
+  "updated_at": "2026-11-11T07:21:50+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -601,14 +601,15 @@
       "chapters": "393-413",
       "schedule_mode": "fixed_start",
       "start_date": "2026-12-05",
-      "status": "pending",
+      "status": "completed",
       "authorized": true,
       "audit": {
         "status": "passed",
         "commit": "e351061214cd8577e835f75156d2399e7c722057",
         "basis": "Author authorized continuation on 2026-11-11. Fresh authenticated read-only Fanqie reconciliation on 2026-11-11 verified remote exactly chapters 1-392 (323 published, 69 scheduled); local-only 393-510; duplicate chapter numbers, title mismatches and position mismatches all 0. Existing chapters 381-392 are scheduled December 1-4 at 00:00 Asia/Shanghai; do not edit them. Chapters 393-413 are complete in main; every chapter passes >=2000 non-whitespace body characters and all 7 consecutive three-chapter groups exceed 6000. Native five-stage novel_gate on 393-510 returned success/HARD=0; chapter-specific prior narrative/continuity audits are present for 393-413. Selective Cold Read of opening, supply-delay and H12 payoff, and mainline arc 411-413 found no publication blocker. Create exactly 393-413 on December 5-11, three chapters per day at 00:00 Asia/Shanghai. Preserve all earlier remote entries and stop on any platform/state anomaly."
       },
-      "reason": "Append next seven previously authored and audited December 5-11 release groups after verified December 4 chapter 392; user requested completing the release workflow. No existing chapter may be overwritten or rescheduled."
+      "reason": "Append next seven previously authored and audited December 5-11 release groups after verified December 4 chapter 392; user requested completing the release workflow. No existing chapter may be overwritten or rescheduled.",
+      "completed_at": "2026-11-11T07:21:50+00:00"
     }
   ],
   "last_reconcile_request": {
