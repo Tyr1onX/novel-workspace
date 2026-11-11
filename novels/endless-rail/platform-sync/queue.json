@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-11-11T09:57:52.955Z",
+  "updated_at": "2026-11-11T10:13:59+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -633,14 +633,15 @@
       "chapters": "444-473",
       "schedule_mode": "fixed_start",
       "start_date": "2026-12-22",
-      "status": "pending",
+      "status": "completed",
       "authorized": true,
       "audit": {
         "status": "passed",
         "commit": "dae4aba90202586be588bce75a56ec175e2bb0a2",
         "basis": "Author authorized continuation on 2026-11-11. Fresh read-only Fanqie reconciliation after preceding batch confirmed chapters 1-443 remote, 323 published/120 scheduled; 441-443 scheduled on 2026-12-21 00:00 Asia/Shanghai; local-only 444-510; remote duplicates/title/position mismatches all zero. PR #105 merged to main, and chapter 444 temporal conclusion corrected in main commit dae4aba. Chapters 444-473 are 30 consecutive chapters, ten complete three-chapter days Dec 22-31 at 00:00 China time; all chapters at least 2000 non-whitespace body characters, all daily three-chapter totals exceed 6000 (minimum 459-461=6048), original five-stage novel_gate exit 0 HARD=0, contextual warning review and manuscript continuity review performed. Upload ONLY 444-473, never edit or reschedule remote 1-443; fail closed and independently reconcile after sync."
       },
-      "reason": "Schedule ten audited December 22-31 groups directly after independently verified Dec 21 group. Existing remote chapters and times are immutable."
+      "reason": "Schedule ten audited December 22-31 groups directly after independently verified Dec 21 group. Existing remote chapters and times are immutable.",
+      "completed_at": "2026-11-11T10:13:59+00:00"
     }
   ],
   "last_reconcile_request": {
