@@ -101,6 +101,10 @@ class FanqieSyncTests(unittest.TestCase):
                 ("2026-09-10", "00:00"),
             ],
         )
+        self.assertEqual(
+            fanqie_runtime_bridge.exact_group_schedule(1, "2027-01-13", "00:00", 3),
+            [("2027-01-13", "00:00")],
+        )
 
     def test_reset_manage_page_before_safe_inspection(self):
         events = []
@@ -262,6 +266,27 @@ class FanqieSyncTests(unittest.TestCase):
                 "authorized": True,
                 "audit": {"status": "passed"},
             }
+            with self.assertRaisesRegex(fanqie_sync.SyncError, "partial release day"):
+                fanqie_sync.validate_release_operation(op, chapters, strict_policy())
+
+    def test_strict_create_allows_explicit_last_chapter_finale(self):
+        with tempfile.TemporaryDirectory() as td:
+            chapters = make_chapters(Path(td), [2100, 2100, 2100, 2100])
+            op = {
+                "id": "finale",
+                "action": "create",
+                "chapters": "4",
+                "schedule_mode": "fixed_start",
+                "start_date": "2027-01-13",
+                "finale_single_chapter": True,
+                "authorized": True,
+                "audit": {"status": "passed"},
+            }
+            self.assertEqual(
+                fanqie_sync.validate_release_operation(op, chapters, strict_policy()),
+                [4],
+            )
+            op["chapters"] = "3"
             with self.assertRaisesRegex(fanqie_sync.SyncError, "partial release day"):
                 fanqie_sync.validate_release_operation(op, chapters, strict_policy())
 

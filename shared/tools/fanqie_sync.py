@@ -284,7 +284,10 @@ def validate_release_operation(
             )
         if not (op.get("start_date") or schedule.get("start_date")):
             raise SyncError(f"{op_id}: strict fixed_start create requires an explicit start_date")
-        _validate_release_groups(op_id, nums, chapters, policy)
+        # A specifically authorized one-chapter finale may end the book without padding.
+        final_single = op.get("finale_single_chapter") is True and nums == [max(chapters)]
+        if not final_single:
+            _validate_release_groups(op_id, nums, chapters, policy)
 
     if action == "reschedule_all" and strict_groups:
         audit = op.get("audit") or {}
