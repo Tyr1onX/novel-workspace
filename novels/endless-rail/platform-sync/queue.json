@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7670480372831882302",
-  "updated_at": "2026-11-11T10:55:58.471Z",
+  "updated_at": "2026-11-11T11:04:36+00:00",
   "operations": [
     {
       "id": "reflow-after-early-release-ch81-2026-08-29",
@@ -649,7 +649,7 @@
       "chapters": "474-503",
       "schedule_mode": "fixed_start",
       "start_date": "2027-01-01",
-      "status": "pending",
+      "status": "completed",
       "authorized": true,
       "audit": {
         "status": "passed",
@@ -658,7 +658,8 @@
         "already_present_chapters": "474-490",
         "recovery_review": "2026-11-11 latest authenticated read-only reconciliation: remote exactly chapters 1-490, published=323 scheduled=167, Jan 1-6 scheduled 474-490 with accurate position, titles, three/day midnight and Jan6 chapters 489-490. No duplicate numbers/positions/title mismatches. Previous retry uploaded 487-490 and failed at chapter491 for duplicated ~100-character night-watch paragraph; exact repeated paragraph was removed, dinner/watch chronology repaired, nonwhitespace body=2109, internal repeated substrings 50+ length 0, five-layer gate HARD=0, committed b293516. Resume only 491-503 with audited skipped prefix 474-490 (offset=17). Chapter491 Jan6 00:00, 492-494 Jan7 ... 501-503 Jan10 00:00. Never overwrite remote 1-490; independently reconcile afterward."
       },
-      "reason": "Continue the independently audited sequential three-chapter midnight release schedule into January 2027; append after the fully reconciled Dec31 chapter 473."
+      "reason": "Continue the independently audited sequential three-chapter midnight release schedule into January 2027; append after the fully reconciled Dec31 chapter 473.",
+      "completed_at": "2026-11-11T11:04:36+00:00"
     }
   ],
   "last_reconcile_request": {
