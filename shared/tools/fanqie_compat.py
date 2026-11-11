@@ -112,6 +112,14 @@ def operation_command_compat(runtime, novel_dir, config, policy, op, chapters):
             )
         if not isinstance(group_size, int) or group_size < 1:
             raise fanqie_sync.SyncError("same-time group_size must be a positive integer")
+        # A verified uploaded prefix still occupies its original release slots.
+        offset = 0
+        if op.get("action") == "create":
+            nums = fanqie_sync.validate_release_operation(op, chapters, policy)
+            remaining = fanqie_sync.create_execution_numbers(op, nums)
+            offset = len(nums) - len(remaining)
+            if remaining != nums[offset:]:
+                raise fanqie_sync.SyncError("partial recovery may skip only a verified chapter prefix")
         # The original command is [python, <runtime>/fanqie_upload.py, ...]. Keep the
         # upstream CLI arguments but run them through the bridge so only
         # compute_schedule is replaced in-process.
@@ -126,6 +134,8 @@ def operation_command_compat(runtime, novel_dir, config, policy, op, chapters):
             str(group_size),
             "--same-time",
             str(slots[0]),
+            "--same-time-offset",
+            str(offset),
             "--",
             *upstream_args,
         ]

@@ -40,11 +40,13 @@ def load_runtime(runtime_dir: Path):
     return module, script
 
 
-def exact_group_schedule(file_count: int, start_date: str, exact_time: str, group_size: int):
+def exact_group_schedule(file_count: int, start_date: str, exact_time: str, group_size: int, offset: int = 0):
     if file_count < 0:
         raise BridgeError("file_count must be non-negative")
     if group_size < 1:
         raise BridgeError("group_size must be positive")
+    if offset < 0:
+        raise BridgeError("offset must be non-negative")
     try:
         base = datetime.strptime(start_date, "%Y-%m-%d")
         datetime.strptime(exact_time, "%H:%M")
@@ -52,7 +54,7 @@ def exact_group_schedule(file_count: int, start_date: str, exact_time: str, grou
         raise BridgeError(str(exc)) from exc
     return [
         (
-            (base + timedelta(days=i // group_size)).strftime("%Y-%m-%d"),
+            (base + timedelta(days=(i + offset) // group_size)).strftime("%Y-%m-%d"),
             exact_time,
         )
         for i in range(file_count)
@@ -257,6 +259,7 @@ def main() -> int:
     parser.add_argument("--runtime", type=Path, required=True)
     parser.add_argument("--same-time-group-size", type=int, required=True)
     parser.add_argument("--same-time", required=True)
+    parser.add_argument("--same-time-offset", type=int, default=0)
     parser.add_argument("upstream_args", nargs=argparse.REMAINDER)
     args = parser.parse_args()
 
@@ -274,7 +277,7 @@ def main() -> int:
     def patched_compute(file_count: int, start_date: str, pub_time: str, per_day: int):
         times = runtime.validate_times(pub_time)
         if per_day == group_size and times == [exact_time]:
-            schedule = exact_group_schedule(file_count, start_date, exact_time, group_size)
+            schedule = exact_group_schedule(file_count, start_date, exact_time, group_size, args.same_time_offset)
             runtime.logger.info(
                 "排期：按仓库策略保留同组相同发布时间 "
                 f"({group_size} 章/组，{exact_time})"

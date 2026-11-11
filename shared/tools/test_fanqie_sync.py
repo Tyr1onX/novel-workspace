@@ -4,6 +4,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 MODULE_PATH = Path(__file__).with_name("fanqie_sync.py")
@@ -105,6 +106,11 @@ class FanqieSyncTests(unittest.TestCase):
             fanqie_runtime_bridge.exact_group_schedule(1, "2027-01-13", "00:00", 3),
             [("2027-01-13", "00:00")],
         )
+        recovered = fanqie_runtime_bridge.exact_group_schedule(17, "2027-01-01", "00:00", 3, offset=13)
+        self.assertEqual(recovered[:3], [("2027-01-05", "00:00")] * 2 + [("2027-01-06", "00:00")])
+        self.assertEqual(recovered[-3:], [("2027-01-10", "00:00")] * 3)
+        with self.assertRaisesRegex(fanqie_runtime_bridge.BridgeError, "offset"):
+            fanqie_runtime_bridge.exact_group_schedule(1, "2027-01-01", "00:00", 3, offset=-1)
 
     def test_reset_manage_page_before_safe_inspection(self):
         events = []
@@ -334,6 +340,38 @@ class FanqieSyncTests(unittest.TestCase):
             fanqie_sync.create_execution_numbers(op, [86, 87, 88, 89, 90]),
             [89, 90],
         )
+
+    def test_resume_preserves_original_calendar_and_rejects_nonprefix_skips(self):
+        with tempfile.TemporaryDirectory() as td:
+            chapters = make_chapters(Path(td), [2100] * 6)
+            policy = strict_policy()
+            policy["schedule"]["same_timestamp_within_group"] = True
+            op = {
+                "id": "partial-recovery",
+                "action": "create",
+                "chapters": "1-6",
+                "start_date": "2027-01-01",
+                "schedule_mode": "fixed_start",
+                "authorized": True,
+                "audit": {"status": "passed", "already_present_chapters": "1-4"},
+            }
+            with mock.patch.object(
+                fanqie_compat,
+                "_ORIGINAL_OPERATION_COMMAND",
+                return_value=([sys.executable, "upstream.py", "upload", "chapters"], 2, False),
+            ):
+                cmd, expected, _ = fanqie_compat.operation_command_compat(
+                    Path(td), Path(td), {"book_id": "book"}, policy, op, chapters
+                )
+                self.assertEqual(expected, 2)
+                idx = cmd.index("--same-time-offset")
+                self.assertEqual(cmd[idx + 1], "4")
+                self.assertEqual(cmd[cmd.index("--") + 1 :], ["upload", "chapters"])
+                op["audit"]["already_present_chapters"] = "2-3"
+                with self.assertRaisesRegex(fanqie_sync.SyncError, "verified chapter prefix"):
+                    fanqie_compat.operation_command_compat(
+                        Path(td), Path(td), {"book_id": "book"}, policy, op, chapters
+                    )
 
     def test_create_execution_numbers_rejects_audited_chapters_outside_selector(self):
         op = {
