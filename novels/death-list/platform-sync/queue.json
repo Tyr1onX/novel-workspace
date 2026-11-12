@@ -573,7 +573,50 @@
       "schedule_mode": "fixed_start",
       "start_date": "2026-09-25",
       "completed_at": "2026-09-16T08:40:31+00:00"
+    },
+    {
+      "id": "death-list-final-105-109-20261112",
+      "action": "create",
+      "chapters": "105-109",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-13",
+      "authorized": true,
+      "status": "completed",
+      "audit": {
+        "status": "passed",
+        "basis": "2026-11-12 live authenticated readonly Fanqie verification: all intended chapter numbers exist with expected titles and Beijing 00:00 schedule; previous remote prefix checked before upload",
+        "expected_remote_prefix_before": "1-104"
+      },
+      "completed_at": "2026-11-12T08:53:18+00:00",
+      "result": {
+        "success": 5,
+        "failed": 0,
+        "confirmed_success_chapters": "105-109",
+        "scheduled_at": "2026-11-13 00:00 Asia/Shanghai",
+        "note": "Uploaded 105-107, fixed 108 duplicate title, resumed 108-109 only; postflight verified all five"
+      }
+    },
+    {
+      "id": "death-list-final-110-114-20261112",
+      "action": "create",
+      "chapters": "110-114",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-14",
+      "authorized": true,
+      "status": "completed",
+      "audit": {
+        "status": "passed",
+        "basis": "2026-11-12 live authenticated readonly Fanqie verification: all intended chapter numbers exist with expected titles and Beijing 00:00 schedule; previous remote prefix checked before upload",
+        "expected_remote_prefix_before": "1-109"
+      },
+      "completed_at": "2026-11-12T08:53:18+00:00",
+      "result": {
+        "success": 5,
+        "failed": 0,
+        "confirmed_success_chapters": "110-114",
+        "scheduled_at": "2026-11-14 00:00 Asia/Shanghai"
+      }
     }
   ],
-  "updated_at": "2026-09-16T08:40:31+00:00"
+  "updated_at": "2026-11-12T08:53:18+00:00"
 }

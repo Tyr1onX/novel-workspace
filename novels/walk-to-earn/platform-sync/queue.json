@@ -1,7 +1,7 @@
 {
   "version": 1,
   "book_id": "7677956141673892926",
-  "updated_at": "2026-09-14T00:08:48+00:00",
+  "updated_at": "2026-11-12T08:53:18+00:00",
   "operations": [
     {
       "id": "walk-canonicalize-18-19-20260829",
@@ -702,6 +702,28 @@
         "workflow_run": "34726406343",
         "basis": "Direct publisher reported success=5 failed=0 and read-only postflight confirmed remote prefix 1-145 with expected schedule."
       }
+    },
+    {
+      "id": "walk-final-146-20261112",
+      "action": "create",
+      "chapters": "146",
+      "schedule_mode": "fixed_start",
+      "start_date": "2026-11-13",
+      "authorized": true,
+      "status": "completed",
+      "audit": {
+        "status": "passed",
+        "basis": "2026-11-12 live authenticated readonly Fanqie verification: all intended chapter numbers exist with expected titles and Beijing 00:00 schedule; previous remote prefix checked before upload",
+        "expected_remote_prefix_before": "1-145"
+      },
+      "completed_at": "2026-11-12T08:53:18+00:00",
+      "result": {
+        "success": 1,
+        "failed": 0,
+        "confirmed_success_chapters": "146",
+        "scheduled_at": "2026-11-13 00:00 Asia/Shanghai"
+      },
+      "finale_single_chapter": true
     }
   ]
 }
