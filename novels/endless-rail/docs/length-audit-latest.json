@@ -1,7 +1,7 @@
 {
   "hard_minimum": 2000,
   "hard_maximum": null,
-  "count": 402,
+  "count": 405,
   "hard_count": 0,
   "hard_chapters": [],
   "chapters": [
@@ -2815,8 +2815,29 @@
     {
       "number": 510,
       "heading": "第510章 开往春天的普通班车",
-      "chars": 2112,
+      "chars": 2275,
       "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-10/chapter-510.md",
+      "status": "ok"
+    },
+    {
+      "number": 511,
+      "heading": "第511章 地图上少了一座站",
+      "chars": 2314,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-11/chapter-511.md",
+      "status": "ok"
+    },
+    {
+      "number": 512,
+      "heading": "第512章 两道钢轨，差了六百多毫米",
+      "chars": 2351,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-11/chapter-512.md",
+      "status": "ok"
+    },
+    {
+      "number": 513,
+      "heading": "第513章 旧车架上多出来的一道刹车",
+      "chars": 2468,
+      "path": "/home/runner/work/novel-workspace/novel-workspace/novels/endless-rail/chapters/volume-11/chapter-513.md",
       "status": "ok"
     }
   ]
